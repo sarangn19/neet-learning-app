@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Heart, Star } from 'lucide-react';
@@ -200,25 +200,57 @@ function LessonComplete({ level, stars, score, onContinue }: { level: Level; sta
   );
 }
 
+const REFILL_COST = 50; // Gems required to refill hearts
+
 function OutOfHearts({ onExit }: { onExit: () => void }) {
-  const { refillHearts } = useUserStore();
+  const { refillHearts, gems, addGems } = useUserStore();
+  const canRefill = gems >= REFILL_COST;
+  
+  const handleRefill = () => {
+    if (canRefill) {
+      addGems(-REFILL_COST); // Deduct gems
+      refillHearts(); // Refill hearts to 5
+      onExit();
+    }
+  };
   
   return (
     <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50 p-4">
       <div className="text-6xl mb-4">💔</div>
       <h1 className="text-2xl font-bold text-gray-900 mb-2">Out of Hearts!</h1>
-      <p className="text-gray-500 mb-6 text-center">
-        You ran out of hearts. Wait for them to refill or practice to earn more!
+      <p className="text-gray-500 mb-2 text-center">
+        You ran out of hearts. Spend gems to refill instantly!
       </p>
+      
+      {/* Gem Cost Display */}
+      <div className="flex items-center gap-2 mb-6 px-4 py-2 bg-blue-50 rounded-xl">
+        <span className="text-2xl">💎</span>
+        <span className={`font-bold ${canRefill ? 'text-brand-blue' : 'text-red-500'}`}>
+          {REFILL_COST} gems
+        </span>
+        <span className="text-gray-400">|</span>
+        <span className="text-gray-500">You have: {gems} 💎</span>
+      </div>
 
       <div className="flex gap-4">
         <button onClick={onExit} className="btn-secondary">
           Exit
         </button>
-        <button onClick={() => { refillHearts(); onExit(); }} className="btn-primary">
-          Refill Hearts
+        <button 
+          onClick={handleRefill}
+          disabled={!canRefill}
+          className={`btn-primary flex items-center gap-2 ${!canRefill ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          <span>💎</span>
+          Refill Now
         </button>
       </div>
+      
+      {!canRefill && (
+        <p className="text-red-500 text-sm mt-4 text-center">
+          Not enough gems! Complete lessons to earn more.
+        </p>
+      )}
     </div>
   );
 }
