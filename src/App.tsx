@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import SubjectSelect from './pages/SubjectSelect';
 import ChapterMap from './pages/ChapterMap';
+import ChapterView from './pages/ChapterView';
 import ModuleView from './pages/ModuleView';
 import Lesson from './pages/Lesson';
 import Profile from './pages/Profile';
@@ -15,6 +16,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="learn" element={<SubjectSelect />} />
         <Route path="learn/:subjectId/:grade" element={<ChapterMap />} />
+        <Route path="learn/:subjectId/:grade/:chapterId" element={<ChapterView />} />
         <Route path="learn/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
         <Route path="lesson/:levelId" element={<Lesson />} />
         <Route path="profile" element={<Profile />} />
