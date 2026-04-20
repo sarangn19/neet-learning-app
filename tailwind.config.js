@@ -21,7 +21,7 @@ export default {
         'gray-500': '#777777',
       },
       fontFamily: {
-        'din': ['DIN Round Pro', 'system-ui', 'sans-serif'],
+        'satoshi': ['Satoshi', 'system-ui', 'sans-serif'],
       },
       animation: {
         'bounce-slight': 'bounce-slight 0.5s ease-in-out',
