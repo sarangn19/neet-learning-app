@@ -122,43 +122,59 @@ function ChapterCard({ chapter, subjectId, grade, completedLessons, index }: {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
+      className="w-full"
     >
       <Link
         to={`/learn/${subjectId}/${grade}/${chapter.id}`}
-        className="block bg-white rounded-3xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+        className="flex flex-row items-center p-2 pr-7 gap-6 w-full bg-white border border-[#E2E8F0] rounded-3xl hover:shadow-md transition-shadow"
+        style={{ minHeight: '137px' }}
       >
-        <div className="flex items-center gap-4">
-          {/* Illustration */}
-          <div className="w-24 h-24 rounded-2xl overflow-hidden bg-rose-50 flex-shrink-0">
-            {illustration}
-          </div>
+        {/* Illustration - 137.45px x 121.08px, border-radius 16px */}
+        <div 
+          className="flex-shrink-0 overflow-hidden bg-rose-50"
+          style={{ width: '137px', height: '121px', borderRadius: '16px' }}
+        >
+          {illustration}
+        </div>
 
-          {/* Chapter Info */}
-          <div className="flex-1">
-            <h3 className="font-bold text-lg text-gray-900 mb-1">{chapter.name}</h3>
-            <p className="text-sm text-gray-500">{chapter.modules.length} modules</p>
-            
-            {/* Progress indicator */}
-            {isCompleted && (
-              <div className="flex items-center gap-1 mt-2 text-brand-green">
-                <CheckCircle2 className="w-4 h-4" />
-                <span className="text-xs font-bold">Completed</span>
-              </div>
-            )}
-          </div>
+        {/* Chapter Info - flex column, gap 8px */}
+        <div className="flex flex-col justify-center items-start gap-2 flex-1 min-w-0">
+          {/* Title - font-weight 600, font-size 18px, line-height 22px, color #000000 */}
+          <h3 
+            className="w-full text-black truncate"
+            style={{ fontWeight: 600, fontSize: '18px', lineHeight: '22px' }}
+          >
+            {chapter.name}
+          </h3>
+          
+          {/* Subtitle - font-weight 400, font-size 14px, line-height 14px, color #000000 */}
+          <p 
+            className="w-full text-black"
+            style={{ fontWeight: 400, fontSize: '14px', lineHeight: '14px' }}
+          >
+            {chapter.modules.length} modules
+          </p>
+          
+          {/* Progress indicator */}
+          {isCompleted && (
+            <div className="flex items-center gap-1 mt-1 text-brand-green">
+              <CheckCircle2 className="w-4 h-4" />
+              <span className="text-xs font-bold">Completed</span>
+            </div>
+          )}
+        </div>
 
-          {/* Arrow or completion status */}
-          <div className="flex-shrink-0">
-            {isCompleted ? (
-              <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center">
-                <CheckCircle2 className="w-5 h-5 text-brand-green" />
-              </div>
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                <ChevronLeft className="w-5 h-5 text-gray-400 rotate-180" />
-              </div>
-            )}
-          </div>
+        {/* Arrow or completion status */}
+        <div className="flex-shrink-0">
+          {isCompleted ? (
+            <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center">
+              <CheckCircle2 className="w-5 h-5 text-brand-green" />
+            </div>
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+              <ChevronLeft className="w-5 h-5 text-gray-400 rotate-180" />
+            </div>
+          )}
         </div>
       </Link>
     </motion.div>
