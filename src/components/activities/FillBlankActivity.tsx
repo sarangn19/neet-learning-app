@@ -5,7 +5,7 @@ import type { Activity } from '../../types';
 
 interface Props {
   activity: Activity;
-  onComplete: (correct: boolean, xp: number) => void;
+  onComplete: (correct: boolean, tokens: number) => void;
 }
 
 export default function FillBlankActivity({ activity, onComplete }: Props) {
@@ -48,7 +48,7 @@ export default function FillBlankActivity({ activity, onComplete }: Props) {
     setShowResult(true);
     
     setTimeout(() => {
-      onComplete(correct, correct ? activity.xpReward : Math.floor(activity.xpReward / 2));
+      onComplete(correct, correct ? activity.tokenReward : Math.floor(activity.tokenReward / 2));
     }, 1500);
   };
 

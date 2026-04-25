@@ -5,7 +5,7 @@ import type { Activity } from '../../types';
 
 interface Props {
   activity: Activity;
-  onComplete: (correct: boolean, xp: number) => void;
+  onComplete: (correct: boolean, tokens: number) => void;
 }
 
 export default function TrueFalseActivity({ activity, onComplete }: Props) {
@@ -26,7 +26,7 @@ export default function TrueFalseActivity({ activity, onComplete }: Props) {
     const correct = selected === isTrue;
     
     setTimeout(() => {
-      onComplete(correct, correct ? activity.xpReward : Math.floor(activity.xpReward / 2));
+      onComplete(correct, correct ? activity.tokenReward : Math.floor(activity.tokenReward / 2));
     }, 1500);
   };
 
@@ -58,7 +58,7 @@ export default function TrueFalseActivity({ activity, onComplete }: Props) {
           whileTap={{ scale: 0.95 }}
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl">✓</span>
+            <span className="text-xl">✓</span>
             <span>TRUE</span>
           </div>
         </motion.button>
@@ -79,7 +79,7 @@ export default function TrueFalseActivity({ activity, onComplete }: Props) {
           whileTap={{ scale: 0.95 }}
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl">✗</span>
+            <span className="text-xl">✗</span>
             <span>FALSE</span>
           </div>
         </motion.button>

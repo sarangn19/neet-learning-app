@@ -45,7 +45,7 @@ const subjectFlashcards: Record<string, { front: string; back: string; subject: 
 export default function DailyRevision({ onClose, onStartLesson }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const { addXP, completedLessons } = useUserStore();
+  const { completedLessons } = useUserStore();
 
   // Determine which subjects were attempted (mock logic - in real app, this would check lastAttempted date)
   // For now, show mix of all subjects or specific subject if lessons completed
@@ -88,8 +88,7 @@ export default function DailyRevision({ onClose, onStartLesson }: Props) {
       setCurrentIndex(prev => prev + 1);
       setIsFlipped(false);
     } else {
-      // Completed revision - give XP
-      addXP(20);
+      // Completed revision
       onStartLesson();
     }
   };
@@ -123,52 +122,20 @@ export default function DailyRevision({ onClose, onStartLesson }: Props) {
         </span>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center p-6 bg-gray-50">
-        {/* Mascot */}
-        <motion.div 
-          className="mb-8"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        >
-          <div className="w-32 h-32 relative">
-            <svg viewBox="0 0 200 200" className="w-full h-full">
-              {/* Cute mascot - similar to Duolingo owl */}
-              <ellipse cx="100" cy="110" rx="60" ry="70" fill="#FF9600" />
-              <ellipse cx="100" cy="100" rx="50" ry="55" fill="#FFB84D" />
-              {/* Eyes */}
-              <circle cx="75" cy="85" r="12" fill="white" />
-              <circle cx="125" cy="85" r="12" fill="white" />
-              <circle cx="75" cy="85" r="6" fill="#1F1F1F" />
-              <circle cx="125" cy="85" r="6" fill="#1F1F1F" />
-              {/* Beak */}
-              <polygon points="100,95 90,105 110,105" fill="#1F1F1F" />
-              {/* Wings */}
-              <ellipse cx="40" cy="110" rx="15" ry="25" fill="#FF9600" />
-              <ellipse cx="160" cy="110" rx="15" ry="25" fill="#FF9600" />
-              {/* Feet */}
-              <ellipse cx="80" cy="175" rx="12" ry="8" fill="#FF9600" />
-              <ellipse cx="120" cy="175" rx="12" ry="8" fill="#FF9600" />
-              {/* Sparkles */}
-              <text x="30" y="50" fontSize="24">✨</text>
-              <text x="160" y="60" fontSize="20">⭐</text>
-            </svg>
-          </div>
-        </motion.div>
-
+      {/* Main Content - Scrollable */}
+      <div className="flex-1 overflow-y-auto flex flex-col items-center justify-start p-4 sm:p-6 bg-gray-50">
         {/* Title */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 text-center">
           Daily Revision 🔥
         </h2>
-        <p className="text-gray-500 mb-2 text-center">
+        <p className="text-gray-500 text-xs sm:text-sm mb-3 text-center">
           Quick review of subjects you attempted
         </p>
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        <div className="flex flex-wrap justify-center gap-2 mb-6">
           {attemptedSubjects.map(subject => (
             <span 
               key={subject} 
-              className="px-3 py-1 bg-brand-blue/10 text-brand-blue text-sm font-bold rounded-full capitalize"
+              className="px-2 py-1 bg-violet-100 text-violet-600 text-xs font-bold rounded-full capitalize"
             >
               {subject}
             </span>
@@ -176,7 +143,7 @@ export default function DailyRevision({ onClose, onStartLesson }: Props) {
         </div>
 
         {/* Flashcard */}
-        <div className="w-full max-w-md mb-8">
+        <div className="w-full max-w-sm mb-6">
           <motion.div
             onClick={handleFlip}
             className="w-full aspect-[3/2] cursor-pointer"
@@ -190,34 +157,34 @@ export default function DailyRevision({ onClose, onStartLesson }: Props) {
             >
               {/* Front */}
               <div 
-                className="absolute inset-0 bg-white border-2 border-gray-200 rounded-2xl p-6 flex flex-col items-center justify-center shadow-lg"
+                className="absolute inset-0 bg-white border-2 border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center shadow-lg"
                 style={{ backfaceVisibility: 'hidden' }}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <SubjectIcon className="w-5 h-5 text-brand-blue" />
+                  <SubjectIcon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-blue" />
                   <span className="text-xs text-gray-400 font-bold uppercase tracking-wide">
                     {currentCard.subject}
                   </span>
                 </div>
-                <p className="text-2xl font-bold text-gray-900 text-center">{currentCard.front}</p>
+                <p className="text-base sm:text-xl font-bold text-gray-900 text-center">{currentCard.front}</p>
                 <div className="mt-4 flex items-center gap-2 text-gray-400">
                   <RotateCw className="w-4 h-4" />
-                  <span className="text-sm">Tap to flip</span>
+                  <span className="text-xs sm:text-sm">Tap to flip</span>
                 </div>
               </div>
 
               {/* Back */}
               <div 
-                className="absolute inset-0 bg-brand-blue/10 border-2 border-brand-blue rounded-2xl p-6 flex flex-col items-center justify-center shadow-lg"
+                className="absolute inset-0 bg-brand-blue/10 border-2 border-brand-blue rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center shadow-lg"
                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <SubjectIcon className="w-5 h-5 text-brand-blue" />
+                  <SubjectIcon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-blue" />
                   <span className="text-xs text-brand-blue font-bold uppercase tracking-wide">
                     Answer
                   </span>
                 </div>
-                <p className="text-lg font-bold text-brand-blue text-center">{currentCard.back}</p>
+                <p className="text-base sm:text-lg font-bold text-brand-blue text-center">{currentCard.back}</p>
               </div>
             </motion.div>
           </motion.div>
@@ -232,7 +199,7 @@ export default function DailyRevision({ onClose, onStartLesson }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               onClick={handleNext}
-              className="btn-primary flex items-center gap-2 text-lg px-8 py-4"
+              className="btn-cta-sm flex items-center gap-2"
             >
               {currentIndex < revisionFlashcards.length - 1 ? (
                 <>

@@ -64,18 +64,18 @@ export default function ChapterView() {
           >
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-xl font-bold text-gray-900">{chapter.name}</h1>
+          <h1 className="text-lg sm:text-xl font-bold text-gray-900">{chapter.name}</h1>
         </div>
 
         {/* Chapter Hero Card */}
-        <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm mb-6">
-          <div className="flex items-center gap-5">
-            <div className="w-28 h-28 rounded-2xl overflow-hidden bg-rose-50 flex-shrink-0">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-sm mb-6">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5">
+            <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl overflow-hidden bg-rose-50 flex-shrink-0">
               {illustration}
             </div>
-            <div className="flex-1">
-              <h2 className="font-bold text-2xl text-gray-900 mb-2">{chapter.name}</h2>
-              <p className="text-gray-500 mb-3">{chapter.description}</p>
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="font-bold text-lg sm:text-xl text-gray-900 mb-1 sm:mb-2">{chapter.name}</h2>
+              <p className="text-gray-500 text-sm sm:text-base mb-3">{chapter.description}</p>
               
               {/* Progress Bar */}
               <div className="flex items-center gap-3">
@@ -102,7 +102,7 @@ export default function ChapterView() {
         transition={{ delay: 0.1 }}
         className="space-y-4"
       >
-        <h3 className="font-bold text-lg text-gray-900 mb-4">Modules</h3>
+        <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-4">Modules</h3>
         
         {chapter.modules.map((module, index) => (
           <ModuleCard 
@@ -141,14 +141,14 @@ function ModuleCard({ module, subjectId, grade, chapterId, lessonProgress, index
       transition={{ delay: index * 0.1 }}
     >
       <Link
-        to={isLocked ? '#' : `/learn/${subjectId}/${grade}/${chapterId}/${module.id}`}
-        className={`block bg-white rounded-2xl p-4 border border-gray-100 shadow-sm transition-all ${
+        to={isLocked ? '#' : `/module/${subjectId}/${grade}/${chapterId}/${module.id}`}
+        className={`block bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm transition-all ${
           isLocked ? 'opacity-60 cursor-not-allowed' : 'hover:shadow-md'
         }`}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {/* Module Number / Status */}
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold flex-shrink-0 ${
+          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0 ${
             isCompleted 
               ? 'bg-brand-green/10 text-brand-green' 
               : isStarted
@@ -168,8 +168,8 @@ function ModuleCard({ module, subjectId, grade, chapterId, lessonProgress, index
 
           {/* Module Info */}
           <div className="flex-1">
-            <h4 className="font-bold text-gray-900 mb-1">{module.name}</h4>
-            <p className="text-sm text-gray-500">{completedLevels}/{totalLevels} levels • {module.totalXP} XP</p>
+            <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1">{module.name}</h4>
+            <p className="text-xs sm:text-sm text-gray-500">{completedLevels}/{totalLevels} levels</p>
             
             {/* Progress dots */}
             <div className="flex items-center gap-1 mt-2">
@@ -191,16 +191,16 @@ function ModuleCard({ module, subjectId, grade, chapterId, lessonProgress, index
           {/* Action Icon */}
           <div className="flex-shrink-0">
             {isCompleted ? (
-              <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center">
-                <CheckCircle2 className="w-5 h-5 text-brand-green" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-green/10 flex items-center justify-center">
+                <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-brand-green" />
               </div>
             ) : isLocked ? (
-              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                <Lock className="w-5 h-5 text-gray-400" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                <Lock className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
               </div>
             ) : (
-              <div className="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center">
-                <Play className="w-5 h-5 text-brand-blue" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-blue/10 flex items-center justify-center">
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 text-brand-blue" />
               </div>
             )}
           </div>

@@ -5,7 +5,7 @@ import type { Activity } from '../../types';
 
 interface Props {
   activity: Activity;
-  onComplete: (correct: boolean, xp: number) => void;
+  onComplete: (correct: boolean, tokens: number) => void;
 }
 
 export default function QuizActivity({ activity, onComplete }: Props) {
@@ -28,7 +28,7 @@ export default function QuizActivity({ activity, onComplete }: Props) {
     setShowResult(true);
     
     setTimeout(() => {
-      onComplete(correct, activity.xpReward);
+      onComplete(correct, activity.tokenReward);
     }, 1500);
   };
 

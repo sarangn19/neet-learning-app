@@ -5,7 +5,7 @@ import type { Activity } from '../../types';
 
 interface Props {
   activity: Activity;
-  onComplete: (correct: boolean, xp: number) => void;
+  onComplete: (correct: boolean, tokens: number) => void;
 }
 
 export default function FlashcardActivity({ activity, onComplete }: Props) {
@@ -22,11 +22,11 @@ export default function FlashcardActivity({ activity, onComplete }: Props) {
   };
 
   const handleKnowIt = () => {
-    onComplete(true, activity.xpReward);
+    onComplete(true, activity.tokenReward);
   };
 
   const handleNeedPractice = () => {
-    onComplete(true, Math.floor(activity.xpReward / 2));
+    onComplete(true, Math.floor(activity.tokenReward / 2));
   };
 
   return (
@@ -54,7 +54,7 @@ export default function FlashcardActivity({ activity, onComplete }: Props) {
               className="absolute inset-0 bg-white border-2 border-gray-200 rounded-2xl p-6 flex flex-col items-center justify-center backface-hidden shadow-lg"
               style={{ backfaceVisibility: 'hidden' }}
             >
-              <p className="text-2xl font-bold text-gray-900 text-center">{front}</p>
+              <p className="text-xl font-bold text-gray-900 text-center">{front}</p>
               <div className="mt-4 flex items-center gap-2 text-gray-400">
                 <RotateCw className="w-4 h-4" />
                 <span className="text-sm">Tap to flip</span>

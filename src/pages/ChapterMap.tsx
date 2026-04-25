@@ -55,7 +55,7 @@ export default function ChapterMap() {
           <Link to="/" className="p-2 hover:bg-gray-200 rounded-full transition-colors">
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </Link>
-          <h1 className="text-xl font-bold text-gray-900">{subject.name}</h1>
+          <h1 className="text-lg sm:text-xl font-bold text-gray-900">{subject.name}</h1>
         </div>
       </motion.div>
 
@@ -126,39 +126,33 @@ function ChapterCard({ chapter, subjectId, grade, completedLessons, index }: {
     >
       <Link
         to={`/learn/${subjectId}/${grade}/${chapter.id}`}
-        className="flex flex-row items-center p-2 pr-7 gap-6 w-full bg-white border border-[#E2E8F0] rounded-3xl hover:shadow-md transition-shadow"
-        style={{ minHeight: '137px' }}
+        className="flex flex-row items-center p-2 pr-4 sm:pr-7 gap-3 sm:gap-6 w-full bg-white border border-[#E2E8F0] rounded-2xl sm:rounded-3xl hover:shadow-md transition-shadow"
+        style={{ minHeight: '100px' }}
       >
-        {/* Illustration - 137.45px x 121.08px, border-radius 16px */}
+        {/* Illustration */}
         <div 
-          className="flex-shrink-0 overflow-hidden bg-rose-50"
-          style={{ width: '137px', height: '121px', borderRadius: '16px' }}
+          className="flex-shrink-0 overflow-hidden bg-rose-50 rounded-xl sm:rounded-2xl"
+          style={{ width: '80px', height: '70px' }}
         >
           {illustration}
         </div>
 
-        {/* Chapter Info - flex column, gap 8px */}
-        <div className="flex flex-col justify-center items-start gap-2 flex-1 min-w-0">
-          {/* Title - font-weight 600, font-size 18px, line-height 22px, color #000000 */}
-          <h3 
-            className="w-full text-black truncate"
-            style={{ fontWeight: 600, fontSize: '18px', lineHeight: '22px' }}
-          >
+        {/* Chapter Info */}
+        <div className="flex flex-col justify-center items-start gap-1 sm:gap-2 flex-1 min-w-0">
+          {/* Title */}
+          <h3 className="w-full text-black truncate font-semibold text-base sm:text-lg">
             {chapter.name}
           </h3>
           
-          {/* Subtitle - font-weight 400, font-size 14px, line-height 14px, color #000000 */}
-          <p 
-            className="w-full text-black"
-            style={{ fontWeight: 400, fontSize: '14px', lineHeight: '14px' }}
-          >
+          {/* Subtitle */}
+          <p className="w-full text-black text-xs sm:text-sm">
             {chapter.modules.length} modules
           </p>
           
           {/* Progress indicator */}
           {isCompleted && (
             <div className="flex items-center gap-1 mt-1 text-brand-green">
-              <CheckCircle2 className="w-4 h-4" />
+              <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="text-xs font-bold">Completed</span>
             </div>
           )}
@@ -167,12 +161,12 @@ function ChapterCard({ chapter, subjectId, grade, completedLessons, index }: {
         {/* Arrow or completion status */}
         <div className="flex-shrink-0">
           {isCompleted ? (
-            <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center">
-              <CheckCircle2 className="w-5 h-5 text-brand-green" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-green/10 flex items-center justify-center">
+              <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-brand-green" />
             </div>
           ) : (
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-gray-400 rotate-180" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 flex items-center justify-center">
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 rotate-180" />
             </div>
           )}
         </div>

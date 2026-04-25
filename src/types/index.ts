@@ -3,12 +3,11 @@ export interface User {
   id: string;
   name: string;
   avatar: string;
-  xp: number;
+  tokens: number;
   level: number;
   streak: number;
   longestStreak: number;
   gems: number;
-  hearts: number;
   lastActive: string;
   badges: Badge[];
   completedLessons: string[];
@@ -48,7 +47,7 @@ export interface Module {
   id: string;
   name: string;
   description: string;
-  totalXP: number;
+  totalTokens: number;
   levels: Level[];
 }
 
@@ -56,7 +55,7 @@ export interface Level {
   id: string;
   name: string;
   order: number;
-  totalXP: number;
+  totalTokens: number;
   activities: Activity[];
 }
 
@@ -75,7 +74,7 @@ export interface Activity {
   id: string;
   type: ActivityType;
   question: string;
-  xpReward: number;
+  tokenReward: number;
   data: QuizData | FlashcardData | MatchData | FillBlankData | DragDropData | SequenceData | TrueFalseData | IdentifyData;
 }
 
@@ -127,14 +126,14 @@ export interface LessonProgress {
   levelId: string;
   completed: boolean;
   stars: number;
-  xpEarned: number;
+  tokensEarned: number;
   lastAttempted: string;
 }
 
 export interface DailyGoal {
   date: string;
-  targetXP: number;
-  earnedXP: number;
+  targetTokens: number;
+  earnedTokens: number;
   completed: boolean;
 }
 

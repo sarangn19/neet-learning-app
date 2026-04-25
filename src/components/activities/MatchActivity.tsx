@@ -5,7 +5,7 @@ import type { Activity } from '../../types';
 
 interface Props {
   activity: Activity;
-  onComplete: (correct: boolean, xp: number) => void;
+  onComplete: (correct: boolean, tokens: number) => void;
 }
 
 interface Item {
@@ -71,10 +71,10 @@ export default function MatchActivity({ activity, onComplete }: Props) {
   useEffect(() => {
     if (matchedIndices.length === pairs.length) {
       const accuracy = pairs.length / Math.max(attempts, pairs.length);
-      const earnedXP = Math.floor(activity.xpReward * (0.5 + accuracy * 0.5));
+      const earnedXP = Math.floor(activity.tokenReward * (0.5 + accuracy * 0.5));
       setTimeout(() => onComplete(true, earnedXP), 500);
     }
-  }, [matchedIndices, pairs.length, attempts, activity.xpReward, onComplete]);
+  }, [matchedIndices, pairs.length, attempts, activity.tokenReward, onComplete]);
 
   const isTermMatched = (item: Item) => matchedIndices.includes(item.pairIndex);
   const isDefMatched = (item: Item) => matchedIndices.includes(item.pairIndex);

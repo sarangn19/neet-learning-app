@@ -1,6 +1,6 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Star, Trophy } from 'lucide-react';
+import { ChevronLeft, Star } from 'lucide-react';
 import { getModule, getSubject } from '../data/curriculum';
 import { useUserStore } from '../store/userStore';
 import type { Grade, Level } from '../types';
@@ -39,34 +39,30 @@ export default function ModuleView() {
       >
         <button 
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-4"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-3 text-sm"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 h-4" />
           Back to Chapters
         </button>
 
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-3 mb-3">
           <div 
-            className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl"
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl"
             style={{ backgroundColor: `${subject.color}20` }}
           >
             🎯
           </div>
           <div>
-            <p className="text-sm text-gray-500">{subject.name} • {gradeLabel}</p>
-            <h1 className="text-2xl font-bold text-gray-900">{module.name}</h1>
-            <p className="text-gray-500">{module.description}</p>
+            <p className="text-xs sm:text-sm text-gray-500">{subject.name} • {gradeLabel}</p>
+            <h1 className="text-lg sm:text-xl font-bold text-gray-900">{module.name}</h1>
+            <p className="text-gray-500 text-xs sm:text-sm">{module.description}</p>
           </div>
         </div>
 
         {/* Module Stats */}
-        <div className="flex gap-4">
-          <div className="bg-brand-yellow/10 text-brand-yellow px-4 py-2 rounded-xl font-bold flex items-center gap-2">
-            <Trophy className="w-5 h-5" />
-            {module.totalXP} XP
-          </div>
-          <div className="bg-brand-green/10 text-brand-green px-4 py-2 rounded-xl font-bold flex items-center gap-2">
-            <Star className="w-5 h-5" />
+        <div className="flex gap-3">
+          <div className="bg-lime-100 text-lime-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl font-bold flex items-center gap-2 text-xs sm:text-sm">
+            <Star className="w-4 h-4 sm:w-5 sm:h-5" />
             {module.levels.length} Levels
           </div>
         </div>
@@ -83,12 +79,12 @@ export default function ModuleView() {
             d="M 100 50 Q 200 150 100 250 Q 0 350 100 450 Q 200 550 100 650"
             fill="none"
             stroke="#e5e5e5"
-            strokeWidth="8"
+            strokeWidth="6"
             strokeLinecap="round"
           />
         </svg>
 
-        <div className="space-y-16 relative">
+        <div className="space-y-12 sm:space-y-16 relative">
           {module.levels.map((level, index) => {
             const status = getLevelStatus(level, index);
             const progress = lessonProgress[level.id];
@@ -100,7 +96,6 @@ export default function ModuleView() {
                 index={index}
                 status={status}
                 stars={progress?.stars || 0}
-                subjectColor={subject.color}
               />
             );
           })}
@@ -110,12 +105,11 @@ export default function ModuleView() {
   );
 }
 
-function LevelNode({ level, index, status, stars, subjectColor }: {
+function LevelNode({ level, index, status, stars }: {
   level: Level;
   index: number;
   status: 'locked' | 'available' | 'completed';
   stars: number;
-  subjectColor: string;
 }) {
   // Alternate sides
   const isLeft = index % 2 === 0;
@@ -128,37 +122,17 @@ function LevelNode({ level, index, status, stars, subjectColor }: {
       className={`flex ${isLeft ? 'justify-start' : 'justify-end'} px-4 sm:px-16`}
     >
       {status === 'locked' ? (
-        <div className="level-node level-locked">
-          <span className="text-xl">🔒</span>
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-base sm:text-lg bg-gray-300 text-gray-500 cursor-not-allowed">
+          <span className="text-lg sm:text-xl">🔒</span>
         </div>
       ) : status === 'completed' ? (
-        <Link to={`/lesson/${level.id}`} className="level-node level-completed">
-          <span className="text-xl">⭐</span>
+        <Link to={`/lesson/${level.id}`} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-base sm:text-lg bg-lime-500 text-white shadow-lg hover:scale-110 active:scale-95 transition-all">
+          <span className="text-lg sm:text-xl">{stars > 0 ? '⭐' : '✓'}</span>
         </Link>
       ) : (
-        <Link to={`/lesson/${level.id}`} className="level-node level-available">
-          <span className="text-xl">{index === 0 ? 'START' : index + 1}</span>
+        <Link to={`/lesson/${level.id}`} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold text-base sm:text-lg bg-white text-gray-700 border-2 border-gray-300 shadow-md hover:scale-110 active:scale-95 transition-all">
+          <span className="text-xs sm:text-sm">{index === 0 ? 'START' : index + 1}</span>
         </Link>
-      )}
-
-      {/* Level Info Card */}
-      {status !== 'locked' && (
-        <div 
-          className={`absolute ${isLeft ? 'left-32' : 'right-32'} top-0 hidden sm:block`}
-        >
-          <div className="bg-white rounded-xl border-2 border-gray-200 px-4 py-2 shadow-sm">
-            <p className="font-bold text-gray-900 text-sm">{level.name}</p>
-            <div className="flex items-center gap-1 mt-1">
-              {[...Array(3)].map((_, i) => (
-                <Star 
-                  key={i}
-                  className={`w-4 h-4 ${i < stars ? 'text-brand-yellow fill-brand-yellow' : 'text-gray-300'}`}
-                />
-              ))}
-              <span className="text-xs text-gray-500 ml-1">{level.totalXP} XP</span>
-            </div>
-          </div>
-        </div>
       )}
     </motion.div>
   );
