@@ -17,7 +17,8 @@ import FillBlankActivity from '../components/activities/FillBlankActivity';
 export default function Lesson() {
   const { levelId } = useParams<{ levelId: string }>();
   const navigate = useNavigate();
-  const { completeLesson } = useUserStore();
+  const { completeLesson, addCatFood, lessonProgress } = useUserStore();
+  const [moduleCompleted, setModuleCompleted] = useState(false);
   
   const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -59,6 +60,37 @@ export default function Lesson() {
         setIsCompleted(true);
         completeLesson(levelId!, earnedStars);
         
+        // Check if all levels in parent module are completed
+        let parentModule = null;
+        let allModuleLevelsCompleted = false;
+        
+        for (const subject of subjects) {
+          for (const grade of ['plus_one', 'plus_two'] as const) {
+            for (const chapter of subject.grades[grade]) {
+              for (const mod of chapter.modules) {
+                const levelIndex = mod.levels.findIndex(l => l.id === levelId);
+                if (levelIndex !== -1) {
+                  parentModule = mod;
+                  // Check if all levels in this module are now completed
+                  allModuleLevelsCompleted = mod.levels.every(l => 
+                    l.id === levelId || lessonProgress[l.id]?.completed
+                  );
+                  break;
+                }
+              }
+              if (parentModule) break;
+            }
+            if (parentModule) break;
+          }
+          if (parentModule) break;
+        }
+        
+        // Award cat food if module is completed
+        if (parentModule && allModuleLevelsCompleted) {
+          setModuleCompleted(true);
+          addCatFood(3);
+        }
+        
         confetti({
           particleCount: 100,
           spread: 70,
@@ -67,7 +99,7 @@ export default function Lesson() {
         });
       }
     }, 1500); // Delay before next activity
-  }, [currentActivityIndex, activities.length, score, levelId, completeLesson]);
+  }, [currentActivityIndex, activities.length, score, levelId, completeLesson, addCatFood, lessonProgress]);
 
   const handleExit = () => navigate(-1);
 
@@ -79,6 +111,7 @@ export default function Lesson() {
       stars={stars} 
       score={score} 
       onContinue={handleExit}
+      moduleCompleted={moduleCompleted}
     />;
   }
 
@@ -148,7 +181,7 @@ function ActivityRenderer({ activity, onComplete }: { activity: Activity; onComp
   }
 }
 
-function LessonComplete({ level, stars, score, onContinue }: { level: Level; stars: number; score: number; onContinue: () => void }) {
+function LessonComplete({ level, stars, score, onContinue, moduleCompleted }: { level: Level; stars: number; score: number; onContinue: () => void; moduleCompleted: boolean }) {
   return (
     <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50 p-4">
       <motion.div
@@ -169,6 +202,19 @@ function LessonComplete({ level, stars, score, onContinue }: { level: Level; sta
             />
           ))}
         </div>
+
+        {/* Module completion bonus */}
+        {moduleCompleted && (
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="bg-amber-100 rounded-2xl p-4 mb-6"
+          >
+            <p className="text-amber-600 font-bold text-sm mb-1">🎊 Module Completed!</p>
+            <p className="text-amber-700 text-lg font-bold">+3 Cat Food 🍗</p>
+          </motion.div>
+        )}
 
         {/* Score */}
         <div className="bg-brand-yellow/10 rounded-2xl p-6 mb-6">
