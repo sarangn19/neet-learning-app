@@ -59,7 +59,7 @@ export default function ChapterView() {
       >
         <div className="flex items-center gap-3 mb-4">
           <button 
-            onClick={() => navigate(`/learn/${subjectId}/${grade}`)}
+            onClick={() => navigate(`/chapter/${subjectId}/${grade}`)}
             className="p-2 hover:bg-gray-200 rounded-full transition-colors"
           >
             <ChevronLeft className="w-6 h-6 text-gray-700" />
