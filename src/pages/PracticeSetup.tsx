@@ -64,7 +64,7 @@ export default function PracticeSetup() {
       </div>
 
       {/* Question Count */}
-      <div className="bg-white rounded-xl p-3 mb-3 shadow-sm">
+      <div className="bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-200">
         <h2 className="font-bold text-sm mb-2">Questions</h2>
         <div className="flex flex-wrap gap-1.5">
           {[5, 10, 15, 20, 25, 30].map((num) => (
@@ -84,7 +84,7 @@ export default function PracticeSetup() {
       </div>
 
       {/* Chapters */}
-      <div className="bg-white rounded-xl p-3 mb-3 shadow-sm">
+      <div className="bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-200">
         <h2 className="font-bold text-sm mb-2">Chapters</h2>
         
         {/* Search Bar */}
@@ -106,10 +106,10 @@ export default function PracticeSetup() {
               <button
                 key={chapter.id}
                 onClick={() => toggleChapter(chapter.id)}
-                className={`w-full flex items-center gap-2 p-2 rounded-lg border text-left ${
+                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left ${
                   isSelected
-                    ? 'border-brand-blue bg-brand-blue/5'
-                    : 'border-gray-200'
+                    ? 'border border-brand-blue bg-brand-blue/5'
+                    : 'border border-gray-200'
                 }`}
               >
                 <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${

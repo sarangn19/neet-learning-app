@@ -68,9 +68,9 @@ export default function ChapterView() {
         </div>
 
         {/* Chapter Hero Card */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-sm mb-6">
+        <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm mb-4">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5">
-            <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl overflow-hidden bg-rose-50 flex-shrink-0">
+            <div className="w-16 h-16 rounded-xl overflow-hidden bg-rose-50 flex-shrink-0">
               {illustration}
             </div>
             <div className="flex-1 text-center sm:text-left">
@@ -142,13 +142,13 @@ function ModuleCard({ module, subjectId, grade, chapterId, lessonProgress, index
     >
       <Link
         to={isLocked ? '#' : `/module/${subjectId}/${grade}/${chapterId}/${module.id}`}
-        className={`block bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm transition-all ${
+        className={`block bg-white rounded-2xl p-4 border border-gray-200 shadow-sm transition-all ${
           isLocked ? 'opacity-60 cursor-not-allowed' : 'hover:shadow-md'
         }`}
       >
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-3">
           {/* Module Number / Status */}
-          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0 ${
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold flex-shrink-0 ${
             isCompleted 
               ? 'bg-brand-green/10 text-brand-green' 
               : isStarted

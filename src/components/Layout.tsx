@@ -4,24 +4,25 @@ import { Home, BookOpen, Trophy, User } from 'lucide-react';
 export default function Layout() {
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
       {/* Main Content */}
-      <main className="flex-1 pt-safe">
+      <main className="flex-1 pb-20">
         <Outlet />
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="bg-white border-t-2 border-gray-200 sticky bottom-0 z-50">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="flex items-center justify-around py-2">
-            <NavItem to="/" icon={<Home className="w-6 h-6" />} label="Home" isActive={isActive('/')} />
-            <NavItem to="/learn" icon={<BookOpen className="w-6 h-6" />} label="Learn" isActive={location.pathname.includes('/learn')} />
-            <NavItem to="/leaderboard" icon={<Trophy className="w-6 h-6" />} label="League" isActive={isActive('/leaderboard')} />
-            <NavItem to="/profile" icon={<User className="w-6 h-6" />} label="Profile" isActive={isActive('/profile')} />
-          </div>
+      {/* Bottom Tab Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+        <div className="flex items-center justify-around py-2">
+          <NavItem to="/" icon={<Home className="w-5 h-5" />} label="Home" isActive={isActive('/')} />
+          <NavItem to="/learn" icon={<BookOpen className="w-5 h-5" />} label="Learn" isActive={isActive('/learn')} />
+          <NavItem to="/leaderboard" icon={<Trophy className="w-5 h-5" />} label="League" isActive={isActive('/leaderboard')} />
+          <NavItem to="/profile" icon={<User className="w-5 h-5" />} label="Profile" isActive={isActive('/profile')} />
         </div>
       </nav>
     </div>
@@ -32,14 +33,17 @@ function NavItem({ to, icon, label, isActive }: { to: string; icon: React.ReactN
   return (
     <Link 
       to={to}
-      className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-200 ${
-        isActive 
-          ? 'text-brand-blue bg-brand-blue/10 border-b-4 border-brand-blue' 
-          : 'text-gray-400 hover:text-gray-600 border-b-4 border-transparent'
-      } active:border-b-0 active:translate-y-1`}
+      className="flex flex-col items-center gap-1 py-1 px-3 relative"
     >
-      {icon}
-      <span className="text-xs font-bold">{label}</span>
+      <div className={`${isActive ? 'text-gray-900' : 'text-gray-400'}`}>
+        {icon}
+      </div>
+      <span className={`text-xs ${isActive ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>
+        {label}
+      </span>
+      {isActive && (
+        <div className="absolute -bottom-2 w-8 h-0.5 bg-gray-900 rounded-full" />
+      )}
     </Link>
   );
 }

@@ -3283,8 +3283,8 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-2',
     name: 'Biological Classification',
-    description: 'Five kingdom system, taxonomy hierarchy',
-    moduleCount: 4,
+    description: 'Five kingdom system, Monera, Protista, Fungi, Viruses, Lichens',
+    moduleCount: 5,
     modules: [
       {
         id: 'bio-11-2-m1',
@@ -3310,6 +3310,281 @@ const biologyPlusOneChapters: Chapter[] = [
             ]
           }
         ]
+      },
+      // ============ MODULE 2: Kingdom Monera ============
+      {
+        id: 'bio-11-2-m2',
+        name: 'Kingdom Monera 🔥',
+        description: 'Bacteria, archaea, cyanobacteria - prokaryotic kingdom',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-2-m2-l1',
+            name: '2.1 Bacteria Structure',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-2-m2-l1-a1', 'Bacterial cell wall contains:', ['Cellulose', 'Peptidoglycan/murein', 'Chitin', 'Lignin'], 1, 'Peptidoglycan (murein) is the unique bacterial cell wall component', 10),
+              createMatch('bio-11-2-m2-l1-a2', 'Match bacterial structure with function', [
+                {term: 'Pilli', definition: 'Attachment to surfaces'},
+                {term: 'Flagella', definition: 'Locomotion'},
+                {term: 'Mesosomes', definition: 'Cell wall formation, respiration'},
+                {term: 'Plasmids', definition: 'Extra-chromosomal DNA'},
+              ], 15),
+              createTrueFalse('bio-11-2-m2-l1-a3', 'True or False', 'Bacteria have membrane-bound organelles', false, 'Prokaryotes lack membrane-bound nucleus and organelles', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m2-l2',
+            name: '2.2 Bacterial Shapes 🔥',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createMatch('bio-11-2-m2-l2-a1', '🎮 Match shape with example', [
+                {term: 'Coccus', definition: 'Spherical - Streptococcus'},
+                {term: 'Bacillus', definition: 'Rod-shaped - E. coli'},
+                {term: 'Spirillum', definition: 'Spiral - Treponema'},
+                {term: 'Vibrio', definition: 'Comma-shaped - Vibrio cholerae'},
+              ], 12),
+              createQuiz('bio-11-2-m2-l2-a2', 'Streptococcus is named for its:', ['Spiral shape', 'Chain arrangement', 'Single cells', 'Spores'], 1, 'Strepto- means chain; cocci in chains = Streptococcus', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m2-l3',
+            name: '2.3 Cyanobacteria (Blue-green Algae)',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-2-m2-l3-a1', 'Cyanobacteria are:', ['Eukaryotic algae', 'Photosynthetic bacteria', 'Fungi', 'Protists'], 1, 'Cyanobacteria are photosynthetic prokaryotes (oxygenic)', 8),
+              createFillBlank('bio-11-2-m2-l3-a2', 'Cyanobacterial pigments', 'Cyanobacteria contain chlorophyll _____, phycobilins, and carotenoids.', ['a'], ['a', 'b', 'c', 'd'], 8),
+              createMatch('bio-11-2-m2-l3-a3', 'Match cyanobacteria with feature', [
+                {term: 'Nostoc', definition: 'Nitrogen-fixing, colonial'},
+                {term: 'Oscillatoria', definition: 'Filamentous, oscillating movement'},
+                {term: 'Anabaena', definition: 'Heterocysts for nitrogen fixation'},
+              ], 12),
+            ]
+          },
+          {
+            id: 'bio-11-2-m2-l4',
+            name: '2.4 Archaebacteria vs Eubacteria',
+            order: 4,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-2-m2-l4-a1', 'Archaebacteria live in:', ['Normal conditions', 'Extreme/harsh environments', 'Only in water', 'Only in soil'], 1, 'Archaea are extremophiles - halophiles, thermophiles, methanogens', 8),
+              createMatch('bio-11-2-m2-l4-a2', 'Match archaebacteria type with habitat', [
+                {term: 'Halophiles', definition: 'Salt-loving (Dead Sea)'},
+                {term: 'Thermophiles', definition: 'Heat-loving (hot springs)'},
+                {term: 'Methanogens', definition: 'Produce methane (swamps, gut)'},
+              ], 10),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Kingdom Protista ============
+      {
+        id: 'bio-11-2-m3',
+        name: 'Kingdom Protista 🔥',
+        description: 'Diverse group of unicellular eukaryotes - algae, protozoa, slime moulds',
+        totalTokens: 90,
+        levels: [
+          {
+            id: 'bio-11-2-m3-l1',
+            name: '3.1 Chrysophytes & Dinoflagellates',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-2-m3-l1-a1', 'Diatoms have cell walls made of:', ['Cellulose', 'Silica', 'Calcium carbonate', 'Chitin'], 1, 'Diatoms have silica cell walls (frustules) with intricate patterns', 10),
+              createMatch('bio-11-2-m3-l1-a2', 'Match chrysophyte with characteristic', [
+                {term: 'Diatoms', definition: 'Silica cell walls, marine/freshwater'},
+                {term: 'Golden algae', definition: 'Fucoxanthin pigment, flagellated'},
+                {term: 'Dinoflagellates', definition: 'Red tide, two flagella'},
+              ], 15),
+              createTrueFalse('bio-11-2-m3-l1-a3', 'True or False', 'Dinoflagellates cause red tides that are toxic', true, 'Red tides (algal blooms) can produce toxins harmful to marine life', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m3-l2',
+            name: '3.2 Euglenoids',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-2-m3-l2-a1', 'Euglena has which unique feature?', ['Only plant characteristics', 'Only animal characteristics', 'Both plant and animal features', 'No pigments'], 2, 'Euglena is mixotrophic - photosynthetic like plants but can ingest food like animals', 10),
+              createFillBlank('bio-11-2-m3-l2-a2', 'Euglena storage', 'Euglena stores carbohydrates as _____ (paramylon bodies).', ['paramylum'], ['paramylum', 'starch', 'glycogen', 'cellulose'], 8),
+              createTrueFalse('bio-11-2-m3-l2-a3', 'True or False', 'Euglena lacks a cell wall', true, 'Euglena has protein-rich pellicle instead of cell wall', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m3-l3',
+            name: '3.3 Slime Moulds 🔥',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-2-m3-l3-a1', 'Slime moulds exhibit:', ['Only plant features', 'Only animal features', 'Both plant and animal features', 'No movement'], 2, 'Slime moulds are saprophytic protists that crawl like amoeba (animal) and form spores (plant)', 10),
+              createMatch('bio-11-2-m3-l3-a2', 'Match slime mould with characteristic', [
+                {term: 'Plasmodium', definition: 'Vegetative phase, slimy mass'},
+                {term: 'Fruiting bodies', definition: 'Reproductive structures with spores'},
+                {term: 'Physarum', definition: 'Common slime mould genus'},
+              ], 12),
+              createTrueFalse('bio-11-2-m3-l3-a3', 'True or False', 'Slime moulds were once classified as fungi', true, 'Slime moulds were previously placed in Kingdom Fungi due to spore formation', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m3-l4',
+            name: '3.4 Protozoans',
+            order: 4,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-2-m3-l4-a1', 'Amoeba moves using:', ['Cilia', 'Flagella', 'Pseudopodia', 'No locomotion'], 2, 'Amoeba forms temporary projections called pseudopodia (false feet) for movement', 10),
+              createMatch('bio-11-2-m3-l4-a2', 'Match protozoan with locomotion', [
+                {term: 'Amoeba', definition: 'Pseudopodia'},
+                {term: 'Paramecium', definition: 'Cilia'},
+                {term: 'Trypanosoma', definition: 'Flagella'},
+                {term: 'Plasmodium', definition: 'No locomotion in blood'},
+              ], 15),
+              createFillBlank('bio-11-2-m3-l4-a3', 'Disease vectors', 'Plasmodium causes _____ (transmitted by female Anopheles mosquito).', ['malaria'], ['malaria', 'typhoid', 'cholera', 'tuberculosis'], 10),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Kingdom Fungi ============
+      {
+        id: 'bio-11-2-m4',
+        name: 'Kingdom Fungi 🔥🔥',
+        description: 'Heterotrophic eukaryotes - mushrooms, molds, yeasts',
+        totalTokens: 100,
+        levels: [
+          {
+            id: 'bio-11-2-m4-l1',
+            name: '4.1 Fungi Characteristics',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-2-m4-l1-a1', 'Fungi cell walls contain:', ['Cellulose', 'Peptidoglycan', 'Chitin', 'Lignin'], 2, 'Fungal cell walls are made of chitin (also found in insect exoskeletons)', 10),
+              createTrueFalse('bio-11-2-m4-l1-a2', 'True or False', 'Fungi are autotrophic organisms', false, 'Fungi are heterotrophic (saprophytes, parasites, symbionts)', 8),
+              createMatch('bio-11-2-m4-l1-a3', 'Match fungal structure with function', [
+                {term: 'Hyphae', definition: 'Thread-like filaments'},
+                {term: 'Mycelium', definition: 'Network of hyphae'},
+                {term: 'Spores', definition: 'Asexual reproduction units'},
+              ], 10),
+            ]
+          },
+          {
+            id: 'bio-11-2-m4-l2',
+            name: '4.2 Phycomycetes (Lower Fungi)',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-2-m4-l2-a1', 'Albugo causes:', ['Rust disease', 'White rust of crucifers', 'Late blight of potato', 'Wheat smut'], 1, 'Albugo candida causes white rust disease in mustard and cabbage family', 10),
+              createMatch('bio-11-2-m4-l2-a2', 'Match phycomycete with feature', [
+                {term: 'Rhizopus', definition: 'Bread mould, zygospores'},
+                {term: 'Mucor', definition: 'Spores in sporangia'},
+                {term: 'Albugo', definition: 'Parasitic, white rust'},
+              ], 12),
+              createTrueFalse('bio-11-2-m4-l2-a3', 'True or False', 'Phycomycetes have coenocytic hyphae (multinucleate, no septa)', true, 'Lower fungi lack cross-walls (septa) in hyphae', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m4-l3',
+            name: '4.3 Ascomycetes (Sac Fungi)',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-2-m4-l3-a1', 'Ascomycetes produce spores in:', ['Basidia', 'Asci (sac-like)', 'Zygosporangia', 'Conidiophores only'], 1, 'Asci are sac-like structures containing ascospores (usually 8)', 10),
+              createMatch('bio-11-2-m4-l3-a2', 'Match ascomycete with importance', [
+                {term: 'Saccharomyces', definition: 'Baker\'s/Brewer\'s yeast'},
+                {term: 'Penicillium', definition: 'Antibiotic production'},
+                {term: 'Aspergillus', definition: 'Source of citric acid'},
+                {term: 'Neurospora', definition: 'Genetic research'},
+                {term: 'Morels', definition: 'Edible mushrooms'},
+              ], 15),
+              createFillBlank('bio-11-2-m4-l3-a3', 'Fruiting bodies', 'Ascomycete fruiting bodies called _____ (cup/saddle shapes).', ['ascocarps'], ['ascocarps', 'basidiocarps', 'zygosporangia', 'conidia'], 10),
+            ]
+          },
+          {
+            id: 'bio-11-2-m4-l4',
+            name: '4.4 Basidiomycetes (Club Fungi)',
+            order: 4,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-2-m4-l4-a1', 'Basidiomycetes produce spores on:', ['Asci', 'Basidia (club-shaped)', 'Conidia', 'Zygospores'], 1, 'Basidia are club-shaped structures bearing 4 basidiospores externally', 10),
+              createMatch('bio-11-2-m4-l4-a2', 'Match basidiomycete with example', [
+                {term: 'Agaricus', definition: 'Common mushroom'},
+                {term: 'Puccinia', definition: 'Rust fungus (wheat)'},
+                {term: 'Ustilago', definition: 'Smut fungus (cereals)'},
+                {term: 'Bracket fungi', definition: 'Shelf-like on trees'},
+              ], 15),
+              createTrueFalse('bio-11-2-m4-l4-a3', 'True or False', 'Puccinia is a basidiomycete causing rust disease', true, 'Puccinia graminis tritici causes black stem rust in wheat', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m4-l5',
+            name: '4.5 Deuteromycetes (Fungi Imperfecti)',
+            order: 5,
+            totalTokens: 10,
+            activities: [
+              createQuiz('bio-11-2-m4-l5-a1', 'Deuteromycetes are called fungi imperfecti because:', ['They lack cell walls', 'Sexual stage is unknown', 'They are not eukaryotic', 'They don\'t form spores'], 1, 'Only asexual/conidial stage known; sexual stage undiscovered', 10),
+              createMatch('bio-11-2-m4-l5-a2', 'Match deuteromycete with importance', [
+                {term: 'Alternaria', definition: 'Leaf spot diseases'},
+                {term: 'Colletotrichum', definition: 'Anthracnose disease'},
+                {term: 'Trichoderma', definition: 'Biocontrol agent'},
+              ], 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Viruses, Viroids, Lichens ============
+      {
+        id: 'bio-11-2-m5',
+        name: 'Viruses, Viroids & Lichens 🔥',
+        description: 'Acellular entities and symbiotic associations',
+        totalTokens: 60,
+        levels: [
+          {
+            id: 'bio-11-2-m5-l1',
+            name: '5.1 Viruses 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-2-m5-l1-a1', 'Viruses are considered:', ['Living organisms', 'Non-living entities', 'Borderline between living and non-living', 'Bacteria'], 2, 'Viruses are acellular; show living features only inside host cells', 10),
+              createMatch('bio-11-2-m5-l1-a2', 'Match virus component with function', [
+                {term: 'Protein coat (capsid)', definition: 'Protects genetic material'},
+                {term: 'Genetic material', definition: 'DNA or RNA (not both)'},
+                {term: 'Envelope', definition: 'Outer membrane (some viruses)'},
+              ], 12),
+              createTrueFalse('bio-11-2-m5-l1-a3', 'True or False', 'TMV (Tobacco Mosaic Virus) was the first virus discovered', true, 'Dmitri Ivanovsky discovered TMV in 1892; first virus crystalized', 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m5-l2',
+            name: '5.2 Viroids & Prions',
+            order: 2,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-2-m5-l2-a1', 'Viroids are:', ['Small viruses with protein coat', 'Infectious RNA without protein coat', 'Bacteria', 'Fungi'], 1, 'Viroids are free infectious RNA molecules (smaller than viruses)', 10),
+              createFillBlank('bio-11-2-m5-l2-a2', 'Prions', 'Prions are _____ proteins that cause neurodegenerative diseases.', ['infectious', 'misfolded', 'abnormal'], ['infectious', 'normal', 'functional', 'structural'], 10),
+              createMatch('bio-11-2-m5-l2-a3', 'Match disease with cause', [
+                {term: 'Mad cow disease', definition: 'Prion (BSE)'},
+                {term: 'Potato spindle tuber', definition: 'Viroid (PSTVd)'},
+                {term: 'Citrus exocortis', definition: 'Viroid (CEVd)'},
+              ], 8),
+            ]
+          },
+          {
+            id: 'bio-11-2-m5-l3',
+            name: '5.3 Lichens 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-2-m5-l3-a1', 'Lichens are:', ['Single organism', 'Symbiotic association', 'Parasitic relationship', 'Competitive relationship'], 1, 'Lichens = fungus (mycobiont) + algae/cyanobacteria (photobiont)', 10),
+              createMatch('bio-11-2-m5-l3-a2', 'Match lichen component with contribution', [
+                {term: 'Fungus (mycobiont)', definition: 'Provides shelter, absorbs water/minerals'},
+                {term: 'Algae (photobiont)', definition: 'Photosynthesis, provides food'},
+              ], 12),
+              createFillBlank('bio-11-2-m5-l3-a3', 'Lichens as bioindicators', 'Lichens are sensitive to _____ pollution and used as bioindicators of air quality.', ['air', 'SO2', 'sulfur dioxide'], ['air', 'water', 'soil', 'noise'], 10),
+              createTrueFalse('bio-11-2-m5-l3-a4', 'True or False', 'Crustose lichens grow on rocks and tree bark', true, 'Crustose = crust-like, tightly attached to substrate', 8),
+            ]
+          }
+        ]
       }
     ]
   },
@@ -3319,20 +3594,296 @@ const biologyPlusOneChapters: Chapter[] = [
     description: 'Algae, Bryophytes, Pteridophytes, Gymnosperms, Angiosperms',
     moduleCount: 5,
     modules: [
+      // ============ MODULE 1: Algae ============
       {
         id: 'bio-11-3-m1',
-        name: 'Algae',
-        description: 'Chlorophyceae, Phaeophyceae, Rhodophyceae',
-        totalTokens: 55,
+        name: 'Algae 🔥',
+        description: 'Chlorophyceae, Phaeophyceae, Rhodophyceae - Thallophytes',
+        totalTokens: 80,
         levels: [
           {
             id: 'bio-11-3-m1-l1',
-            name: 'Green Algae',
+            name: '1.1 Chlorophyceae (Green Algae)',
             order: 1,
-            totalTokens: 55,
+            totalTokens: 25,
             activities: [
-              createQuiz('bio-11-3-m1-l1-a1', 'What pigment gives green algae their color?', ['Chlorophyll a & b', 'Fucoxanthin', 'Phycoerythrin', 'Carotenoids'], 0, 'Chlorophyceae contain chlorophyll a and b', 10),
-              createTrueFalse('bio-11-3-m1-l1-a2', 'True or False', 'Brown algae contain fucoxanthin pigment', true, 'Phaeophyceae (brown algae) have fucoxanthin', 8),
+              createQuiz('bio-11-3-m1-l1-a1', 'Green algae contain which pigments?', ['Chlorophyll a & b', 'Fucoxanthin', 'Phycoerythrin', 'Carotenoids only'], 0, 'Chlorophyceae contain chlorophyll a and b stored in chloroplasts', 10),
+              createMatch('bio-11-3-m1-l1-a2', 'Match green algae with features', [
+                {term: 'Chlamydomonas', definition: 'Unicellular, flagellated'},
+                {term: 'Volvox', definition: 'Colonial, hollow ball'},
+                {term: 'Ulothrix', definition: 'Filamentous, unbranched'},
+                {term: 'Spirogyra', definition: 'Filamentous, spiral chloroplast'},
+              ], 15),
+              createFillBlank('bio-11-3-m1-l1-a3', 'Storage products', 'Green algae store carbohydrates as _____ and _____ in pyrenoids.', ['starch', 'proteins'], ['starch', 'glycogen', 'proteins', 'oils'], 8),
+              createTrueFalse('bio-11-3-m1-l1-a4', 'True or False', 'Green algae are found in freshwater, brackish water and marine environments', true, 'Chlorophyceae are cosmopolitan - found in diverse habitats', 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m1-l2',
+            name: '1.2 Phaeophyceae (Brown Algae)',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m1-l2-a1', 'Brown algae get their color from:', ['Chlorophyll b', 'Fucoxanthin', 'Phycoerythrin', 'Anthocyanin'], 1, 'Fucoxanthin is a brown pigment that masks chlorophyll a', 10),
+              createMatch('bio-11-3-m1-l2-a2', 'Match brown algae with features', [
+                {term: 'Ectocarpus', definition: 'Filamentous branched'},
+                {term: 'Dictyota', definition: 'Dichotomously branched'},
+                {term: 'Laminaria', definition: 'Kelps, large size'},
+                {term: 'Sargassum', definition: 'Floating brown algae'},
+                {term: 'Fucus', definition: 'Rockweeds, air bladders'},
+              ], 15),
+              createFillBlank('bio-11-3-m1-l2-a3', 'Storage products', 'Brown algae store carbohydrates as _____ (laminarin) and _____ (mannitol).', ['laminarin', 'mannitol'], ['starch', 'glycogen', 'laminarin', 'mannitol'], 8),
+              createTrueFalse('bio-11-3-m1-l2-a4', 'True or False', 'Brown algae are mostly marine and found in colder regions', true, 'Phaeophyceae are almost exclusively marine', 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m1-l3',
+            name: '1.3 Rhodophyceae (Red Algae)',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-3-m1-l3-a1', 'Red algae appear red due to:', ['Phycoerythrin', 'Phycocyanin', 'Chlorophyll b', 'Carotene'], 0, 'Phycoerythrin is a red pigment that masks chlorophyll a', 10),
+              createMatch('bio-11-3-m1-l3-a2', 'Match red algae with importance', [
+                {term: 'Porphyra', definition: 'Edible (nori), used in sushi'},
+                {term: 'Gracilaria', definition: 'Source of agar'},
+                {term: 'Gelidium', definition: 'Best source of agar'},
+                {term: 'Chondrus', definition: 'Irish moss, carrageenan'},
+              ], 15),
+              createFillBlank('bio-11-3-m1-l3-a3', 'Commercial products', 'Agar is obtained from _____ and used as a _____ medium in labs.', ['Gelidium', 'culture'], ['Gelidium', 'Gracilaria', 'culture', 'food'], 8),
+              createTrueFalse('bio-11-3-m1-l3-a4', 'True or False', 'Red algae can grow at great depths in ocean because phycoerythrin can absorb blue light', true, 'Phycoerythrin absorbs blue light that penetrates deep water', 8),
+              createQuiz('bio-11-3-m1-l3-a5', 'Red algae lack:', ['Chlorophyll a', 'Flagella', 'Phycobilins', 'Thallus'], 1, 'Rhodophyceae lack flagella in all stages of life', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Bryophytes ============
+      {
+        id: 'bio-11-3-m2',
+        name: 'Bryophytes 🔥',
+        description: 'Amphibians of plant kingdom - Liverworts, Hornworts, Mosses',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-3-m2-l1',
+            name: '2.1 Bryophytes Overview',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-3-m2-l1-a1', 'Bryophytes are called amphibians of plant kingdom because:', ['They live in water', 'They need water for fertilization', 'They can swim', 'They have lungs'], 1, 'Sperm needs water to swim to archegonium for fertilization', 10),
+              createMatch('bio-11-3-m2-l1-a2', 'Match bryophyte group with example', [
+                {term: 'Liverworts', definition: 'Marchantia, Riccia'},
+                {term: 'Hornworts', definition: 'Anthoceros'},
+                {term: 'Mosses', definition: 'Funaria, Sphagnum'},
+              ], 12),
+              createTrueFalse('bio-11-3-m2-l1-a3', 'True or False', 'Bryophytes have vascular tissues (xylem and phloem)', false, 'Bryophytes are non-vascular plants (avascular)', 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m2-l2',
+            name: '2.2 Liverworts',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m2-l2-a1', 'Marchantia reproduces asexually by:', ['Fragmentation', 'Gemmae cups', 'Spores only', 'Binary fission'], 1, 'Gemmae cups contain gemmae that disperse and grow into new plants', 10),
+              createMatch('bio-11-3-m2-l2-a2', 'Match structure with function in Marchantia', [
+                {term: 'Thallus', definition: 'Flattened, dichotomously branched body'},
+                {term: 'Rhizoids', definition: 'Anchor and absorb water'},
+                {term: 'Gemma cups', definition: 'Asexual reproduction'},
+                {term: 'Archegoniophore', definition: 'Female reproductive structure'},
+              ], 15),
+              createFillBlank('bio-11-3-m2-l2-a3', 'Male structure', 'Marchantia has _____ bearing antheridia for producing male gametes.', ['antheridiophore'], ['antheridiophore', 'archegoniophore', 'gemma cup', 'thallus'], 10),
+            ]
+          },
+          {
+            id: 'bio-11-3-m2-l3',
+            name: '2.3 Mosses (Funaria) 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m2-l3-a1', 'In mosses, the main plant body (gametophyte) is:', ['Sporophyte', 'Gametophyte - green and independent', 'Rhizome', 'Protonema'], 1, 'Moss gametophyte is dominant, green, leafy and photosynthetic', 10),
+              createMatch('bio-11-3-m2-l3-a2', 'Match moss structure with description', [
+                {term: 'Protonema', definition: 'First stage, creeping, green filaments'},
+                {term: 'Leafy stage', definition: 'Second stage with rhizoids'},
+                {term: 'Sporophyte', definition: 'Foot, seta, capsule - depends on gametophyte'},
+                {term: 'Operculum', definition: 'Lid of capsule'},
+                {term: 'Peristome', definition: 'Teeth-like structures for spore dispersal'},
+              ], 15),
+              createTrueFalse('bio-11-3-m2-l3-a3', 'True or False', 'Sphagnum (peat moss) is used as packing material and fuel', true, 'Peat is partially carbonized Sphagnum used as fuel', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Pteridophytes ============
+      {
+        id: 'bio-11-3-m3',
+        name: 'Pteridophytes 🔥🔥',
+        description: 'First vascular plants - Ferns, Horsetails, Club mosses',
+        totalTokens: 75,
+        levels: [
+          {
+            id: 'bio-11-3-m3-l1',
+            name: '3.1 Pteridophytes Overview',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-3-m3-l1-a1', 'Pteridophytes are called vascular cryptogams because:', ['They have seeds but no vascular tissue', 'They have vascular tissue but no seeds', 'They have flowers', 'They are aquatic'], 1, 'Pteridophytes have xylem and phloem but reproduce by spores, not seeds', 10),
+              createMatch('bio-11-3-m3-l1-a2', 'Match pteridophyte group with example', [
+                {term: 'Psilopsida', definition: 'Psilotum (whisk ferns)'},
+                {term: 'Lycopsida', definition: 'Selaginella, Lycopodium (club mosses)'},
+                {term: 'Sphenopsida', definition: 'Equisetum (horsetails)'},
+                {term: 'Pteropsida', definition: 'Dryopteris, Pteris (true ferns)'},
+              ], 15),
+              createTrueFalse('bio-11-3-m3-l1-a3', 'True or False', 'Pteridophytes show heteromorphic alternation of generations', true, 'Sporophyte is dominant, independent; gametophyte is small (prothallus)', 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m3-l2',
+            name: '3.2 Selaginella (Spike Moss) 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m3-l2-a1', 'Selaginella shows:', ['Homospory', 'Heterospory', 'No spores', 'Seeds'], 1, 'Selaginella produces two types of spores - microspores and megaspores', 10),
+              createMatch('bio-11-3-m3-l2-a2', 'Match heterospory terms', [
+                {term: 'Megaspore', definition: 'Female gametophyte inside'},
+                {term: 'Microspore', definition: 'Male gametophyte inside'},
+                {term: 'Strobilus', definition: 'Cone-like structure bearing sporangia'},
+                {term: 'Ligule', definition: 'Small tongue-like outgrowth near sporangium'},
+              ], 15),
+              createFillBlank('bio-11-3-m3-l2-a3', 'Evolutionary significance', 'Heterospory is the precursor to the evolution of _____ in plants.', ['seeds'], ['seeds', 'flowers', 'fruits', 'roots'], 10),
+            ]
+          },
+          {
+            id: 'bio-11-3-m3-l3',
+            name: '3.3 Ferns (Dryopteris)',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-3-m3-l3-a1', 'The young fern leaf is called:', ['Prothallus', 'Fiddlehead/circinate vernation', 'Sporophyll', 'Ramenta'], 1, 'Young fern leaves show circinate vernation - coiled like a fiddlehead', 10),
+              createMatch('bio-11-3-m3-l3-a2', 'Match fern structure with description', [
+                {term: 'Rhizome', definition: 'Underground stem, horizontal'},
+                {term: 'Fronds', definition: 'Large divided leaves'},
+                {term: 'Sori', definition: 'Clusters of sporangia on frond undersides'},
+                {term: 'Indusium', definition: 'Protective covering over sorus'},
+                {term: 'Prothallus', definition: 'Gametophyte, heart-shaped'},
+              ], 15),
+              createFillBlank('bio-11-3-m3-l3-a3', 'Sporangium structure', 'Fern sporangia have _____ cells which help in spore dispersal.', ['annulus', 'jacket'], ['annulus', 'jacket', 'spores', 'tapetum'], 10),
+              createTrueFalse('bio-11-3-m3-l3-a4', 'True or False', 'Fern gametophyte (prothallus) is independent, photosynthetic and bears sex organs', true, 'Prothallus is green, free-living, has rhizoids and antheridia/archegonia', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Gymnosperms ============
+      {
+        id: 'bio-11-3-m4',
+        name: 'Gymnosperms 🔥',
+        description: 'Naked seeded plants - Conifers, Cycads, Ginkgo',
+        totalTokens: 65,
+        levels: [
+          {
+            id: 'bio-11-3-m4-l1',
+            name: '4.1 Gymnosperms Overview',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-3-m4-l1-a1', 'Gymnosperms are called naked seeded because:', ['Seeds are exposed on sporophylls', 'They have no seeds', 'Seeds are covered by fruit', 'They have spores only'], 0, 'Seeds are not enclosed in an ovary/fruit; they lie naked on sporophylls', 10),
+              createMatch('bio-11-3-m4-l1-a2', 'Match gymnosperm group with example', [
+                {term: 'Cycadopsida', definition: 'Cycas (sago palm)'},
+                {term: 'Coniferopsida', definition: 'Pinus, Cedrus (conifers)'},
+                {term: 'Ginkgopsida', definition: 'Ginkgo biloba (living fossil)'},
+                {term: 'Gnetopsida', definition: 'Ephedra, Gnetum'},
+              ], 15),
+              createTrueFalse('bio-11-3-m4-l1-a3', 'True or False', 'Gymnosperms are perennial, evergreen and woody', true, 'Most gymnosperms are evergreen trees/shrubs with needle-like leaves', 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m4-l2',
+            name: '4.2 Pinus (Pine) 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m4-l2-a1', 'Pinus leaves are:', ['Broad and flat', 'Needle-like/acicular', 'Compound', 'Reduced scales'], 1, 'Pine needles are modified leaves to reduce water loss', 10),
+              createMatch('bio-11-3-m4-l2-a2', 'Match Pinus cone with description', [
+                {term: 'Male cone', definition: 'Small, short-lived, clustered'},
+                {term: 'Female cone', definition: 'Large, woody, persistent'},
+                {term: 'Scales', definition: 'Ovuliferous scales bear ovules'},
+                {term: 'Winged seeds', definition: 'For wind dispersal'},
+              ], 15),
+              createFillBlank('bio-11-3-m4-l2-a3', 'Leaf modification', 'Pine needles have _____ to reduce water loss and _____ for gas exchange.', ['thick cuticle', 'sunken stomata'], ['thick cuticle', 'sunken stomata', 'stomata', 'vascular bundles'], 10),
+            ]
+          },
+          {
+            id: 'bio-11-3-m4-l3',
+            name: '4.3 Cycas (Sago Palm)',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-3-m4-l3-a1', 'Cycas is considered a living fossil because:', ['It is extinct', 'It has remained unchanged for millions of years', 'It grows fast', 'It has flowers'], 1, 'Cycas has retained primitive features and existed since Mesozoic era', 10),
+              createMatch('bio-11-3-m4-l3-a2', 'Match Cycas features', [
+                {term: 'Coralloid roots', definition: 'Roots with N2-fixing cyanobacteria'},
+                {term: 'Megasporophyll', definition: 'Leaf-like, not organized as cone'},
+                {term: 'Pinnate leaves', definition: 'Feather-like, compound'},
+                {term: 'Microsporangiate', definition: 'Male cone, compact'},
+              ], 12),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Angiosperms ============
+      {
+        id: 'bio-11-3-m5',
+        name: 'Angiosperms 🔥🔥',
+        description: 'Flowering plants - Monocots vs Dicots',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-3-m5-l1',
+            name: '5.1 Angiosperms Overview',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-3-m5-l1-a1', 'Angiosperms are called flowering plants because:', ['They produce flowers and fruits', 'They have no flowers', 'They are seedless', 'They are aquatic'], 0, 'Seeds are enclosed within fruits which develop from ovary', 10),
+              createMatch('bio-11-3-m5-l1-a2', 'Match angiosperm feature with description', [
+                {term: 'Double fertilization', definition: 'One sperm + egg = zygote; one sperm + polar nuclei = endosperm'},
+                {term: 'Endosperm', definition: 'Triploid (3n) nutritive tissue'},
+                {term: 'Ovary', definition: 'Develops into fruit after fertilization'},
+                {term: 'Ovule', definition: 'Develops into seed after fertilization'},
+              ], 15),
+              createTrueFalse('bio-11-3-m5-l1-a3', 'True or False', 'Double fertilization is unique to angiosperms', true, 'This process produces both zygote and endosperm simultaneously', 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m5-l2',
+            name: '5.2 Monocots vs Dicots 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m5-l2-a1', 'Monocot embryos have how many cotyledons?', ['One', 'Two', 'Three', 'None'], 0, 'Monocots = one cotyledon; Dicots = two cotyledons', 10),
+              createMatch('bio-11-3-m5-l2-a2', '🎮 Match feature with plant type', [
+                {term: 'Parallel venation', definition: 'Monocots (grass, banana)'},
+                {term: 'Reticulate venation', definition: 'Dicots (rose, mango)'},
+                {term: 'Fibrous roots', definition: 'Monocots (wheat, rice)'},
+                {term: 'Tap root system', definition: 'Dicots (carrot, radish)'},
+                {term: 'Vascular bundles scattered', definition: 'Monocot stem'},
+                {term: 'Vascular bundles in ring', definition: 'Dicot stem'},
+              ], 15),
+              createFillBlank('bio-11-3-m5-l2-a3', 'Floral parts', 'Monocot flowers typically have parts in _____ or multiples of _____.', ['three', 'three'], ['two', 'three', 'four', 'five'], 8),
+            ]
+          },
+          {
+            id: 'bio-11-3-m5-l3',
+            name: '5.3 Plant Life Cycles',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-3-m5-l3-a1', 'In angiosperms, the dominant phase is:', ['Gametophyte', 'Sporophyte', 'Both equal', 'Protonema'], 1, 'Sporophyte is the main plant body - trees, herbs, shrubs', 10),
+              createMatch('bio-11-3-m5-l3-a2', 'Match plant group with dominant phase', [
+                {term: 'Bryophytes', definition: 'Gametophyte dominant'},
+                {term: 'Pteridophytes', definition: 'Sporophyte dominant'},
+                {term: 'Gymnosperms', definition: 'Sporophyte dominant'},
+                {term: 'Angiosperms', definition: 'Sporophyte dominant'},
+              ], 12),
+              createTrueFalse('bio-11-3-m5-l3-a3', 'True or False', 'In bryophytes, the sporophyte is dependent on gametophyte', true, 'Sporophyte is attached to and dependent on gametophyte for nutrition', 8),
+              createFillBlank('bio-11-3-m5-l3-a4', 'Evolutionary trend', 'Evolution in plant kingdom shows progressive reduction of _____ and dominance of _____ phase.', ['gametophyte', 'sporophyte'], ['gametophyte', 'sporophyte', 'spores', 'zygote'], 10),
             ]
           }
         ]
@@ -4174,23 +4725,369 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-5',
     name: 'Breathing & Exchange of Gases',
-    description: 'Respiratory system, breathing mechanisms, gas exchange',
-    moduleCount: 3,
+    description: 'Respiratory organs, breathing mechanisms, gas exchange, transport of gases, regulation of respiration, disorders',
+    moduleCount: 6,
     modules: [
+      // ============ MODULE 1: Respiratory Organs ============
       {
         id: 'bio-11-5-m1',
-        name: 'Respiratory System',
-        description: 'Organs and breathing mechanism',
-        totalTokens: 50,
+        name: 'Respiratory Organs 🔥',
+        description: 'Human respiratory system - conducting and respiratory zones',
+        totalTokens: 75,
         levels: [
           {
             id: 'bio-11-5-m1-l1',
-            name: 'Mechanism of Breathing',
+            name: '1.1 Respiratory System Overview',
             order: 1,
-            totalTokens: 50,
+            totalTokens: 20,
             activities: [
-              createQuiz('bio-11-5-m1-l1-a1', 'What is the primary muscle for breathing?', ['Intercostal', 'Diaphragm', 'Abdominal', 'Pectoral'], 1, 'Diaphragm is the primary breathing muscle', 10),
-              createTrueFalse('bio-11-5-m1-l1-a2', 'True or False', 'During inspiration, diaphragm contracts and flattens', true, 'Contraction increases thoracic volume', 8),
+              createQuiz('bio-11-5-m1-l1-a1', 'The respiratory system is divided into:', ['Upper and lower', 'Conducting and respiratory zones', 'Internal and external', 'A and B only'], 3, 'Both divisions apply: anatomical (upper/lower) and functional (conducting/respiratory)', 10),
+              createMatch('bio-11-5-m1-l1-a2', 'Match respiratory zone components', [
+                {term: 'Conducting zone', definition: 'Transports air, no gas exchange'},
+                {term: 'Respiratory zone', definition: 'Site of gas exchange'},
+                {term: 'Nasal chambers', definition: 'Filter, warm, humidify air'},
+                {term: 'Alveoli', definition: 'Gas exchange units'},
+              ], 15),
+              createTrueFalse('bio-11-5-m1-l1-a3', 'True or False', 'The conducting zone includes respiratory bronchioles', false, 'Respiratory bronchioles mark the beginning of respiratory zone', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m1-l2',
+            name: '1.2 Upper Respiratory Tract 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m1-l2-a1', 'Which structure prevents food from entering the trachea?', ['Epiglottis', 'Glottis', 'Larynx', 'Pharynx'], 0, 'Epiglottis is a leaf-shaped cartilage that closes during swallowing', 10),
+              createMatch('bio-11-5-m1-l2-a2', 'Match structure with function', [
+                {term: 'External nares', definition: 'Nostrils - entry of air'},
+                {term: 'Nasal conchae', definition: 'Turbinate bones - increase surface'},
+                {term: 'Pharynx', definition: 'Common passage for air and food'},
+                {term: 'Larynx', definition: 'Voice box, prevents food entry'},
+              ], 15),
+              createFillBlank('bio-11-5-m1-l2-a3', 'Nasal cavity features', 'The nasal cavity has _____ which trap dust particles and _____ which warm and humidify air.', ['hairs', 'mucous glands'], ['hairs', 'cilia', 'mucous glands', 'taste buds'], 10),
+              createTrueFalse('bio-11-5-m1-l2-a4', 'True or False', 'The pharynx connects nasal cavity to larynx and mouth to esophagus', true, 'Pharynx serves as common passage - nasopharynx, oropharynx, laryngopharynx', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m1-l3',
+            name: '1.3 Lower Respiratory Tract 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-5-m1-l3-a1', 'The trachea is supported by:', ['Bony rings', 'C-shaped cartilage rings', 'Smooth muscle only', 'Elastic fibers'], 1, 'C-shaped hyaline cartilage rings prevent collapse but allow esophageal expansion', 10),
+              createMatch('bio-11-5-m1-l3-a2', 'Match respiratory structure with feature', [
+                {term: 'Trachea', definition: 'Windpipe, 12 cm long, C-rings'},
+                {term: 'Bronchi', definition: 'Two primary branches from trachea'},
+                {term: 'Bronchioles', definition: 'No cartilage, smooth muscle'},
+                {term: 'Terminal bronchioles', definition: 'End of conducting zone'},
+              ], 15),
+              createFillBlank('bio-11-5-m1-l3-a3', 'Bronchial tree', 'The right lung has _____ lobes and the left lung has _____ lobes.', ['three', 'two'], ['three', 'two', 'four', 'one'], 10),
+              createQuiz('bio-11-5-m1-l3-a4', 'The last part of conducting zone is:', ['Respiratory bronchiole', 'Terminal bronchiole', 'Alveolar duct', 'Bronchiole'], 1, 'Terminal bronchiole is the end of conducting zone - no gas exchange occurs here', 8),
+              createTrueFalse('bio-11-5-m1-l3-a5', 'True or False', 'The left lung has a cardiac notch to accommodate the heart', true, 'Cardiac notch is a concavity on left lung surface for heart placement', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Alveoli & Gas Exchange ============
+      {
+        id: 'bio-11-5-m2',
+        name: 'Alveoli & Gas Exchange 🔥🔥',
+        description: 'Respiratory unit, alveolar structure, diffusion membrane',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-5-m2-l1',
+            name: '2.1 Alveoli Structure 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m2-l1-a1', 'Each lung contains approximately how many alveoli?', ['100 million', '300 million', '10 million', '1 billion'], 1, 'Human lungs contain ~300-500 million alveoli', 10),
+              createMatch('bio-11-5-m2-l1-a2', 'Match alveolar cell with function', [
+                {term: 'Type I pneumocytes', definition: 'Squamous cells - gas exchange surface'},
+                {term: 'Type II pneumocytes', definition: 'Secrete surfactant'},
+                {term: 'Alveolar macrophages', definition: 'Dust cells - phagocytosis'},
+                {term: 'Surfactant', definition: 'Reduces surface tension'},
+              ], 15),
+              createFillBlank('bio-11-5-m2-l1-a3', 'Respiratory membrane', 'The respiratory membrane consists of _____ layer, basement membrane, and _____ epithelium.', ['alveolar squamous', 'capillary endothelial'], ['alveolar squamous', 'ciliated columnar', 'capillary endothelial', 'stratified'], 10),
+              createTrueFalse('bio-11-5-m2-l1-a4', 'True or False', 'Type II pneumocytes are more abundant but do not participate in gas exchange', true, 'Type II cells secrete surfactant; Type I cells form 95% of gas exchange surface', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m2-l2',
+            name: '2.2 Gas Exchange Mechanism 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m2-l2-a1', 'Gas exchange across alveoli occurs by:', ['Active transport', 'Simple diffusion', 'Facilitated diffusion', 'Osmosis'], 1, 'O2 and CO2 move by simple diffusion down partial pressure gradients', 10),
+              createMatch('bio-11-5-m2-l2-a2', 'Match gas with partial pressure', [
+                {term: 'PO2 in alveoli', definition: '104 mmHg'},
+                {term: 'PO2 in venous blood', definition: '40 mmHg'},
+                {term: 'PCO2 in alveoli', definition: '40 mmHg'},
+                {term: 'PCO2 in venous blood', definition: '45 mmHg'},
+              ], 15),
+              createFillBlank('bio-11-5-m2-l2-a3', 'Diffusion gradient', 'O2 diffuses from alveoli (_____ mmHg) to blood (_____ mmHg).', ['104', '40'], ['104', '95', '40', '45'], 10),
+              createTrueFalse('bio-11-5-m2-l2-a4', 'True or False', 'The respiratory membrane is extremely thin - only 0.2-0.5 micrometers thick', true, 'Thin membrane allows rapid gas exchange by diffusion', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m2-l3',
+            name: '2.3 Lung Volumes & Capacities',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-5-m2-l3-a1', 'Tidal volume in normal breathing is approximately:', ['500 mL', '3000 mL', '1200 mL', '6000 mL'], 0, 'Tidal volume (TV) = ~500 mL - air moved during normal quiet breathing', 10),
+              createMatch('bio-11-5-m2-l3-a2', 'Match lung volume with definition', [
+                {term: 'Tidal volume (TV)', definition: 'Normal breathing - 500 mL'},
+                {term: 'Inspiratory reserve (IRV)', definition: 'Additional intake - 2500-3000 mL'},
+                {term: 'Expiratory reserve (ERV)', definition: 'Additional exhalation - 1000-1200 mL'},
+                {term: 'Residual volume (RV)', definition: 'Air remaining - 1000-1200 mL'},
+              ], 15),
+              createFillBlank('bio-11-5-m2-l3-a3', 'Vital capacity', 'Vital capacity = _____ + _____ + ERV', ['TV', 'IRV'], ['TV', 'IRV', 'RV', 'ERV'], 10),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Breathing Mechanism ============
+      {
+        id: 'bio-11-5-m3',
+        name: 'Mechanism of Breathing 🔥',
+        description: 'Inspiration, expiration, respiratory muscles, pressure changes',
+        totalTokens: 65,
+        levels: [
+          {
+            id: 'bio-11-5-m3-l1',
+            name: '3.1 Inspiration (Inhalation) 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-5-m3-l1-a1', 'During inspiration, intrapulmonary pressure:', ['Increases', 'Decreases below atmospheric', 'Remains same', 'Equals atmospheric'], 1, 'Thoracic volume increases → pressure drops below atmospheric → air rushes in', 10),
+              createMatch('bio-11-5-m3-l1-a2', 'Match muscle with action during inspiration', [
+                {term: 'Diaphragm', definition: 'Contracts and flattens'},
+                {term: 'External intercostals', definition: 'Contract - elevate ribs'},
+                {term: 'Sternocleidomastoid', definition: 'Accessory - forced inspiration'},
+                {term: 'Scalenes', definition: 'Accessory - forced inspiration'},
+              ], 15),
+              createFillBlank('bio-11-5-m3-l1-a3', 'Pressure changes', 'During inspiration: Thoracic volume _____ → Intrapulmonary pressure _____.', ['increases', 'decreases'], ['increases', 'decreases', 'stays same', 'equals'], 10),
+              createTrueFalse('bio-11-5-m3-l1-a4', 'True or False', 'Normal inspiration is an active process requiring muscle contraction', true, 'Contraction of diaphragm and external intercostals creates negative pressure', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m3-l2',
+            name: '3.2 Expiration (Exhalation)',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-5-m3-l2-a1', 'Normal expiration is:', ['Active process', 'Passive process', 'Requires muscle contraction', 'Both active and passive'], 1, 'Normal quiet expiration is passive - elastic recoil of lungs and relaxation of muscles', 10),
+              createMatch('bio-11-5-m3-l2-a2', 'Match process with muscle activity', [
+                {term: 'Normal expiration', definition: 'Passive - diaphragm relaxes'},
+                {term: 'Forced expiration', definition: 'Active - abdominal muscles contract'},
+                {term: 'Internal intercostals', definition: 'Contract during forced expiration'},
+                {term: 'Latissimus dorsi', definition: 'Accessory expiration muscle'},
+              ], 12),
+              createFillBlank('bio-11-5-m3-l2-a3', 'Expiration mechanics', 'During expiration: Thoracic volume _____ → Intrapulmonary pressure _____.', ['decreases', 'increases'], ['increases', 'decreases', 'stays same', 'equals'], 10),
+              createTrueFalse('bio-11-5-m3-l2-a4', 'True or False', 'During forced expiration, abdominal muscles contract and push the diaphragm upward', true, 'Abdominal muscle contraction increases intra-abdominal pressure', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m3-l3',
+            name: '3.3 Spirometry & Respiratory Cycle',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m3-l3-a1', 'Spirometry measures:', ['Heart rate', 'Lung volumes and capacities', 'Blood pressure', 'Oxygen saturation'], 1, 'Spirometer measures volumes of air inspired and expired', 10),
+              createMatch('bio-11-5-m3-l3-a2', 'Match spirometry term with definition', [
+                {term: 'Tidal volume', definition: 'Normal breath - ~500 mL'},
+                {term: 'Vital capacity', definition: 'Maximum forceful expiration after inspiration'},
+                {term: 'Total lung capacity', definition: 'Vital capacity + Residual volume'},
+                {term: 'Dead space', definition: 'Conducting zone - 150 mL (no gas exchange)'},
+              ], 15),
+              createFillBlank('bio-11-5-m3-l3-a3', 'Alveolar ventilation', 'Alveolar ventilation = (_____ - _____) × Respiratory rate', ['Tidal volume', 'Dead space'], ['Tidal volume', 'Dead space', 'Vital capacity', 'Residual volume'], 10),
+              createTrueFalse('bio-11-5-m3-l3-a4', 'True or False', 'Dead space volume is about 150 mL - air in conducting zone that does not participate in gas exchange', true, 'Anatomical dead space = ~150 mL - nasal chambers to terminal bronchioles', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Transport of Gases ============
+      {
+        id: 'bio-11-5-m4',
+        name: 'Transport of Gases 🔥🔥',
+        description: 'Oxygen and carbon dioxide transport in blood',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-5-m4-l1',
+            name: '4.1 Oxygen Transport 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m4-l1-a1', 'Most oxygen is transported in blood as:', ['Dissolved in plasma', 'Oxyhemoglobin', 'Carbaminohemoglobin', 'Bicarbonate'], 1, '97% of O2 binds to hemoglobin forming oxyhemoglobin; 3% dissolves in plasma', 10),
+              createMatch('bio-11-5-m4-l1-a2', 'Match O2 transport factor with description', [
+                {term: 'Hemoglobin', definition: '4 heme groups, each binds 1 O2'},
+                {term: 'Oxyhemoglobin', definition: 'Bright red, formed in lungs'},
+                {term: 'Deoxyhemoglobin', definition: 'Dark red, releases O2 in tissues'},
+                {term: 'Oxygen capacity', definition: '~20 mL O2 per 100 mL blood'},
+              ], 15),
+              createFillBlank('bio-11-5-m4-l1-a3', 'Hemoglobin saturation', 'Each hemoglobin can bind _____ oxygen molecules, carrying them from lungs to _____.', ['four', 'tissues'], ['one', 'four', 'tissues', 'alveoli'], 10),
+              createTrueFalse('bio-11-5-m4-l1-a4', 'True or False', 'Hemoglobin releases oxygen more readily in acidic conditions and higher temperatures', true, 'Bohr effect: low pH (high H+) and high temp favor O2 release in active tissues', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m4-l2',
+            name: '4.2 Carbon Dioxide Transport 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m4-l2-a1', 'Most CO2 is transported as:', ['Carbaminohemoglobin', 'Dissolved in plasma', 'Bicarbonate (HCO3-)', 'Free CO2'], 2, '70% as bicarbonate, 20-23% as carbaminohemoglobin, 7-10% dissolved', 10),
+              createMatch('bio-11-5-m4-l2-a2', 'Match CO2 transport mechanism', [
+                {term: 'Bicarbonate (70%)', definition: 'CO2 + H2O → H2CO3 → H+ + HCO3-'},
+                {term: 'Carbaminohemoglobin (23%)', definition: 'CO2 binds to Hb globin'},
+                {term: 'Dissolved (7%)', definition: 'As free CO2 in plasma'},
+                {term: 'Chloride shift', definition: 'Cl- enters RBC as HCO3- leaves'},
+              ], 15),
+              createFillBlank('bio-11-5-m4-l2-a3', 'Carbonic anhydrase', 'CO2 combines with water in RBCs to form carbonic acid, catalyzed by enzyme _____ in _____ cells.', ['carbonic anhydrase', 'red blood'], ['carbonic anhydrase', 'carboxypeptidase', 'red blood', 'white blood'], 10),
+              createTrueFalse('bio-11-5-m4-l2-a4', 'True or False', 'The chloride shift (Hamburger phenomenon) maintains electrical neutrality during CO2 transport', true, 'As HCO3- leaves RBC, Cl- enters to maintain ionic balance', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m4-l3',
+            name: '4.3 Oxygen Dissociation Curve 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-5-m4-l3-a1', 'The oxygen-hemoglobin dissociation curve is:', ['Linear', 'Sigmoid (S-shaped)', 'Hyperbolic', 'Parabolic'], 1, 'Sigmoid curve due to cooperative binding - as O2 binds, affinity for more O2 increases', 10),
+              createMatch('bio-11-5-m4-l3-a2', 'Match factor with effect on O2 binding', [
+                {term: 'High pO2 in lungs', definition: '100% saturation - left side'},
+                {term: 'Low pO2 in tissues', definition: 'O2 released - right side'},
+                {term: 'High pCO2 (Bohr effect)', definition: 'Shifts curve right - favors release'},
+                {term: 'High temperature', definition: 'Shifts curve right - favors release'},
+                {term: 'High pH (alkaline)', definition: 'Shifts curve left - favors binding'},
+              ], 15),
+              createFillBlank('bio-11-5-m4-l3-a3', 'Bohr effect', 'The Bohr effect states that increased CO2 or decreased pH _____ hemoglobins affinity for oxygen.', ['decreases'], ['increases', 'decreases', 'eliminates', 'enhances'], 10),
+              createQuiz('bio-11-5-m4-l3-a4', 'P50 represents:', ['O2 capacity', 'Partial pressure at which Hb is 50% saturated', 'CO2 pressure', 'Normal atmospheric pressure'], 1, 'P50 is ~26.6 mmHg - the pO2 where hemoglobin is 50% saturated', 8),
+              createTrueFalse('bio-11-5-m4-l3-a5', 'True or False', 'Fetal hemoglobin has a higher affinity for oxygen than adult hemoglobin', true, 'Fetal Hb shifts curve left, allowing O2 transfer from maternal to fetal blood', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Regulation & Disorders ============
+      {
+        id: 'bio-11-5-m5',
+        name: 'Regulation & Disorders 🔥',
+        description: 'Neural and chemical regulation, respiratory disorders',
+        totalTokens: 60,
+        levels: [
+          {
+            id: 'bio-11-5-m5-l1',
+            name: '5.1 Regulation of Respiration',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-5-m5-l1-a1', 'The respiratory rhythm center is located in:', ['Cerebrum', 'Medulla oblongata', 'Pons', 'Cerebellum'], 1, 'Medulla contains the respiratory rhythm center that maintains basic breathing rhythm', 10),
+              createMatch('bio-11-5-m5-l1-a2', 'Match respiratory center with function', [
+                {term: 'Medulla (Dorsal RC)', definition: 'Inspiration control'},
+                {term: 'Medulla (Ventral RC)', definition: 'Expiration control (forced)'},
+                {term: 'Pneumotaxic center (Pons)', definition: 'Limits inspiration duration'},
+                {term: 'Apneustic center (Pons)', definition: 'Promotes inspiration'},
+                {term: 'Chemoreceptors', definition: 'Detect pCO2, pO2, pH changes'},
+              ], 15),
+              createTrueFalse('bio-11-5-m5-l1-a3', 'True or False', 'Peripheral chemoreceptors in carotid and aortic bodies primarily detect changes in blood pO2', true, 'Peripheral chemoreceptors respond to low O2; central respond to pCO2/pH', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m5-l2',
+            name: '5.2 Respiratory Disorders 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m5-l2-a1', 'Asthma is characterized by:', ['Excess mucus production', 'Inflammation and bronchospasm', 'Destruction of alveolar walls', 'Fluid accumulation in lungs'], 1, 'Asthma involves inflammation, bronchoconstriction, and excess mucus - allergic reaction', 10),
+              createMatch('bio-11-5-m5-l2-a2', 'Match disorder with characteristic', [
+                {term: 'Emphysema', definition: 'Alveolar wall destruction - low elasticity'},
+                {term: 'Chronic bronchitis', definition: 'Excess mucus, inflamed bronchi'},
+                {term: 'Pneumonia', definition: 'Alveoli filled with fluid/pus'},
+                {term: 'Tuberculosis', definition: 'Mycobacterium infection - granulomas'},
+                {term: 'COVID-19', definition: 'SARS-CoV-2 - ARDS, cytokine storm'},
+              ], 15),
+              createFillBlank('bio-11-5-m5-l2-a3', 'COPD', 'COPD includes _____ and _____ - both associated with smoking.', ['emphysema', 'chronic bronchitis'], ['emphysema', 'asthma', 'chronic bronchitis', 'pneumonia'], 10),
+              createTrueFalse('bio-11-5-m5-l2-a4', 'True or False', 'Emphysema involves destruction of alveolar walls leading to decreased surface area for gas exchange', true, 'Smoking destroys alveolar septa, reducing elastic recoil and surface area', 8),
+            ]
+          },
+          {
+            id: 'bio-11-5-m5-l3',
+            name: '5.3 Hypoxia & Mountain Sickness',
+            order: 3,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-5-m5-l3-a1', 'At high altitudes, hypoxia occurs due to:', ['Low temperature', 'Decreased atmospheric pressure and pO2', 'High humidity', 'Less oxygen in air'], 1, 'Total oxygen percentage remains 21%, but lower atmospheric pressure reduces pO2', 10),
+              createMatch('bio-11-5-m5-l3-a2', 'Match altitude response with effect', [
+                {term: 'Immediate response', definition: 'Hyperventilation'},
+                {term: 'Long-term adaptation', definition: 'Increased RBC production'},
+                {term: 'Mountain sickness', definition: 'Nausea, fatigue, headache'},
+                {term: 'High altitude acclimatization', definition: 'Increased 2,3-DPG production'},
+              ], 12),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 6: PYQ & Master Review ============
+      {
+        id: 'bio-11-5-m6',
+        name: 'PYQ Master 🔥🔥',
+        description: 'Assertion-reason, previous year questions, rapid revision',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-5-m6-l1',
+            name: '6.1 Assertion-Reason Practice',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-5-m6-l1-a1', 'Assertion-Reason: Inspiration is an active process BECAUSE Diaphragm contracts and flattens during inspiration.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A true, R false', 'A false, R true'], 0, 'Both assertion and reason are true, and reason correctly explains assertion - diaphragm contraction is the mechanism', 10),
+              createQuiz('bio-11-5-m6-l1-a2', 'Assertion-Reason: CO2 is transported mainly as carbaminohemoglobin BECAUSE Carbonic anhydrase catalyzes CO2 transport.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A false, R true', 'A false, R false'], 2, 'Assertion is FALSE (70% is bicarbonate, 23% carbaminohemoglobin), but reason is TRUE about carbonic anhydrase', 10),
+              createQuiz('bio-11-5-m6-l1-a3', 'Assertion-Reason: Vital capacity is less than total lung capacity BECAUSE Residual volume is included in TLC but not VC.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A true, R false', 'A false, R true'], 0, 'Both true and reason correctly explains - VC = TV+IRV+ERV; TLC = VC+RV', 10),
+              createQuiz('bio-11-5-m6-l1-a4', 'Assertion-Reason: Emphysema destroys alveolar walls BECAUSE This increases surface area for gas exchange.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A true, R false', 'A false, R false'], 2, 'Assertion TRUE (destruction occurs) but Reason FALSE - surface area DECREASES, not increases', 8),
+              createMatch('bio-11-5-m6-l1-a5', 'Match PYQ facts', [
+                {term: 'Residual volume', definition: 'Cannot be measured by spirometry'},
+                {term: 'Tidal volume', definition: '~500 mL, normal breathing'},
+                {term: 'Dead space', definition: '~150 mL, no gas exchange'},
+                {term: 'P50', definition: '26.6 mmHg, 50% Hb saturation'},
+              ], 12),
+            ]
+          },
+          {
+            id: 'bio-11-5-m6-l2',
+            name: '6.2 Mixed MCQ Battle',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-5-m6-l2-a1', 'PYQ: The partial pressure of oxygen in alveoli is:', ['40 mmHg', '104 mmHg', '95 mmHg', '45 mmHg'], 1, 'pO2 in alveoli = 104 mmHg; in venous blood = 40 mmHg; difference drives diffusion', 10),
+              createQuiz('bio-11-5-m6-l2-a2', 'PYQ: Which center decreases the duration of inspiration?', ['Apneustic', 'Pneumotaxic', 'Medullary', 'Chemoreceptor'], 1, 'Pneumotaxic center in pons sends signals to switch off inspiration', 10),
+              createQuiz('bio-11-5-m6-l2-a3', 'PYQ: Oxygen dissociation curve shifts to the right when:', ['pH increases', 'Temperature decreases', 'pCO2 increases', 'O2 affinity increases'], 2, 'Bohr effect: High pCO2, low pH, high temp shift curve right → O2 release', 10),
+              createMatch('bio-11-5-m6-l2-a4', '🎮 Rapid matching', [
+                {term: 'Epiglottis', definition: 'Prevents food entry'},
+                {term: 'Type II pneumocytes', definition: 'Surfactant secretion'},
+                {term: 'Chloride shift', definition: 'HCO3- out, Cl- in'},
+                {term: 'Bicarbonate', definition: '70% of CO2 transport'},
+              ], 15),
+              createFillBlank('bio-11-5-m6-l2-a5', 'NCERT fact', 'The diffusion membrane consists of _____ layers at its thinnest point.', ['three'], ['one', 'two', 'three', 'four'], 10),
+            ]
+          },
+          {
+            id: 'bio-11-5-m6-l3',
+            name: '6.3 Rapid Revision - 60 Seconds',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createMatch('bio-11-5-m6-l3-a1', '⚡ Lightning round: Match in 60 seconds', [
+                {term: 'Tidal volume', definition: '500 mL'},
+                {term: 'Dead space', definition: '150 mL'},
+                {term: 'Alveoli count', definition: '300-500 million'},
+                {term: 'Hemoglobin heme groups', definition: '4'},
+                {term: 'pO2 in arterial blood', definition: '95 mmHg'},
+                {term: 'pCO2 in venous blood', definition: '45 mmHg'},
+                {term: 'Inspiratory reserve', definition: '2500-3000 mL'},
+                {term: 'Residual volume', definition: '1000-1200 mL'},
+              ], 20),
+              createQuiz('bio-11-5-m6-l3-a2', '⚡ Quick: What prevents tracheal collapse?', ['Smooth muscle', 'C-shaped cartilage', 'Ciliated epithelium', 'Goblet cells'], 1, 'C-shaped hyaline cartilage rings provide structural support', 10),
             ]
           }
         ]
@@ -4200,27 +5097,441 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-6',
     name: 'Body Fluids and Circulation',
-    description: 'Blood, heart, blood vessels, lymphatic system',
-    moduleCount: 4,
+    description: 'Blood composition, blood groups, clotting, heart, blood vessels, lymphatic system',
+    moduleCount: 6,
     modules: [
+      // ============ MODULE 1: Blood Composition ============
       {
         id: 'bio-11-6-m1',
-        name: 'Circulatory System',
-        description: 'Blood composition and circulation',
-        totalTokens: 65,
+        name: 'Blood Composition 🔥',
+        description: 'Plasma, RBC, WBC, Platelets - formed elements',
+        totalTokens: 90,
         levels: [
           {
             id: 'bio-11-6-m1-l1',
-            name: 'Blood Components',
+            name: '1.1 Blood Overview & Plasma',
             order: 1,
-            totalTokens: 65,
+            totalTokens: 20,
             activities: [
-              createQuiz('bio-11-6-m1-l1-a1', 'Which blood cell lacks nucleus?', ['Neutrophil', 'Monocyte', 'Erythrocyte', 'Lymphocyte'], 2, 'RBCs lose nucleus during maturation', 10),
-              createMatch('bio-11-6-m1-l1-a2', 'Match components', [
-                {term: 'RBC', definition: 'Oxygen transport'},
-                {term: 'WBC', definition: 'Immunity'},
-                {term: 'Platelets', definition: 'Clotting'},
+              createQuiz('bio-11-6-m1-l1-a1', 'Blood is a type of:', ['Epithelial tissue', 'Connective tissue', 'Muscular tissue', 'Nervous tissue'], 1, 'Blood is a fluid connective tissue - has matrix (plasma) and cells', 10),
+              createMatch('bio-11-6-m1-l1-a2', 'Match blood component with percentage', [
+                {term: 'Plasma', definition: '55% of blood volume'},
+                {term: 'RBCs', definition: '45% (hematocrit)'},
+                {term: 'WBCs & Platelets', definition: '<1% (buffy coat)'},
+              ], 12),
+              createFillBlank('bio-11-6-m1-l1-a3', 'Plasma composition', 'Plasma is about _____% water and contains proteins like _____, globulins, and fibrinogen.', ['90-92', 'albumin'], ['90-92', '85', 'albumin', 'hemoglobin'], 10),
+              createTrueFalse('bio-11-6-m1-l1-a4', 'True or False', 'Serum is plasma without clotting factors', true, 'Serum = Plasma - fibrinogen and other clotting factors', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m1-l2',
+            name: '1.2 Erythrocytes (RBCs) 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m1-l2-a1', 'RBCs are shaped as:', ['Spherical', 'Biconcave discs', 'Biconvex', 'Cuboidal'], 1, 'Biconcave shape increases surface area for oxygen exchange', 10),
+              createMatch('bio-11-6-m1-l2-a2', 'Match RBC feature with significance', [
+                {term: 'No nucleus', definition: 'More space for hemoglobin'},
+                {term: 'No mitochondria', definition: 'Anaerobic respiration - no O2 consumption'},
+                {term: 'Biconcave shape', definition: 'Increases surface area/volume ratio'},
+                {term: 'Life span 120 days', definition: 'Destroyed in spleen (graveyard)'},
               ], 15),
+              createFillBlank('bio-11-6-m1-l2-a3', 'Hemoglobin structure', 'Each hemoglobin has _____ polypeptide chains (2 alpha, 2 beta) and _____ heme groups with iron.', ['four', 'four'], ['two', 'four', 'six', 'eight'], 10),
+              createQuiz('bio-11-6-m1-l2-a4', 'Erythropoietin (EPO) is produced by:', ['Liver', 'Kidneys', 'Bone marrow', 'Spleen'], 1, 'EPO stimulates RBC production in bone marrow', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m1-l3',
+            name: '1.3 Leukocytes (WBCs) 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m1-l3-a1', 'Which WBC is most abundant?', ['Lymphocytes', 'Neutrophils', 'Monocytes', 'Eosinophils'], 1, 'Neutrophils are 60-65% of WBCs - first responders to infection', 10),
+              createMatch('bio-11-6-m1-l3-a2', 'Match WBC type with function', [
+                {term: 'Neutrophils', definition: 'Phagocytosis - bacterial infection'},
+                {term: 'Eosinophils', definition: 'Allergies, parasitic infections'},
+                {term: 'Basophils', definition: 'Release histamine - inflammation'},
+                {term: 'Lymphocytes', definition: 'Immunity - B cells, T cells'},
+                {term: 'Monocytes', definition: 'Become macrophages - phagocytosis'},
+              ], 15),
+              createFillBlank('bio-11-6-m1-l3-a3', 'WBC count', 'Normal WBC count is _____ to _____ cells per cubic mm of blood.', ['4000', '11000'], ['2000', '4000', '8000', '11000'], 10),
+              createTrueFalse('bio-11-6-m1-l3-a4', 'True or False', 'Leukemia is characterized by abnormally high WBC count', true, 'Leukemia = cancer of blood-forming tissues, excessive WBCs', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m1-l4',
+            name: '1.4 Platelets (Thrombocytes)',
+            order: 4,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m1-l4-a1', 'Platelets are fragments of:', ['RBCs', 'Megakaryocytes', 'Lymphocytes', 'Monocytes'], 1, 'Platelets bud off from megakaryocytes in bone marrow', 10),
+              createMatch('bio-11-6-m1-l4-a2', 'Match platelet feature with function', [
+                {term: '150,000-350,000 per μL', definition: 'Normal count range'},
+                {term: 'No nucleus', definition: 'Cell fragments, not complete cells'},
+                {term: 'Granules', definition: 'Contain clotting factors'},
+                {term: 'Thrombopoietin', definition: 'Hormone stimulating platelet production'},
+              ], 12),
+              createTrueFalse('bio-11-6-m1-l4-a3', 'True or False', 'Thrombocytopenia is a condition with abnormally low platelet count', true, 'Low platelets cause bleeding tendency and bruising', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Blood Groups & Clotting ============
+      {
+        id: 'bio-11-6-m2',
+        name: 'Blood Groups & Clotting 🔥🔥',
+        description: 'ABO system, Rh factor, blood coagulation cascade',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-6-m2-l1',
+            name: '2.1 ABO Blood Group System 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m2-l1-a1', 'ABO blood groups are determined by:', ['RBC surface proteins', 'Antigens on RBC surface', 'Antibodies in plasma', 'Genes on X chromosome'], 1, 'ABO groups based on presence of A and/or B antigens on RBC surface', 10),
+              createMatch('bio-11-6-m2-l1-a2', 'Match blood group with antigens/antibodies', [
+                {term: 'Type A', definition: 'A antigen, anti-B antibodies'},
+                {term: 'Type B', definition: 'B antigen, anti-A antibodies'},
+                {term: 'Type AB', definition: 'Both antigens, no antibodies (universal recipient)'},
+                {term: 'Type O', definition: 'No antigens, both antibodies (universal donor)'},
+              ], 15),
+              createFillBlank('bio-11-6-m2-l1-a3', 'Blood typing', 'A person with A blood type has _____ antigens on RBCs and _____ antibodies in plasma.', ['A', 'anti-B'], ['A', 'B', 'anti-A', 'anti-B'], 10),
+              createTrueFalse('bio-11-6-m2-l1-a4', 'True or False', 'Type AB+ is the universal recipient for blood transfusions', true, 'AB+ has all antigens (A, B, Rh+) and no antibodies against them', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m2-l2',
+            name: '2.2 Rh Factor 🔥',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m2-l2-a1', 'Rh factor is named after:', ['Rhesus monkey', 'Rhodesia', 'Rheumatoid factor', 'Rhodopsin'], 0, 'Discovered in Rhesus monkeys - D antigen on RBC surface', 10),
+              createMatch('bio-11-6-m2-l2-a2', 'Match Rh status with description', [
+                {term: 'Rh+', definition: 'Has D antigen on RBCs'},
+                {term: 'Rh-', definition: 'No D antigen on RBCs'},
+                {term: 'Erythroblastosis fetalis', definition: 'Hemolytic disease of newborn'},
+                {term: 'Anti-D injection', definition: 'Given to Rh- mothers after delivery'},
+              ], 12),
+              createTrueFalse('bio-11-6-m2-l2-a3', 'True or False', 'Erythroblastosis fetalis occurs when Rh- mother carries second Rh+ fetus', true, 'First pregnancy sensitizes mother; second pregnancy causes antibody attack on fetal RBCs', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m2-l3',
+            name: '2.3 Blood Coagulation 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m2-l3-a1', 'The final step in clotting converts fibrinogen to:', ['Thrombin', 'Fibrin', 'Prothrombin', 'Calcium'], 1, 'Thrombin enzyme converts soluble fibrinogen to insoluble fibrin mesh', 10),
+              createMatch('bio-11-6-m2-l3-a2', 'Match clotting factor with role', [
+                {term: 'Factor I', definition: 'Fibrinogen - converted to fibrin'},
+                {term: 'Factor II', definition: 'Prothrombin - converted to thrombin'},
+                {term: 'Thromboplastin', definition: 'Released from injured tissue'},
+                {term: 'Calcium ions', definition: 'Factor IV - essential for clotting'},
+                {term: 'Vitamin K', definition: 'Required for prothrombin synthesis'},
+              ], 15),
+              createFillBlank('bio-11-6-m2-l3-a3', 'Clotting cascade', 'Blood clotting involves a cascade where _____ activates prothrombin to _____.', ['thromboplastin', 'thrombin'], ['fibrin', 'thromboplastin', 'thrombin', 'fibrinogen'], 10),
+              createTrueFalse('bio-11-6-m2-l3-a4', 'True or False', 'Hemophilia is a genetic disorder affecting blood clotting factors', true, 'Hemophilia A (Factor VIII deficiency) and B (Factor IX deficiency) are X-linked recessive', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m2-l4',
+            name: '2.4 Anticoagulants & Disorders',
+            order: 4,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-6-m2-l4-a1', 'Heparin is produced by:', ['Liver', 'Basophils and mast cells', 'Platelets', 'Kidneys'], 1, 'Heparin is a natural anticoagulant preventing blood clotting in vessels', 10),
+              createMatch('bio-11-6-m2-l4-a2', 'Match disorder with description', [
+                {term: 'Thrombosis', definition: 'Clot formation in blood vessels'},
+                {term: 'Embolism', definition: 'Clot travels and blocks vessel'},
+                {term: 'Hemophilia', definition: 'Delayed blood clotting'},
+                {term: 'Thrombocytopenia', definition: 'Low platelet count'},
+              ], 12),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Heart Anatomy ============
+      {
+        id: 'bio-11-6-m3',
+        name: 'Human Heart 🔥🔥',
+        description: 'Structure, chambers, valves, cardiac muscle',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-6-m3-l1',
+            name: '3.1 Heart Overview 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m3-l1-a1', 'The heart is located in:', ['Abdominal cavity', 'Thoracic cavity - mediastinum', 'Pleural cavity', 'Pericardial cavity only'], 1, 'Heart is in mediastinum between lungs, enclosed in pericardium', 10),
+              createMatch('bio-11-6-m3-l1-a2', 'Match heart structure with description', [
+                {term: 'Pericardium', definition: 'Double-walled protective sac'},
+                {term: 'Myocardium', definition: 'Cardiac muscle - heart wall'},
+                {term: 'Endocardium', definition: 'Inner endothelial lining'},
+                {term: 'Septum', definition: 'Wall separating left and right sides'},
+              ], 15),
+              createFillBlank('bio-11-6-m3-l1-a3', 'Heart size', 'Human heart is about the size of a _____ and weighs approximately _____ grams.', ['fist', '300'], ['fist', 'head', '300', '500'], 8),
+              createTrueFalse('bio-11-6-m3-l1-a4', 'True or False', 'The heart is myogenic - can generate its own electrical impulses', true, 'Cardiac muscle is self-excitable; SA node initiates heartbeat', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m3-l2',
+            name: '3.2 Heart Chambers & Valves 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m3-l2-a1', 'Which chamber has the thickest wall?', ['Right atrium', 'Left ventricle', 'Right ventricle', 'Left atrium'], 1, 'Left ventricle pumps blood to entire body - needs more force', 10),
+              createMatch('bio-11-6-m3-l2-a2', 'Match valve with location and function', [
+                {term: 'Tricuspid valve', definition: 'Between right atrium and ventricle'},
+                {term: 'Bicuspid/Mitral valve', definition: 'Between left atrium and ventricle'},
+                {term: 'Pulmonary semilunar', definition: 'At exit of right ventricle'},
+                {term: 'Aortic semilunar', definition: 'At exit of left ventricle'},
+              ], 15),
+              createFillBlank('bio-11-6-m3-l2-a3', 'Valve sounds', 'The "lub" sound is caused by closure of _____ valves; "dub" by closure of _____ valves.', ['AV/atrioventricular', 'semilunar'], ['AV', 'semilunar', 'tricuspid', 'mitral'], 10),
+              createQuiz('bio-11-6-m3-l2-a4', 'The foramen ovale in fetal heart becomes _____ in adults.', ['Fossa ovalis', 'Ligamentum arteriosum', 'Septum primum', 'Septum secundum'], 0, 'Foramen ovale closes at birth and becomes fossa ovalis (depression in interatrial septum)', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m3-l3',
+            name: '3.3 Blood Flow Pathway',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m3-l3-a1', 'Blood entering the right atrium comes from:', ['Lungs', 'Systemic circulation/Superior & inferior vena cava', 'Left ventricle', 'Pulmonary veins'], 1, 'Deoxygenated blood returns from body via venae cavae to right atrium', 10),
+              createMatch('bio-11-6-m3-l3-a2', 'Match pathway with blood type', [
+                {term: 'Pulmonary artery', definition: 'Carries deoxygenated blood to lungs'},
+                {term: 'Pulmonary veins', definition: 'Carry oxygenated blood to heart'},
+                {term: 'Aorta', definition: 'Carries oxygenated blood to body'},
+                {term: 'Vena cava', definition: 'Carries deoxygenated blood to heart'},
+              ], 15),
+              createFillBlank('bio-11-6-m3-l3-a3', 'Double circulation', 'Humans have _____ circulation - pulmonary (lungs) and _____ (body).', ['double', 'systemic'], ['single', 'double', 'open', 'systemic'], 10),
+              createTrueFalse('bio-11-6-m3-l3-a4', 'True or False', 'Pulmonary veins are the only veins that carry oxygenated blood', true, 'All other veins carry deoxygenated blood; all arteries carry oxygenated except pulmonary', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m3-l4',
+            name: '3.4 Cardiac Muscle Tissue',
+            order: 4,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-6-m3-l4-a1', 'Cardiac muscle cells are connected by:', ['Tight junctions', 'Intercalated discs', 'Gap junctions only', 'Desmosomes only'], 1, 'Intercalated discs contain desmosomes and gap junctions for synchronized contraction', 10),
+              createMatch('bio-11-6-m3-l4-a2', 'Match cardiac muscle feature with significance', [
+                {term: 'Striated', definition: 'Similar to skeletal muscle - sarcomeres'},
+                {term: 'Branched fibers', definition: 'Form network for coordinated contraction'},
+                {term: 'Intercalated discs', definition: 'Allow rapid spread of action potentials'},
+                {term: 'Single nucleus', definition: 'Each cell has one central nucleus'},
+              ], 12),
+              createTrueFalse('bio-11-6-m3-l4-a3', 'True or False', 'Cardiac muscle never fatigues because it relies on aerobic respiration', true, 'Rich in mitochondria (30% of cell volume) - continuous ATP production', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Cardiac Cycle & ECG ============
+      {
+        id: 'bio-11-6-m4',
+        name: 'Cardiac Cycle & ECG 🔥🔥',
+        description: 'Heart contraction phases, electrical activity, ECG waves',
+        totalTokens: 75,
+        levels: [
+          {
+            id: 'bio-11-6-m4-l1',
+            name: '4.1 Conducting System of Heart 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m4-l1-a1', 'The pacemaker of the heart is:', ['AV node', 'SA node/Sinoatrial node', 'Bundle of His', 'Purkinje fibers'], 1, 'SA node in right atrium initiates heartbeat at 70-80 beats/min', 10),
+              createMatch('bio-11-6-m4-l1-a2', 'Match conduction structure with function', [
+                {term: 'SA node', definition: 'Pacemaker - generates impulse'},
+                {term: 'AV node', definition: 'Delays impulse to allow atrial contraction'},
+                {term: 'Bundle of His', definition: 'Conducts impulse to ventricles'},
+                {term: 'Purkinje fibers', definition: 'Distribute impulse to ventricular muscle'},
+              ], 15),
+              createFillBlank('bio-11-6-m4-l1-a3', 'Heart rate', 'Normal heart rate is _____-_____ beats per minute at rest.', ['70', '80'], ['50', '60', '70', '80'], 8),
+              createTrueFalse('bio-11-6-m4-l1-a4', 'True or False', 'The AV node delays the electrical impulse to allow complete ventricular filling', true, 'AV nodal delay = 0.1 sec - allows atria to empty before ventricles contract', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m4-l2',
+            name: '4.2 Cardiac Cycle 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m4-l2-a1', 'During ventricular systole:', ['AV valves open', 'AV valves close, semilunar valves open', 'All valves closed', 'All valves open'], 1, 'Ventricles contract → pressure rises → AV valves close → semilunar valves open', 10),
+              createMatch('bio-11-6-m4-l2-a2', 'Match cardiac phase with events', [
+                {term: 'Atrial systole', definition: 'Atria contract - ventricular filling'},
+                {term: 'Ventricular systole', definition: 'Ventricles contract - blood ejected'},
+                {term: 'Joint diastole', definition: 'All chambers relaxed - filling'},
+                {term: 'Isovolumetric contraction', definition: 'All valves closed - pressure builds'},
+              ], 15),
+              createFillBlank('bio-11-6-m4-l2-a3', 'Stroke volume', 'One cardiac cycle takes about _____ seconds; stroke volume is approximately _____ mL.', ['0.8', '70'], ['0.5', '0.8', '50', '70'], 10),
+              createQuiz('bio-11-6-m4-l2-a4', 'Cardiac output equals:', ['Heart rate × Stroke volume', 'Blood pressure × Heart rate', 'Stroke volume ÷ Heart rate', 'Heart rate only'], 0, 'Cardiac output = HR × SV = ~5 L/min at rest', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m4-l3',
+            name: '4.3 ECG (Electrocardiogram) 🔥',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m4-l3-a1', 'The P wave in ECG represents:', ['Ventricular depolarization', 'Atrial depolarization', 'Ventricular repolarization', 'Atrial repolarization'], 1, 'P wave = atrial depolarization (contraction); hidden by QRS in repolarization', 10),
+              createMatch('bio-11-6-m4-l3-a2', 'Match ECG wave with event', [
+                {term: 'P wave', definition: 'Atrial depolarization'},
+                {term: 'QRS complex', definition: 'Ventricular depolarization (atrial repolarization hidden)'},
+                {term: 'T wave', definition: 'Ventricular repolarization'},
+                {term: 'PQ interval', definition: 'Atrial contraction time'},
+              ], 15),
+              createFillBlank('bio-11-6-m4-l3-a3', 'ECG intervals', 'The _____ segment represents the time when ventricles are fully depolarized and contracting.', ['ST'], ['PQ', 'ST', 'QR', 'T'], 8),
+              createTrueFalse('bio-11-6-m4-l3-a4', 'True or False', 'An abnormal ECG can detect arrhythmias, myocardial infarction, and conduction defects', true, 'ECG is a valuable diagnostic tool for heart conditions', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m4-l4',
+            name: '4.4 Heart Sounds & Murmurs',
+            order: 4,
+            totalTokens: 10,
+            activities: [
+              createQuiz('bio-11-6-m4-l4-a1', 'The "lubb" sound is produced by closure of:', ['Semilunar valves', 'AV valves (tricuspid and bicuspid)', 'Pulmonary valve', 'Aortic valve'], 1, 'Lubb (S1) = AV valve closure at start of ventricular systole', 10),
+              createMatch('bio-11-6-m4-l4-a2', 'Match heart sound with cause', [
+                {term: 'Lubb (S1)', definition: 'Closure of AV valves'},
+                {term: 'Dup (S2)', definition: 'Closure of semilunar valves'},
+                {term: 'Heart murmur', definition: 'Turbulent blood flow through valves'},
+                {term: 'S3 gallop', definition: 'Rapid ventricular filling'},
+              ], 12),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Blood Vessels & Blood Pressure ============
+      {
+        id: 'bio-11-6-m5',
+        name: 'Blood Vessels & Pressure 🔥',
+        description: 'Arteries, veins, capillaries, blood pressure regulation',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-6-m5-l1',
+            name: '5.1 Types of Blood Vessels 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m5-l1-a1', 'Which blood vessel has the thickest wall?', ['Capillary', 'Artery', 'Vein', 'Venule'], 1, 'Arteries have thick muscular walls to withstand high pressure', 10),
+              createMatch('bio-11-6-m5-l1-a2', 'Match vessel type with feature', [
+                {term: 'Arteries', definition: 'Thick walls, small lumen, carry blood away from heart'},
+                {term: 'Veins', definition: 'Thin walls, large lumen, valves present'},
+                {term: 'Capillaries', definition: 'Single layer endothelium - exchange'},
+                {term: 'Arterioles', definition: 'Small arteries - control blood flow'},
+              ], 15),
+              createFillBlank('bio-11-6-m5-l1-a3', 'Capillary exchange', 'Capillaries form a network called _____ between arterioles and venules.', ['capillary bed'], ['venous pool', 'capillary bed', 'arterial network'], 8),
+              createTrueFalse('bio-11-6-m5-l1-a4', 'True or False', 'Veins have valves to prevent backflow of blood against gravity', true, 'Skeletal muscle contraction and valves help venous return', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m5-l2',
+            name: '5.2 Blood Pressure 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-6-m5-l2-a1', 'Normal blood pressure is about:', ['120/80 mmHg', '80/120 mmHg', '140/90 mmHg', '100/60 mmHg'], 0, '120 mmHg systolic (contraction) / 80 mmHg diastolic (relaxation)', 10),
+              createMatch('bio-11-6-m5-l2-a2', 'Match BP term with definition', [
+                {term: 'Systolic pressure', definition: 'Maximum pressure during ventricular contraction'},
+                {term: 'Diastolic pressure', definition: 'Minimum pressure during ventricular relaxation'},
+                {term: 'Pulse pressure', definition: 'Systolic - Diastolic (~40 mmHg)'},
+                {term: 'Mean arterial pressure', definition: 'Diastolic + 1/3 pulse pressure'},
+              ], 15),
+              createFillBlank('bio-11-6-m5-l2-a3', 'BP measurement', 'Blood pressure is measured using a _____ and recorded as _____/_____ mmHg.', ['sphygmomanometer', 'systolic', 'diastolic'], ['sphygmomanometer', 'stethoscope', 'systolic', 'diastolic'], 10),
+              createQuiz('bio-11-6-m5-l2-a4', 'Hypertension is defined as BP above:', ['120/80', '140/90', '160/100', '100/60'], 1, '140/90 mmHg or higher is considered high blood pressure', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m5-l3',
+            name: '5.3 Blood Pressure Regulation',
+            order: 3,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-6-m5-l3-a1', 'Baroreceptors detect changes in:', ['Blood oxygen', 'Blood pressure', 'Blood pH', 'Blood glucose'], 1, 'Baroreceptors in carotid sinus and aortic arch detect stretch/pressure changes', 10),
+              createMatch('bio-11-6-m5-l3-a2', 'Match regulatory mechanism with effect', [
+                {term: 'Neural regulation', definition: 'ANS controls heart rate and vasoconstriction'},
+                {term: 'Hormonal regulation', definition: 'Adrenaline, ADH, aldosterone affect BP'},
+                {term: 'Renal regulation', definition: 'Kidneys control blood volume'},
+                {term: 'Chemoreceptors', definition: 'Detect O2, CO2, H+ levels'},
+              ], 12),
+            ]
+          },
+          {
+            id: 'bio-11-6-m5-l4',
+            name: '5.4 Microcirculation',
+            order: 4,
+            totalTokens: 10,
+            activities: [
+              createQuiz('bio-11-6-m5-l4-a1', 'Blood flow through capillaries is regulated by:', ['Sphincters', 'Precapillary sphincters', 'Valves', 'Pacemaker cells'], 1, 'Precapillary sphincters control blood entry into capillary beds', 10),
+              createMatch('bio-11-6-m5-l4-a2', 'Match capillary mechanism with function', [
+                {term: 'Bulk flow', definition: 'Fluid movement by pressure gradient'},
+                {term: 'Diffusion', definition: 'Gas and solute exchange'},
+                {term: 'Pinocytosis', definition: 'Vesicular transport of large molecules'},
+                {term: 'Osmotic pressure', definition: 'Albumin draws fluid back'},
+              ], 12),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 6: Lymphatic System & PYQ ============
+      {
+        id: 'bio-11-6-m6',
+        name: 'Lymphatic System & PYQ 🔥',
+        description: 'Lymph, lymph nodes, immunity, previous year questions',
+        totalTokens: 65,
+        levels: [
+          {
+            id: 'bio-11-6-m6-l1',
+            name: '6.1 Lymphatic System 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-6-m6-l1-a1', 'Lymph is:', ['Blood plasma', 'Blood minus large proteins and RBCs', 'Interstitial fluid in lymph vessels', 'Both B and C'], 3, 'Lymph is interstitial fluid that enters lymphatic vessels - clear, pale', 10),
+              createMatch('bio-11-6-m6-l1-a2', 'Match lymphatic structure with function', [
+                {term: 'Lymph capillaries', definition: 'Blind-ended, pick up tissue fluid'},
+                {term: 'Lymph nodes', definition: 'Filter lymph, contain lymphocytes'},
+                {term: 'Lymph ducts', definition: 'Return lymph to bloodstream'},
+                {term: 'Thoracic duct', definition: 'Drains left side and lower body'},
+              ], 15),
+              createFillBlank('bio-11-6-m6-l1-a3', 'Lymph composition', 'Lymph contains _____, lymphocytes, and transports _____ from tissues.', ['proteins', 'fats'], ['RBCs', 'proteins', 'WBCs', 'fats'], 8),
+              createTrueFalse('bio-11-6-m6-l1-a4', 'True or False', 'The lymphatic system returns excess tissue fluid to blood and transports fats from intestine', true, 'Lymph maintains fluid balance and absorbs dietary fats (chylomicrons)', 8),
+            ]
+          },
+          {
+            id: 'bio-11-6-m6-l2',
+            name: '6.2 Spleen & Thymus',
+            order: 2,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-6-m6-l2-a1', 'The spleen is called the graveyard of RBCs because:', ['It produces RBCs', 'It destroys old RBCs', 'It stores blood', 'It filters lymph'], 1, 'Spleen phagocytoses old/damaged RBCs and removes them from circulation', 10),
+              createMatch('bio-11-6-m6-l2-a2', 'Match lymphoid organ with function', [
+                {term: 'Spleen', definition: 'Blood filtration, immune response'},
+                {term: 'Thymus', definition: 'T-cell maturation (T = thymus)'},
+                {term: 'Tonsils', definition: 'Trap pathogens entering throat'},
+                {term: 'Peyer patches', definition: 'Lymphoid tissue in intestine'},
+              ], 12),
+            ]
+          },
+          {
+            id: 'bio-11-6-m6-l3',
+            name: '6.3 PYQ Master 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-6-m6-l3-a1', 'PYQ: Which granulocyte is most abundant?', ['Basophils', 'Neutrophils', 'Eosinophils', 'Lymphocytes'], 1, 'Neutrophils = 60-65% of WBCs - most abundant', 10),
+              createQuiz('bio-11-6-m6-l3-a2', 'PYQ: Erythropoietin is produced by:', ['Liver', 'Kidneys', 'Bone marrow', 'Spleen'], 1, 'EPO is produced by kidneys in response to low oxygen', 10),
+              createQuiz('bio-11-6-m6-l3-a3', 'PYQ: The pacemaker of the heart is:', ['AV node', 'SA node', 'Purkinje fibers', 'Bundle of His'], 1, 'SA (Sinoatrial) node is the natural pacemaker', 10),
+              createQuiz('bio-11-6-m6-l3-a4', 'PYQ: Which blood group is the universal donor?', ['A+', 'AB+', 'O-', 'B+'], 2, 'O- has no A, B, or Rh antigens - can donate to anyone', 10),
+              createMatch('bio-11-6-m6-l3-a5', '🎮 Match the concepts', [
+                {term: 'Universal donor', definition: 'O negative'},
+                {term: 'Universal recipient', definition: 'AB positive'},
+                {term: 'Cardiac output', definition: 'Heart rate × Stroke volume'},
+                {term: 'Hematocrit', definition: '% of RBCs in blood (~45%)'},
+                {term: 'Thrombin', definition: 'Converts fibrinogen to fibrin'},
+              ], 15),
+              createFillBlank('bio-11-6-m6-l3-a6', 'Quick facts', 'Cardiac output at rest is about _____ L/min; blood volume in adult is _____ L.', ['5', '5'], ['3', '5', '5', '7'], 10),
             ]
           }
         ]
@@ -4230,23 +5541,384 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-7',
     name: 'Excretory Products and Their Elimination',
-    description: 'Kidney, urine formation, osmoregulation',
-    moduleCount: 4,
+    description: 'Human excretory system, nephron, urine formation, osmoregulation, disorders',
+    moduleCount: 6,
     modules: [
+      // ============ MODULE 1: Human Excretory System ============
       {
         id: 'bio-11-7-m1',
-        name: 'Excretory System',
-        description: 'Human kidney and nephron',
-        totalTokens: 60,
+        name: 'Human Excretory System 🔥',
+        description: 'Kidneys, ureters, urinary bladder, urethra - anatomy and location',
+        totalTokens: 75,
         levels: [
           {
             id: 'bio-11-7-m1-l1',
-            name: 'Nephrons',
+            name: '1.1 Excretory Organs Overview',
             order: 1,
-            totalTokens: 60,
+            totalTokens: 20,
             activities: [
-              createQuiz('bio-11-7-m1-l1-a1', 'Filtration occurs in:', ['PCT', 'DCT', 'Bowmans capsule', 'Loop of Henle'], 2, 'Glomerular filtration in Bowmans capsule', 10),
-              createTrueFalse('bio-11-7-m1-l1-a2', 'True or False', 'ADH increases water reabsorption', true, 'ADH makes DCT and collecting duct permeable to water', 8),
+              createQuiz('bio-11-7-m1-l1-a1', 'The primary excretory organs in humans are:', ['Liver and skin', 'Lungs and kidneys', 'Kidneys', 'Skin only'], 2, 'Kidneys are the main excretory organs producing urine', 10),
+              createMatch('bio-11-7-m1-l1-a2', 'Match organ with excretory product', [
+                {term: 'Kidneys', definition: 'Urea, creatinine, uric acid'},
+                {term: 'Lungs', definition: 'CO2 and water vapor'},
+                {term: 'Liver', definition: 'Bile pigments, urea synthesis'},
+                {term: 'Skin', definition: 'Sweat (water, salts, urea)'},
+                {term: 'Sebaceous glands', definition: 'Sebum'},
+              ], 15),
+              createFillBlank('bio-11-7-m1-l1-a3', 'Ammonotelism types', 'Fish are _____, amphibians are _____, and birds are uricotelic.', ['ammoniotelic', 'ureotelic'], ['ammoniotelic', 'ureotelic', 'uricotelic', 'guanotelic'], 10),
+              createTrueFalse('bio-11-7-m1-l1-a4', 'True or False', 'Ammonia is the most toxic nitrogenous waste requiring dilute urine for excretion', true, 'Ammonia requires maximum water; uric acid requires minimum water', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m1-l2',
+            name: '1.2 Kidney Structure 🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-7-m1-l2-a1', 'Each kidney contains approximately:', ['1000 nephrons', '1 million nephrons', '100,000 nephrons', '10,000 nephrons'], 1, 'Each kidney has ~1 million (10 lakh) nephrons', 10),
+              createMatch('bio-11-7-m1-l2-a2', 'Match kidney structure with location/feature', [
+                {term: 'Renal cortex', definition: 'Outer region - contains glomeruli'},
+                {term: 'Renal medulla', definition: 'Inner region - contains pyramids'},
+                {term: 'Renal pelvis', definition: 'Funnel-shaped cavity leading to ureter'},
+                {term: 'Renal artery', definition: 'Supplies oxygenated blood to kidney'},
+                {term: 'Renal vein', definition: 'Drains deoxygenated blood from kidney'},
+              ], 15),
+              createFillBlank('bio-11-7-m1-l2-a3', 'Kidney dimensions', 'Human kidney is about _____-_____ cm long, _____-_____ cm wide, and weighs about _____ g.', ['10', '12', '5', '6', '150'], ['10', '5', '150', '8', '12'], 10),
+              createQuiz('bio-11-7-m1-l2-a4', 'The functional unit of kidney is:', ['Nephron', 'Glomerulus', 'Bowmans capsule', 'Collecting duct'], 0, 'Nephron is the structural and functional unit of kidney', 10),
+              createTrueFalse('bio-11-7-m1-l2-a5', 'True or False', 'The right kidney is slightly lower than the left due to the presence of liver', true, 'Liver occupies more space on right side, pushing right kidney down', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m1-l3',
+            name: '1.3 Urinary Passages',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m1-l3-a1', 'Urine is carried from kidney to bladder by:', ['Urethra', 'Ureter', 'Renal vein', 'Renal artery'], 1, 'Two ureters - one from each kidney - carry urine to urinary bladder', 10),
+              createMatch('bio-11-7-m1-l3-a2', 'Match urinary passage with feature', [
+                {term: 'Ureter', definition: 'Muscular tube, peristaltic movements'},
+                {term: 'Urinary bladder', definition: 'Muscular sac, stores urine'},
+                {term: 'Urethra', definition: 'Carries urine to exterior'},
+                {term: 'Urinary meatus', definition: 'External opening of urethra'},
+              ], 15),
+              createFillBlank('bio-11-7-m1-l3-a3', 'Bladder capacity', 'The urinary bladder can hold about _____-_____ mL of urine comfortably.', ['300', '400'], ['300', '500', '400', '600'], 8),
+              createTrueFalse('bio-11-7-m1-l3-a4', 'True or False', 'The urethra in females is shorter than in males', true, 'Female urethra ~4 cm, male ~20 cm - females more prone to UTIs', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Nephron Structure ============
+      {
+        id: 'bio-11-7-m2',
+        name: 'Nephron Structure 🔥🔥',
+        description: 'Renal corpuscle, tubule segments, juxtaglomerular apparatus',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-7-m2-l1',
+            name: '2.1 Nephron Overview 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-7-m2-l1-a1', 'Nephrons are classified based on location into:', ['Cortical and juxtamedullary', 'Proximal and distal', 'Superficial and deep', 'A and B only'], 0, 'Cortical nephrons (85%) in outer cortex; juxtamedullary (15%) near medulla', 10),
+              createMatch('bio-11-7-m2-l1-a2', 'Match nephron type with feature', [
+                {term: 'Cortical nephron', definition: '85%, short loop of Henle'},
+                {term: 'Juxtamedullary nephron', definition: '15%, long loop of Henle'},
+                {term: 'Loop of Henle', definition: 'Hairpin loop in medulla'},
+                {term: 'Vasa recta', definition: 'Capillary loop alongside long nephrons'},
+              ], 15),
+              createFillBlank('bio-11-7-m2-l1-a3', 'Nephron parts', 'Each nephron has a _____ corpuscle and a renal _____.', ['renal', 'tubule'], ['renal', 'tubule', 'medulla', 'pyramid'], 10),
+              createTrueFalse('bio-11-7-m2-l1-a4', 'True or False', 'Juxtamedullary nephrons are essential for producing concentrated urine', true, 'Long loop of Henle extends deep into medulla for water conservation', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m2-l2',
+            name: '2.2 Renal Corpuscle 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m2-l2-a1', 'The glomerulus is formed by:', ['Afferent arteriole', 'Efferent arteriole', 'Afferent arteriole branching into capillaries', 'Renal vein'], 2, 'Afferent arteriole enters, branches into glomerular capillaries, exits as efferent arteriole', 10),
+              createMatch('bio-11-7-m2-l2-a2', 'Match structure with description', [
+                {term: 'Bowmans capsule', definition: 'Double-walled cup surrounding glomerulus'},
+                {term: 'Podocytes', definition: 'Cells with foot processes on capillaries'},
+                {term: 'Glomerular filtrate', definition: 'Plasma minus proteins and cells'},
+                {term: 'Mesangial cells', definition: 'Support glomerular capillaries'},
+              ], 15),
+              createFillBlank('bio-11-7-m2-l2-a3', 'Filtration barrier', 'The filtration membrane includes fenestrated _____, basement membrane, and _____ slit pores.', ['endothelium', 'podocyte'], ['endothelium', 'epithelium', 'podocyte', 'mesangial'], 10),
+              createQuiz('bio-11-7-m2-l2-a4', 'Glomerular filtration rate (GFR) is approximately:', ['75 mL/min', '125 mL/min', '180 L/day', 'Both B and C'], 3, 'GFR = ~125 mL/min = 180 L/day - total volume filtered', 10),
+              createTrueFalse('bio-11-7-m2-l2-a5', 'True or False', 'The efferent arteriole is narrower than the afferent arteriole creating high pressure in glomerulus', true, 'Constriction of efferent arteriole maintains glomerular hydrostatic pressure', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m2-l3',
+            name: '2.3 Renal Tubule 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m2-l3-a1', 'The proximal convoluted tubule (PCT) is lined by:', ['Simple squamous', 'Simple cuboidal with microvilli', 'Simple columnar', 'Stratified squamous'], 1, 'PCT has brush border (microvilli) for maximum reabsorption', 10),
+              createMatch('bio-11-7-m2-l3-a2', 'Match tubule segment with function', [
+                {term: 'PCT', definition: 'Reabsorbs 65-70% of filtrate'},
+                {term: 'Descending limb', definition: 'Permeable to water, impermeable to solutes'},
+                {term: 'Ascending limb', definition: 'Impermeable to water, pumps out NaCl'},
+                {term: 'DCT', definition: 'Conditional reabsorption of water and Na+'},
+                {term: 'Collecting duct', definition: 'Water reabsorption under ADH control'},
+              ], 15),
+              createFillBlank('bio-11-7-m2-l3-a3', 'Counter-current', 'The loop of Henle creates a _____ gradient in the medulla essential for _____ urine formation.', ['osmotic', 'concentrated'], ['osmotic', 'concentrated', 'hydrostatic', 'dilute'], 10),
+              createTrueFalse('bio-11-7-m2-l3-a4', 'True or False', 'The ascending limb of loop of Henle is impermeable to water but actively transports Na+ and Cl-', true, 'This creates the osmotic gradient in medullary interstitium', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Urine Formation ============
+      {
+        id: 'bio-11-7-m3',
+        name: 'Urine Formation 🔥🔥',
+        description: 'Glomerular filtration, selective reabsorption, tubular secretion',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-7-m3-l1',
+            name: '3.1 Glomerular Filtration 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m3-l1-a1', 'Glomerular filtrate is similar to blood plasma except it lacks:', ['Glucose', 'Proteins and cells', 'Amino acids', 'Electrolytes'], 1, 'Filtration barrier prevents proteins (albumin) and cells from passing', 10),
+              createMatch('bio-11-7-m3-l1-a2', 'Match filtration factor with effect', [
+                {term: 'Glomerular hydrostatic pressure', definition: 'Favors filtration (~55 mmHg)'},
+                {term: 'Capsular hydrostatic pressure', definition: 'Opposes filtration (~15 mmHg)'},
+                {term: 'Colloid osmotic pressure', definition: 'Opposes filtration (~30 mmHg)'},
+                {term: 'Net filtration pressure', definition: '~10 mmHg (favors filtration)'},
+              ], 15),
+              createFillBlank('bio-11-7-m3-l1-a3', 'Filtration equation', 'Net filtration pressure = Glomerular HP - (Capsular HP + _____ _____ pressure)', ['blood colloid', 'osmotic'], ['blood colloid', 'capsular', 'osmotic', 'hydrostatic'], 10),
+              createQuiz('bio-11-7-m3-l1-a4', 'The filtration fraction is approximately:', ['5%', '20%', '50%', '100%'], 1, '~20% of plasma entering kidney is filtered; 80% exits via efferent arteriole', 10),
+              createTrueFalse('bio-11-7-m3-l1-a5', 'True or False', 'Glomerular filtration is a passive process driven by hydrostatic pressure', true, 'No ATP required - physical pressure forces fluid through filtration membrane', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m3-l2',
+            name: '3.2 Tubular Reabsorption 🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-7-m3-l2-a1', 'Maximum reabsorption occurs in:', ['DCT', 'PCT', 'Collecting duct', 'Loop of Henle'], 1, 'PCT reabsorbs 65-70% of filtered water, all glucose, amino acids, most ions', 10),
+              createMatch('bio-11-7-m3-l2-a2', 'Match substance with reabsorption mechanism', [
+                {term: 'Glucose', definition: 'Secondary active transport with Na+'},
+                {term: 'Amino acids', definition: 'Secondary active transport'},
+                {term: 'Na+', definition: 'Active transport (Na+/K+ pump)'},
+                {term: 'Water', definition: 'Osmosis (follows solutes)'},
+                {term: 'Urea', definition: 'Passive diffusion (50% reabsorbed)'},
+              ], 15),
+              createFillBlank('bio-11-7-m3-l2-a3', 'Glucose transport', 'Glucose is reabsorbed by _____ _____ transport using SGLT proteins with Na+.', ['secondary', 'active'], ['secondary', 'active', 'primary', 'facilitated'], 10),
+              createQuiz('bio-11-7-m3-l2-a4', 'Transport maximum (Tm) for glucose is about:', ['100 mg/min', '375 mg/min', '180 g/day', 'Both B and C'], 3, 'Tm = ~375 mg/min; if blood glucose exceeds 180 mg/dL, glucose appears in urine', 10),
+              createTrueFalse('bio-11-7-m3-l2-a5', 'True or False', 'Glucosuria (glucose in urine) occurs when blood glucose exceeds renal threshold (~180 mg/dL)', true, 'Diabetes mellitus causes hyperglycemia exceeding reabsorption capacity', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m3-l3',
+            name: '3.3 Tubular Secretion',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-7-m3-l3-a1', 'Tubular secretion mainly occurs in:', ['PCT only', 'DCT and PCT', 'Loop of Henle only', 'Collecting duct only'], 1, 'Secretion of H+, K+, NH3, drugs, toxins occurs mainly in PCT and DCT', 10),
+              createMatch('bio-11-7-m3-l3-a2', 'Match secreted substance with purpose', [
+                {term: 'H+ ions', definition: 'Acid-base balance (pH regulation)'},
+                {term: 'K+ ions', definition: 'Electrolyte balance'},
+                {term: 'NH3/NH4+', definition: 'Buffering H+, excreting acid'},
+                {term: 'Drugs/toxins', definition: 'Removal of foreign substances'},
+                {term: 'Creatinine', definition: 'Metabolic waste excretion'},
+              ], 15),
+              createFillBlank('bio-11-7-m3-l3-a3', 'Acid-base balance', 'The kidneys regulate pH by secreting _____ and reabsorbing _____ ions.', ['H+', 'bicarbonate'], ['H+', 'Na+', 'K+', 'bicarbonate'], 10),
+              createQuiz('bio-11-7-m3-l3-a4', 'The ammonia buffer system:', ['Is in the blood only', 'Traps H+ in tubules as NH4+', 'Is not related to kidneys', 'Regulates Na+ only'], 1, 'Ammonia diffuses into tubules, combines with H+ to form NH4+ which cannot diffuse back', 10),
+              createTrueFalse('bio-11-7-m3-l3-a5', 'True or False', 'Tubular secretion allows kidneys to actively eliminate substances not filtered at glomerulus', true, 'Organic ions, drugs, and toxins can be actively transported into tubule', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Counter-Current Mechanism ============
+      {
+        id: 'bio-11-7-m4',
+        name: 'Counter-Current Mechanism 🔥🔥',
+        description: 'Concentration gradient, hypertonic medulla, dilute vs concentrated urine',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-7-m4-l1',
+            name: '4.1 Counter-Current Multiplier 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m4-l1-a1', 'The counter-current multiplier system involves:', ['Only loop of Henle', 'Loop of Henle and vasa recta', 'Only collecting duct', 'Only PCT'], 1, 'Loop creates gradient; vasa recta maintains it without washing away solutes', 10),
+              createMatch('bio-11-7-m4-l1-a2', 'Match limb with permeability', [
+                {term: 'Descending limb', definition: 'Permeable to water, impermeable to NaCl'},
+                {term: 'Ascending limb thick', definition: 'Active NaCl transport, impermeable to water'},
+                {term: 'Ascending limb thin', definition: 'Passive NaCl diffusion, impermeable to water'},
+                {term: 'Medullary interstitium', definition: 'Hypertonic - up to 1200 mOsm/L'},
+              ], 15),
+              createFillBlank('bio-11-7-m4-l1-a3', 'Gradient formation', 'The osmolarity of interstitial fluid increases from _____ mOsm/L in cortex to _____ mOsm/L in inner medulla.', ['300', '1200'], ['300', '400', '900', '1200'], 10),
+              createQuiz('bio-11-7-m4-l1-a4', 'The single effect refers to:', ['Single nephron filtration', 'Small osmotic difference between ascending and descending limbs', 'One-time urine formation', 'Single hormone action'], 1, 'Single effect creates small gradient that is multiplied by counter-current flow', 10),
+              createTrueFalse('bio-11-7-m4-l1-a5', 'True or False', 'The loop of Henle multiplies the osmotic gradient created by the single effect', true, 'Multiple segments of loop create progressive osmotic gradient in medulla', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m4-l2',
+            name: '4.2 Counter-Current Exchange (Vasa Recta) 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m4-l2-a1', 'Vasa recta function is to:', ['Produce urine', 'Maintain medullary osmotic gradient', 'Filter blood', 'Secrete hormones'], 1, 'Vasa recta removes water and returns solutes to maintain gradient', 10),
+              createMatch('bio-11-7-m4-l2-a2', 'Match vasa recta feature with function', [
+                {term: 'Descending limb', definition: 'Water leaves, solutes enter'},
+                {term: 'Ascending limb', definition: 'Water enters, solutes leave'},
+                {term: 'U-shaped capillary', definition: 'Parallel to loop of Henle'},
+                {term: 'Slow blood flow', definition: 'Prevents rapid solute removal'},
+              ], 15),
+              createFillBlank('bio-11-7-m4-l2-a3', 'Vasa recta purpose', 'Vasa recta acts as a _____-_____ exchanger maintaining the medullary gradient.', ['counter-current', 'exchange'], ['counter-current', 'exchange', 'concurrent', 'flow'], 10),
+              createQuiz('bio-11-7-m4-l2-a4', 'If vasa recta did not exist, the medullary gradient would:', ['Increase', 'Be washed away', 'Remain same', 'Double'], 1, 'Normal capillaries would wash away the solutes destroying the gradient', 10),
+              createTrueFalse('bio-11-7-m4-l2-a5', 'True or False', 'Blood leaving vasa recta has nearly normal osmolarity (~300 mOsm/L) despite passing through hypertonic medulla', true, 'Counter-current exchange allows blood to enter and leave with same osmolarity', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m4-l3',
+            name: '4.3 Urine Concentration',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-7-m4-l3-a1', 'Maximum concentrating ability of human kidney is:', ['300 mOsm/L', '600 mOsm/L', '900 mOsm/L', '1200 mOsm/L'], 3, 'Human kidneys can concentrate urine up to ~1200 mOsm/L (4x plasma osmolarity)', 10),
+              createMatch('bio-11-7-m4-l3-a2', 'Match urine type with condition', [
+                {term: 'Dilute urine', definition: 'ADH absent, collecting duct impermeable'},
+                {term: 'Concentrated urine', definition: 'ADH present, water reabsorbed'},
+                {term: 'Isosthenuric urine', definition: 'Same as plasma (300 mOsm/L)'},
+                {term: 'Diabetes insipidus', definition: 'No ADH, copious dilute urine'},
+              ], 15),
+              createFillBlank('bio-11-7-m4-l3-a3', 'Daily urine volume', 'Normal daily urine volume is about _____-_____ L, but can vary from _____ to _____ L.', ['1', '1.5', '0.5', '20'], ['1', '1.5', '0.5', '20'], 10),
+              createTrueFalse('bio-11-7-m4-l3-a4', 'True or False', 'Desert animals like kangaroo rats can concentrate urine up to 3000-4000 mOsm/L', true, 'They have extremely long loops of Henle extending deep into medulla', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Regulation of Kidney Function ============
+      {
+        id: 'bio-11-7-m5',
+        name: 'Regulation of Kidney Function 🔥🔥',
+        description: 'ADH, RAAS, ANF, micturition reflex',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-7-m5-l1',
+            name: '5.1 Antidiuretic Hormone (ADH) 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m5-l1-a1', 'ADH is secreted from:', ['Anterior pituitary', 'Posterior pituitary (stored)', 'Hypothalamus (produced)', 'Both B and C'], 3, 'Produced in hypothalamus (supraoptic/paraventricular nuclei), stored in posterior pituitary', 10),
+              createMatch('bio-11-7-m5-l1-a2', 'Match ADH factor with effect', [
+                {term: 'Increased plasma osmolarity', definition: 'Stimulates ADH release'},
+                {term: 'Decreased blood volume', definition: 'Stimulates ADH release'},
+                {term: 'ADH action', definition: 'Inserts aquaporin-2 channels in DCT/CD'},
+                {term: 'Result', definition: 'Water reabsorption, concentrated urine'},
+              ], 15),
+              createFillBlank('bio-11-7-m5-l1-a3', 'ADH mechanism', 'ADH makes the _____ _____ tubule and _____ duct permeable to water via _____.', ['distal', 'convoluted', 'collecting', 'aquaporins'], ['distal', 'convoluted', 'collecting', 'aquaporins'], 10),
+              createQuiz('bio-11-7-m5-l1-a4', 'Diabetes insipidus is caused by:', ['Excess insulin', 'ADH deficiency or insensitivity', 'Excess aldosterone', 'Glucose excess'], 1, 'No ADH action → cannot reabsorb water → 10-20 L/day dilute urine', 10),
+              createTrueFalse('bio-11-7-m5-l1-a5', 'True or False', 'Alcohol inhibits ADH release causing increased urine output (diuresis)', true, 'Alcohol suppresses ADH → more water excreted → dehydration', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m5-l2',
+            name: '5.2 RAAS and Aldosterone 🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-7-m5-l2-a1', 'Renin is secreted by:', ['Adrenal cortex', 'Juxtaglomerular (JG) cells', 'Posterior pituitary', 'Hypothalamus'], 1, 'JG cells in afferent arteriole wall sense decreased BP and secrete renin', 10),
+              createMatch('bio-11-7-m5-l2-a2', 'Match RAAS component with action', [
+                {term: 'Renin', definition: 'Converts angiotensinogen to angiotensin I'},
+                {term: 'ACE (lungs)', definition: 'Converts AI to angiotensin II'},
+                {term: 'Angiotensin II', definition: 'Vasoconstriction, stimulates aldosterone'},
+                {term: 'Aldosterone', definition: 'Na+ reabsorption, K+ secretion in DCT'},
+              ], 15),
+              createFillBlank('bio-11-7-m5-l2-a3', 'RAAS pathway', 'Angiotensinogen → Angiotensin I → Angiotensin II → Stimulates _____ release from adrenal _____.', ['aldosterone', 'cortex'], ['aldosterone', 'cortex', 'medulla', 'renin'], 10),
+              createQuiz('bio-11-7-m5-l2-a4', 'Aldosterone causes:', ['Na+ reabsorption and K+ secretion', 'Water excretion only', 'Glucose reabsorption', 'H+ secretion only'], 0, 'Aldosterone acts on DCT and collecting duct for Na+/K+ exchange', 10),
+              createTrueFalse('bio-11-7-m5-l2-a5', 'True or False', 'The macula densa cells of DCT sense NaCl delivery and regulate JG cell renin secretion', true, 'Tubuloglomerular feedback - macula densa monitors filtrate composition', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m5-l3',
+            name: '5.3 Other Regulators & Micturition',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m5-l3-a1', 'ANF (Atrial Natriuretic Factor) is released when:', ['Blood pressure drops', 'Atrial wall is stretched (volume overload)', 'Blood osmolarity increases', 'Aldosterone is high'], 1, 'ANF released from atria during volume expansion → causes vasodilation and Na+ excretion', 10),
+              createMatch('bio-11-7-m5-l3-a2', 'Match regulator with action', [
+                {term: 'ANF', definition: 'Vasodilation, Na+ excretion (diuresis)'},
+                {term: 'Prostaglandins', definition: 'Vasodilation of afferent arteriole'},
+                {term: 'Parathyroid hormone', definition: 'Ca2+ reabsorption, PO4 excretion'},
+                {term: 'Erythropoietin', definition: 'RBC production stimulation'},
+              ], 15),
+              createFillBlank('bio-11-7-m5-l3-a3', 'Micturition', 'Micturition is the process of _____ and involves the _____ sphincter and _____ sphincter.', ['urination', 'internal', 'external'], ['urination', 'internal', 'external', 'detrusor'], 10),
+              createQuiz('bio-11-7-m5-l3-a4', 'The micturition reflex is controlled by:', ['Only spinal cord', 'Spinal reflex + voluntary cortical control', 'Only cerebral cortex', 'Only hypothalamus'], 1, 'Spinal reflex (S2-S4) initiates; cortex provides voluntary control (can override)', 10),
+              createTrueFalse('bio-11-7-m5-l3-a5', 'True or False', 'The detrusor muscle contracts and both sphincters relax during micturition', true, 'Detrusor muscle contraction increases bladder pressure; sphincters open to allow flow', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 6: Disorders & PYQ ============
+      {
+        id: 'bio-11-7-m6',
+        name: 'Disorders & PYQ 🔥',
+        description: 'Kidney disorders, dialysis, transplants, previous year questions',
+        totalTokens: 70,
+        levels: [
+          {
+            id: 'bio-11-7-m6-l1',
+            name: '6.1 Kidney Disorders 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m6-l1-a1', 'Uremia refers to:', ['Excess urea in urine', 'Urea accumulation in blood', 'Lack of urea', 'Normal urea levels'], 1, 'Uremia = elevated blood urea due to kidney failure - toxic to CNS', 10),
+              createMatch('bio-11-7-m6-l1-a2', 'Match disorder with description', [
+                {term: 'Uremia', definition: 'Urea accumulation in blood'},
+                {term: 'Renal calculi', definition: 'Kidney stones (oxalate, phosphate, urate)'},
+                {term: 'Glomerulonephritis', definition: 'Inflammation of glomeruli'},
+                {term: 'Pyelonephritis', definition: 'Bacterial infection of kidneys'},
+                {term: 'Nephrotic syndrome', definition: 'Proteinuria, edema, hyperlipidemia'},
+              ], 15),
+              createFillBlank('bio-11-7-m6-l1-a3', 'Kidney stones', 'Renal calculi (kidney stones) are formed by precipitation of calcium _____, calcium _____, or uric acid.', ['oxalate', 'phosphate'], ['oxalate', 'phosphate', 'carbonate', 'chloride'], 10),
+              createQuiz('bio-11-7-m6-l1-a4', 'Hemodialysis is based on:', ['Active transport', 'Diffusion across semipermeable membrane', 'Osmosis only', 'Filtration only'], 1, 'Blood flows past dialyzing fluid; wastes diffuse out along concentration gradient', 10),
+              createTrueFalse('bio-11-7-m6-l1-a5', 'True or False', 'In peritoneal dialysis, the peritoneum acts as a semipermeable membrane', true, 'Dialyzing fluid introduced into peritoneal cavity; wastes diffuse into it', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m6-l2',
+            name: '6.2 Artificial Kidney & Transplant',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-7-m6-l2-a1', 'The dialyzing fluid in hemodialysis contains:', ['Urea and creatinine', 'Glucose and electrolytes (no urea)', 'Only water', 'Only glucose'], 1, 'Dialyzate composition mimics normal plasma without waste products', 10),
+              createMatch('bio-11-7-m6-l2-a2', 'Match treatment with mechanism', [
+                {term: 'Hemodialysis', definition: 'Machine filters blood externally'},
+                {term: 'Peritoneal dialysis', definition: 'Uses peritoneum as filter'},
+                {term: 'Kidney transplant', definition: 'Replaces failed kidney'},
+                {term: 'Immunosuppressants', definition: 'Prevent transplant rejection'},
+              ], 12),
+              createFillBlank('bio-11-7-m6-l2-a3', 'Dialysis frequency', 'Hemodialysis is typically needed _____ times per week for _____ hours each session.', ['2-3', '3-4'], ['2-3', '3-4', '1-2', '4-5'], 8),
+              createTrueFalse('bio-11-7-m6-l2-a4', 'True or False', 'Kidney transplantation is the permanent solution for end-stage renal disease', true, 'Transplant replaces non-functioning kidneys but requires lifelong immunosuppression', 8),
+            ]
+          },
+          {
+            id: 'bio-11-7-m6-l3',
+            name: '6.3 PYQ Master 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-7-m6-l3-a1', 'PYQ: The process of urine formation includes:', ['Filtration only', 'Filtration, reabsorption, secretion', 'Reabsorption only', 'Secretion only'], 1, 'Three processes: glomerular filtration, tubular reabsorption, tubular secretion', 10),
+              createQuiz('bio-11-7-m6-l3-a2', 'PYQ: GFR in a healthy adult is approximately:', ['75 mL/min', '125 mL/min', '180 L/day', 'Both B and C'], 3, '~125 mL/min = ~180 L/day', 10),
+              createQuiz('bio-11-7-m6-l3-a3', 'PYQ: Maximum urine concentration in humans is:', ['300 mOsm/L', '600 mOsm/L', '900 mOsm/L', '1200 mOsm/L'], 3, 'Can concentrate up to ~1200 mOsm/L (4x plasma)', 10),
+              createMatch('bio-11-7-m6-l3-a4', '🎮 Match PYQ facts', [
+                {term: 'PCT', definition: 'Reabsorbs 65-70% of filtrate'},
+                {term: 'ADH', definition: 'Increases water permeability in DCT/CD'},
+                {term: 'Aldosterone', definition: 'Na+ reabsorption, K+ excretion'},
+                {term: 'Renin', definition: 'Converts angiotensinogen to AI'},
+                {term: 'Juxtaglomerular apparatus', definition: 'Regulates GFR via macula densa'},
+              ], 15),
+              createFillBlank('bio-11-7-m6-l3-a5', 'Quick revision', 'Ammonia is converted to urea by the _____ cycle in the _____.', ['ornithine/urea', 'liver'], ['ornithine/urea', 'kidney', 'liver', 'ornithine'], 10),
             ]
           }
         ]
@@ -4256,23 +5928,409 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-8',
     name: 'Locomotion and Movement',
-    description: 'Muscles, bones, joints, disorders',
-    moduleCount: 4,
+    description: 'Types of movement, muscle types, skeletal system, joints, muscle contraction',
+    moduleCount: 6,
     modules: [
+      // ============ MODULE 1: Types of Movement ============
       {
         id: 'bio-11-8-m1',
-        name: 'Muscular System',
-        description: 'Muscle types and contraction',
-        totalTokens: 60,
+        name: 'Types of Movement 🔥',
+        description: 'Amoeboid, ciliary, flagellar, and muscular movement',
+        totalTokens: 55,
         levels: [
           {
             id: 'bio-11-8-m1-l1',
-            name: 'Muscle Types',
+            name: '1.1 Movement in Organisms',
             order: 1,
-            totalTokens: 60,
+            totalTokens: 20,
             activities: [
-              createQuiz('bio-11-8-m1-l1-a1', 'Striated muscles are:', ['Smooth', 'Cardiac and skeletal', 'Only cardiac', 'Only skeletal'], 1, 'Both cardiac and skeletal muscles are striated', 10),
-              createFlashcard('bio-11-8-m1-l1-a2', 'Sarcomere', 'Contractile unit', 'Between two Z-lines', 8),
+              createQuiz('bio-11-8-m1-l1-a1', 'Locomotion refers to:', ['Any movement', 'Movement of body parts only', 'Movement of organism from place to place', 'Internal movement'], 2, 'Locomotion = voluntary movement from one place to another, not just body parts', 10),
+              createMatch('bio-11-8-m1-l1-a2', 'Match movement type with example', [
+                {term: 'Amoeboid', definition: 'Amoeba, macrophages, leucocytes'},
+                {term: 'Ciliary', definition: 'Paramecium, respiratory tract cilia'},
+                {term: 'Flagellar', definition: 'Sperm, Euglena'},
+                {term: 'Muscular', definition: 'Most multicellular animals'},
+              ], 15),
+              createFillBlank('bio-11-8-m1-l1-a3', 'Amoeboid movement', 'Amoeboid movement involves formation of _____-like pseudopodia using _____.', ['finger', 'pseudopodia'], ['finger', 'lobe', 'pseudopodia', 'cilia'], 10),
+              createTrueFalse('bio-11-8-m1-l1-a4', 'True or False', 'Cilia and flagella are structurally identical but differ in length, number, and beating pattern', true, 'Both have 9+2 microtubule arrangement; flagella are longer, fewer, undulate; cilia are shorter, numerous, beat synchronously', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m1-l2',
+            name: '1.2 Ciliary and Flagellar Movement',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-8-m1-l2-a1', 'The core of cilia and flagella contains:', ['9+0 microtubule arrangement', '9+2 microtubule arrangement', 'Actin filaments only', 'Myosin filaments only'], 1, 'Axoneme has 9 peripheral doublets + 2 central singlets (9+2 pattern)', 10),
+              createMatch('bio-11-8-m1-l2-a2', 'Match structure with function in cilia/flagella', [
+                {term: 'Axoneme', definition: 'Core with 9+2 microtubules'},
+                {term: 'Dynein arms', definition: 'Motor proteins causing bending'},
+                {term: 'Basal body', definition: 'Anchors to cell, has 9+0 triplet'},
+                {term: 'Radial spokes', definition: 'Connect outer doublets to central pair'},
+                {term: 'Nexin links', definition: 'Maintain doublet spacing'},
+              ], 15),
+              createFillBlank('bio-11-8-m1-l2-a3', 'Cilia beating', 'Ciliary movement in respiratory tract moves _____ toward the _____.', ['mucus', 'pharynx'], ['mucus', 'pharynx', 'food', 'stomach'], 10),
+              createTrueFalse('bio-11-8-m1-l2-a4', 'True or False', 'Dynein arms use ATP to slide microtubule doublets past each other causing bending', true, 'ATP hydrolysis by dynein generates force for microtubule sliding and bending', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m1-l3',
+            name: '1.3 Skeletal Muscle Overview',
+            order: 3,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-8-m1-l3-a1', 'Skeletal muscles constitute approximately what percentage of body weight?', ['10%', '20%', '40-50%', '70%'], 2, 'Skeletal muscles make up 40-50% of total body weight', 10),
+              createMatch('bio-11-8-m1-l3-a2', 'Match muscle characteristic with skeletal muscle', [
+                {term: 'Voluntary control', definition: 'Skeletal only'},
+                {term: 'Striated appearance', definition: 'Skeletal and cardiac'},
+                {term: 'Multinucleated', definition: 'Skeletal (syncytium)'},
+                {term: 'Attached to bones', definition: 'Skeletal by tendons'},
+              ], 12),
+              createFillBlank('bio-11-8-m1-l3-a3', 'Muscle functions', 'Muscles help in _____ (body position), _____ (heat production), and _____ of substances.', ['locomotion', 'thermogenesis', 'movement'], ['locomotion', 'thermogenesis', 'digestion', 'movement'], 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Muscle Types & Structure ============
+      {
+        id: 'bio-11-8-m2',
+        name: 'Muscle Types & Structure 🔥🔥',
+        description: 'Skeletal, smooth, cardiac muscles - histology and features',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-8-m2-l1',
+            name: '2.1 Skeletal Muscle 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m2-l1-a1', 'Skeletal muscle fibers are:', ['Uninucleated', 'Multinucleated', 'Binucleated', 'Anucleated'], 1, 'Skeletal muscle fibers are syncytium (multinucleated) formed by fusion of myoblasts', 10),
+              createMatch('bio-11-8-m2-l1-a2', 'Match skeletal muscle feature with description', [
+                {term: 'Striations', definition: 'Alternating dark and light bands'},
+                {term: 'Multinucleated', definition: 'Multiple nuclei peripherally located'},
+                {term: 'Long cylindrical fibers', definition: 'Unbranched, parallel arrangement'},
+                {term: 'Voluntary', definition: 'Under conscious control'},
+                {term: 'Sarcoplasmic reticulum', definition: 'Stores and releases Ca2+'},
+              ], 15),
+              createFillBlank('bio-11-8-m2-l1-a3', 'Muscle hierarchy', 'Muscle → Fasciculus (bundle of _____) → Muscle fiber (_____) → Myofibril → Sarcomere.', ['fibers', 'cell'], ['fibers', 'cells', 'myofibrils', 'sarcomeres'], 10),
+              createQuiz('bio-11-8-m2-l1-a4', 'The connective tissue covering individual muscle fibers is called:', ['Epimysium', 'Perimysium', 'Endomysium', 'Sarcolemma'], 2, 'Endomysium covers individual fibers; perimysium covers fasciculi; epimysium covers whole muscle', 10),
+              createTrueFalse('bio-11-8-m2-l1-a5', 'True or False', 'Sarcolemma is the plasma membrane of muscle fibers and is excitable like neuronal membrane', true, 'Sarcolemma generates and conducts action potentials during muscle stimulation', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m2-l2',
+            name: '2.2 Smooth and Cardiac Muscle 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m2-l2-a1', 'Smooth muscle is found in:', ['Only GI tract', 'Hollow visceral organs (GI, blood vessels, ureters, uterus)', 'Only heart', 'Only skeletal attachments'], 1, 'Smooth muscle lines walls of hollow internal organs and tubes', 10),
+              createMatch('bio-11-8-m2-l2-a2', 'Match muscle type with feature', [
+                {term: 'Smooth muscle', definition: 'Spindle-shaped, uninucleated, non-striated'},
+                {term: 'Cardiac muscle', definition: 'Branched, uninucleated/cenucleated, striated, intercalated discs'},
+                {term: 'Both smooth and cardiac', definition: 'Involuntary control'},
+                {term: 'Skeletal only', definition: 'Voluntary, multinucleated'},
+              ], 15),
+              createFillBlank('bio-11-8-m2-l2-a3', 'Cardiac features', 'Cardiac muscle has _____ discs containing _____ and gap junctions for synchronized contraction.', ['intercalated', 'desmosomes'], ['intercalated', 'desmosomes', 'tight', 'adherens'], 10),
+              createQuiz('bio-11-8-m2-l2-a4', 'Which muscle type is most fatigue-resistant?', ['Skeletal', 'Smooth', 'Cardiac', 'All same'], 2, 'Cardiac muscle never fatigues due to rich mitochondria and continuous blood supply', 10),
+              createTrueFalse('bio-11-8-m2-l2-a5', 'True or False', 'Smooth muscle contracts slowly but can maintain contraction for long periods with low energy cost', true, 'Latch mechanism allows smooth muscle to sustain contraction without continuous ATP consumption', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m2-l3',
+            name: '2.3 Muscle Proteins 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-8-m2-l3-a1', 'Thick filaments are composed of:', ['Actin', 'Myosin', 'Troponin', 'Tropomyosin'], 1, 'Thick filaments contain myosin; thin filaments contain actin, troponin, tropomyosin', 10),
+              createMatch('bio-11-8-m2-l3-a2', 'Match protein with function/location', [
+                {term: 'Myosin', definition: 'Thick filament - motor protein with head'},
+                {term: 'Actin', definition: 'Thin filament - binding site for myosin'},
+                {term: 'Tropomyosin', definition: 'Blocks myosin binding sites on actin'},
+                {term: 'Troponin', definition: 'Ca2+ binding - moves tropomyosin'},
+                {term: 'Titin', definition: 'Elastic protein connecting Z-line to M-line'},
+              ], 15),
+              createFillBlank('bio-11-8-m2-l3-a3', 'Contractile proteins', 'The two contractile proteins are _____ (thin filament) and _____ (thick filament).', ['actin', 'myosin'], ['actin', 'myosin', 'troponin', 'tropomyosin'], 10),
+              createQuiz('bio-11-8-m2-l3-a4', 'Regulatory proteins in muscle include:', ['Only actin', 'Troponin and tropomyosin', 'Only myosin', 'Titin only'], 1, 'Troponin and tropomyosin regulate contraction by controlling actin-myosin interaction', 10),
+              createTrueFalse('bio-11-8-m2-l3-a5', 'True or False', 'Meromyosin heads contain ATPase activity and binding sites for actin and ATP', true, 'Myosin head hydrolyzes ATP to ADP + Pi, providing energy for power stroke', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Skeletal System ============
+      {
+        id: 'bio-11-8-m3',
+        name: 'Skeletal System 🔥🔥',
+        description: 'Bones, cartilage, types of joints, axial and appendicular skeleton',
+        totalTokens: 90,
+        levels: [
+          {
+            id: 'bio-11-8-m3-l1',
+            name: '3.1 Skeletal System Overview 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m3-l1-a1', 'The human skeleton has approximately:', ['106 bones', '206 bones', '306 bones', '180 bones'], 1, 'Adult human skeleton has 206 bones (300+ at birth, many fuse)', 10),
+              createMatch('bio-11-8-m3-l1-a2', 'Match skeleton division with components', [
+                {term: 'Axial skeleton', definition: 'Skull, vertebral column, ribs, sternum (80 bones)'},
+                {term: 'Appendicular skeleton', definition: 'Limbs, girdles (126 bones)'},
+                {term: 'Cranium', definition: 'Brain case (8 bones)'},
+                {term: 'Face', definition: '14 bones including mandible'},
+              ], 15),
+              createFillBlank('bio-11-8-m3-l1-a3', 'Bone functions', 'Bones provide _____ (support), _____ (leverage for muscles), and _____ of internal organs.', ['support', 'protection', 'leverage'], ['support', 'protection', 'leverage', 'movement'], 10),
+              createQuiz('bio-11-8-m3-l1-a4', 'Which is NOT a function of the skeletal system?', ['Support', 'Blood cell production', 'Protein digestion', 'Mineral storage'], 2, 'Skeletal functions: support, protection, locomotion, blood production, mineral storage - NOT digestion', 10),
+              createTrueFalse('bio-11-8-m3-l1-a5', 'True or False', 'Yellow bone marrow in adults is mainly adipose tissue that stores fat', true, 'Red marrow produces blood cells; yellow marrow stores fat and can convert back to red if needed', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m3-l2',
+            name: '3.2 Bone Structure 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m3-l2-a1', 'The shaft of long bone is called:', ['Epiphysis', 'Diaphysis', 'Metaphysis', 'Periosteum'], 1, 'Diaphysis = central shaft; Epiphysis = ends; Metaphysis = growth plate region between', 10),
+              createMatch('bio-11-8-m3-l2-a2', 'Match bone structure with description', [
+                {term: 'Periosteum', definition: 'Outer fibrous covering with blood vessels'},
+                {term: 'Endosteum', definition: 'Lines internal cavity (medullary)'},
+                {term: 'Compact bone', definition: 'Dense, outer layer with Haversian systems'},
+                {term: 'Spongy bone', definition: 'Cancellous, trabecular, contains red marrow'},
+                {term: 'Medullary cavity', definition: 'Contains yellow bone marrow'},
+              ], 15),
+              createFillBlank('bio-11-8-m3-l2-a3', 'Bone cells', 'Osteo_____ builds bone, osteo_____ breaks down bone, osteo_____ are mature bone cells.', ['blasts', 'clasts', 'cytes'], ['blasts', 'clasts', 'cytes', 'gens'], 10),
+              createQuiz('bio-11-8-m3-l2-l4', 'Haversian systems (osteons) are found in:', ['Spongy bone only', 'Compact bone only', 'Both types', 'Cartilage'], 1, 'Compact bone is organized into osteons with central Haversian canal and concentric lamellae', 10),
+              createTrueFalse('bio-11-8-m3-l2-a5', 'True or False', 'Cartilage lacks blood vessels and nerves, receiving nutrients by diffusion from surrounding fluid', true, 'Avascular cartilage relies on diffusion; this limits repair capacity compared to bone', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m3-l3',
+            name: '3.3 Types of Joints 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m3-l3-a1', 'Which joint allows the greatest range of motion?', ['Fibrous', 'Cartilaginous', 'Synovial', 'Suture'], 2, 'Synovial (diarthrotic) joints have joint cavity with synovial fluid allowing free movement', 10),
+              createMatch('bio-11-8-m3-l3-a2', 'Match joint type with example', [
+                {term: 'Fibrous (synarthrosis)', definition: 'Sutures of skull, teeth in sockets'},
+                {term: 'Cartilaginous (amphiarthrosis)', definition: 'Intervertebral discs, pubic symphysis'},
+                {term: 'Synovial (diarthrosis)', definition: 'Knee, shoulder, hip, elbow'},
+                {term: 'Ball and socket', definition: 'Hip, shoulder'},
+                {term: 'Hinge', definition: 'Elbow, knee (modified)'},
+                {term: 'Pivot', definition: 'Atlantoaxial joint'},
+              ], 15),
+              createFillBlank('bio-11-8-m3-l3-a3', 'Synovial joint', 'Synovial joints have a _____ cavity containing _____ fluid for lubrication.', ['joint', 'synovial'], ['joint', 'bursa', 'synovial', 'serous'], 10),
+              createQuiz('bio-11-8-m3-l3-a4', 'Cartilage found at ends of long bones is:', ['Fibrocartilage', 'Hyaline cartilage', 'Elastic cartilage', 'Calcified cartilage'], 1, 'Articular cartilage is hyaline cartilage providing smooth, low-friction surface', 10),
+              createTrueFalse('bio-11-8-m3-l3-a5', 'True or False', 'Bursae are fluid-filled sacs that reduce friction between tendons and bones', true, 'Bursae act as cushions reducing friction in areas like shoulder, elbow, knee', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m3-l4',
+            name: '3.4 Disorders of Muscular and Skeletal System',
+            order: 4,
+            totalTokens: 15,
+            activities: [
+              createQuiz('bio-11-8-m3-l4-a1', 'Myasthenia gravis is an autoimmune disorder affecting:', ['Bones', 'Neuromuscular junction', 'Tendons', 'Cartilage'], 1, 'Antibodies attack acetylcholine receptors at neuromuscular junction causing muscle weakness', 10),
+              createMatch('bio-11-8-m3-l4-a2', 'Match disorder with description', [
+                {term: 'Muscular dystrophy', definition: 'Genetic, progressive muscle degeneration'},
+                {term: 'Tetany', definition: 'Rapid spasms due to low Ca2+'},
+                {term: 'Osteoporosis', definition: 'Low bone density, porous bones'},
+                {term: 'Arthritis', definition: 'Joint inflammation'},
+                {term: 'Gout', definition: 'Uric acid crystals in joints'},
+                {term: 'Sprain', definition: 'Ligament injury'},
+              ], 12),
+              createFillBlank('bio-11-8-m3-l4-a3', 'Tetany cause', 'Tetany is caused by low levels of _____ in the blood.', ['calcium'], ['calcium', 'sodium', 'potassium', 'magnesium'], 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Muscle Contraction Mechanism ============
+      {
+        id: 'bio-11-8-m4',
+        name: 'Muscle Contraction 🔥🔥',
+        description: 'Sliding filament theory, neuromuscular junction, excitation-contraction coupling',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-8-m4-l1',
+            name: '4.1 Sarcomere Structure 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m4-l1-a1', 'The sarcomere is the region between:', ['Two M-lines', 'Two Z-lines', 'One Z and one M line', 'Two A-bands'], 1, 'Sarcomere = contractile unit between two successive Z-lines (Z-discs)', 10),
+              createMatch('bio-11-8-m4-l1-a2', 'Match sarcomere band with composition', [
+                {term: 'A-band (Anisotropic)', definition: 'Contains entire thick filament + parts of thin filament'},
+                {term: 'I-band (Isotropic)', definition: 'Contains only thin filaments'},
+                {term: 'H-zone', definition: 'Only thick filaments (center of A-band)'},
+                {term: 'M-line', definition: 'Middle of sarcomere - holds thick filaments'},
+                {term: 'Z-line/Z-disc', definition: 'Anchors thin filaments, defines sarcomere ends'},
+              ], 15),
+              createFillBlank('bio-11-8-m4-l1-a3', 'Band changes', 'During contraction, the _____-zone and _____-bands shorten, but the A-band remains constant.', ['H', 'I'], ['H', 'I', 'A', 'M'], 10),
+              createQuiz('bio-11-8-m4-l1-a4', 'During muscle contraction:', ['A-band shortens', 'I-band shortens, H-zone shortens', 'All bands shorten', 'No bands change'], 1, 'Thin filaments slide past thick filaments; I-band and H-zone narrow, A-band constant', 10),
+              createTrueFalse('bio-11-8-m4-l1-a5', 'True or False', 'The M-line contains proteins like myomesin that hold thick filaments in place', true, 'M-line proteins provide structural support for thick filaments during contraction', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m4-l2',
+            name: '4.2 Neuromuscular Junction 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m4-l2-a1', 'The neurotransmitter at neuromuscular junction is:', ['Dopamine', 'Acetylcholine', 'GABA', 'Serotonin'], 1, 'Motor neuron releases acetylcholine (ACh) which binds to receptors on sarcolemma', 10),
+              createMatch('bio-11-8-m4-l2-a2', 'Match NMJ structure with function', [
+                {term: 'Synaptic knob', definition: 'Motor neuron terminal with vesicles'},
+                {term: 'Synaptic cleft', definition: 'Gap between neuron and muscle (20-50 nm)'},
+                {term: 'Motor end plate', definition: 'Folded sarcolemma with receptors'},
+                {term: 'Acetylcholinesterase', definition: 'Breaks down ACh in cleft'},
+                {term: 'Junctional folds', definition: 'Increase surface area for receptors'},
+              ], 15),
+              createFillBlank('bio-11-8-m4-l2-a3', 'Action potential', 'ACh binding opens _____-gated channels causing depolarization and _____ potential.', ['ligand', 'end-plate'], ['ligand', 'voltage', 'end-plate', 'action'], 10),
+              createQuiz('bio-11-8-m4-l2-a4', 'Acetylcholinesterase function is to:', ['Synthesize ACh', 'Break down ACh to stop stimulation', 'Release ACh', 'Store ACh'], 1, 'AChE in synaptic cleft hydrolyzes ACh to choline + acetate, ending muscle stimulation', 10),
+              createTrueFalse('bio-11-8-m4-l2-a5', 'True or False', 'One action potential in motor neuron causes one action potential in muscle fiber (all-or-none)', true, 'Each nerve impulse reliably triggers a muscle action potential within milliseconds', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m4-l3',
+            name: '4.3 Sliding Filament Theory 🔥',
+            order: 3,
+            totalTokens: 35,
+            activities: [
+              createQuiz('bio-11-8-m4-l3-a1', 'The power stroke occurs when:', ['ATP binds to myosin', 'ADP + Pi are released from myosin head', 'Ca2+ binds troponin', 'Tropomyosin blocks actin'], 1, 'Release of ADP and Pi triggers conformational change - myosin head pivots pulling thin filament', 10),
+              createMatch('bio-11-8-m4-l3-a2', 'Match contraction step with event', [
+                {term: 'Rest', definition: 'Tropomyosin blocks myosin sites, low Ca2+'},
+                {term: 'Excitation', definition: 'Action potential spreads down T-tubule'},
+                {term: 'Ca2+ release', definition: 'SR releases Ca2+ into cytosol'},
+                {term: 'Cross-bridge formation', definition: 'Myosin binds exposed actin'},
+                {term: 'Power stroke', definition: 'Myosin head pivots, thin filament slides'},
+                {term: 'Detachment', definition: 'ATP binds, myosin releases actin'},
+              ], 20),
+              createFillBlank('bio-11-8-m4-l3-a3', 'Cross-bridge cycle', 'ATP binding to myosin head causes _____ from actin; ATP hydrolysis _____ the head.', ['detachment', 'cocks'], ['detachment', 'binding', 'cocks', 'relaxes'], 10),
+              createQuiz('bio-11-8-m4-l3-a4', 'During muscle relaxation, Ca2+ is:', ['Released from SR', 'Pumped back into SR by Ca2+-ATPase', 'Bound to troponin', 'Exported from cell'], 1, 'Ca2+-ATPase actively transports Ca2+ back into sarcoplasmic reticulum for relaxation', 10),
+              createQuiz('bio-11-8-m4-l3-a5', 'The T-tubule (transverse tubule) function is to:', ['Store Ca2+', 'Transmit action potential into muscle fiber interior', 'Synthesize ATP', 'Break down glycogen'], 1, 'T-tubules conduct action potential from sarcolemma to interior, triggering SR Ca2+ release', 10),
+              createTrueFalse('bio-11-8-m4-l3-a6', 'True or False', 'Tropomyosin moves to expose myosin-binding sites when Ca2+ binds to troponin C', true, 'Ca2+-troponin complex pulls tropomyosin away, unblocking actin sites for cross-bridge formation', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Energy for Contraction & Fatigue ============
+      {
+        id: 'bio-11-8-m5',
+        name: 'Muscle Energetics 🔥',
+        description: 'ATP sources, muscle fatigue, oxygen debt, types of muscle fibers',
+        totalTokens: 60,
+        levels: [
+          {
+            id: 'bio-11-8-m5-l1',
+            name: '5.1 Energy Sources for Muscle 🔥',
+            order: 1,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-8-m5-l1-a1', 'The immediate energy source for muscle contraction is:', ['Glucose', 'Fatty acids', 'ATP', 'Creatine phosphate'], 2, 'ATP is direct energy source; creatine phosphate regenerates ATP quickly', 10),
+              createMatch('bio-11-8-m5-l1-a2', 'Match energy system with duration', [
+                {term: 'ATP already in muscle', definition: 'Immediate - few seconds'},
+                {term: 'Creatine phosphate', definition: 'Short bursts - 15-30 seconds'},
+                {term: 'Anaerobic glycolysis', definition: '1-2 minutes (lactic acid)'},
+                {term: 'Aerobic respiration', definition: 'Sustained activity (Krebs, ETC)'},
+              ], 15),
+              createFillBlank('bio-11-8-m5-l1-a3', 'Creatine phosphate', 'Creatine phosphate + _____ → Creatine + _____.', ['ADP', 'ATP'], ['ADP', 'ATP', 'AMP', 'glucose'], 8),
+              createTrueFalse('bio-11-8-m5-l1-a4', 'True or False', 'Aerobic respiration in mitochondria provides most ATP during prolonged exercise', true, 'Fatty acids and glucose are oxidized to produce 36-38 ATP per glucose molecule', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m5-l2',
+            name: '5.2 Muscle Fatigue & Oxygen Debt',
+            order: 2,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-8-m5-l2-a1', 'Muscle fatigue during intense exercise is primarily due to:', ['Lack of Ca2+', 'Accumulation of lactic acid and H+', 'Too much ATP', 'Excessive oxygen'], 1, 'Anaerobic glycolysis produces lactic acid lowering pH, inhibiting enzyme function', 10),
+              createMatch('bio-11-8-m5-l2-a2', 'Match fatigue factor with effect', [
+                {term: 'Lactic acid accumulation', definition: 'Lowers pH, inhibits enzymes'},
+                {term: 'ATP depletion', definition: 'Cannot detach cross-bridges (rigor)'},
+                {term: 'Oxygen debt', definition: 'Extra O2 needed post-exercise'},
+                {term: 'Creatine depletion', definition: 'Limited phosphate reservoir'},
+              ], 12),
+              createFillBlank('bio-11-8-m5-l2-a3', 'Oxygen debt', 'Oxygen debt is the extra _____ needed after exercise to convert _____ to glucose and oxidize it.', ['oxygen', 'lactate'], ['oxygen', 'ATP', 'lactate', 'pyruvate'], 10),
+              createTrueFalse('bio-11-8-m5-l2-a4', 'True or False', 'Rigor mortis is muscle stiffness after death due to lack of ATP for cross-bridge detachment', true, 'Without ATP, myosin stays bound to actin; muscles relax later as proteins degrade', 8),
+            ]
+          },
+          {
+            id: 'bio-11-8-m5-l3',
+            name: '5.3 Muscle Fiber Types',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-8-m5-l3-a1', 'Red muscle fibers are characterized by:', ['Fast contraction, fatigue quickly', 'Slow contraction, fatigue-resistant, high mitochondria', 'No mitochondria', 'No myoglobin'], 1, 'Slow-oxidative (Type I) fibers are red due to myoglobin and rich blood supply', 10),
+              createMatch('bio-11-8-m5-l3-a2', 'Match fiber type with feature', [
+                {term: 'Slow-oxidative (Type I)', definition: 'Red, endurance, many mitochondria'},
+                {term: 'Fast-oxidative (Type IIa)', definition: 'Intermediate, fatigue-resistant'},
+                {term: 'Fast-glycolytic (Type IIb)', definition: 'White, powerful, fatigue quickly'},
+                {term: 'Myoglobin', definition: 'Oxygen storage protein in red fibers'},
+              ], 12),
+              createFillBlank('bio-11-8-m5-l3-a3', 'White muscle', 'White muscle fibers have less _____, fewer _____, and depend more on glycolysis.', ['myoglobin', 'mitochondria'], ['myoglobin', 'mitochondria', 'glycogen', 'nuclei'], 8),
+              createTrueFalse('bio-11-8-m5-l3-a4', 'True or False', 'Marathon runners have more slow-oxidative (Type I) fibers, while sprinters have more fast-glycolytic (Type II) fibers', true, 'Fiber composition varies with training and genetic factors for different activities', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 6: PYQ & Master Review ============
+      {
+        id: 'bio-11-8-m6',
+        name: 'PYQ Master 🔥🔥',
+        description: 'Assertion-reason, previous year questions, rapid revision',
+        totalTokens: 75,
+        levels: [
+          {
+            id: 'bio-11-8-m6-l1',
+            name: '6.1 Assertion-Reason Practice',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m6-l1-a1', 'Assertion-Reason: Thin filaments slide over thick filaments during muscle contraction BECAUSE Myosin head pulls actin toward the M-line.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A true, R false', 'A false, R false'], 0, 'Both true and reason correctly explains sliding filament theory', 10),
+              createQuiz('bio-11-8-m6-l1-a2', 'Assertion-Reason: Human skeleton has 206 bones at birth BECAUSE Many bones fuse during development.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A false, R true', 'A false, R false'], 2, 'Assertion FALSE - baby has ~300 bones; reason TRUE - many fuse to become 206 in adult', 10),
+              createQuiz('bio-11-8-m6-l1-a3', 'Assertion-Reason: Cardiac muscle is striated BECAUSE It contains organized sarcomeres.', ['Both true, R explains A', 'Both true, R does NOT explain A', 'A true, R false', 'A false, R true'], 0, 'Both true - striations come from organized actin-myosin arrangement in sarcomeres', 10),
+              createMatch('bio-11-8-m6-l1-a4', 'Match PYQ facts', [
+                {term: '9+2 arrangement', definition: 'Cilia and flagella'},
+                {term: 'Multinucleated', definition: 'Skeletal muscle'},
+                {term: 'Intercalated discs', definition: 'Cardiac muscle'},
+                {term: 'Sarcomere', definition: 'Between two Z-lines'},
+                {term: 'Synovial joint', definition: 'Freely movable joint'},
+              ], 15),
+            ]
+          },
+          {
+            id: 'bio-11-8-m6-l2',
+            name: '6.2 Mixed MCQ Battle',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-8-m6-l2-a1', 'PYQ: Axial skeleton includes all EXCEPT:', ['Skull', 'Vertebral column', 'Pelvic girdle', 'Rib cage'], 2, 'Pelvic girdle is appendicular; axial = skull, vertebral column, sternum, ribs (80 bones)', 10),
+              createQuiz('bio-11-8-m6-l2-a2', 'PYQ: The contractile protein of muscle is:', ['Tropomyosin', 'Actin and myosin', 'Troponin', 'Titin'], 1, 'Actin and myosin are contractile; troponin/tropomyosin are regulatory', 10),
+              createQuiz('bio-11-8-m6-l2-a3', 'PYQ: What is the functional unit of contraction?', ['Myofibril', 'Sarcomere', 'Muscle fiber', 'Z-line'], 1, 'Sarcomere is functional unit between Z-lines containing complete apparatus', 10),
+              createQuiz('bio-11-8-m6-l2-a4', 'PYQ: Neostigmine increases muscle contraction by:', ['Increasing acetylcholine synthesis', 'Inhibiting acetylcholinesterase', 'Blocking receptors', 'Increasing calcium'], 1, 'Neostigmine inhibits AChE → ACh accumulates → sustained stimulation', 10),
+              createMatch('bio-11-8-m6-l2-a5', '🎮 Match the concepts', [
+                {term: 'I-band', definition: 'Contains only actin'},
+                {term: 'A-band', definition: 'Contains myosin + actin overlap'},
+                {term: 'H-zone', definition: 'Only myosin'},
+                {term: 'Z-line', definition: 'Actin attachment'},
+                {term: 'M-line', definition: 'Myosin attachment'},
+              ], 15),
+            ]
+          },
+          {
+            id: 'bio-11-8-m6-l3',
+            name: '6.3 Rapid Revision - 60 Seconds',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createMatch('bio-11-8-m6-l3-a1', '⚡ Lightning round: Match in 60 seconds', [
+                {term: '206', definition: 'Bones in adult'},
+                {term: '9+2', definition: 'Cilia axoneme'},
+                {term: 'Myosin', definition: 'Thick filament'},
+                {term: 'Actin', definition: 'Thin filament'},
+                {term: 'ACh', definition: 'Neuromuscular transmitter'},
+                {term: 'Z-line', definition: 'Sarcomere boundary'},
+                {term: 'Red fiber', definition: 'Slow-oxidative'},
+                {term: 'White fiber', definition: 'Fast-glycolytic'},
+                {term: 'Haversian canal', definition: 'Compact bone'},
+                {term: 'Synovial fluid', definition: 'Joint lubricant'},
+              ], 20),
+              createQuiz('bio-11-8-m6-l3-a2', '⚡ Quick: Which protein moves to expose binding sites when Ca2+ binds?', ['Tropomyosin', 'Troponin', 'Myosin', 'Actin'], 0, 'Tropomyosin blocks sites; troponin C binds Ca2+ and moves tropomyosin', 10),
             ]
           }
         ]
@@ -4282,27 +6340,428 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-9',
     name: 'Neural Control and Coordination',
-    description: 'Neuron, synapse, CNS, PNS, reflex action',
-    moduleCount: 5,
+    description: 'Neural system, neuron, synapse, CNS, PNS, reflex action, sensory organs',
+    moduleCount: 6,
     modules: [
+      // ============ MODULE 1: Neural System & Neuron Structure ============
       {
         id: 'bio-11-9-m1',
-        name: 'Nervous System',
-        description: 'Neuron structure and function',
-        totalTokens: 65,
+        name: 'Neural System 🔥🔥',
+        description: 'Neuron structure, types, and neural organization',
+        totalTokens: 85,
         levels: [
           {
             id: 'bio-11-9-m1-l1',
-            name: 'Neurons',
+            name: '1.1 Neural System Organization 🔥',
             order: 1,
-            totalTokens: 65,
+            totalTokens: 25,
             activities: [
-              createQuiz('bio-11-9-m1-l1-a1', 'Resting membrane potential is:', ['-70mV', '0mV', '+70mV', '-90mV'], 0, 'Resting potential is negative at -70mV', 10),
-              createMatch('bio-11-9-m1-l1-a2', 'Match parts', [
-                {term: 'Dendrite', definition: 'Receives signals'},
-                {term: 'Axon', definition: 'Transmits signals'},
-                {term: 'Synapse', definition: 'Neuron junction'},
+              createQuiz('bio-11-9-m1-l1-a1', 'The neural system detects changes in the:', ['Internal environment only', 'External environment only', 'Both internal and external environment', 'Neither environment'], 2, 'Neural system monitors changes in both internal and external environment', 10),
+              createMatch('bio-11-9-m1-l1-a2', 'Match division with components', [
+                {term: 'CNS', definition: 'Brain and spinal cord'},
+                {term: 'PNS', definition: 'Cranial nerves (12 pairs), spinal nerves (31 pairs)'},
+                {term: 'Somatic neural system', definition: 'Voluntary control of skeletal muscles'},
+                {term: 'Autonomic neural system', definition: 'Involuntary control of smooth/cardiac muscles, glands'},
+                {term: 'Sympathetic division', definition: 'Fight or flight, emergencies'},
+                {term: 'Parasympathetic division', definition: 'Rest and digest, normal function'},
+              ], 18),
+              createFillBlank('bio-11-9-m1-l1-a3', 'ANS divisions', 'The sympathetic division is _____, while the parasympathetic is _____.', ['thoracolumbar', 'craniosacral'], ['thoracolumbar', 'craniosacral', 'sacral', 'lumbar'], 10),
+              createQuiz('bio-11-9-m1-l1-a4', 'Which statement is CORRECT about neural organization?', ['All vertebrates have identical brains', 'Brain is dorsally located in all vertebrates', 'Complexity increases from lower to higher vertebrates', 'Fish have more complex brains than mammals'], 2, 'Complexity increases: fish → amphibians → reptiles → birds → mammals', 10),
+              createTrueFalse('bio-11-9-m1-l1-a5', 'True or False', 'Invertebrates like Hydra have a nerve net with neurons diffused throughout the body', true, 'Hydra lacks brain; has simple nerve net for basic coordination', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m1-l2',
+            name: '1.2 Neuron Structure 🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m1-l2-a1', 'Which part of the neuron contains Nissl granules?', ['Axon', 'Dendrites', 'Cell body (cyton/soma)', 'Axon terminals'], 2, 'Nissl granules (rough ER + ribosomes) are found only in cell body and dendrites, NOT in axon', 10),
+              createMatch('bio-11-9-m1-l2-a2', 'Match neuron part with feature', [
+                {term: 'Dendrites', definition: 'Short, branched, receive impulses'},
+                {term: 'Cell body', definition: 'Contains nucleus, Nissl granules'},
+                {term: 'Axon', definition: 'Long, unbranched initially, transmits impulses away'},
+                {term: 'Axon terminals', definition: 'Release neurotransmitters'},
+                {term: 'Synaptic vesicles', definition: 'Contain neurotransmitters'},
+                {term: 'Myelin sheath', definition: 'Insulating layer around axon'},
+              ], 20),
+              createFillBlank('bio-11-9-m1-l2-a3', 'Axon hillock', 'The _____ is the conical projection where axon arises from cell body and is free of _____.', ['axon hillock', 'Nissl granules'], ['axon hillock', 'dendrites', 'Nissl granules', 'mitochondria'], 10),
+              createQuiz('bio-11-9-m1-l2-a4', 'Nissl granules are composed of:', ['Smooth ER', 'Rough ER and free ribosomes', 'Golgi apparatus', 'Mitochondria only'], 1, 'Nissl bodies = RER + ribosomes for protein synthesis', 10),
+              createQuiz('bio-11-9-m1-l2-a5', 'The axon divides into:', ['More dendrites', 'Axon terminals/branches with synaptic knobs', 'Another axon', 'Nothing'], 1, 'Axon ends in fine branches called axon terminals with synaptic knobs containing vesicles', 10),
+              createTrueFalse('bio-11-9-m1-l2-a6', 'True or False', 'Myelin sheath is produced by Schwann cells in PNS and oligodendrocytes in CNS', true, 'Schwann cells (PNS) and oligodendrocytes (CNS) form myelin; gaps are nodes of Ranvier', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m1-l3',
+            name: '1.3 Types of Neurons',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m1-l3-a1', 'A neuron with one axon and one dendrite is called:', ['Unipolar', 'Bipolar', 'Multipolar', 'Pseudounipolar'], 1, 'Bipolar = 1 axon + 1 dendrite (found in retina, olfactory epithelium)', 10),
+              createMatch('bio-11-9-m1-l3-a2', 'Match neuron type with location/function', [
+                {term: 'Multipolar', definition: 'One axon, many dendrites - motor neurons'},
+                {term: 'Bipolar', definition: 'One axon, one dendrite - retina, olfactory'},
+                {term: 'Unipolar/pseudounipolar', definition: 'Single process dividing - sensory neurons'},
+                {term: 'Afferent/sensory', definition: 'Carry impulses to CNS'},
+                {term: 'Efferent/motor', definition: 'Carry impulses from CNS to effectors'},
+                {term: 'Interneuron', definition: 'Connect neurons within CNS'},
+              ], 20),
+              createFillBlank('bio-11-9-m1-l3-a3', 'Sensory and motor', 'Sensory neurons carry impulses _____ the CNS; motor neurons carry impulses _____ the CNS.', ['towards', 'away from'], ['towards', 'away from', 'within', 'against'], 10),
+              createQuiz('bio-11-9-m1-l3-a4', 'Association neurons (interneurons) are found:', ['Only in PNS', 'Only in CNS', 'In both CNS and PNS', 'Only in ganglia'], 1, 'Interneurons connect sensory and motor neurons entirely within CNS', 10),
+              createTrueFalse('bio-11-9-m1-l3-a5', 'True or False', 'The cell body of sensory neurons is located outside the CNS in dorsal root ganglia', true, 'Sensory neuron cell bodies are in dorsal root ganglia; motor neuron cell bodies are in CNS', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Generation & Conduction of Nerve Impulse ============
+      {
+        id: 'bio-11-9-m2',
+        name: 'Nerve Impulse 🔥🔥',
+        description: 'Resting potential, action potential, impulse conduction',
+        totalTokens: 90,
+        levels: [
+          {
+            id: 'bio-11-9-m2-l1',
+            name: '2.1 Resting Membrane Potential 🔥',
+            order: 1,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m2-l1-a1', 'Resting membrane potential is approximately:', ['0 mV', '-70 mV', '+70 mV', '-90 mV'], 1, 'Resting potential is negative at about -70 mV (polarized state)', 10),
+              createMatch('bio-11-9-m2-l1-a2', 'Match factor with contribution to resting potential', [
+                {term: 'Na+-K+ pump (3Na+ out, 2K+ in)', definition: 'Electrogenic, maintains gradient'},
+                {term: 'Leak channels (K+ mostly)', definition: 'K+ efflux makes interior negative'},
+                {term: 'Impermeable anions (A-)', definition: 'Negatively charged proteins, phosphate trapped inside'},
+                {term: 'Higher K+ inside', definition: 'Chemical gradient for K+ efflux'},
+                {term: 'Higher Na+ outside', definition: 'Chemical gradient for Na+ influx'},
+              ], 20),
+              createFillBlank('bio-11-9-m2-l1-a3', 'Sodium-potassium pump', 'The Na+-K+ pump moves ____ Na+ out and ____ K+ in, using ATP.', ['3', '2'], ['3', '2', '1', '4'], 10),
+              createQuiz('bio-11-9-m2-l1-a4', 'The resting membrane is most permeable to:', ['Na+', 'K+', 'Cl-', 'Ca2+'], 1, 'Resting membrane has more K+ leak channels; K+ efflux dominates resting potential', 10),
+              createTrueFalse('bio-11-9-m2-l1-a5', 'True or False', 'The inside of a resting neuron is negatively charged relative to outside due to unequal ion distribution', true, 'Polarized state: interior negative (-70mV), exterior positive', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m2-l2',
+            name: '2.2 Action Potential 🔥🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m2-l2-a1', 'During depolarization:', ['K+ rushes in', 'Na+ rushes in', 'Cl- rushes out', 'Only leak channels open'], 1, 'Depolarization: voltage-gated Na+ channels open → Na+ influx → inside becomes positive (+30mV)', 10),
+              createMatch('bio-11-9-m2-l2-a2', 'Match phase with ion movement', [
+                {term: 'Depolarization', definition: 'Na+ influx through open Na+ channels'},
+                {term: 'Repolarization', definition: 'Na+ channels close, K+ channels open, K+ efflux'},
+                {term: 'Hyperpolarization', definition: 'K+ efflux continues, briefly below -70mV'},
+                {term: 'Restoration', definition: 'Na+-K+ pump restores ion gradients'},
               ], 15),
+              createFillBlank('bio-11-9-m2-l2-a3', 'Action potential', 'Action potential threshold is approximately _____ mV; peak depolarization reaches about _____ mV.', ['-55', '+30 to +40'], ['-55', '-70', '+30 to +40', '0'], 10),
+              createQuiz('bio-11-9-m2-l2-a4', 'The falling phase of action potential is due to:', ['Na+ influx continuing', 'K+ efflux (voltage-gated K+ channels open)', 'Na+-K+ pump stopping', 'Cl- influx'], 1, 'Repolarization: Na+ channels inactivate, K+ channels open → K+ efflux → potential returns to negative', 10),
+              createQuiz('bio-11-9-m2-l2-a5', 'All-or-none law means:', ['Graded response based on stimulus strength', 'Either full action potential or none at all', 'Action potential only in dendrites', 'Action potential travels slowly'], 1, 'Action potential is all-or-none; once threshold is reached, it fires completely', 10),
+              createTrueFalse('bio-11-9-m2-l2-a6', 'True or False', 'During the absolute refractory period, another action potential cannot be triggered no matter how strong the stimulus', true, 'Na+ channels are inactivated; this prevents backward propagation and ensures one-way transmission', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m2-l3',
+            name: '2.3 Conduction of Impulse 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m2-l3-a1', 'Saltatory conduction occurs in:', ['Unmyelinated axons', 'Myelinated axons between nodes of Ranvier', 'Dendrites', 'Cell bodies'], 1, 'Action potential jumps from node to node in myelinated fibers, increasing conduction speed', 10),
+              createMatch('bio-11-9-m2-l3-a2', 'Match conduction feature with effect', [
+                {term: 'Myelination', definition: 'Increases conduction speed, saves energy'},
+                {term: 'Saltatory conduction', definition: 'Jumping between nodes of Ranvier'},
+                {term: 'Larger axon diameter', definition: 'Faster conduction (less resistance)'},
+                {term: 'Continuous conduction', definition: 'Unmyelinated - step by step depolarization'},
+                {term: 'Axon hillock', definition: 'Trigger zone for action potential'},
+              ], 15),
+              createFillBlank('bio-11-9-m2-l3-a3', 'Myelin function', 'Myelin acts as an _____ preventing current _____ through the membrane.', ['insulator', 'leak'], ['insulator', 'conductor', 'leak', 'flow'], 10),
+              createQuiz('bio-11-9-m2-l3-a4', 'Conduction velocity is fastest in:', ['Thin unmyelinated axons', 'Thick myelinated axons', 'Dendrites', 'Cell body'], 1, 'Thick myelinated axons conduct fastest (e.g., motor neurons to skeletal muscles)', 10),
+              createTrueFalse('bio-11-9-m2-l3-a5', 'True or False', 'In unmyelinated axons, the action potential propagates continuously along the entire membrane', true, 'Continuous conduction is slower as each segment must depolarize sequentially', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Synapse and Neurotransmission ============
+      {
+        id: 'bio-11-9-m3',
+        name: 'Synapse 🔥🔥',
+        description: 'Synaptic transmission, types of synapses, neurotransmitters',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-9-m3-l1',
+            name: '3.1 Synapse Structure 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m3-l1-a1', 'A synapse is a junction between:', ['Two dendrites', 'Neuron and effector cell or another neuron', 'Two cell bodies', 'Two axons'], 1, 'Synapse = junction between two neurons or neuron and effector (muscle/gland)', 10),
+              createMatch('bio-11-9-m3-l1-a2', 'Match synapse component with description', [
+                {term: 'Presynaptic neuron', definition: 'Transmits impulse toward synapse'},
+                {term: 'Postsynaptic neuron', definition: 'Receives impulse after synapse'},
+                {term: 'Synaptic cleft', definition: '20-40 nm gap between neurons'},
+                {term: 'Synaptic vesicles', definition: 'Store neurotransmitters'},
+                {term: 'Synaptic knob/button', definition: 'Swollen axon terminal presynaptically'},
+              ], 15),
+              createFillBlank('bio-11-9-m3-l1-a3', 'Synaptic cleft', 'The synaptic cleft is approximately _____ nm wide and contains _____ fluid.', ['20-40', 'interstitial'], ['20-40', '10-20', 'interstitial', 'synovial'], 10),
+              createQuiz('bio-11-9-m3-l1-a4', 'Electrical synapses are characterized by:', ['Synaptic cleft and chemical transmission', 'Gap junctions with direct cytoplasmic connection', 'Slow transmission', 'Unidirectional only'], 1, 'Electrical synapses have gap junctions (connexons) allowing direct ion flow; fast, bidirectional', 10),
+              createTrueFalse('bio-11-9-m3-l1-a5', 'True or False', 'Chemical synapses are unidirectional and have a synaptic delay of about 0.3-0.5 ms', true, 'Chemical synapses: vesicle release, diffusion, receptor binding cause delay; rare in humans', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m3-l2',
+            name: '3.2 Synaptic Transmission 🔥🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m3-l2-a1', 'Neurotransmitter release is triggered by:', ['K+ influx', 'Ca2+ influx through voltage-gated channels', 'Na+ efflux', 'Cl- influx'], 1, 'Depolarization opens Ca2+ channels; Ca2+ triggers vesicle fusion and exocytosis', 10),
+              createMatch('bio-11-9-m3-l2-a2', 'Match transmission step with event', [
+                {term: 'Action potential arrives', definition: 'Depolarizes presynaptic membrane'},
+                {term: 'Ca2+ influx', definition: 'Triggers vesicle fusion with membrane'},
+                {term: 'Exocytosis', definition: 'Neurotransmitters released into cleft'},
+                {term: 'Binding to receptors', definition: 'Opens ion channels postsynaptically'},
+                {term: 'Inactivation', definition: 'Enzyme degradation or reuptake'},
+              ], 18),
+              createFillBlank('bio-11-9-m3-l2-a3', 'Excitatory vs inhibitory', 'Excitatory PSPs _____ the membrane (Na+ influx); Inhibitory PSPs _____ the membrane (Cl- influx, K+ efflux).', ['depolarize', 'hyperpolarize'], ['depolarize', 'hyperpolarize', 'polarize', 'repolarize'], 10),
+              createQuiz('bio-11-9-m3-l2-a4', 'EPSP and IPSP summation occurs at:', ['Axon terminals', 'Axon hillock (trigger zone)', 'Dendrites only', 'Synaptic cleft'], 1, 'Spatial and temporal summation of graded potentials occurs at axon hillock to reach threshold', 10),
+              createQuiz('bio-11-9-m3-l2-a5', 'Which terminates acetylcholine action at synapses?', ['Acetylcholinesterase', 'Monoamine oxidase', 'COMT', 'Reuptake transporters'], 0, 'AChE in synaptic cleft hydrolyzes ACh to choline and acetate', 10),
+              createTrueFalse('bio-11-9-m3-l2-a6', 'True or False', 'One action potential in presynaptic neuron always causes action potential in postsynaptic neuron', false, 'Single EPSP is subthreshold; temporal or spatial summation needed to reach threshold', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m3-l3',
+            name: '3.3 Neurotransmitters 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m3-l3-a1', 'Acetylcholine is released at:', ['All synapses in brain only', 'Neuromuscular junctions, parasympathetic synapses, some brain synapses', 'Only sympathetic synapses', 'Only sensory neurons'], 1, 'Cholinergic synapses: neuromuscular junction, parasympathetic ANS, basal forebrain', 10),
+              createMatch('bio-11-9-m3-l3-a2', 'Match neurotransmitter with effect', [
+                {term: 'Acetylcholine', definition: 'Excitatory at NMJ, various effects in CNS'},
+                {term: 'GABA', definition: 'Major inhibitory neurotransmitter in brain'},
+                {term: 'Glutamate', definition: 'Major excitatory neurotransmitter'},
+                {term: 'Norepinephrine', definition: 'Sympathetic fight or flight'},
+                {term: 'Dopamine', definition: 'Reward, movement coordination'},
+                {term: 'Serotonin', definition: 'Mood, sleep regulation'},
+              ], 15),
+              createFillBlank('bio-11-9-m3-l3-a3', 'Neurotransmitter recycling', 'After release, neurotransmitters may be degraded by _____, taken back by _____, or diffuse away.', ['enzymes', 'reuptake'], ['enzymes', 'hormones', 'reuptake', 'diffusion'], 10),
+              createTrueFalse('bio-11-9-m3-l3-a4', 'True or False', 'Parkinsons disease is associated with dopamine deficiency in the substantia nigra', true, 'Loss of dopaminergic neurons causes tremors, rigidity, bradykinesia', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Central Nervous System ============
+      {
+        id: 'bio-11-9-m4',
+        name: 'CNS - Brain 🔥🔥',
+        description: 'Brain parts - forebrain, midbrain, hindbrain, their functions',
+        totalTokens: 95,
+        levels: [
+          {
+            id: 'bio-11-9-m4-l1',
+            name: '4.1 Brain Organization & Forebrain 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m4-l1-a1', 'The brain is protected by:', ['Only skull', 'Skull and CSF', 'Skull, meninges, CSF, and blood-brain barrier', 'Only meninges'], 2, 'Brain protection: cranium (skull), meninges (3 layers), CSF, blood-brain barrier', 10),
+              createMatch('bio-11-9-m4-l1-a2', 'Match brain division with structures', [
+                {term: 'Forebrain (prosencephalon)', definition: 'Cerebrum, thalamus, hypothalamus, limbic system'},
+                {term: 'Midbrain (mesencephalon)', definition: 'Corpora quadrigemina, cerebral peduncles'},
+                {term: 'Hindbrain (rhombencephalon)', definition: 'Cerebellum, pons, medulla oblongata'},
+                {term: 'Cerebrum', definition: 'Largest part, cerebral cortex, 4 lobes'},
+              ], 15),
+              createFillBlank('bio-11-9-m4-l1-a3', 'Meninges', 'The three meninges from outer to inner are: _____ mater, _____ mater, and _____ mater.', ['dura', 'arachnoid', 'pia'], ['dura', 'arachnoid', 'pia', 'cerebrospinal'], 10),
+              createQuiz('bio-11-9-m4-l1-a4', 'CSF (cerebrospinal fluid) is formed by:', ['Arachnoid villi', 'Choroid plexus in ventricles', 'Pia mater', 'Blood-brain barrier'], 1, 'Choroid plexus (capillary network) in ventricles produces CSF from blood plasma', 10),
+              createTrueFalse('bio-11-9-m4-l1-a5', 'True or False', 'The cerebrum is divided into two hemispheres by the longitudinal fissure', true, 'Cerebral hemispheres connected by corpus callosum; each has 4 lobes', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m4-l2',
+            name: '4.2 Cerebrum & Functions 🔥🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m4-l2-a1', 'The cerebral cortex is divided into how many lobes?', ['2', '4', '6', '8'], 1, '4 lobes: frontal, parietal, temporal, occipital', 10),
+              createMatch('bio-11-9-m4-l2-a2', 'Match lobe with major function', [
+                {term: 'Frontal lobe', definition: 'Motor, speech (Broca\'s), personality, planning'},
+                {term: 'Parietal lobe', definition: 'Sensory, spatial awareness, language (Wernicke\'s)'},
+                {term: 'Temporal lobe', definition: 'Hearing, memory, emotion'},
+                {term: 'Occipital lobe', definition: 'Vision processing'},
+                {term: 'Motor area', definition: 'Frontal lobe - initiates voluntary movement'},
+                {term: 'Sensory area', definition: 'Parietal lobe - processes somatic sensations'},
+              ], 20),
+              createFillBlank('bio-11-9-m4-l2-a3', 'Association areas', 'Association areas connect sensory and motor areas for _____, memory, and communication.', ['learning'], ['learning', 'reflexes', 'breathing', 'circulation'], 10),
+              createQuiz('bio-11-9-m4-l2-a4', 'Broca\'s area (motor speech) is located in:', ['Parietal lobe', 'Frontal lobe', 'Temporal lobe', 'Occipital lobe'], 1, 'Broca\'s area: frontal lobe; damage causes expressive aphasia (cant speak but understand)', 10),
+              createQuiz('bio-11-9-m4-l2-a5', 'Wernicke\'s area (language comprehension) is in:', ['Frontal lobe', 'Parietal-temporal junction', 'Occipital lobe', 'Cerebellum'], 1, 'Wernicke\'s area: left temporal-parietal; damage causes receptive aphasia (fluent nonsense)', 10),
+              createTrueFalse('bio-11-9-m4-l2-a6', 'True or False', 'The right cerebral hemisphere controls the left side of the body and vice versa (contralateral control)', true, 'Motor and sensory pathways cross in medulla; left brain controls right body', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m4-l3',
+            name: '4.3 Thalamus, Hypothalamus & Limbic System 🔥',
+            order: 3,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-9-m4-l3-a1', 'Thalamus functions as the:', ['Master endocrine gland', 'Relay station for sensory information', 'Temperature control center', 'Coordination of movement'], 1, 'Thalamus: sensory relay to cortex (except smell); also involved in consciousness', 10),
+              createMatch('bio-11-9-m4-l3-a2', 'Match structure with function', [
+                {term: 'Hypothalamus', definition: 'Temperature, hunger, thirst, sleep, ANS control'},
+                {term: 'Thalamus', definition: 'Sensory relay station to cortex'},
+                {term: 'Limbic system', definition: 'Emotion, memory, olfaction'},
+                {term: 'Hippocampus', definition: 'Memory formation, consolidation'},
+                {term: 'Amygdala', definition: 'Fear, aggression, emotion processing'},
+              ], 15),
+              createFillBlank('bio-11-9-m4-l3-a3', 'Hypothalamus control', 'The hypothalamus controls the pituitary gland through _____ and _____ release hormones.', ['releasing', 'inhibiting'], ['releasing', 'stimulating', 'inhibiting', 'regulating'], 8),
+              createTrueFalse('bio-11-9-m4-l3-a4', 'True or False', 'The limbic system includes the hippocampus, amygdala, and parts of the hypothalamus', true, 'Limbic system = emotional brain; hippocampus converts short-term to long-term memory', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m4-l4',
+            name: '4.4 Midbrain, Hindbrain & Cerebellum 🔥',
+            order: 4,
+            totalTokens: 20,
+            activities: [
+              createQuiz('bio-11-9-m4-l4-a1', 'Corpora quadrigemina in midbrain consists of:', ['Two colliculi', 'Four colliculi (2 superior, 2 inferior)', 'Six colliculi', 'None'], 1, '4 colliculi: superior (visual reflexes), inferior (auditory reflexes)', 10),
+              createMatch('bio-11-9-m4-l4-a2', 'Match hindbrain structure with function', [
+                {term: 'Cerebellum', definition: 'Coordination, balance, posture (motor learning)'},
+                {term: 'Medulla oblongata', definition: 'Vital centers (cardiac, vasomotor, respiratory)'},
+                {term: 'Pons', definition: 'Relays signals, breathing regulation, connects cerebellum'},
+                {term: 'Midbrain', definition: 'Visual/auditory reflexes, motor control'},
+              ], 12),
+              createFillBlank('bio-11-9-m4-l4-a3', 'Vital centers', 'The cardiac, vasomotor, and respiratory centers are located in the _____.', ['medulla oblongata'], ['medulla oblongata', 'pons', 'cerebellum', 'hypothalamus'], 10),
+              createTrueFalse('bio-11-9-m4-l4-a4', 'True or False', 'The cerebellum is called the \'little brain\' and is responsible for coordination and precision of voluntary movements', true, 'Cerebellum compares motor commands with sensory feedback; ataxia results from damage', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: PNS and Reflex Action ============
+      {
+        id: 'bio-11-9-m5',
+        name: 'PNS & Reflexes 🔥🔥',
+        description: 'Peripheral nervous system, reflex arc, autonomic nervous system',
+        totalTokens: 75,
+        levels: [
+          {
+            id: 'bio-11-9-m5-l1',
+            name: '5.1 Reflex Action & Reflex Arc 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m5-l1-a1', 'A reflex action is:', ['Conscious response to stimulus', 'Rapid, automatic, involuntary response', 'Only somatic response', 'Only learned response'], 1, 'Reflex: quick, involuntary, innate response to stimulus without conscious thought', 10),
+              createMatch('bio-11-9-m5-l1-a2', 'Match reflex arc component with description', [
+                {term: 'Receptor', definition: 'Detects stimulus (sensory ending)'},
+                {term: 'Afferent/sensory neuron', definition: 'Carries impulse to CNS'},
+                {term: 'Integration center', definition: 'Spinal cord (usually) or brain'},
+                {term: 'Efferent/motor neuron', definition: 'Carries impulse to effector'},
+                {term: 'Effector', definition: 'Muscle or gland that responds'},
+              ], 15),
+              createFillBlank('bio-11-9-m5-l1-a3', 'Reflex types', 'Knee jerk is a _____ reflex; salivation is a _____ reflex.', ['monosynaptic stretch', 'conditioned'], ['monosynaptic stretch', 'polysynaptic', 'conditioned', 'unconditioned'], 10),
+              createQuiz('bio-11-9-m5-l1-a4', 'Withdrawal reflex (from pain) is:', ['Monosynaptic', 'Polysynaptic with interneurons', 'Only cranial reflex', 'Only somatic'], 1, 'Withdrawal involves interneurons in spinal cord; knee jerk is monosynaptic', 10),
+              createTrueFalse('bio-11-9-m5-l1-a5', 'True or False', 'Reflexes allow quick protective responses before the brain even processes the sensation', true, 'Reflex arc bypasses brain for speed; brain learns about it after response occurs', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m5-l2',
+            name: '5.2 Autonomic Nervous System 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m5-l2-a1', 'The autonomic nervous system controls:', ['Voluntary skeletal muscles', 'Involuntary smooth muscle, cardiac muscle, glands', 'Only brain functions', 'Only spinal cord functions'], 1, 'ANS: involuntary control of visceral functions', 10),
+              createMatch('bio-11-9-m5-l2-a2', 'Match ANS division with function/location', [
+                {term: 'Sympathetic', definition: 'Thoracolumbar origin, fight or flight'},
+                {term: 'Parasympathetic', definition: 'Craniosacral origin, rest and digest'},
+                {term: 'Sympathetic ganglia', definition: 'Near spinal cord (chain)'},
+                {term: 'Parasympathetic ganglia', definition: 'Near/in target organs'},
+                {term: 'Sympathetic neurotransmitter', definition: 'Acetylcholine (preganglionic), norepinephrine (postganglionic)'},
+                {term: 'Parasympathetic neurotransmitter', definition: 'Acetylcholine (both)'},
+              ], 18),
+              createFillBlank('bio-11-9-m5-l2-a3', 'ANS effects', 'Sympathetic: heart rate _____, pupils _____, digestion _____.', ['increases', 'dilate', 'decreases'], ['increases', 'decreases', 'dilate', 'constrict'], 10),
+              createQuiz('bio-11-9-m5-l2-a4', 'The "fight or flight" response includes all EXCEPT:', ['Increased heart rate', 'Pupil constriction', 'Increased blood glucose', 'Increased breathing rate'], 1, 'Sympathetic: pupil DILATION for better vision; parasympathetic causes constriction', 10),
+              createTrueFalse('bio-11-9-m5-l2-a5', 'True or False', 'Parasympathetic stimulation decreases heart rate, stimulates digestion, and causes pupil constriction', true, 'Rest and digest: conserves energy, promotes digestion and recovery', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m5-l3',
+            name: '5.3 Cranial and Spinal Nerves',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m5-l3-a1', 'How many pairs of cranial nerves are there?', ['10', '12', '31', '62'], 1, '12 pairs of cranial nerves (I-XII); some sensory, some motor, some mixed', 10),
+              createMatch('bio-11-9-m5-l3-a2', 'Match cranial nerve with number/function', [
+                {term: 'I - Olfactory', definition: 'Smell (sensory)'},
+                {term: 'II - Optic', definition: 'Vision (sensory)'},
+                {term: 'V - Trigeminal', definition: 'Face sensation, chewing (mixed)'},
+                {term: 'VII - Facial', definition: 'Face expression, taste (mixed)'},
+                {term: 'X - Vagus', definition: 'Parasympathetic to viscera (mixed)'},
+                {term: 'XII - Hypoglossal', definition: 'Tongue movement (motor)'},
+              ], 15),
+              createFillBlank('bio-11-9-m5-l3-a3', 'Spinal nerves', 'There are _____ pairs of spinal nerves ( _____ cervical, _____ thoracic).', ['31', '8', '12'], ['31', '8', '12', '5', '7'], 10),
+              createQuiz('bio-11-9-m5-l3-a4', 'The vagus nerve (X) is special because it:', ['Only sensory', 'Only motor', 'Longest cranial nerve with parasympathetic to viscera', 'Only in head'], 2, 'Vagus: extensive parasympathetic innervation to thoracic and abdominal viscera', 10),
+              createTrueFalse('bio-11-9-m5-l3-a5', 'True or False', 'Some cranial nerves are purely sensory (I, II, VIII), some purely motor (III, IV, VI, XI, XII), and some mixed (V, VII, IX, X)', true, 'Cranial nerves vary in function: olfactory/optic purely sensory; oculomotor/trochlear purely motor', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 6: Sensory Organs and PYQ ============
+      {
+        id: 'bio-11-9-m6',
+        name: 'Sensory & PYQ Master 🔥🔥',
+        description: 'Eye, ear, sensory reception, previous year questions',
+        totalTokens: 80,
+        levels: [
+          {
+            id: 'bio-11-9-m6-l1',
+            name: '6.1 Eye - Structure 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m6-l1-a1', 'The external layer of eyeball consists of:', ['Only cornea', 'Only sclera', 'Cornea (anterior transparent) and sclera (posterior white)', 'Only choroid'], 2, 'Fibrous tunic: cornea (transparent, refractive) + sclera (white, protective)', 10),
+              createMatch('bio-11-9-m6-l1-a2', 'Match eye structure with function', [
+                {term: 'Cornea', definition: 'Transparent, light enters, major refraction'},
+                {term: 'Lens', definition: 'Accommodation (focus), adjustable refraction'},
+                {term: 'Retina', definition: 'Photoreceptors (rods/cones), image detection'},
+                {term: 'Iris', definition: 'Colored, controls pupil size'},
+                {term: 'Ciliary body', definition: 'Suspensory ligaments, aqueous humor'},
+                {term: 'Aqueous humor', definition: 'Maintains pressure, anterior cavity'},
+              ], 18),
+              createFillBlank('bio-11-9-m6-l1-a3', 'Photoreceptors', 'Rods function in _____ vision and detect _____; cones function in _____ vision and color.', ['dim light', 'shades of gray', 'bright'], ['dim light', 'bright', 'shades of gray', 'color'], 10),
+              createQuiz('bio-11-9-m6-l1-a4', 'The fovea centralis contains:', ['Only rods', 'Only cones (highest acuity)', 'Equal rods and cones', 'No photoreceptors'], 1, 'Fovea: pit in macula with only cones - sharpest vision', 10),
+              createTrueFalse('bio-11-9-m6-l1-a5', 'True or False', 'Rhodopsin in rods contains retinal + opsin (scotopsin) and breaks down in light causing hyperpolarization', true, 'Light → retinal changes shape → opsin activates → transducin → phosphodiesterase → cGMP decrease → Na+ channels close → hyperpolarization', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m6-l2',
+            name: '6.2 Ear - Structure 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-9-m6-l2-a1', 'The ear consists of:', ['Only outer and middle ear', 'Outer, middle, and inner ear', 'Only inner ear', 'Only cochlea'], 1, '3 parts: outer (pinna, ear canal), middle (tympanic membrane, ossicles), inner (cochlea, vestibular apparatus)', 10),
+              createMatch('bio-11-9-m6-l2-a2', 'Match ear part with function', [
+                {term: 'Pinna', definition: 'Collects and directs sound waves'},
+                {term: 'Tympanic membrane', definition: 'Eardrum - vibrates with sound'},
+                {term: 'Ear ossicles (malleus, incus, stapes)', definition: 'Amplify sound, transfer to oval window'},
+                {term: 'Cochlea', definition: 'Hearing organ with organ of Corti'},
+                {term: 'Semicircular canals', definition: 'Dynamic balance (angular acceleration)'},
+                {term: 'Vestibule (utricle, saccule)', definition: 'Static balance (linear acceleration)'},
+              ], 18),
+              createFillBlank('bio-11-9-m6-l2-a3', 'Mechanism', 'Sound waves → tympanic membrane → _____ → _____ → _____ → oval window → cochlea.', ['malleus', 'incus', 'stapes'], ['malleus', 'incus', 'stapes', 'tympanum'], 10),
+              createQuiz('bio-11-9-m6-l2-a4', 'The organ of Corti contains:', ['Only supporting cells', 'Hair cells (mechanoreceptors) on basilar membrane', 'Only nerve fibers', 'Cerumen glands'], 1, 'Hair cells detect bending of cilia by basilar membrane movement; rest on tectorial membrane', 10),
+              createTrueFalse('bio-11-9-m6-l2-a5', 'True or False', 'Eustachian tube connects middle ear to pharynx and equalizes pressure on both sides of tympanic membrane', true, 'ET opens during yawning/swallowing to equalize pressure; blockage causes discomfort', 8),
+            ]
+          },
+          {
+            id: 'bio-11-9-m6-l3',
+            name: '6.3 PYQ Master 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-9-m6-l3-a1', 'PYQ: Where are Nissl granules found?', ['Axon only', 'Cell body and dendrites', 'Axon terminals only', 'All parts equally'], 1, 'Nissl bodies (RER + ribosomes) absent in axon and axon hillock', 10),
+              createQuiz('bio-11-9-m6-l3-a2', 'PYQ: Nodes of Ranvier are found in:', ['Dendrites', 'Myelinated axons - gaps in myelin sheath', 'Cell body', 'Synaptic terminals'], 1, 'Nodes of Ranvier = gaps between Schwann cells where action potential regenerates', 10),
+              createMatch('bio-11-9-m6-l3-a3', 'PYQ Quick Match', [
+                {term: '-70 mV', definition: 'Resting potential'},
+                {term: '+30 mV', definition: 'Peak action potential'},
+                {term: 'Na+ influx', definition: 'Depolarization'},
+                {term: 'K+ efflux', definition: 'Repolarization'},
+                {term: 'Saltatory', definition: 'Jumping conduction'},
+                {term: 'Myelin', definition: 'Schwann cells / oligodendrocytes'},
+              ], 18),
+              createQuiz('bio-11-9-m6-l3-a4', 'PYQ: Cerebellum damage causes:', ['Loss of sensation', 'Ataxia (loss of coordination)', 'Blindness', 'Loss of hearing'], 1, 'Cerebellum = coordination center; damage causes drunken gait, intention tremor', 10),
+              createQuiz('bio-11-9-m6-l3-a5', 'PYQ: Brocas area is for:', ['Vision', 'Motor speech', 'Hearing', 'Touch'], 1, 'Broca\'s = motor speech (frontal); Wernicke\'s = comprehension (temporal-parietal)', 10),
             ]
           }
         ]
@@ -4312,23 +6771,402 @@ const biologyPlusOneChapters: Chapter[] = [
   {
     id: 'bio-11-10',
     name: 'Chemical Coordination and Integration',
-    description: 'Endocrine glands, hormones, disorders',
-    moduleCount: 4,
+    description: 'Endocrine glands, hormones, mechanism of hormone action, disorders',
+    moduleCount: 6,
     modules: [
+      // ============ MODULE 1: Endocrine System Overview ============
       {
         id: 'bio-11-10-m1',
-        name: 'Endocrine System',
-        description: 'Hormones and their functions',
-        totalTokens: 60,
+        name: 'Endocrine System 🔥🔥',
+        description: 'Hormones, endocrine vs exocrine glands, hormone types and transport',
+        totalTokens: 80,
         levels: [
           {
             id: 'bio-11-10-m1-l1',
-            name: 'Hormones',
+            name: '1.1 Endocrine vs Exocrine 🔥',
             order: 1,
-            totalTokens: 60,
+            totalTokens: 25,
             activities: [
-              createQuiz('bio-11-10-m1-l1-a1', 'Insulin is secreted by:', ['Alpha cells', 'Beta cells', 'Delta cells', 'Gamma cells'], 1, 'Beta cells of islets of Langerhans secrete insulin', 10),
-              createTrueFalse('bio-11-10-m1-l1-a2', 'True or False', 'Adrenaline is fight or flight hormone', true, 'Adrenaline prepares body for emergency', 8),
+              createQuiz('bio-11-10-m1-l1-a1', 'Endocrine glands are characterized by:', ['Ducts that carry secretions', 'Ductless glands secreting hormones into blood', 'Exocrine secretions', 'No secretions'], 1, 'Endocrine glands are ductless; hormones secreted directly into bloodstream', 10),
+              createMatch('bio-11-10-m1-l1-a2', 'Match gland type with examples', [
+                {term: 'Endocrine', definition: 'Pituitary, thyroid, adrenal, pancreas (islets)'},
+                {term: 'Exocrine', definition: 'Salivary, sweat, sebaceous, pancreas (acini)'},
+                {term: 'Mixed/Heterocrine', definition: 'Pancreas (endocrine + exocrine parts)'},
+                {term: 'Pituitary', definition: 'Master endocrine gland'},
+              ], 15),
+              createFillBlank('bio-11-10-m1-l1-a3', 'Hormone definition', 'Hormones are non-nutrient chemicals that act as intercellular _____ in very low concentrations at _____ sites.', ['messengers', 'target'], ['messengers', 'signals', 'target', 'distant'], 10),
+              createQuiz('bio-11-10-m1-l1-a4', 'The hypothalamus is connected to the pituitary by:', ['Duct', 'Hypophyseal portal system and neurons', 'Lymphatic vessels', 'No connection'], 1, 'Hypothalamus controls pituitary via portal blood vessels and neural connections', 10),
+              createTrueFalse('bio-11-10-m1-l1-a5', 'True or False', 'The endocrine system and neural system together constitute the neuroendocrine system', true, 'Both systems coordinate and regulate physiological functions; often work together', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m1-l2',
+            name: '1.2 Hormone Chemistry & Transport 🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m1-l2-a1', 'Steroid hormones are derived from:', ['Amino acids', 'Cholesterol', 'Fatty acids', 'Nucleic acids'], 1, 'Steroid hormones (cortisol, aldosterone, estrogen, testosterone) synthesized from cholesterol', 10),
+              createMatch('bio-11-10-m1-l2-a2', 'Match hormone type with examples/characteristics', [
+                {term: 'Peptide/protein hormones', definition: 'Insulin, glucagon, ACTH, GH, TSH (water soluble)'},
+                {term: 'Steroid hormones', definition: 'Cortisol, aldosterone, estrogen, testosterone (lipid soluble)'},
+                {term: 'Iodothyronines', definition: 'Thyroid hormones (T3, T4)'},
+                {term: 'Catecholamines', definition: 'Adrenaline, noradrenaline, dopamine'},
+                {term: 'Lipid soluble hormones', definition: 'Bind plasma proteins for transport'},
+              ], 20),
+              createFillBlank('bio-11-10-m1-l2-a3', 'Half-life', 'Water-soluble hormones have short half-lives (minutes) because they are degraded by _____, while lipid-soluble hormones circulate bound to _____ proteins.', ['enzymes', 'plasma'], ['enzymes', 'proteases', 'plasma', 'carrier'], 10),
+              createQuiz('bio-11-10-m1-l2-a4', 'Hormones are transported in blood:', ['Only freely dissolved', 'Free or bound to plasma proteins', 'Only inside cells', 'Only in lymph'], 1, 'Steroid/thyroid hormones bind plasma proteins; peptide hormones usually circulate free', 10),
+              createTrueFalse('bio-11-10-m1-l2-a5', 'True or False', 'Hormones can be amino acid derivatives, peptides, proteins, or steroid compounds', true, 'Four main classes: (1) amines (modified amino acids), (2) peptides, (3) proteins, (4) steroids', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m1-l3',
+            name: '1.3 Mechanism of Hormone Action 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m1-l3-a1', 'Peptide hormones bind to receptors on:', ['Cell membrane (surface receptors)', 'Cytoplasm', 'Nucleus', 'Mitochondria'], 0, 'Peptide hormones cannot cross membrane; bind cell surface receptors (second messenger systems)', 10),
+              createMatch('bio-11-10-m1-l3-a2', 'Match hormone type with receptor location', [
+                {term: 'Peptide hormones', definition: 'Cell surface receptors (GPCRs)'},
+                {term: 'Steroid hormones', definition: 'Intracellular/cytoplasmic receptors'},
+                {term: 'Thyroid hormones', definition: 'Nuclear receptors (DNA binding)'},
+                {term: 'Second messenger cAMP', definition: 'Intracellular mediator for peptide hormones'},
+              ], 15),
+              createFillBlank('bio-11-10-m1-l3-a3', 'Second messenger', 'For peptide hormones, hormone acts as first messenger; _____ is a common second messenger activating _____ kinases.', ['cAMP', 'protein'], ['cAMP', 'ATP', 'protein', 'lipid'], 10),
+              createQuiz('bio-11-10-m1-l3-a4', 'Steroid hormones regulate gene expression by:', ['Opening ion channels', 'Binding intracellular receptors that act as transcription factors', 'Activating G-proteins', 'Hydrolyzing ATP'], 1, 'Steroid-receptor complex enters nucleus, binds DNA, regulates gene transcription', 10),
+              createTrueFalse('bio-11-10-m1-l3-a5', 'True or False', 'Hormone receptors show specificity, high affinity, and saturation kinetics similar to enzymes', true, 'Receptor-hormone binding is specific with affinity (Kd) and limited receptor numbers', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 2: Pituitary Gland ============
+      {
+        id: 'bio-11-10-m2',
+        name: 'Pituitary Gland 🔥🔥',
+        description: 'Master gland, anterior and posterior pituitary hormones',
+        totalTokens: 90,
+        levels: [
+          {
+            id: 'bio-11-10-m2-l1',
+            name: '2.1 Pituitary Overview 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m2-l1-a1', 'The pituitary gland is located:', ['In the hypothalamus', 'In a bony cavity called sella turcica of sphenoid bone', 'In the brain cortex', 'In the neck'], 1, 'Pituitary sits in sella turcica, attached to hypothalamus by pituitary stalk (infundibulum)', 10),
+              createMatch('bio-11-10-m2-l1-a2', 'Match pituitary lobe with origin', [
+                {term: 'Anterior pituitary (adenohypophysis)', definition: 'Ectodermal origin - glandular'},
+                {term: 'Posterior pituitary (neurohypophysis)', definition: 'Neural origin - extension of hypothalamus'},
+                {term: 'Pars distalis', definition: 'Major part of anterior pituitary'},
+                {term: 'Pars nervosa', definition: 'Posterior pituitary proper'},
+              ], 15),
+              createFillBlank('bio-11-10-m2-l1-a3', 'Parts of pituitary', 'Anterior pituitary = pars _____, pars _____; Posterior pituitary = pars _____ + _____ stalk.', ['distalis', 'intermedia', 'nervosa', 'infundibular'], ['distalis', 'intermedia', 'nervosa', 'infundibular'], 12),
+              createQuiz('bio-11-10-m2-l1-a4', 'The pituitary is often called the:', ['Slave gland', 'Master endocrine gland', 'Mixed gland', 'Exocrine gland'], 1, 'Master gland: controls many other endocrine glands via tropic hormones', 10),
+              createTrueFalse('bio-11-10-m2-l1-a5', 'True or False', 'The posterior pituitary does not synthesize hormones; it only stores and releases hormones made in hypothalamus', true, 'ADH and oxytocin are synthesized in hypothalamic neurons, transported to posterior pituitary', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m2-l2',
+            name: '2.2 Anterior Pituitary Hormones 🔥🔥',
+            order: 2,
+            totalTokens: 35,
+            activities: [
+              createQuiz('bio-11-10-m2-l2-a1', 'Which is NOT an anterior pituitary hormone?', ['GH', 'TSH', 'ACTH', 'ADH'], 3, 'ADH is posterior pituitary; anterior secretes GH, TSH, ACTH, FSH, LH, PRL, MSH', 10),
+              createMatch('bio-11-10-m2-l2-a2', 'Match hormone with target/function', [
+                {term: 'GH (Growth Hormone)', definition: 'Growth of body tissues, metabolic effects'},
+                {term: 'TSH (Thyroid Stimulating)', definition: 'Thyroid gland growth and hormone release'},
+                {term: 'ACTH (Adrenocorticotropic)', definition: 'Adrenal cortex growth and cortisol release'},
+                {term: 'FSH (Follicle Stimulating)', definition: 'Gonads - follicle development, sperm production'},
+                {term: 'LH (Luteinizing)', definition: 'Ovulation, testosterone production'},
+                {term: 'Prolactin (PRL)', definition: 'Milk production in mammary glands'},
+              ], 22),
+              createFillBlank('bio-11-10-m2-l2-a3', 'Gonadotropins', 'FSH and LH are called _____ because they act on the _____ (testis/ovary).', ['gonadotropins', 'gonads'], ['gonadotropins', 'tropic', 'gonads', 'kidneys'], 10),
+              createQuiz('bio-11-10-m2-l2-a4', 'Tropic hormones are those that:', ['Act directly on non-endocrine tissues', 'Stimulate other endocrine glands', 'Only act on pituitary', 'Are not protein hormones'], 1, 'Tropic hormones target other endocrine glands (TSH, ACTH, FSH, LH)', 10),
+              createQuiz('bio-11-10-m2-l2-a5', 'Growth hormone excess in children causes:', ['Diabetes insipidus', 'Gigantism', 'Dwarfism', 'Cretinism'], 1, 'GH excess before epiphyseal closure → gigantism; after closure → acromegaly', 10),
+              createTrueFalse('bio-11-10-m2-l2-a6', 'True or False', 'Prolactin stimulates milk production but inhibits ovulation during lactation (Lactational Amenorrhea)', true, 'High prolactin suppresses GnRH → no ovulation; natural contraceptive during breastfeeding', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m2-l3',
+            name: '2.3 Posterior Pituitary Hormones 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m2-l3-a1', 'The posterior pituitary releases:', ['GH and TSH', 'ADH (vasopressin) and oxytocin', 'ACTH and FSH', 'Insulin and glucagon'], 1, 'Only 2 hormones: ADH (antidiuretic) and oxytocin (childbirth, milk ejection)', 10),
+              createMatch('bio-11-10-m2-l3-a2', 'Match posterior pituitary hormone with function', [
+                {term: 'ADH (Vasopressin)', definition: 'Water reabsorption in kidneys, vasoconstriction'},
+                {term: 'Oxytocin', definition: 'Uterine contractions, milk ejection reflex'},
+                {term: 'Hypothalamic origin', definition: 'Both ADH and oxytocin made in hypothalamus'},
+                {term: 'Neurophysins', definition: 'Carrier proteins for transport to posterior pituitary'},
+              ], 15),
+              createFillBlank('bio-11-10-m2-l3-a3', 'ADH function', 'ADH acts on the collecting ducts and distal tubules of the _____ to promote water _____.', ['kidney', 'reabsorption'], ['kidney', 'liver', 'reabsorption', 'secretion'], 10),
+              createQuiz('bio-11-10-m2-l3-a4', 'Diabetes insipidus is caused by:', ['Excess insulin', 'ADH deficiency or insensitivity', 'Glucagon deficiency', 'GH excess'], 1, 'No ADH → cannot reabsorb water → 5-20 L/day dilute urine, extreme thirst', 10),
+              createQuiz('bio-11-10-m2-l3-a5', 'Oxytocin causes:', ['Uterine relaxation', 'Uterine contraction and milk ejection', 'Water retention', 'Blood sugar decrease'], 1, 'Oxytocin = birth hormone; stimulates uterine contractions and milk let-down', 10),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 3: Thyroid and Parathyroid ============
+      {
+        id: 'bio-11-10-m3',
+        name: 'Thyroid & Parathyroid 🔥🔥',
+        description: 'Thyroid hormones, calcitonin, PTH, iodine deficiency disorders',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-10-m3-l1',
+            name: '3.1 Thyroid Gland 🔥🔥',
+            order: 1,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m3-l1-a1', 'The thyroid gland is located:', ['In the brain', 'Over the trachea (butterfly-shaped)', 'In the abdomen', 'In the chest'], 1, 'Thyroid: butterfly-shaped, anterior neck over trachea, below larynx', 10),
+              createMatch('bio-11-10-m3-l1-a2', 'Match thyroid structure/hormone with feature', [
+                {term: 'Follicular cells', definition: 'Produce T3 and T4 (thyroid hormones)'},
+                {term: 'Parafollicular/C-cells', definition: 'Produce calcitonin (calcium lowering)'},
+                {term: 'Thyroxine (T4)', definition: 'Tetraiodothyronine, 4 iodine atoms'},
+                {term: 'T3 (Triiodothyronine)', definition: 'Active form, 3 iodine atoms'},
+                {term: 'Colloid', definition: 'Thyroglobulin - storage of thyroid hormones'},
+              ], 20),
+              createFillBlank('bio-11-10-m3-l1-a3', 'Iodine requirement', 'Iodine is essential for synthesis of _____ hormones; deficiency causes _____ and goiter.', ['thyroid', 'cretinism'], ['thyroid', 'adrenal', 'cretinism', 'acromegaly'], 10),
+              createQuiz('bio-11-10-m3-l1-a4', 'T4 is converted to active T3 mainly in:', ['Thyroid gland only', 'Liver, kidneys, and target tissues', 'Pituitary only', 'Adrenal gland'], 1, 'T4 is prohormone; converted to T3 in peripheral tissues by deiodinases', 10),
+              createQuiz('bio-11-10-m3-l1-a5', 'The colloid in thyroid follicles contains:', ['Already active T3 and T4', 'Thyroglobulin (precursor protein)', 'Calcitonin', 'PTH'], 1, 'Thyroglobulin is glycoprotein stored in colloid; iodinated to make hormones', 10),
+              createTrueFalse('bio-11-10-m3-l1-a6', 'True or False', 'Thyroid hormones regulate basal metabolic rate (BMR), body temperature, and growth/development', true, 'T3/T4 increase BMR, protein synthesis, carbohydrate/fat metabolism; essential for brain development', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m3-l2',
+            name: '3.2 Thyroid Disorders 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m3-l2-a1', 'Goiter is caused by:', ['Excess iodine', 'Iodine deficiency causing compensatory enlargement', 'Excess calcium', 'GH deficiency'], 1, 'Low iodine → low T3/T4 → high TSH → thyroid enlargement (goiter)', 10),
+              createMatch('bio-11-10-m3-l2-a2', 'Match thyroid disorder with cause/symptoms', [
+                {term: 'Hypothyroidism (adult)', definition: 'Myxedema - low BMR, weight gain, cold intolerance'},
+                {term: 'Hypothyroidism (infant)', definition: 'Cretinism - stunted growth, mental retardation'},
+                {term: 'Hyperthyroidism', definition: 'Graves disease - exophthalmos, high BMR, weight loss'},
+                {term: 'Hashimoto thyroiditis', definition: 'Autoimmune hypothyroidism'},
+                {term: 'Simple goiter', definition: 'Iodine deficiency, compensatory enlargement'},
+              ], 18),
+              createFillBlank('bio-11-10-m3-l2-a3', 'Graves disease', 'Graves disease is an _____ disorder causing hyperthyroidism with bulging eyes called _____.', ['autoimmune', 'exophthalmos'], ['autoimmune', 'genetic', 'exophthalmos', 'strabismus'], 10),
+              createQuiz('bio-11-10-m3-l2-l4', 'Cretinism can be prevented by:', ['Thyroid surgery', 'Iodized salt in diet', 'Removing parathyroid', 'GH injections'], 1, 'Iodine deficiency during pregnancy causes irreversible cretinism; use iodized salt', 10),
+              createTrueFalse('bio-11-10-m3-l2-a5', 'True or False', 'Myxedema in adults is characterized by puffy face, dry skin, cold intolerance, and mental sluggishness', true, 'Hypothyroidism in adults: low metabolism, weight gain despite poor appetite', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m3-l3',
+            name: '3.3 Parathyroid and Calcium Regulation 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m3-l3-a1', 'Parathyroid glands are located:', ['Inside thyroid tissue', 'On the posterior surface of thyroid (4 glands)', 'In the brain', 'In the kidneys'], 1, '4 small parathyroid glands embedded in posterior thyroid capsule', 10),
+              createMatch('bio-11-10-m3-l3-a2', 'Match calcium-regulating hormone with action', [
+                {term: 'PTH (Parathyroid Hormone)', definition: 'Increases blood calcium (bone resorption, kidney reabsorption, vitamin D activation)'},
+                {term: 'Calcitonin', definition: 'Decreases blood calcium (bone deposition)'},
+                {term: 'PTH effect on bone', definition: 'Stimulates osteoclasts, bone resorption'},
+                {term: 'PTH effect on kidney', definition: 'Increases Ca2+ reabsorption, PO4 excretion'},
+                {term: 'Active vitamin D', definition: 'Increases intestinal Ca2+ absorption'},
+              ], 20),
+              createFillBlank('bio-11-10-m3-l3-a3', 'PTH action', 'PTH raises blood calcium by acting on _____, kidneys, and activating vitamin _____.', ['bones', 'D'], ['bones', 'muscles', 'D', 'K'], 10),
+              createQuiz('bio-11-10-m3-l3-a4', 'Tetany (muscle spasms) can result from:', ['Excess PTH', 'Low PTH (hypoparathyroidism) causing low blood calcium', 'Excess calcitonin', 'High vitamin D'], 1, 'Low PTH → hypocalcemia → tetany (carpopedal spasm, laryngeal spasm)', 10),
+              createQuiz('bio-11-10-m3-l3-a5', 'Osteoporosis can be caused by:', ['Excess calcitonin', 'Excess PTH (hyperparathyroidism) causing bone breakdown', 'Low GH', 'High thyroid'], 1, 'Hyperparathyroidism → chronic excess PTH → bone resorption → osteoporosis', 10),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 4: Adrenal Gland ============
+      {
+        id: 'bio-11-10-m4',
+        name: 'Adrenal Gland 🔥🔥',
+        description: 'Adrenal cortex and medulla hormones, stress response',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-10-m4-l1',
+            name: '4.1 Adrenal Gland Structure 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m4-l1-a1', 'The adrenal glands are located:', ['Inside the brain', 'On top of the kidneys (suprarenal)', 'In the neck', 'In the abdomen near liver'], 1, 'Adrenal = suprarenal; one on each kidney; divided into cortex and medulla', 10),
+              createMatch('bio-11-10-m4-l1-a2', 'Match adrenal region with origin and hormones', [
+                {term: 'Adrenal cortex', definition: 'Mesodermal - steroid hormones (cortisol, aldosterone, androgens)'},
+                {term: 'Adrenal medulla', definition: 'Ectodermal (neural crest) - catecholamines (adrenaline)'},
+                {term: 'Zona glomerulosa', definition: 'Outer cortex - mineralocorticoids (aldosterone)'},
+                {term: 'Zona fasciculata', definition: 'Middle cortex - glucocorticoids (cortisol)'},
+                {term: 'Zona reticularis', definition: 'Inner cortex - androgens'},
+              ], 18),
+              createFillBlank('bio-11-10-m4-l1-a3', 'Adrenal zones', 'The adrenal cortex has 3 zones: zona _____, zona _____, and zona _____.', ['glomerulosa', 'fasciculata', 'reticularis'], ['glomerulosa', 'fasciculata', 'reticularis'], 12),
+              createQuiz('bio-11-10-m4-l1-a4', 'Adrenal medulla develops from:', ['Mesoderm', 'Ectoderm (neural crest cells)', 'Endoderm', 'Notochord'], 1, 'Medulla = modified sympathetic ganglion; neural crest origin; secretes adrenaline', 10),
+              createTrueFalse('bio-11-10-m4-l1-a5', 'True or False', 'The adrenal cortex is essential for life; complete removal causes death within days without hormone replacement', true, 'Cortisol and aldosterone are essential; medulla is not essential (sympathetic nerves compensate)', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m4-l2',
+            name: '4.2 Adrenal Cortex Hormones 🔥🔥',
+            order: 2,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m4-l2-a1', 'Aldosterone is a:', ['Glucocorticoid', 'Mineralocorticoid', 'Androgen', 'Catecholamine'], 1, 'Aldosterone = mineralocorticoid; regulates Na+/K+ balance; zona glomerulosa', 10),
+              createMatch('bio-11-10-m4-l2-a2', 'Match cortical hormone with function', [
+                {term: 'Aldosterone', definition: 'Na+ reabsorption, K+ excretion, water retention, BP regulation'},
+                {term: 'Cortisol', definition: 'Gluconeogenesis, anti-inflammatory, stress response'},
+                {term: 'Androgens (DHEA)', definition: 'Weak male hormones; source of estrogen in females'},
+                {term: 'Cortisol deficiency', definition: 'Addisons disease - fatigue, low BP, skin pigmentation'},
+                {term: 'Cortisol excess', definition: 'Cushings syndrome - moon face, buffalo hump, thin skin'},
+              ], 20),
+              createFillBlank('bio-11-10-m4-l2-a3', 'Cortisol effects', 'Cortisol increases blood glucose by stimulating _____ and has _____ effects on inflammation.', ['gluconeogenesis', 'anti-inflammatory'], ['gluconeogenesis', 'glycolysis', 'anti-inflammatory', 'pro-inflammatory'], 10),
+              createQuiz('bio-11-10-m4-l2-a4', 'Addisons disease is caused by:', ['Cortisol excess', 'Cortisol/aldosterone deficiency (adrenal cortex destruction)', 'Adrenaline excess', 'Growth hormone deficiency'], 1, 'Addison: autoimmune destruction of cortex; low cortisol, low aldosterone; hyperpigmentation', 10),
+              createQuiz('bio-11-10-m4-l2-a5', 'Primary hyperaldosteronism (Conn syndrome) causes:', ['Hypertension and low K+ (hypokalemia)', 'Low blood pressure', 'High calcium', 'Diabetes'], 0, 'Aldosterone excess → Na+ retention, K+ loss → hypertension, muscle weakness', 10),
+              createTrueFalse('bio-11-10-m4-l2-a6', 'True or False', 'Cushings syndrome features include moon face, central obesity with thin limbs, buffalo hump, and striae', true, 'Excess cortisol causes fat redistribution, protein breakdown, skin thinning, immune suppression', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m4-l3',
+            name: '4.3 Adrenal Medulla 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m4-l3-a1', 'Adrenaline and noradrenaline are:', ['Steroids', 'Peptide hormones', 'Catecholamines derived from tyrosine', 'Iodinated compounds'], 2, 'Catecholamines: synthesized from tyrosine; water-soluble; bind membrane receptors', 10),
+              createMatch('bio-11-10-m4-l3-a2', 'Match adrenal medulla hormone with effect', [
+                {term: 'Adrenaline (epinephrine)', definition: '80% of medulla secretion; heart, vessels, metabolism'},
+                {term: 'Noradrenaline (norepinephrine)', definition: '20% of medulla; mainly vasoconstriction'},
+                {term: 'Fight or flight response', definition: 'Adrenaline increases heart rate, BP, glucose'},
+                {term: 'Pheochromocytoma', definition: 'Adrenal medulla tumor - episodic hypertension'},
+              ], 15),
+              createFillBlank('bio-11-10-m4-l3-a3', 'Adrenaline effects', 'Adrenaline increases heart rate, dilates _____, dilates _____, and increases blood glucose.', ['bronchi', 'pupils'], ['bronchi', 'pupils', 'vessels', 'coronary'], 10),
+              createQuiz('bio-11-10-m4-l3-a4', 'Adrenaline acts through:', ['Nuclear receptors', 'G-protein coupled receptors (alpha and beta adrenergic)', 'Intracellular receptors', 'Ion channels'], 1, 'Adrenergic receptors: α1, α2, β1, β2, β3; all GPCRs with second messengers', 10),
+              createTrueFalse('bio-11-10-m4-l3-a5', 'True or False', 'The adrenal medulla is essentially a sympathetic ganglion that has been modified - it is stimulated by preganglionic sympathetic neurons', true, 'Preganglionic sympathetic fibers from splanchnic nerves directly stimulate chromaffin cells', 8),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 5: Pancreas and Gonads ============
+      {
+        id: 'bio-11-10-m5',
+        name: 'Pancreas & Gonads 🔥🔥',
+        description: 'Islets of Langerhans, insulin, glucagon, sex hormones',
+        totalTokens: 85,
+        levels: [
+          {
+            id: 'bio-11-10-m5-l1',
+            name: '5.1 Pancreas - Islets of Langerhans 🔥🔥',
+            order: 1,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m5-l1-a1', 'The endocrine part of pancreas consists of:', ['Acini', 'Islets of Langerhans', 'Ducts', 'No endocrine part'], 1, 'Islets of Langerhans = endocrine; acini = exocrine (digestive enzymes)', 10),
+              createMatch('bio-11-10-m5-l1-a2', 'Match pancreatic cell type with hormone and function', [
+                {term: 'Alpha (α) cells', definition: 'Glucagon (20%) - raises blood glucose'},
+                {term: 'Beta (β) cells', definition: 'Insulin (70%) - lowers blood glucose'},
+                {term: 'Delta (δ) cells', definition: 'Somatostatin (5-10%) - inhibits both'},
+                {term: 'PP cells', definition: 'Pancreatic polypeptide - regulates pancreas secretion'},
+              ], 18),
+              createFillBlank('bio-11-10-m5-l1-a3', 'Insulin function', 'Insulin _____ blood glucose by promoting glucose _____ in muscle and adipose tissue.', ['lowers', 'uptake'], ['lowers', 'raises', 'uptake', 'release'], 10),
+              createQuiz('bio-11-10-m5-l1-a4', 'Glucagon acts mainly on the:', ['Brain', 'Liver', 'Kidneys', 'Heart'], 1, 'Glucagon primarily targets liver: glycogenolysis, gluconeogenesis → raises blood glucose', 10),
+              createQuiz('bio-11-10-m5-l1-a5', 'Diabetes mellitus type 1 is caused by:', ['Insulin resistance', 'Autoimmune destruction of beta cells (no insulin)', 'Excess glucagon', 'GH deficiency'], 1, 'Type 1: autoimmune, insulin-dependent; Type 2: insulin resistance', 10),
+              createTrueFalse('bio-11-10-m5-l1-a6', 'True or False', 'Somatostatin from delta cells inhibits both insulin and glucagon secretion, preventing extreme fluctuations', true, 'Somatostatin = paracrine regulator; maintains stable glucose levels', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m5-l2',
+            name: '5.2 Testis - Male Sex Hormones 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m5-l2-a1', 'Testosterone is produced by:', ['Sertoli cells', 'Leydig cells (interstitial cells)', 'Seminiferous tubules', 'Epididymis'], 1, 'Leydig cells produce testosterone; Sertoli cells support spermatogenesis', 10),
+              createMatch('bio-11-10-m5-l2-a2', 'Match male hormone with function', [
+                {term: 'Testosterone', definition: 'Spermatogenesis, secondary sexual characteristics, muscle growth'},
+                {term: 'Inhibin', definition: 'From Sertoli cells - inhibits FSH'},
+                {term: 'LH (ICSH)', definition: 'Stimulates Leydig cells to make testosterone'},
+                {term: 'FSH', definition: 'Stimulates Sertoli cells - sperm maturation'},
+              ], 15),
+              createFillBlank('bio-11-10-m5-l2-a3', 'LH function', 'LH stimulates _____ cells to produce testosterone; therefore LH is also called _____ in males.', ['Leydig', 'ICSH'], ['Leydig', 'Sertoli', 'ICSH', 'FSH'], 10),
+              createQuiz('bio-11-10-m5-l2-a4', 'Androgens can be converted to estrogens in peripheral tissues by the enzyme:', ['5-alpha reductase', 'Aromatase', 'Hydroxylase', 'Dehydrogenase'], 1, 'Aromatase converts testosterone → estradiol; androstenedione → estrone (in fat, skin, brain)', 10),
+              createTrueFalse('bio-11-10-m5-l2-a5', 'True or False', 'Testosterone promotes spermatogenesis, development of secondary sexual characteristics, and anabolic effects on muscle and bone', true, 'Testosterone is anabolic steroid; increases protein synthesis, red blood cell production', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m5-l3',
+            name: '5.3 Ovary - Female Sex Hormones 🔥',
+            order: 3,
+            totalTokens: 30,
+            activities: [
+              createQuiz('bio-11-10-m5-l3-a1', 'Estrogen is primarily produced by:', ['Corpus luteum only', 'Developing ovarian follicles (granulosa cells)', 'Pituitary', 'Uterus'], 1, 'Estrogen from developing follicles (preovulatory); corpus luteum produces progesterone + estrogen', 10),
+              createMatch('bio-11-10-m5-l3-a2', 'Match female hormone with source and function', [
+                {term: 'Estrogen (estradiol)', definition: 'Follicles - endometrial proliferation, secondary sexual characteristics'},
+                {term: 'Progesterone', definition: 'Corpus luteum - maintains pregnancy, secretory endometrium'},
+                {term: 'Relaxin', definition: 'Corpus luteum - softens pubic symphysis for childbirth'},
+                {term: 'Inhibin', definition: 'Granulosa cells - inhibits FSH'},
+                {term: 'hCG', definition: 'Placenta - maintains corpus luteum in early pregnancy'},
+              ], 20),
+              createFillBlank('bio-11-10-m5-l3-a3', 'Estrogen and progesterone', 'Estrogen causes endometrial _____, while progesterone causes endometrial _____ in preparation for pregnancy.', ['proliferation', 'secretory changes'], ['proliferation', 'secretory changes', 'breakdown', 'menstruation'], 10),
+              createQuiz('bio-11-10-m5-l3-a4', 'The corpus luteum forms from:', ['Degenerating follicle after ovulation', 'Ovarian stroma', 'Fallopian tube', 'Uterus'], 0, 'After ovulation, remaining follicle cells become corpus luteum; secretes progesterone', 10),
+              createQuiz('bio-11-10-m5-l3-a5', 'Hormone that maintains corpus luteum in early pregnancy is:', ['FSH', 'hCG (human chorionic gonadotropin)', 'LH', 'Prolactin'], 1, 'hCG from placenta rescues corpus luteum → continues progesterone production until placenta takes over', 10),
+            ]
+          }
+        ]
+      },
+      // ============ MODULE 6: Other Hormones and PYQ ============
+      {
+        id: 'bio-11-10-m6',
+        name: 'Other Hormones & PYQ 🔥🔥',
+        description: 'Melatonin, thymosin, prostaglandins, atrial natriuretic factor, NEET PYQs',
+        totalTokens: 75,
+        levels: [
+          {
+            id: 'bio-11-10-m6-l1',
+            name: '6.1 Other Endocrine Glands 🔥',
+            order: 1,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m6-l1-a1', 'Melatonin is secreted by:', ['Thyroid', 'Pineal gland (epiphysis)', 'Pituitary', 'Thymus'], 1, 'Pineal gland: melatonin regulates sleep-wake cycle (circadian rhythm), reproductive cycles', 10),
+              createMatch('bio-11-10-m6-l1-a2', 'Match hormone/gland with function', [
+                {term: 'Melatonin', definition: 'Sleep-wake cycle, seasonal breeding in animals'},
+                {term: 'Thymosin', definition: 'Thymus - T-lymphocyte maturation, immunity'},
+                {term: 'Prostaglandins', definition: 'Local hormones - inflammation, uterine contractions, gastric protection'},
+                {term: 'ANF (Atrial Natriuretic Factor)', definition: 'Heart atria - Na+ excretion, vasodilation, lowers BP'},
+                {term: 'Leptin', definition: 'Adipose tissue - satiety signal, inhibits hunger'},
+              ], 18),
+              createFillBlank('bio-11-10-m6-l1-a3', 'Pineal gland', 'The pineal gland is located on the _____ and secretes _____ to regulate biological rhythms.', ['dorsal diencephalon', 'melatonin'], ['dorsal diencephalon', 'ventricles', 'melatonin', 'serotonin'], 10),
+              createQuiz('bio-11-10-m6-l1-a4', 'Prostaglandins are called local hormones because they:', ['Travel in blood to distant targets', 'Act locally near site of synthesis', 'Are produced by pituitary', 'Are steroid hormones'], 1, 'Autacoids/prostaglandins act locally (paracrine) on nearby cells; not true hormones', 10),
+              createTrueFalse('bio-11-10-m6-l1-a5', 'True or False', 'ANF (atrial natriuretic factor) from heart atria causes vasodilation and sodium/water excretion, opposing aldosterone', true, 'ANF counters RAAS: dilates vessels, increases GFR, causes natriuresis and diuresis', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m6-l2',
+            name: '6.2 Hormone Feedback and Regulation 🔥',
+            order: 2,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m6-l2-a1', 'Most hormone secretion is regulated by:', ['Only positive feedback', 'Negative feedback (maintains homeostasis)', 'Only neural stimulation', 'Random release'], 1, 'Negative feedback is most common: product inhibits its own production (e.g., thyroid axis)', 10),
+              createMatch('bio-11-10-m6-l2-a2', 'Match feedback type with example', [
+                {term: 'Negative feedback', definition: 'Thyroid hormones inhibit TRH/TSH release'},
+                {term: 'Positive feedback', definition: 'Oxytocin during childbirth (uterine contractions)'},
+                {term: 'Hypothalamic-pituitary-target axis', definition: 'HPA axis, HPT axis, HPG axis'},
+                {term: 'Long-loop feedback', definition: 'Target gland hormone inhibits hypothalamus'},
+                {term: 'Short-loop feedback', definition: 'Pituitary hormone inhibits hypothalamus'},
+              ], 18),
+              createFillBlank('bio-11-10-m6-l2-a3', 'Feedback loops', 'In the hypothalamic-pituitary-thyroid axis: TRH → TSH → _____. High levels inhibit _____ and TSH release.', ['T3/T4', 'TRH'], ['T3/T4', 'TSH', 'TRH', 'GnRH'], 10),
+              createQuiz('bio-11-10-m6-l2-a4', 'Positive feedback occurs during:', ['Maintenance of blood glucose', 'Childbirth (oxytocin release)', 'Temperature regulation', 'Blood pressure control'], 1, 'Positive feedback amplifies response; rare but important in childbirth and LH surge before ovulation', 10),
+              createTrueFalse('bio-11-10-m6-l2-a5', 'True or False', 'The hypothalamic-pituitary-adrenal (HPA) axis involves CRH → ACTH → cortisol, with negative feedback at multiple levels', true, 'HPA axis stress response: hypothalamus releases CRH → pituitary ACTH → adrenal cortisol → feedback inhibition', 8),
+            ]
+          },
+          {
+            id: 'bio-11-10-m6-l3',
+            name: '6.3 PYQ Master 🔥',
+            order: 3,
+            totalTokens: 25,
+            activities: [
+              createQuiz('bio-11-10-m6-l3-a1', 'PYQ: Insulin deficiency causes:', ['Hyperglycemia and glycosuria', 'Hypoglycemia', 'Cretinism', 'Goiter'], 0, 'No insulin → cannot use glucose → high blood glucose → spills into urine (diabetes mellitus)', 10),
+              createQuiz('bio-11-10-m6-l3-a2', 'PYQ: Which hormone is NOT a steroid?', ['Cortisol', 'Aldosterone', 'Insulin', 'Testosterone'], 2, 'Insulin = peptide/protein hormone; others are steroid hormones from cholesterol', 10),
+              createMatch('bio-11-10-m6-l3-a3', 'PYQ Quick Match', [
+                {term: 'Beta cells', definition: 'Insulin'},
+                {term: 'Alpha cells', definition: 'Glucagon'},
+                {term: 'Leydig cells', definition: 'Testosterone'},
+                {term: 'Thyroid follicular', definition: 'T3/T4'},
+                {term: 'Parafollicular/C-cells', definition: 'Calcitonin'},
+                {term: 'Adrenal cortex', definition: 'Cortisol'},
+                {term: 'Adrenal medulla', definition: 'Adrenaline'},
+                {term: 'Pineal', definition: 'Melatonin'},
+              ], 20),
+              createQuiz('bio-11-10-m6-l3-a4', 'PYQ: Acromegaly is caused by:', ['GH excess in children', 'GH excess in adults', 'GH deficiency', 'TSH excess'], 1, 'GH excess AFTER epiphyseal closure = acromegaly (enlarged hands, feet, jaw); BEFORE = gigantism', 10),
+              createQuiz('bio-11-10-m6-l3-a5', 'PYQ: Graves disease affects the:', ['Pituitary', 'Thyroid (autoimmune hyperthyroidism)', 'Adrenal', 'Pancreas'], 1, 'Graves = autoimmune hyperthyroidism with exophthalmos; Hashimotos = autoimmune hypothyroidism', 10),
             ]
           }
         ]

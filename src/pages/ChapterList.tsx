@@ -40,6 +40,11 @@ export default function ChapterList() {
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
+        <img 
+          src={`/images/${subjectId}-icon.png`}
+          alt={subject.name}
+          className="w-12 h-12 object-contain"
+        />
         <div>
           <h1 className="text-xl font-bold">{subject.name}</h1>
           <p className="text-sm text-gray-500 capitalize">{grade?.replace('_', ' ')}</p>
@@ -61,14 +66,14 @@ export default function ChapterList() {
           >
             <Link
               to={`/chapter/${subjectId}/${grade}/${chapter.id}`}
-              className="block bg-white rounded-xl p-4 border-2 border-gray-100 hover:border-brand-blue hover:shadow-md transition-all"
+              className="block bg-white rounded-2xl p-4 border border-gray-200 hover:border-brand-blue hover:shadow-md transition-all"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{ backgroundColor: `${subject.color}15` }}
                 >
-                  <BookOpen className="w-6 h-6" style={{ color: subject.color }} />
+                  <BookOpen className="w-5 h-5" style={{ color: subject.color }} />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900">{chapter.name}</h3>
