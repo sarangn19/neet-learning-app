@@ -7969,6 +7969,16 @@ const biologyPlusTwoChapters: Chapter[] = [
 // ============ EXPORT SUBJECTS ============
 export const subjects: Subject[] = [
   {
+    id: 'maths',
+    name: 'Maths',
+    color: '#ff4b8b',
+    icon: 'calculator',
+    grades: {
+      plus_one: [],
+      plus_two: [],
+    }
+  },
+  {
     id: 'physics',
     name: 'Physics',
     color: '#1cb0f6',

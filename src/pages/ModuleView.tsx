@@ -1,6 +1,6 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Star } from 'lucide-react';
+import { ChevronLeft, Star, Check, Lock } from 'lucide-react';
 import { getModule, getSubject } from '../data/curriculum';
 import { useUserStore } from '../store/userStore';
 import type { Grade, Level } from '../types';
@@ -81,76 +81,164 @@ export default function ModuleView() {
           />
         </div>
 
-        <div className="space-y-0">
-          {module.levels.map((level, index) => {
-            const status = getLevelStatus(level, index);
-            const progress = lessonProgress[level.id];
-            
-            return (
-              <LevelNode 
-                key={level.id}
-                level={level}
-                index={index}
-                status={status}
-                stars={progress?.stars || 0}
-              />
-            );
-          })}
-        </div>
+        <TimelinePath 
+          levels={module.levels}
+          lessonProgress={lessonProgress}
+          getLevelStatus={getLevelStatus}
+        />
       </div>
     </div>
   );
 }
 
-function LevelNode({ level, index, status, stars }: {
+function TimelinePath({ 
+  levels, 
+  lessonProgress,
+  getLevelStatus
+}: { 
+  levels: Level[]; 
+  lessonProgress: Record<string, any>;
+  getLevelStatus: (level: Level, index: number) => 'locked' | 'available' | 'completed';
+}) {
+  const completedCount = levels.filter((l, idx) => getLevelStatus(l, idx) === 'completed').length;
+  const totalHeight = levels.length * 80; // 80px per level
+  const lineProgress = completedCount > 0 ? ((completedCount - 0.5) / levels.length) * 100 : 0;
+
+  return (
+    <div className="relative" style={{ minHeight: totalHeight }}>
+      {/* Center vertical line - background (gray) */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 top-8 bottom-8 w-1.5 bg-gray-200 rounded-full">
+        {/* Progress line (green) - shows completed portion */}
+        <div 
+          className="absolute top-0 left-0 w-full bg-lime-500 rounded-full transition-all duration-700"
+          style={{ height: `${lineProgress}%` }}
+        />
+        
+        {/* Current level indicator (blue) */}
+        {completedCount < levels.length && (
+          <div 
+            className="absolute left-0 w-full h-8 bg-blue-500 rounded-full transition-all duration-500"
+            style={{ top: `${lineProgress}%` }}
+          />
+        )}
+      </div>
+
+      {/* Level nodes */}
+      <div className="relative z-10 space-y-0">
+        {levels.map((level, index) => {
+          const status = getLevelStatus(level, index);
+          const progress = lessonProgress[level.id];
+          const isLeft = index % 2 === 0;
+          
+          return (
+            <TimelineLevelNode 
+              key={level.id}
+              level={level}
+              index={index}
+              status={status}
+              stars={progress?.stars || 0}
+              isLeft={isLeft}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function TimelineLevelNode({ 
+  level, 
+  index, 
+  status, 
+  stars,
+  isLeft
+}: {
   level: Level;
   index: number;
   status: 'locked' | 'available' | 'completed';
   stars: number;
+  isLeft: boolean;
 }) {
-  const isLeft = index % 2 === 0;
+  // Variables available for future use:
+  // const isCurrent = index === 0 || status === 'available';
+  // const isFirst = index === 0;
+  // const isLast = index === total - 1;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="relative flex items-center py-6"
+      initial={{ opacity: 0, x: isLeft ? -20 : 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+      className="relative flex items-center py-5"
     >
-      {/* Left content - text on alternating sides */}
-      <div className={`flex-1 ${isLeft ? 'text-right pr-6' : 'order-3 pl-6'}`}>
-        {isLeft && status !== 'locked' && (
-          <p className="text-xs text-gray-500 font-medium">{level.name}</p>
-        )}
-        {!isLeft && status === 'locked' && (
-          <p className="text-xs text-gray-400">Locked</p>
-        )}
-      </div>
-
-      {/* Center - Node (always centered on the vertical line) */}
-      <div className="order-2 flex items-center justify-center">
-        {status === 'locked' ? (
-          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-gray-200 text-gray-400 cursor-not-allowed border-4 border-white shadow-md z-10">
-            <span className="text-xl">🔒</span>
+      {/* Left side content */}
+      <div className={`flex-1 ${isLeft ? 'text-right pr-5' : 'order-3 pl-5'}`}>
+        {isLeft ? (
+          <div className="inline-block">
+            <p className={`font-semibold text-sm ${status === 'locked' ? 'text-gray-400' : 'text-gray-800'}`}>
+              {level.name}
+            </p>
+            {status === 'completed' && stars > 0 && (
+              <div className="flex justify-end gap-0.5 mt-1">
+                {[...Array(stars)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+            )}
           </div>
-        ) : status === 'completed' ? (
-          <Link to={`/lesson/${level.id}`} className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-lime-500 text-white shadow-lg hover:scale-110 active:scale-95 transition-all border-4 border-white z-10">
-            <span className="text-2xl">{stars > 0 ? '⭐' : '✓'}</span>
-          </Link>
         ) : (
-          <Link to={`/lesson/${level.id}`} className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-white text-brand-blue border-4 border-brand-blue shadow-lg hover:scale-110 active:scale-95 transition-all z-10">
-            <span className="font-bold text-sm">{index === 0 ? 'GO' : index + 1}</span>
-          </Link>
+          status === 'locked' && (
+            <p className="text-xs text-gray-400">Locked</p>
+          )
         )}
       </div>
 
-      {/* Right content - text on alternating sides */}
-      <div className={`flex-1 ${isLeft ? 'order-3 pl-6' : 'text-right pr-6'}`}>
-        {!isLeft && status !== 'locked' && (
-          <p className="text-xs text-gray-500 font-medium">{level.name}</p>
-        )}
-        {isLeft && status === 'locked' && (
-          <p className="text-xs text-gray-400">Locked</p>
+      {/* Center node */}
+      <div className="order-2 flex-shrink-0">
+        <Link to={status === 'locked' ? '#' : `/lesson/${level.id}`}>
+          <motion.div
+            whileHover={status !== 'locked' ? { scale: 1.1 } : {}}
+            whileTap={status !== 'locked' ? { scale: 0.95 } : {}}
+            className={`
+              w-14 h-14 rounded-full flex items-center justify-center border-4 border-white shadow-lg z-20 relative
+              ${status === 'completed' 
+                ? 'bg-lime-500 text-white' 
+                : status === 'available'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }
+            `}
+          >
+            {status === 'completed' ? (
+              <Check className="w-6 h-6" strokeWidth={3} />
+            ) : status === 'available' ? (
+              <span className="font-bold text-sm">{index + 1}</span>
+            ) : (
+              <Lock className="w-5 h-5" />
+            )}
+          </motion.div>
+        </Link>
+      </div>
+
+      {/* Right side content */}
+      <div className={`flex-1 ${isLeft ? 'order-3 pl-5' : 'text-right pr-5'}`}>
+        {!isLeft ? (
+          <div className="inline-block text-left">
+            <p className={`font-semibold text-sm ${status === 'locked' ? 'text-gray-400' : 'text-gray-800'}`}>
+              {level.name}
+            </p>
+            {status === 'completed' && stars > 0 && (
+              <div className="flex gap-0.5 mt-1">
+                {[...Array(stars)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          status === 'locked' && (
+            <p className="text-xs text-gray-400">Locked</p>
+          )
         )}
       </div>
     </motion.div>

@@ -7,13 +7,55 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-green': '#58cc02',
-        'brand-green-dark': '#4cb201',
-        'brand-blue': '#1cb0f6',
-        'brand-red': '#ff4b4b',
-        'brand-yellow': '#ffc800',
-        'brand-purple': '#ce82ff',
-        'brand-orange': '#ff9600',
+        // Lingora Design System
+        'violet': {
+          50: '#f5f3ff',
+          100: '#ede9fe',
+          200: '#ddd6fe',
+          300: '#c4b5fd',
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#7c3aed',
+          700: '#6d28d9',
+          800: '#5b21b6',
+          900: '#4c1d95',
+        },
+        'lime': {
+          400: '#a3e635',
+          500: '#84cc16',
+          600: '#65a30d',
+        },
+        'teal': {
+          400: '#2dd4bf',
+          500: '#14b8a6',
+        },
+        'rose': {
+          400: '#fb7185',
+          500: '#f43f5e',
+        },
+        'amber': {
+          400: '#fbbf24',
+          500: '#f59e0b',
+        },
+        // Semantic tokens
+        'primary': '#6d28d9',      // Deep violet
+        'primary-light': '#7c3aed',
+        'primary-dark': '#5b21b6',
+        'cta': '#84cc16',          // Electric lime
+        'cta-dark': '#65a30d',
+        'correct': '#14b8a6',      // Teal
+        'wrong': '#f43f5e',        // Rose
+        'hearts': '#f43f5e',       // Rose
+        'streak': '#f59e0b',       // Amber
+        'xp': '#f59e0b',          // Amber
+        // Legacy compatibility
+        'brand-green': '#84cc16',
+        'brand-green-dark': '#65a30d',
+        'brand-blue': '#7c3aed',
+        'brand-red': '#f43f5e',
+        'brand-yellow': '#f59e0b',
+        'brand-purple': '#6d28d9',
+        'brand-orange': '#f59e0b',
         'gray-100': '#f7f7f7',
         'gray-200': '#e5e5e5',
         'gray-300': '#cfcfcf',
@@ -22,6 +64,12 @@ export default {
       },
       fontFamily: {
         'satoshi': ['Satoshi', 'system-ui', 'sans-serif'],
+      },
+      boxShadow: {
+        '3d': '0 4px 0 0 #65a30d',
+        '3d-active': '0 2px 0 0 #65a30d',
+        '3d-sm': '0 3px 0 0 #65a30d',
+        '3d-sm-active': '0 1px 0 0 #65a30d',
       },
       animation: {
         'bounce-slight': 'bounce-slight 0.5s ease-in-out',

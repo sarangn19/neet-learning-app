@@ -2,6 +2,7 @@
 export interface User {
   id: string;
   name: string;
+  email: string;
   avatar: string;
   tokens: number;
   level: number;
@@ -11,6 +12,7 @@ export interface User {
   lastActive: string;
   badges: Badge[];
   completedLessons: string[];
+  role: 'user' | 'admin' | 'superadmin';
 }
 
 export interface Badge {
