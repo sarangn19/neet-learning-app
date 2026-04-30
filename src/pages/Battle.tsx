@@ -109,18 +109,27 @@ export default function Battle() {
 
   // Subscribe to match updates via Supabase Realtime
   const subscribeToMatch = useCallback((matchId: string) => {
+    console.log('Subscribing to match:', matchId);
+    
     const channel = supabase
       .channel(`battle:${matchId}`)
       .on('postgres_changes', 
-        { event: 'UPDATE', schema: 'public', table: 'battle_matches', filter: `id=eq.${matchId}` },
+        { event: '*', schema: 'public', table: 'battle_matches', filter: `id=eq.${matchId}` },
         (payload) => {
+          console.log('Realtime update received:', payload);
           const updated = payload.new as Match;
+          
+          console.log('Match update - player2_id:', updated.player2_id, 'status:', updated.status);
           
           // Check if opponent joined before updating state
           const opponentJustJoined = updated.player2_id && updated.status === 'active';
+          console.log('Opponent just joined?', opponentJustJoined);
           
           setCurrentMatch(prev => {
+            console.log('Current match status:', prev?.status, 'Opponent joined?', opponentJustJoined);
+            
             if (opponentJustJoined && prev?.status === 'waiting') {
+              console.log('Starting countdown - opponent joined!');
               // Opponent joined - start countdown
               setGameState('countdown');
               let count = 3;
@@ -137,7 +146,9 @@ export default function Battle() {
           });
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Subscription status:', status);
+      });
     
     return channel;
   }, []);
