@@ -1,18 +1,12 @@
 import { useState, useCallback } from 'react';
 
 import { useParams, useNavigate } from 'react-router-dom';
-
 import { motion, AnimatePresence } from 'framer-motion';
-
 import { X, Star } from 'lucide-react';
-
 import confetti from 'canvas-confetti';
-
 import { subjects } from '../data/curriculum';
-
 import { useUserStore } from '../store/userStore';
-
-import type { Activity, Level } from '../types';
+import type { Activity, Level, Badge } from '../types';
 
 
 
@@ -39,16 +33,12 @@ export default function Lesson() {
   const { completeLesson, addCatFood, lessonProgress } = useUserStore();
 
   const [moduleCompleted, setModuleCompleted] = useState(false);
-
-  
-
   const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
-
   const [score, setScore] = useState(0);
-
   const [isCompleted, setIsCompleted] = useState(false);
-
   const [stars, setStars] = useState(0);
+  const [unlockedBadges, setUnlockedBadges] = useState<Badge[]>([]);
+  const [showBadgeIndex, setShowBadgeIndex] = useState(0);
 
 
 
@@ -114,11 +104,16 @@ export default function Lesson() {
 
         const earnedStars = Math.min(3, Math.ceil((score + points) / (activities.length * 5)));
 
-        setStars(earnedStars);
-
         setIsCompleted(true);
-
-        completeLesson(levelId!, earnedStars);
+        setStars(earnedStars);
+        
+        // Complete lesson and check for badges
+        completeLesson(levelId!, earnedStars).then((newBadges) => {
+          if (newBadges && newBadges.length > 0) {
+            setUnlockedBadges(newBadges);
+            setShowBadgeIndex(0);
+          }
+        });
 
         
 
@@ -212,22 +207,33 @@ export default function Lesson() {
 
 
 
+  // Show badge unlock popup
+  if (unlockedBadges.length > 0 && showBadgeIndex < unlockedBadges.length) {
+    const badge = unlockedBadges[showBadgeIndex];
+    return (
+      <BadgeUnlockPopup
+        badge={badge}
+        currentIndex={showBadgeIndex}
+        totalCount={unlockedBadges.length}
+        onContinue={() => {
+          if (showBadgeIndex < unlockedBadges.length - 1) {
+            setShowBadgeIndex(prev => prev + 1);
+          } else {
+            setShowBadgeIndex(unlockedBadges.length); // Mark all as shown
+          }
+        }}
+      />
+    );
+  }
+
   if (isCompleted) {
-
     return <LessonComplete 
-
       level={level} 
-
       stars={stars} 
-
       score={score} 
-
       onContinue={handleExit}
-
       moduleCompleted={moduleCompleted}
-
     />;
-
   }
 
 
@@ -460,5 +466,86 @@ function LessonComplete({ level, stars, score, onContinue, moduleCompleted }: { 
 
 }
 
+// Badge Unlock Popup Component
+function BadgeUnlockPopup({ 
+  badge, 
+  currentIndex, 
+  totalCount, 
+  onContinue 
+}: { 
+  badge: Badge; 
+  currentIndex: number; 
+  totalCount: number; 
+  onContinue: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', damping: 15 }}
+        className="bg-white rounded-3xl p-8 max-w-sm w-full text-center"
+      >
+        {/* Badge Icon */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', damping: 10 }}
+          className="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+        >
+          <span className="text-5xl">{badge.icon}</span>
+        </motion.div>
 
+        {/* Title */}
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-2xl font-bold text-gray-900 mb-2"
+        >
+          Badge Unlocked!
+        </motion.h2>
+
+        {/* Badge Name */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-lg font-semibold text-purple-600 mb-2"
+        >
+          {badge.name}
+        </motion.p>
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="text-gray-500 mb-6"
+        >
+          {badge.description}
+        </motion.p>
+
+        {/* Progress indicator */}
+        {totalCount > 1 && (
+          <p className="text-sm text-gray-400 mb-4">
+            {currentIndex + 1} of {totalCount}
+          </p>
+        )}
+
+        {/* Continue Button */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          onClick={onContinue}
+          whileTap={{ scale: 0.95 }}
+          className="w-full py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-semibold transition-colors"
+        >
+          {currentIndex < totalCount - 1 ? 'Next Badge →' : 'Awesome!'}
+        </motion.button>
+      </motion.div>
+    </div>
+  );
+}
 

@@ -13,6 +13,7 @@ export interface User {
   badges: Badge[];
   completedLessons: string[];
   role: 'user' | 'admin' | 'superadmin';
+  purchasedAvatars: string[];
 }
 
 export interface Badge {

@@ -1,9 +1,16 @@
 import { motion } from 'framer-motion';
-import { Cat, Flame, Target, Zap, Award } from 'lucide-react';
+import { Cat, Flame, Target, Zap, Award, LogOut } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
-  const { name, avatar, catFood, level, streak, longestStreak, completedLessons, badges } = useUserStore();
+  const { name, avatar, catFood, level, streak, longestStreak, completedLessons, badges, logout } = useUserStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const stats = [
     { icon: <Cat className="w-5 h-5" />, label: 'Cat Food', value: catFood, color: 'text-amber-600' },
@@ -25,6 +32,15 @@ export default function Profile() {
         </div>
         <h1 className="text-xl font-bold text-gray-900 mb-1">{name}</h1>
         <p className="text-gray-500 text-sm sm:text-base mb-4">Level {level} Learner</p>
+        
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors text-sm font-medium"
+        >
+          <LogOut className="w-4 h-4" />
+          Logout
+        </button>
         
         {/* Level Progress */}
         <div className="max-w-xs mx-auto">

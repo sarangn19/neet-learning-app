@@ -1,12 +1,8 @@
-import { Link } from 'react-router-dom';
-
 import { motion } from 'framer-motion';
-
-import { Search } from 'lucide-react';
-
+import { Search, Cat, Flame, Target, Zap, Award, LogOut, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-
 import { useUserStore } from '../store/userStore';
+import { useNavigate } from 'react-router-dom';
 
 import RevisionPopup from '../components/RevisionPopup';
 
@@ -16,21 +12,52 @@ import { PageSkeleton } from '../components/Skeleton';
 
 
 
+const AVATAR_OPTIONS = ['👨‍🔬', '👩‍🔬', '🧑‍🔬', '👨‍🎓', '👩‍🎓', '🧑‍🎓', '🐱', '🐶', '🐰', '🦊', '🦁', '🐯', '🐼', '🐨', '🐸', '🦄'];
+
+interface BadgeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  requirement: string;
+}
+
+const ALL_BADGES: BadgeDefinition[] = [
+  { id: 'first_lesson', name: 'First Steps', description: 'Complete your first lesson', icon: '👣', requirement: 'Complete 1 lesson' },
+  { id: 'ten_lessons', name: 'Quick Learner', description: 'Complete 10 lessons', icon: '📚', requirement: 'Complete 10 lessons' },
+  { id: 'fifty_lessons', name: 'Knowledge Seeker', description: 'Complete 50 lessons', icon: '🎓', requirement: 'Complete 50 lessons' },
+  { id: 'streak_3', name: 'On Fire', description: 'Maintain a 3-day streak', icon: '🔥', requirement: '3-day streak' },
+  { id: 'streak_7', name: 'Dedicated', description: 'Maintain a 7-day streak', icon: '⭐', requirement: '7-day streak' },
+  { id: 'streak_30', name: 'Unstoppable', description: 'Maintain a 30-day streak', icon: '🏆', requirement: '30-day streak' },
+  { id: 'perfect_score', name: 'Perfectionist', description: 'Get a perfect score on any lesson', icon: '💯', requirement: 'Perfect score' },
+  { id: 'module_master', name: 'Module Master', description: 'Complete an entire module', icon: '🎯', requirement: 'Complete 1 module' },
+  { id: 'all_subjects', name: 'Well Rounded', description: 'Complete lessons in all 4 subjects', icon: '🌟', requirement: 'All subjects' },
+  { id: 'early_bird', name: 'Early Bird', description: 'Complete a lesson before 8 AM', icon: '🌅', requirement: 'Early morning lesson' },
+  { id: 'night_owl', name: 'Night Owl', description: 'Complete a lesson after 10 PM', icon: '🦉', requirement: 'Late night lesson' },
+  { id: 'coin_collector', name: 'Coin Collector', description: 'Collect 500 coins', icon: '🪙', requirement: '500 coins' },
+];
+
 export default function Home() {
-
-  const [searchQuery, setSearchQuery] = useState('');
-
   const [showFlashcards, setShowFlashcards] = useState(false);
-
+  const [showProfile, setShowProfile] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars } = useUserStore();
+  const navigate = useNavigate();
 
-  const { catFood, name } = useUserStore();
+  const hasBadge = (badgeId: string) => badges.some(b => b.id === badgeId);
 
   // Simulate loading for demo
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   if (isLoading) {
     return <PageSkeleton type="home" />;
@@ -84,9 +111,12 @@ export default function Home() {
 
         <div className="flex items-center gap-3">
 
-          <div className="w-10 h-10 bg-[#D9D9D9] rounded-full flex items-center justify-center">
-
-          </div>
+          <button 
+            onClick={() => setShowProfile(true)}
+            className="w-10 h-10 bg-[#D9D9D9] rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
+          >
+            {avatar || <span className="text-gray-500 text-sm">👤</span>}
+          </button>
 
           <div className="flex flex-col">
 
@@ -100,172 +130,229 @@ export default function Home() {
 
 
 
-        {/* Right: Cat Food Icon (Feed Button) */}
+        {/* Right: Search Icon & Cat Food */}
+        <div className="flex items-center gap-3">
+          {/* Search Icon */}
+          <button className="w-11 h-11 rounded-full bg-gray-100 border border-gray-300 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+            <Search className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+          </button>
 
-        <div className="relative cursor-pointer hover:scale-105 transition-transform">
-
-          <div className="w-11 h-11 rounded-full bg-gray-100 border border-gray-300 flex items-center justify-center">
-
-            <img 
-
-              src="/images/catfood.svg" 
-
-              alt="Cat Food"
-
-              className="w-7 h-7 object-contain"
-
-            />
-
+          {/* Cat Food Icon */}
+          <div className="relative cursor-pointer hover:scale-105 transition-transform">
+            <div className="w-11 h-11 rounded-full bg-gray-100 border border-gray-300 flex items-center justify-center">
+              <img 
+                src="/images/catfood.svg" 
+                alt="Cat Food"
+                className="w-7 h-7 object-contain"
+              />
+            </div>
+            <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-amber-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+              {catFood}
+            </span>
           </div>
-
-          <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-amber-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-
-            {catFood}
-
-          </span>
-
         </div>
-
       </motion.div>
 
 
 
       {/* Mascot - Cat GIF */}
-
       <motion.div
-
         initial={{ opacity: 0, scale: 0.9 }}
-
         animate={{ opacity: 1, scale: 1 }}
-
         transition={{ delay: 0.2 }}
-
         className="my-6"
-
       >
-
         <div className="w-full aspect-[16/9] relative overflow-hidden rounded-2xl shadow-sm">
-
           <img 
-
             src="/images/mascot.gif" 
-
             alt="Mascot"
-
             className="w-full h-full object-cover"
-
           />
-
         </div>
-
       </motion.div>
 
+      {/* Profile Modal */}
+      {showProfile && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-y-auto p-6"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-gray-900">Profile</h2>
+              <button 
+                onClick={() => setShowProfile(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
 
+            {/* Profile Info */}
+            <div className="text-center mb-6">
+              <button
+                onClick={() => setShowAvatarPicker(true)}
+                className="w-20 h-20 bg-[#D9D9D9] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl hover:opacity-80 transition-opacity cursor-pointer relative group"
+              >
+                {avatar || <span>👤</span>}
+                <span className="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-white text-xs">Change</span>
+                </span>
+              </button>
+              <h3 className="text-xl font-bold text-gray-900">{name}</h3>
+              <p className="text-gray-500">Level {level} Learner</p>
+            </div>
 
-      {/* Search Bar */}
+            {/* Avatar Picker */}
+            {showAvatarPicker && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mb-6 bg-gray-50 rounded-xl p-4"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-bold text-gray-900">Choose Avatar</h4>
+                  <button
+                    onClick={() => setShowAvatarPicker(false)}
+                    className="p-1 hover:bg-gray-200 rounded-full"
+                  >
+                    <X className="w-4 h-4 text-gray-500" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-5 gap-2">
+                  {AVATAR_OPTIONS.filter(emoji => purchasedAvatars.includes(emoji)).map((emoji) => (
+                    <button
+                      key={emoji}
+                      onClick={() => {
+                        setUser({ avatar: emoji });
+                        setShowAvatarPicker(false);
+                      }}
+                      className={`w-10 h-10 rounded-lg text-xl flex items-center justify-center transition-colors ${
+                        avatar === emoji
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-white hover:bg-gray-100'
+                      }`}
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-400 mt-3 text-center">
+                  Buy more avatars from the shop!
+                </p>
+              </motion.div>
+            )}
 
-      <motion.div 
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className="bg-gray-50 rounded-xl p-3 text-center">
+                <Cat className="w-5 h-5 text-amber-600 mx-auto mb-1" />
+                <p className="text-lg font-bold text-gray-900">{catFood}</p>
+                <p className="text-xs text-gray-500">Cat Food</p>
+              </div>
+              <div className="bg-gray-50 rounded-xl p-3 text-center">
+                <Flame className="w-5 h-5 text-orange-500 mx-auto mb-1" />
+                <p className="text-lg font-bold text-gray-900">{streak}</p>
+                <p className="text-xs text-gray-500">Streak</p>
+              </div>
+              <div className="bg-gray-50 rounded-xl p-3 text-center">
+                <Target className="w-5 h-5 text-red-500 mx-auto mb-1" />
+                <p className="text-lg font-bold text-gray-900">{longestStreak}</p>
+                <p className="text-xs text-gray-500">Best Streak</p>
+              </div>
+              <div className="bg-gray-50 rounded-xl p-3 text-center">
+                <Zap className="w-5 h-5 text-blue-500 mx-auto mb-1" />
+                <p className="text-lg font-bold text-gray-900">{completedLessons.length}</p>
+                <p className="text-xs text-gray-500">Lessons</p>
+              </div>
+              <div className="bg-gray-50 rounded-xl p-3 text-center col-span-2">
+                <span className="text-xl mx-auto mb-1 block">🪙</span>
+                <p className="text-lg font-bold text-gray-900">{coins}</p>
+                <p className="text-xs text-gray-500">Coins</p>
+              </div>
+            </div>
 
-        initial={{ opacity: 0, y: 20 }}
+            {/* Badges */}
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Award className="w-5 h-5 text-purple-500" />
+                <h4 className="font-bold text-gray-900">Achievements</h4>
+                <span className="text-xs text-gray-500">({badges.length}/{ALL_BADGES.length})</span>
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {ALL_BADGES.map((badge) => {
+                  const unlocked = hasBadge(badge.id);
+                  return (
+                    <button
+                      key={badge.id}
+                      onClick={() => setSelectedBadge(badge)}
+                      className={`rounded-lg p-2 text-center transition-all ${
+                        unlocked
+                          ? 'bg-purple-50 border-2 border-purple-200'
+                          : 'bg-gray-100 border-2 border-gray-200 opacity-60 grayscale'
+                      }`}
+                    >
+                      <div className="text-xl mb-1">{unlocked ? badge.icon : '🔒'}</div>
+                      <p className={`text-xs font-medium truncate ${unlocked ? 'text-purple-900' : 'text-gray-500'}`}>
+                        {badge.name}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+              
+              {/* Badge Detail Modal */}
+              {selectedBadge && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 bg-white border-2 border-purple-200 rounded-xl p-4"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
+                      hasBadge(selectedBadge.id) ? 'bg-purple-100' : 'bg-gray-100'
+                    }`}>
+                      {hasBadge(selectedBadge.id) ? selectedBadge.icon : '🔒'}
+                    </div>
+                    <div className="flex-1">
+                      <h5 className="font-bold text-gray-900">{selectedBadge.name}</h5>
+                      <p className="text-sm text-gray-600 mb-2">{selectedBadge.description}</p>
+                      <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
+                        hasBadge(selectedBadge.id)
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-amber-100 text-amber-700'
+                      }`}>
+                        {hasBadge(selectedBadge.id) ? (
+                          <><span>✓</span> Unlocked!</>
+                        ) : (
+                          <><span>📋</span> To unlock: {selectedBadge.requirement}</>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setSelectedBadge(null)}
+                      className="p-1 hover:bg-gray-100 rounded-full"
+                    >
+                      <X className="w-4 h-4 text-gray-400" />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </div>
 
-        animate={{ opacity: 1, y: 0 }}
-
-        transition={{ delay: 0.3 }}
-
-        className="mb-4"
-
-      >
-
-        <div className="flex items-center gap-3 h-12 px-4 bg-white border border-gray-200 rounded-2xl">
-
-          <Search className="w-4 h-4 text-gray-400 flex-shrink-0" strokeWidth={1.5} />
-
-          <input
-
-            type="text"
-
-            placeholder="Search Chapter"
-
-            value={searchQuery}
-
-            onChange={(e) => setSearchQuery(e.target.value)}
-
-            className="flex-1 h-full bg-transparent focus:outline-none text-sm text-gray-900 placeholder:text-gray-400"
-
-          />
-
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-colors font-medium"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </button>
+          </motion.div>
         </div>
-
-      </motion.div>
-
-
-
-      {/* Subject Cards - 2x2 Grid */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="grid grid-cols-2 gap-4 px-4 pb-4"
-      >
-
-        {/* Maths Card - Pink/Purple Gradient */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-        >
-          <Link 
-            to={`/chapter/maths/plus_one`}
-            className="flex w-full aspect-[4/3] bg-gradient-to-br from-pink-400 via-pink-500 to-purple-600 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start"
-          >
-            <span className="text-white font-bold text-lg z-10">Maths</span>
-          </Link>
-        </motion.div>
-
-        {/* Physics Card - Orange Gradient */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <Link 
-            to={`/chapter/physics/plus_one`}
-            className="flex w-full aspect-[4/3] bg-gradient-to-br from-orange-400 via-orange-500 to-amber-500 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start"
-          >
-            <span className="text-white font-bold text-lg z-10">Physics</span>
-          </Link>
-        </motion.div>
-
-        {/* Chemistry Card - Yellow/Orange Gradient */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <Link 
-            to={`/chapter/chemistry/plus_one`}
-            className="flex w-full aspect-[4/3] bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-500 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start"
-          >
-            <span className="text-white font-bold text-lg z-10">Chemistry</span>
-          </Link>
-        </motion.div>
-
-        {/* Biology Card - Coral/Red Gradient */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Link 
-            to={`/chapter/biology/plus_one`}
-            className="flex w-full aspect-[4/3] bg-gradient-to-br from-orange-400 via-red-400 to-red-500 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start"
-          >
-            <span className="text-white font-bold text-lg z-10">Biology</span>
-          </Link>
-        </motion.div>
-
-      </motion.div>
-
+      )}
     </div>
 
   );

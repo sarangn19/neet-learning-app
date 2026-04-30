@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Trophy, User } from 'lucide-react';
+import { Home, BookOpen, ShoppingBag } from 'lucide-react';
 
 export default function Layout() {
   const location = useLocation();
@@ -21,8 +21,8 @@ export default function Layout() {
         <div className="flex items-center justify-around py-2">
           <NavItem to="/" icon={<Home className="w-5 h-5" />} label="Home" isActive={isActive('/')} />
           <NavItem to="/learn" icon={<BookOpen className="w-5 h-5" />} label="Learn" isActive={isActive('/learn')} />
-          <NavItem to="/leaderboard" icon={<Trophy className="w-5 h-5" />} label="League" isActive={isActive('/leaderboard')} />
-          <NavItem to="/profile" icon={<User className="w-5 h-5" />} label="Profile" isActive={isActive('/profile')} />
+          <NavItem to="/mcqs" icon={<span className="text-lg font-bold">Q</span>} label="MCQs" isActive={isActive('/mcqs')} />
+          <NavItem to="/shop" icon={<ShoppingBag className="w-5 h-5" />} label="Shop" isActive={isActive('/shop')} />
         </div>
       </nav>
     </div>

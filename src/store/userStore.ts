@@ -1,26 +1,34 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { supabase } from '../lib/supabase';
 import type { User, LessonProgress, DailyGoal, Badge } from '../types';
 
 interface UserState extends User {
   lessonProgress: Record<string, LessonProgress>;
   dailyGoals: DailyGoal[];
   catFood: number;
+  coins: number;
   isAuthenticated: boolean;
   user: User | null;
   
   // Actions
   setUser: (user: Partial<User>) => void;
-  completeLesson: (levelId: string, stars: number) => void;
+  completeLesson: (levelId: string, stars: number) => Promise<Badge[]>;
+  loadLessonProgress: () => Promise<void>;
   updateStreak: () => void;
   addGems: (amount: number) => void;
   unlockBadge: (badge: Badge) => void;
+  checkBadges: (lessonStars: number, coinsEarned: number) => Badge[];
   getDailyGoal: () => DailyGoal | undefined;
   addCatFood: (amount: number) => void;
+  addCoins: (amount: number) => void;
+  spendCoins: (amount: number) => boolean;
+  purchaseAvatar: (avatar: string, cost: number) => boolean;
   completeModule: () => void;
   login: (email: string, password: string) => Promise<{ success: boolean; user?: User; error?: string }>;
   signup: (data: { name: string; email: string; password: string }) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
+  clearStorage: () => void;
 }
 
 const defaultUser: User = {
@@ -37,6 +45,7 @@ const defaultUser: User = {
   badges: [],
   completedLessons: [],
   role: 'user',
+  purchasedAvatars: ['👨‍🔬'],
 };
 
 export const useUserStore = create<UserState>()(
@@ -46,64 +55,149 @@ export const useUserStore = create<UserState>()(
       lessonProgress: {},
       dailyGoals: [],
       catFood: 0,
+      coins: 0,
       isAuthenticated: false,
       user: null,
 
       setUser: (userData) => set((state) => ({ ...state, ...userData })),
 
-      login: async (email, password) => {
-        // Mock login - replace with actual API
-        if (email && password) {
-          const mockUser: User = {
-            id: 'admin-1',
-            name: email.split('@')[0],
-            email,
-            avatar: '👨‍💼',
-            tokens: 0,
-            level: 1,
-            streak: 1,
-            longestStreak: 1,
-            gems: 100,
-            lastActive: new Date().toISOString().split('T')[0],
+      login: async (data) => {
+        try {
+          // Check if user exists in database
+          const { data: userData, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', data.email)
+            .single();
+
+          if (error || !userData) {
+            return { success: false, error: 'User not found. Please sign up first.' };
+          }
+
+          // For now, accept any password (you should add password hashing later)
+
+          const user: User = {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            avatar: userData.avatar || '�',
+            tokens: userData.tokens || 0,
+            level: userData.level || 1,
+            streak: userData.streak || 0,
+            longestStreak: userData.longest_streak || 0,
+            gems: userData.gems || 0,
+            lastActive: userData.last_active || new Date().toISOString().split('T')[0],
             badges: [],
             completedLessons: [],
-            role: email.includes('super') ? 'superadmin' : email.includes('admin') ? 'admin' : 'user',
+            role: userData.role || 'user',
           };
-          set({ isAuthenticated: true, user: mockUser });
-          return { success: true, user: mockUser };
+
+          set({ isAuthenticated: true, user, lessonProgress: {} });
+          // Load this user's lesson progress from database
+          await get().loadLessonProgress();
+          return { success: true };
+        } catch (error) {
+          console.error('Login error:', error);
+          return { success: false, error: 'Login failed. Please try again.' };
         }
-        return { success: false, error: 'Invalid credentials' };
       },
 
       signup: async (data) => {
-        // Mock signup - replace with actual API
-        if (data.email && data.password) {
+        try {
+          // Generate UUID v4
+          const generateUUID = () => {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+              const r = Math.random() * 16 | 0;
+              const v = c === 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+            });
+          };
+
+          // Check if user already exists
+          const { data: existingUser } = await supabase
+            .from('users')
+            .select('email')
+            .eq('email', data.email)
+            .single();
+
+          if (existingUser) {
+            return { success: false, error: 'Email already registered. Please log in.' };
+          }
+
+          // Create new user in database
+          const { data: userData, error } = await supabase
+            .from('users')
+            .insert({
+              id: generateUUID(),
+              email: data.email,
+              name: data.name,
+              avatar: '👤',
+              role: 'user',
+              status: 'active',
+              gems: 100,
+              level: 1,
+              streak: 1,
+              longest_streak: 1,
+              tokens: 0,
+              completed_lessons: 0,
+              last_active: 'Just now',
+            })
+            .select()
+            .single();
+
+          if (error) {
+            console.error('Signup error:', error);
+            return { success: false, error: 'Failed to create account. Please try again.' };
+          }
+
           const newUser: User = {
-            id: 'user-' + Date.now(),
-            name: data.name,
-            email: data.email,
-            avatar: '👤',
-            tokens: 0,
-            level: 1,
-            streak: 1,
-            longestStreak: 1,
-            gems: 100,
-            lastActive: new Date().toISOString().split('T')[0],
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            avatar: userData.avatar || '👤',
+            tokens: userData.tokens || 0,
+            level: userData.level || 1,
+            streak: userData.streak || 1,
+            longestStreak: userData.longest_streak || 1,
+            gems: userData.gems || 100,
+            lastActive: userData.last_active || 'Just now',
             badges: [],
             completedLessons: [],
-            role: 'user',
+            role: userData.role || 'user',
           };
-          set({ isAuthenticated: true, user: newUser });
+
+          set({ isAuthenticated: true, user: newUser, lessonProgress: {} });
           return { success: true };
+        } catch (error) {
+          console.error('Signup error:', error);
+          return { success: false, error: 'Signup failed. Please try again.' };
         }
-        return { success: false, error: 'Signup failed' };
       },
 
       logout: () => {
-        set({ isAuthenticated: false, user: null });
+        set({ 
+          isAuthenticated: false, 
+          user: null,
+          lessonProgress: {},
+          dailyGoals: [],
+          catFood: 0,
+          coins: 0
+        });
       },
 
-      completeLesson: (levelId: string, stars: number) => {
+      clearStorage: () => {
+        set({
+          ...defaultUser,
+          lessonProgress: {},
+          dailyGoals: [],
+          catFood: 0,
+          coins: 0,
+          isAuthenticated: false,
+          user: null
+        });
+      },
+
+          completeLesson: async (levelId: string, stars: number) => {
         const state = get();
         const progress: LessonProgress = {
           levelId,
@@ -113,12 +207,148 @@ export const useUserStore = create<UserState>()(
           lastAttempted: new Date().toISOString(),
         };
         
+        // Calculate coins reward
+        const baseCoins = 10;
+        const bonusCoins = stars === 3 ? 20 : stars === 2 ? 10 : 0;
+        const totalCoins = baseCoins + bonusCoins;
+        
+        // Save to local state
         set({
           lessonProgress: { ...state.lessonProgress, [levelId]: progress },
           completedLessons: [...state.completedLessons, levelId],
+          coins: state.coins + totalCoins,
         });
         
+        // Save to database if user is logged in
+        if (state.user) {
+          try {
+            await supabase.from('lesson_progress').upsert({
+              user_id: state.user.id,
+              lesson_id: levelId,
+              completed: true,
+              score: stars,
+              completed_at: new Date().toISOString(),
+            });
+          } catch (error) {
+            console.error('Failed to save lesson progress:', error);
+          }
+        }
+        
         get().updateStreak();
+        
+        // Check and unlock badges
+        return get().checkBadges(stars, totalCoins);
+      },
+
+      checkBadges: (lessonStars: number, coinsEarned: number) => {
+        const state = get();
+        const newlyUnlocked: Badge[] = [];
+        const now = new Date().toISOString();
+        const currentHour = new Date().getHours();
+        
+        const hasBadge = (id: string) => state.badges.some(b => b.id === id);
+        
+        // First Steps - Complete 1 lesson
+        if (!hasBadge('first_lesson') && state.completedLessons.length + 1 >= 1) {
+          const badge: Badge = { id: 'first_lesson', name: 'First Steps', description: 'Complete your first lesson', icon: '👣', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Quick Learner - Complete 10 lessons
+        if (!hasBadge('ten_lessons') && state.completedLessons.length + 1 >= 10) {
+          const badge: Badge = { id: 'ten_lessons', name: 'Quick Learner', description: 'Complete 10 lessons', icon: '📚', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Fifty Lessons - Complete 50 lessons
+        if (!hasBadge('fifty_lessons') && state.completedLessons.length + 1 >= 50) {
+          const badge: Badge = { id: 'fifty_lessons', name: 'Knowledge Seeker', description: 'Complete 50 lessons', icon: '🎓', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Streak badges
+        if (!hasBadge('streak_3') && state.streak >= 3) {
+          const badge: Badge = { id: 'streak_3', name: 'On Fire', description: 'Maintain a 3-day streak', icon: '🔥', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        if (!hasBadge('streak_7') && state.streak >= 7) {
+          const badge: Badge = { id: 'streak_7', name: 'Dedicated', description: 'Maintain a 7-day streak', icon: '⭐', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        if (!hasBadge('streak_30') && state.streak >= 30) {
+          const badge: Badge = { id: 'streak_30', name: 'Unstoppable', description: 'Maintain a 30-day streak', icon: '🏆', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Perfectionist - Perfect score
+        if (!hasBadge('perfect_score') && lessonStars === 3) {
+          const badge: Badge = { id: 'perfect_score', name: 'Perfectionist', description: 'Get a perfect score on any lesson', icon: '💯', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Coin Collector - 500 coins
+        if (!hasBadge('coin_collector') && state.coins + coinsEarned >= 500) {
+          const badge: Badge = { id: 'coin_collector', name: 'Coin Collector', description: 'Collect 500 coins', icon: '🪙', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Early Bird - Complete lesson before 8 AM
+        if (!hasBadge('early_bird') && currentHour < 8) {
+          const badge: Badge = { id: 'early_bird', name: 'Early Bird', description: 'Complete a lesson before 8 AM', icon: '🌅', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Night Owl - Complete lesson after 10 PM
+        if (!hasBadge('night_owl') && currentHour >= 22) {
+          const badge: Badge = { id: 'night_owl', name: 'Night Owl', description: 'Complete a lesson after 10 PM', icon: '🦉', unlockedAt: now };
+          newlyUnlocked.push(badge);
+        }
+        
+        // Add newly unlocked badges
+        if (newlyUnlocked.length > 0) {
+          set({ badges: [...state.badges, ...newlyUnlocked] });
+        }
+        
+        return newlyUnlocked;
+      },
+
+      loadLessonProgress: async () => {
+        const state = get();
+        if (!state.user) return;
+
+        try {
+          const { data, error } = await supabase
+            .from('lesson_progress')
+            .select('*')
+            .eq('user_id', state.user.id);
+
+          if (error) throw error;
+
+          if (data) {
+            const progressMap: Record<string, LessonProgress> = {};
+            const completed: string[] = [];
+            
+            data.forEach((item: any) => {
+              progressMap[item.lesson_id] = {
+                levelId: item.lesson_id,
+                completed: item.completed,
+                stars: item.score || 0,
+                tokensEarned: 0,
+                lastAttempted: item.completed_at || item.created_at,
+              };
+              if (item.completed) {
+                completed.push(item.lesson_id);
+              }
+            });
+
+            set({
+              lessonProgress: progressMap,
+              completedLessons: completed,
+            });
+          }
+        } catch (error) {
+          console.error('Failed to load lesson progress:', error);
+        }
       },
 
       updateStreak: () => {
@@ -148,6 +378,17 @@ export const useUserStore = create<UserState>()(
 
       addCatFood: (amount) => set((state) => ({ catFood: state.catFood + amount })),
 
+      addCoins: (amount) => set((state) => ({ coins: state.coins + amount })),
+
+      spendCoins: (amount) => {
+        const state = get();
+        if (state.coins >= amount) {
+          set({ coins: state.coins - amount });
+          return true;
+        }
+        return false;
+      },
+
       completeModule: () => {
         // Give 1 cat food for completing a module
         get().addCatFood(1);
@@ -156,6 +397,18 @@ export const useUserStore = create<UserState>()(
       unlockBadge: (badge) => set((state) => ({
         badges: [...state.badges, badge],
       })),
+
+      purchaseAvatar: (avatar, cost) => {
+        const state = get();
+        if (state.coins >= cost && !state.purchasedAvatars.includes(avatar)) {
+          set({
+            coins: state.coins - cost,
+            purchasedAvatars: [...state.purchasedAvatars, avatar],
+          });
+          return true;
+        }
+        return false;
+      },
 
       getDailyGoal: () => {
         const state = get();
