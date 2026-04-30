@@ -122,12 +122,13 @@ export default function Battle() {
           console.log('Match update - player2_id:', updated.player2_id, 'status:', updated.status);
           
           setCurrentMatch(prev => {
-            // Check if we went from no player2 to having player2 (opponent joined)
+            // Only react if I'm Player 1 (the creator) and opponent just joined
+            const imPlayer1 = prev?.player1_id === userId;
             const hadNoOpponent = !prev?.player2_id;
             const nowHasOpponent = !!updated.player2_id;
-            const opponentJustJoined = hadNoOpponent && nowHasOpponent;
+            const opponentJustJoined = imPlayer1 && hadNoOpponent && nowHasOpponent;
             
-            console.log('Previous player2:', prev?.player2_id, 'New player2:', updated.player2_id);
+            console.log('I am Player 1?', imPlayer1, 'Previous player2:', prev?.player2_id, 'New player2:', updated.player2_id);
             console.log('Opponent just joined?', opponentJustJoined);
             
             if (opponentJustJoined) {
