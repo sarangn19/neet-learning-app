@@ -431,6 +431,7 @@ export default function Battle() {
     return (
       <BattleResults
         match={currentMatch}
+        currentUserId={userId}
         onExit={exitBattle}
         onRematch={() => {
           setGameState('searching');
@@ -963,9 +964,14 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
 }
 
 // Battle Results Component
-function BattleResults({ match, onExit, onRematch }: { match: Match; onExit: () => void; onRematch: () => void }) {
-  const playerWon = match.player1_score > match.player2_score;
-  const isDraw = match.player1_score === match.player2_score;
+function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Match; onExit: () => void; onRematch: () => void; currentUserId: string | null }) {
+  // Determine if current user is player1 or player2
+  const isPlayer1 = match.player1_id === currentUserId;
+  const myScore = isPlayer1 ? match.player1_score : match.player2_score;
+  const opponentScore = isPlayer1 ? match.player2_score : match.player1_score;
+  
+  const playerWon = myScore > opponentScore;
+  const isDraw = myScore === opponentScore;
   const coinsEarned = playerWon ? 50 : isDraw ? 25 : 10;
 
   return (
@@ -1000,15 +1006,15 @@ function BattleResults({ match, onExit, onRematch }: { match: Match; onExit: () 
         {/* Score Display */}
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="text-center">
-            <span className="text-3xl">{match.player1_avatar}</span>
-            <p className="text-2xl font-bold text-gray-900">{match.player1_score}</p>
+            <span className="text-3xl">{isPlayer1 ? match.player1_avatar : match.player2_avatar}</span>
+            <p className="text-2xl font-bold text-gray-900">{myScore}</p>
             <p className="text-xs text-gray-500">You</p>
           </div>
           <div className="text-xl text-gray-400">-</div>
           <div className="text-center">
-            <span className="text-3xl">{match.player2_avatar}</span>
-            <p className="text-2xl font-bold text-gray-900">{match.player2_score}</p>
-            <p className="text-xs text-gray-500">{match.player2_name}</p>
+            <span className="text-3xl">{isPlayer1 ? match.player2_avatar : match.player1_avatar}</span>
+            <p className="text-2xl font-bold text-gray-900">{opponentScore}</p>
+            <p className="text-xs text-gray-500">{isPlayer1 ? match.player2_name : match.player1_name}</p>
           </div>
         </div>
 
