@@ -220,9 +220,12 @@ export default function Battle() {
         .neq('player1_id', userId)
         .limit(1);
 
+      console.log('Searching for waiting matches...', { searchError, waitingMatches });
+
       if (!searchError && waitingMatches && waitingMatches.length > 0) {
         // Join existing match - real multiplayer!
         const match = waitingMatches[0];
+        console.log('Found waiting match, attempting to join:', match.id);
         
         const { error: updateError } = await supabase
           .from('battle_matches')
@@ -235,7 +238,10 @@ export default function Battle() {
           })
           .eq('id', match.id);
 
+        console.log('Join result:', { updateError });
+
         if (!updateError) {
+          console.log('Successfully joined match!');
           const fullMatch: Match = {
             id: match.id,
             player1_id: match.player1_id,
