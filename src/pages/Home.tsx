@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import RevisionPopup from '../components/RevisionPopup';
 
 import DailyRevision from '../components/DailyRevision';
+import Battle from './Battle';
 
 import { PageSkeleton } from '../components/Skeleton';
 
@@ -47,6 +48,7 @@ export default function Home() {
   const [victoriesToday, setVictoriesToday] = useState(0);
   const [lastResetDate, setLastResetDate] = useState<string>('');
   const [showBoxReward, setShowBoxReward] = useState<{boxIndex: number, coins: number} | null>(null);
+  const [showBattleModal, setShowBattleModal] = useState(false);
   const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, addCoins, recordBattleVictory } = useUserStore();
   const navigate = useNavigate();
 
@@ -246,7 +248,7 @@ export default function Home() {
         className="mb-6"
       >
         <div 
-          onClick={() => navigate('/battle')}
+          onClick={() => setShowBattleModal(true)}
           className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-5 text-white cursor-pointer hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center justify-between">
@@ -564,6 +566,23 @@ export default function Home() {
               <LogOut className="w-4 h-4" />
               Logout
             </button>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Battle Modal */}
+      {showBattleModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center">
+          <motion.div
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="w-full h-[95vh] sm:h-[90vh] sm:max-w-lg sm:rounded-2xl bg-white overflow-hidden"
+          >
+            <div className="h-full overflow-y-auto">
+              <Battle onClose={() => setShowBattleModal(false)} />
+            </div>
           </motion.div>
         </div>
       )}

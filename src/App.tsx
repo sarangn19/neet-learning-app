@@ -15,7 +15,6 @@ import Signup from './pages/Signup';
 import AdminDashboard from './pages/AdminDashboard';
 import SuperAdminDashboard from './pages/SuperAdminDashboard';
 import Shop from './pages/Shop';
-import Battle from './pages/Battle';
 import SplashScreen from './components/SplashScreen';
 import { useUserStore } from './store/userStore';
 
@@ -64,7 +63,6 @@ function App() {
             <Route path="learn" element={<Learn />} />
             <Route path="mcqs" element={<PracticeSetup />} />
             <Route path="shop" element={<Shop />} />
-            <Route path="battle" element={<Battle />} />
             <Route path="practice" element={<PracticeSetup />} />
             <Route path="practice/:subjectId" element={<PracticeSetup />} />
             <Route path="practice/session" element={<PracticeSession />} />

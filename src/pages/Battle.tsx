@@ -37,7 +37,7 @@ const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: strin
   { id: 'mixed', name: 'Mixed', icon: <Sparkles className="w-6 h-6" />, color: 'text-purple-600', bgColor: 'bg-purple-100' },
 ];
 
-export default function Battle() {
+export default function Battle({ onClose }: { onClose?: () => void }) {
   const { name, avatar, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
@@ -389,6 +389,10 @@ export default function Battle() {
     setGameState('setup');
     setCountdown(3);
     setError(null);
+    // Call onClose if provided (when used as modal)
+    if (onClose) {
+      onClose();
+    }
   };
 
   // Render countdown screen
