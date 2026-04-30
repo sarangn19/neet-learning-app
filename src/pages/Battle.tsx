@@ -67,32 +67,33 @@ export default function Battle() {
 
   const fetchActivePlayers = async () => {
     try {
-      // Update current user's last active time
-      if (userId) {
-        await supabase
-          .from('users')
-          .update({ updated_at: new Date().toISOString() })
-          .eq('id', userId);
-      }
-
-      // Count users who were active in the last 5 minutes
-      const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
-      const { count: userCount } = await supabase
+      // Count total registered users (real data from Supabase)
+      const { count: totalUsers, error: usersError } = await supabase
         .from('users')
-        .select('*', { count: 'exact', head: true })
-        .gte('updated_at', fiveMinAgo);
+        .select('*', { count: 'exact', head: true });
+      
+      if (usersError) {
+        console.error('Error fetching users:', usersError);
+        setActivePlayers(0);
+        setWaitingMatches(0);
+        return;
+      }
       
       // Count waiting matches
-      const { count: matchCount } = await supabase
+      const { count: matchCount, error: matchError } = await supabase
         .from('battle_matches')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'waiting');
 
-      setActivePlayers((userCount || 0) + 1); // +1 for current user
+      if (matchError) {
+        console.error('Error fetching matches:', matchError);
+      }
+
+      setActivePlayers(totalUsers || 0);
       setWaitingMatches(matchCount || 0);
-    } catch {
-      // If Supabase fails, show at least 1 (current user)
-      setActivePlayers(1);
+    } catch (err) {
+      console.error('Error fetching active players:', err);
+      setActivePlayers(0);
       setWaitingMatches(0);
     }
   };
@@ -489,11 +490,13 @@ export default function Battle() {
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="font-bold text-lg">{activePlayers} Online</p>
+                  <p className="font-bold text-lg">{activePlayers > 0 ? `${activePlayers} Players` : 'Loading...'}</p>
                   <p className="text-white/80 text-xs">
-                    {waitingMatches > 0 
-                      ? `${waitingMatches} player${waitingMatches > 1 ? 's' : ''} waiting for match` 
-                      : 'No players waiting'}
+                    {activePlayers === 0 
+                      ? 'Connecting to server...' 
+                      : waitingMatches > 0 
+                        ? `${waitingMatches} waiting for match` 
+                        : 'No players waiting - AI opponent ready'}
                   </p>
                 </div>
               </div>
