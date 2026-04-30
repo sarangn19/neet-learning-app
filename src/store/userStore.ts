@@ -61,16 +61,16 @@ export const useUserStore = create<UserState>()(
 
       setUser: (userData) => set((state) => ({ ...state, ...userData })),
 
-      login: async (data) => {
+      login: async (email: string, password: string) => {
         try {
           const { isFallbackMode } = await import('../lib/supabase');
 
           if (isFallbackMode) {
             // Fallback mode - check localStorage for user
             const storedUser = get().user;
-            if (storedUser && storedUser.email === data.email) {
+            if (storedUser && storedUser.email === email) {
               set({ isAuthenticated: true, ...storedUser, lessonProgress: get().lessonProgress });
-              return { success: true };
+              return { success: true, user: storedUser };
             }
             return { success: false, error: 'User not found. Please sign up first.' };
           }
@@ -79,15 +79,15 @@ export const useUserStore = create<UserState>()(
           const { data: userData, error } = await supabase
             .from('users')
             .select('*')
-            .eq('email', data.email)
+            .eq('email', email)
             .maybeSingle();
 
           if (error || !userData) {
             // Supabase connection failed - try localStorage fallback
             const storedUser = get().user;
-            if (storedUser && storedUser.email === data.email) {
+            if (storedUser && storedUser.email === email) {
               set({ isAuthenticated: true, ...storedUser, lessonProgress: get().lessonProgress });
-              return { success: true };
+              return { success: true, user: storedUser };
             }
             return { success: false, error: 'User not found. Please sign up first.' };
           }
@@ -106,19 +106,19 @@ export const useUserStore = create<UserState>()(
             badges: [],
             completedLessons: [],
             role: userData.role || 'user',
-            purchasedAvatars: [''],
+            purchasedAvatars: ['👨‍🔬'],
           };
 
           set({ isAuthenticated: true, user, ...user, lessonProgress: {} });
           await get().loadLessonProgress();
-          return { success: true };
+          return { success: true, user };
         } catch (error) {
           console.error('Login error:', error);
           // Network error - try localStorage fallback
           const storedUser = get().user;
-          if (storedUser && storedUser.email === data.email) {
+          if (storedUser && storedUser.email === email) {
             set({ isAuthenticated: true, ...storedUser, lessonProgress: get().lessonProgress });
-            return { success: true };
+            return { success: true, user: storedUser };
           }
           return { success: false, error: 'Login failed. Please try again.' };
         }
