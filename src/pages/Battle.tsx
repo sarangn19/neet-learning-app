@@ -302,6 +302,9 @@ export default function Battle() {
         return;
       }
 
+      // Set current match state so Player 1 is recognized as creator
+      setCurrentMatch(newMatch as Match);
+      
       // Subscribe to match updates (waiting for opponent)
       const channel = subscribeToMatch(newMatch.id);
 
