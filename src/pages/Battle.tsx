@@ -219,8 +219,56 @@ export default function Battle() {
         }
       }
 
-      // No waiting match or error - start AI match immediately
-      startAIMatch();
+      // No waiting match - create one and wait for real opponent
+      const { data: newMatch, error: createError } = await supabase
+        .from('battle_matches')
+        .insert({
+          player1_id: userId,
+          player1_name: name,
+          player1_avatar: avatar,
+          status: 'waiting',
+          subject: selectedSubject,
+          grade: selectedGrade,
+          questions: questions,
+        })
+        .select()
+        .single();
+
+      if (createError || !newMatch) {
+        // Can't create match in DB - start AI immediately
+        console.error('Match create error:', createError);
+        startAIMatch();
+        return;
+      }
+
+      // Subscribe to match updates (waiting for opponent)
+      const channel = subscribeToMatch(newMatch.id);
+
+      // Wait 10 seconds for a real opponent, then fallback to AI
+      setTimeout(async () => {
+        // Check if still in searching state (opponent didn't join)
+        if (gameState !== 'searching') return;
+
+        try {
+          const { data: currentMatchData } = await supabase
+            .from('battle_matches')
+            .select('player2_name, status')
+            .eq('id', newMatch.id)
+            .single();
+
+          if (currentMatchData && currentMatchData.status === 'waiting') {
+            // No opponent joined - delete waiting match and start AI
+            await supabase.from('battle_matches').delete().eq('id', newMatch.id);
+            channel.unsubscribe();
+            startAIMatch();
+          }
+        } catch {
+          // Error checking match - start AI
+          channel.unsubscribe();
+          startAIMatch();
+        }
+      }, 10000); // Wait 10 seconds
+
     } catch (err) {
       console.error('Matchmaking error:', err);
       // Any error - start AI match immediately
