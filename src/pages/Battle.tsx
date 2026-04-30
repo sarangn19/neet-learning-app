@@ -741,27 +741,42 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
 
   // Subscribe to opponent score updates for real multiplayer
   useEffect(() => {
-    if (!isRealOpponent) return; // Only for real multiplayer
+    if (!isRealOpponent) {
+      console.log('AI opponent - no score subscription needed');
+      return; // Only for real multiplayer
+    }
+
+    console.log('Setting up score subscription for match:', match.id);
 
     const channel = supabase
       .channel(`scores:${match.id}`)
       .on('postgres_changes', 
-        { event: 'UPDATE', schema: 'public', table: 'battle_matches', filter: `id=eq.${match.id}` },
+        { event: '*', schema: 'public', table: 'battle_matches', filter: `id=eq.${match.id}` },
         (payload) => {
+          console.log('Score update received:', payload);
           const updated = payload.new as Match;
+          console.log('Updated match scores:', { p1: updated.player1_score, p2: updated.player2_score });
+          
           // Update opponent score from Supabase
           if (isPlayer1) {
             // I'm player 1, opponent is player 2
-            setOpponentScore(updated.player2_score || 0);
+            const newOpponentScore = updated.player2_score || 0;
+            console.log('Setting opponent score (player2):', newOpponentScore);
+            setOpponentScore(newOpponentScore);
           } else {
             // I'm player 2, opponent is player 1
-            setOpponentScore(updated.player1_score || 0);
+            const newOpponentScore = updated.player1_score || 0;
+            console.log('Setting opponent score (player1):', newOpponentScore);
+            setOpponentScore(newOpponentScore);
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Score subscription status:', status);
+      });
 
     return () => {
+      console.log('Unsubscribing from score updates');
       channel.unsubscribe();
     };
   }, [match.id, isPlayer1, isRealOpponent]);
