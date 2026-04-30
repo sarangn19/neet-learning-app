@@ -420,6 +420,7 @@ export default function Battle() {
     return (
       <BattleGame
         match={currentMatch}
+        currentUserId={userId}
         onComplete={handleGameComplete}
         onExit={exitBattle}
       />
@@ -723,7 +724,7 @@ export default function Battle() {
 }
 
 // Battle Game Component
-function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (p1: number, p2: number, answers: Match['player1_answers']) => void; onExit: () => void }) {
+function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match; onComplete: (p1: number, p2: number, answers: Match['player1_answers']) => void; onExit: () => void; currentUserId: string | null }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [playerScore, setPlayerScore] = useState(0);
   const [opponentScore, setOpponentScore] = useState(0);
@@ -735,6 +736,35 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
 
   const questions = match.questions;
   const currentQuestion = questions[currentQuestionIndex];
+  const isPlayer1 = match.player1_id === currentUserId;
+  const isRealOpponent = match.player2_id !== 'ai-opponent';
+
+  // Subscribe to opponent score updates for real multiplayer
+  useEffect(() => {
+    if (!isRealOpponent) return; // Only for real multiplayer
+
+    const channel = supabase
+      .channel(`scores:${match.id}`)
+      .on('postgres_changes', 
+        { event: 'UPDATE', schema: 'public', table: 'battle_matches', filter: `id=eq.${match.id}` },
+        (payload) => {
+          const updated = payload.new as Match;
+          // Update opponent score from Supabase
+          if (isPlayer1) {
+            // I'm player 1, opponent is player 2
+            setOpponentScore(updated.player2_score || 0);
+          } else {
+            // I'm player 2, opponent is player 1
+            setOpponentScore(updated.player1_score || 0);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, [match.id, isPlayer1, isRealOpponent]);
 
   useEffect(() => {
     if (timeLeft > 0 && !showResult) {
@@ -769,7 +799,30 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
     
     const isCorrect = answerIndex === currentQuestion.correctAnswer;
     const points = isCorrect ? 10 + timeLeft : 0;
-    setPlayerScore(s => s + points);
+    const newScore = playerScore + points;
+    setPlayerScore(newScore);
+    
+    // Sync score to Supabase for real multiplayer
+    if (isRealOpponent) {
+      const scoreField = isPlayer1 ? 'player1_score' : 'player2_score';
+      const answersField = isPlayer1 ? 'player1_answers' : 'player2_answers';
+      const newAnswers = [...playerAnswers, {
+        questionIndex: currentQuestionIndex,
+        correct: isCorrect,
+        timeLeft: timeLeft,
+      }];
+      
+      supabase
+        .from('battle_matches')
+        .update({
+          [scoreField]: newScore,
+          [answersField]: newAnswers,
+        })
+        .eq('id', match.id)
+        .then(({ error }) => {
+          if (error) console.error('Error syncing score:', error);
+        });
+    }
     
     setPlayerAnswers(prev => [...prev, {
       questionIndex: currentQuestionIndex,
