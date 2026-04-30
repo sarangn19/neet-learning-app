@@ -23,7 +23,6 @@ export default function Layout() {
           <NavItem to="/learn" icon={<BookOpen className="w-5 h-5" />} label="Learn" isActive={isActive('/learn')} />
           <NavItem to="/mcqs" icon={<span className="text-lg font-bold">Q</span>} label="MCQs" isActive={isActive('/mcqs')} />
           <NavItem to="/shop" icon={<ShoppingBag className="w-5 h-5" />} label="Shop" isActive={isActive('/shop')} />
-          <NavItem to="/battle" icon={<Swords className="w-5 h-5" />} label="Battle" isActive={isActive('/battle')} />
         </div>
       </nav>
     </div>

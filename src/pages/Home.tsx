@@ -171,6 +171,38 @@ export default function Home() {
         </div>
       </motion.div>
 
+      {/* Battle Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="mb-6"
+      >
+        <div 
+          onClick={() => navigate('/battle')}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-5 text-white cursor-pointer hover:shadow-lg transition-shadow"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <Zap className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">1v1 Battle</h3>
+                <p className="text-white/80 text-sm">Challenge friends in real-time!</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="flex items-center gap-1 text-xs text-white/80">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span>Live</span>
+              </div>
+              <p className="text-xs text-white/60 mt-1">5 questions • Win coins</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Profile Modal */}
       {showProfile && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
