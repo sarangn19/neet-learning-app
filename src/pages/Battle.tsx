@@ -48,15 +48,53 @@ export default function Battle() {
   const [matchHistory, setMatchHistory] = useState<Match[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activePlayers, setActivePlayers] = useState(0);
+  const [waitingMatches, setWaitingMatches] = useState(0);
 
-  // Fetch match history on mount
+  // Fetch match history and active players on mount
   useEffect(() => {
     fetchMatchHistory();
+    fetchActivePlayers();
+    // Poll active players every 30 seconds
+    const interval = setInterval(fetchActivePlayers, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchMatchHistory = async () => {
     // In production, fetch from Supabase
     // For now, use local state
+  };
+
+  const fetchActivePlayers = async () => {
+    try {
+      // Update current user's last active time
+      if (userId) {
+        await supabase
+          .from('users')
+          .update({ updated_at: new Date().toISOString() })
+          .eq('id', userId);
+      }
+
+      // Count users who were active in the last 5 minutes
+      const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+      const { count: userCount } = await supabase
+        .from('users')
+        .select('*', { count: 'exact', head: true })
+        .gte('updated_at', fiveMinAgo);
+      
+      // Count waiting matches
+      const { count: matchCount } = await supabase
+        .from('battle_matches')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'waiting');
+
+      setActivePlayers((userCount || 0) + 1); // +1 for current user
+      setWaitingMatches(matchCount || 0);
+    } catch {
+      // If Supabase fails, show at least 1 (current user)
+      setActivePlayers(1);
+      setWaitingMatches(0);
+    }
   };
 
   // AI Opponent names and avatars (fallback)
@@ -439,6 +477,29 @@ export default function Battle() {
               <div>
                 <p className="text-2xl font-bold text-amber-600">{coins}</p>
                 <p className="text-xs text-gray-500">Coins</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Live Players Card */}
+          <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl p-4 text-white">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="font-bold text-lg">{activePlayers} Online</p>
+                  <p className="text-white/80 text-xs">
+                    {waitingMatches > 0 
+                      ? `${waitingMatches} player${waitingMatches > 1 ? 's' : ''} waiting for match` 
+                      : 'No players waiting'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="text-xs text-white/80">Live</span>
               </div>
             </div>
           </div>
