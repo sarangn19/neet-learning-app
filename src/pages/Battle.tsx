@@ -284,30 +284,35 @@ export default function Battle() {
       // Subscribe to match updates (waiting for opponent)
       const channel = subscribeToMatch(newMatch.id);
 
-      // Wait 10 seconds for a real opponent, then fallback to AI
-      setTimeout(async () => {
-        // Check if still in searching state (opponent didn't join)
-        if (gameState !== 'searching') return;
-
+      // Wait 60 seconds for a real opponent, then fallback to AI
+      const timeoutId = setTimeout(async () => {
+        console.log('Timeout: Checking if opponent joined...');
+        
         try {
           const { data: currentMatchData } = await supabase
             .from('battle_matches')
-            .select('player2_name, status')
+            .select('player2_id, status')
             .eq('id', newMatch.id)
             .single();
 
-          if (currentMatchData && currentMatchData.status === 'waiting') {
+          console.log('Match status after timeout:', currentMatchData);
+
+          if (currentMatchData && currentMatchData.status === 'waiting' && !currentMatchData.player2_id) {
             // No opponent joined - delete waiting match and start AI
+            console.log('No opponent joined, starting AI match');
             await supabase.from('battle_matches').delete().eq('id', newMatch.id);
             channel.unsubscribe();
             startAIMatch();
+          } else if (currentMatchData?.player2_id) {
+            console.log('Opponent joined! Match should be active');
+            // Opponent joined - don't delete, subscription will handle it
           }
-        } catch {
-          // Error checking match - start AI
+        } catch (err) {
+          console.error('Error checking match status:', err);
           channel.unsubscribe();
           startAIMatch();
         }
-      }, 10000); // Wait 10 seconds
+      }, 60000); // Wait 60 seconds
 
     } catch (err) {
       console.error('Matchmaking error:', err);
