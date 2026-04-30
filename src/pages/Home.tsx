@@ -43,10 +43,77 @@ export default function Home() {
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars } = useUserStore();
+  const [openedBoxes, setOpenedBoxes] = useState<number[]>([]);
+  const [victoriesToday, setVictoriesToday] = useState(0);
+  const [lastResetDate, setLastResetDate] = useState<string>('');
+  const [showBoxReward, setShowBoxReward] = useState<{boxIndex: number, coins: number} | null>(null);
+  const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, addCoins, recordBattleVictory } = useUserStore();
   const navigate = useNavigate();
 
   const hasBadge = (badgeId: string) => badges.some(b => b.id === badgeId);
+
+  // Load magic box state from localStorage
+  useEffect(() => {
+    const savedOpened = localStorage.getItem('magicBoxesOpened');
+    const savedReset = localStorage.getItem('magicBoxesLastReset');
+    const savedVictories = localStorage.getItem('battleVictoriesToday');
+    
+    const today = new Date().toDateString();
+    
+    // Check if it's a new day - reset boxes
+    if (savedReset !== today) {
+      setOpenedBoxes([]);
+      setVictoriesToday(0);
+      setLastResetDate(today);
+      localStorage.setItem('magicBoxesOpened', JSON.stringify([]));
+      localStorage.setItem('magicBoxesLastReset', today);
+      localStorage.setItem('battleVictoriesToday', '0');
+    } else {
+      setOpenedBoxes(savedOpened ? JSON.parse(savedOpened) : []);
+      setVictoriesToday(savedVictories ? parseInt(savedVictories) : 0);
+      setLastResetDate(savedReset || today);
+    }
+  }, []);
+
+  // Check for midnight reset
+  useEffect(() => {
+    const checkMidnight = () => {
+      const now = new Date();
+      const today = now.toDateString();
+      
+      if (lastResetDate && lastResetDate !== today) {
+        // Midnight passed - reset everything
+        setOpenedBoxes([]);
+        setVictoriesToday(0);
+        setLastResetDate(today);
+        localStorage.setItem('magicBoxesOpened', JSON.stringify([]));
+        localStorage.setItem('magicBoxesLastReset', today);
+        localStorage.setItem('battleVictoriesToday', '0');
+      }
+    };
+
+    const interval = setInterval(checkMidnight, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, [lastResetDate]);
+
+  const handleOpenBox = (boxIndex: number) => {
+    if (openedBoxes.includes(boxIndex)) return;
+    if (victoriesToday <= openedBoxes.length) return;
+
+    // Generate random coins (10-50)
+    const rewardCoins = Math.floor(Math.random() * 41) + 10;
+    
+    // Add coins
+    addCoins(rewardCoins);
+    
+    // Mark box as opened
+    const newOpened = [...openedBoxes, boxIndex];
+    setOpenedBoxes(newOpened);
+    localStorage.setItem('magicBoxesOpened', JSON.stringify(newOpened));
+    
+    // Show reward modal
+    setShowBoxReward({ boxIndex, coins: rewardCoins });
+  };
 
   // Simulate loading for demo
   useEffect(() => {
@@ -202,6 +269,121 @@ export default function Home() {
           </div>
         </div>
       </motion.div>
+
+      {/* Magic Boxes */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="mb-6"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-bold text-gray-900">Magic Boxes</h3>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-500">
+              {victoriesToday - openedBoxes.length} keys available
+            </span>
+            <span className="text-xs text-purple-600 font-medium">
+              Resets at midnight
+            </span>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-4 gap-3">
+          {[0, 1, 2, 3].map((boxIndex) => {
+            const isOpened = openedBoxes.includes(boxIndex);
+            const canOpen = victoriesToday > openedBoxes.length && !isOpened;
+            
+            return (
+              <motion.button
+                key={boxIndex}
+                onClick={() => canOpen && handleOpenBox(boxIndex)}
+                disabled={isOpened || !canOpen}
+                whileHover={canOpen ? { scale: 1.05 } : {}}
+                whileTap={canOpen ? { scale: 0.95 } : {}}
+                className={`relative aspect-square rounded-xl flex flex-col items-center justify-center transition-all ${
+                  isOpened 
+                    ? 'bg-gray-100 border-2 border-gray-200' 
+                    : canOpen 
+                      ? 'bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-amber-300 shadow-lg cursor-pointer' 
+                      : 'bg-gray-50 border-2 border-gray-200 opacity-60'
+                }`}
+              >
+                {isOpened ? (
+                  <>
+                    <span className="text-2xl mb-1">✓</span>
+                    <span className="text-[10px] text-gray-500 font-medium">Opened</span>
+                  </>
+                ) : canOpen ? (
+                  <>
+                    <motion.span 
+                      animate={{ rotate: [0, -10, 10, 0] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                      className="text-3xl mb-1"
+                    >
+                      🎁
+                    </motion.span>
+                    <span className="text-[10px] text-white font-medium">Tap to open!</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-2xl mb-1 grayscale">🔒</span>
+                    <span className="text-[10px] text-gray-400 font-medium">Locked</span>
+                  </>
+                )}
+                
+                {/* Box number */}
+                <span className="absolute top-1 left-2 text-[10px] font-bold text-white/80">
+                  #{boxIndex + 1}
+                </span>
+              </motion.button>
+            );
+          })}
+        </div>
+        
+        <p className="text-xs text-gray-500 mt-2 text-center">
+          Win battles to get keys. Each key opens one box!
+        </p>
+      </motion.div>
+
+      {/* Box Reward Modal */}
+      {showBoxReward && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-2xl p-8 max-w-xs w-full text-center"
+          >
+            <motion.div
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.2, type: 'spring' }}
+              className="mb-4"
+            >
+              <span className="text-6xl">🎉</span>
+            </motion.div>
+            
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
+              Box #{showBoxReward.boxIndex + 1} Opened!
+            </h3>
+            
+            <p className="text-gray-600 mb-4">You found:</p>
+            
+            <div className="bg-amber-100 rounded-xl p-4 mb-6">
+              <span className="text-3xl font-bold text-amber-600">
+                +{showBoxReward.coins} coins
+              </span>
+            </div>
+            
+            <button
+              onClick={() => setShowBoxReward(null)}
+              className="w-full bg-purple-500 text-white py-3 rounded-xl font-semibold hover:bg-purple-600 transition-colors"
+            >
+              Awesome!
+            </button>
+          </motion.div>
+        </div>
+      )}
 
       {/* Profile Modal */}
       {showProfile && (

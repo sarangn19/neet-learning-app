@@ -38,7 +38,7 @@ const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: strin
 ];
 
 export default function Battle() {
-  const { name, avatar, coins, addCoins, isAuthenticated, id: userId } = useUserStore();
+  const { name, avatar, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
   const [selectedSubject, setSelectedSubject] = useState<Subject>('mixed');
@@ -374,6 +374,9 @@ export default function Battle() {
     // Award coins based on result
     if (playerScore > opponentScore) {
       addCoins(50);
+      // Record battle victory for magic boxes
+      const newVictoryCount = recordBattleVictory();
+      console.log('Battle victory recorded! Total today:', newVictoryCount);
     } else if (playerScore === opponentScore) {
       addCoins(25);
     } else {

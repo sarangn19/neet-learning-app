@@ -17,6 +17,7 @@ interface UserState extends User {
   loadLessonProgress: () => Promise<void>;
   updateStreak: () => void;
   addGems: (amount: number) => void;
+  recordBattleVictory: () => number;
   unlockBadge: (badge: Badge) => void;
   checkBadges: (lessonStars: number, coinsEarned: number) => Badge[];
   getDailyGoal: () => DailyGoal | undefined;
@@ -450,6 +451,26 @@ export const useUserStore = create<UserState>()(
       addCatFood: (amount) => set((state) => ({ catFood: state.catFood + amount })),
 
       addCoins: (amount) => set((state) => ({ coins: state.coins + amount })),
+
+      // Track battle victories for magic boxes (returns new victory count)
+      recordBattleVictory: () => {
+        const today = new Date().toDateString();
+        const savedDate = localStorage.getItem('lastBattleVictoryDate');
+        const savedCount = parseInt(localStorage.getItem('battleVictoriesToday') || '0');
+        
+        let newCount;
+        if (savedDate !== today) {
+          // New day - reset count
+          newCount = 1;
+          localStorage.setItem('lastBattleVictoryDate', today);
+        } else {
+          // Same day - increment
+          newCount = savedCount + 1;
+        }
+        
+        localStorage.setItem('battleVictoriesToday', newCount.toString());
+        return newCount;
+      },
 
       spendCoins: (amount) => {
         const state = get();
