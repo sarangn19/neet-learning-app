@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Swords, Users, Trophy, Clock, Zap, ArrowLeft } from 'lucide-react';
+import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
+import { supabase } from '../lib/supabase';
+import { battleQuestions, getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
 
 interface Match {
   id: string;
@@ -13,85 +15,142 @@ interface Match {
   player2_avatar: string | null;
   player1_score: number;
   player2_score: number;
-  status: 'waiting' | 'active' | 'completed';
-  subject: string;
+  player1_answers: { questionIndex: number; correct: boolean; timeLeft: number }[];
+  player2_answers: { questionIndex: number; correct: boolean; timeLeft: number }[];
+  status: 'waiting' | 'active' | 'completed' | 'cancelled';
+  subject: 'physics' | 'chemistry' | 'biology' | 'mixed';
+  questions: BattleQuestion[];
+  current_question: number;
+  winner_id: string | null;
   created_at: string;
+  started_at?: string;
+  completed_at?: string;
 }
+
+type Subject = 'physics' | 'chemistry' | 'biology' | 'mixed';
+type Grade = 'plus_one' | 'plus_two';
+
+const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: string; bgColor: string }[] = [
+  { id: 'physics', name: 'Physics', icon: <Atom className="w-6 h-6" />, color: 'text-blue-600', bgColor: 'bg-blue-100' },
+  { id: 'chemistry', name: 'Chemistry', icon: <FlaskConical className="w-6 h-6" />, color: 'text-green-600', bgColor: 'bg-green-100' },
+  { id: 'biology', name: 'Biology', icon: <Dna className="w-6 h-6" />, color: 'text-pink-600', bgColor: 'bg-pink-100' },
+  { id: 'mixed', name: 'Mixed', icon: <Sparkles className="w-6 h-6" />, color: 'text-purple-600', bgColor: 'bg-purple-100' },
+];
 
 export default function Battle() {
   const { name, avatar, coins, addCoins } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
-  const [isSearching, setIsSearching] = useState(false);
+  const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
+  const [selectedSubject, setSelectedSubject] = useState<Subject>('mixed');
+  const [selectedGrade, setSelectedGrade] = useState<Grade>('plus_one');
   const [currentMatch, setCurrentMatch] = useState<Match | null>(null);
-  const [matchHistory] = useState<Match[]>([]);
   const [countdown, setCountdown] = useState(3);
-  const [gameState, setGameState] = useState<'lobby' | 'countdown' | 'playing' | 'finished'>('lobby');
+  const [matchHistory, setMatchHistory] = useState<Match[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock matchmaking - in production this would use Supabase Realtime
-  const startMatchmaking = () => {
-    setIsSearching(true);
-    
-    // Simulate finding an opponent after 2-4 seconds
-    setTimeout(() => {
-      const mockOpponents = [
-        { name: 'Rahul', avatar: '👨‍🎓' },
-        { name: 'Priya', avatar: '👩‍🔬' },
-        { name: 'Arun', avatar: '🧑‍🔬' },
-        { name: 'Neha', avatar: '🐱' },
-        { name: 'Vikram', avatar: '🦁' },
-      ];
-      const opponent = mockOpponents[Math.floor(Math.random() * mockOpponents.length)];
-      
-      const match: Match = {
-        id: 'match-' + Date.now(),
-        player1_id: 'current-user',
-        player1_name: name,
-        player1_avatar: avatar,
-        player1_score: 0,
-        player2_id: 'opponent-' + Date.now(),
-        player2_name: opponent.name,
-        player2_avatar: opponent.avatar,
-        player2_score: 0,
-        status: 'active',
-        subject: 'Physics',
-        created_at: new Date().toISOString(),
-      };
-      
-      setCurrentMatch(match);
-      setIsSearching(false);
-      setGameState('countdown');
-      
-      // Start countdown
-      let count = 3;
-      const interval = setInterval(() => {
-        count--;
-        setCountdown(count);
-        if (count <= 0) {
-          clearInterval(interval);
-          setGameState('playing');
-        }
-      }, 1000);
-    }, 2000 + Math.random() * 2000);
+  // Fetch match history on mount
+  useEffect(() => {
+    fetchMatchHistory();
+  }, []);
+
+  const fetchMatchHistory = async () => {
+    // In production, fetch from Supabase
+    // For now, use local state
   };
+
+  // Start matchmaking
+  const startMatchmaking = useCallback(async () => {
+    setGameState('searching');
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Get random questions for the selected subject
+      const questions = getRandomQuestions(selectedSubject, 5);
+      
+      // In production, this would join the matchmaking queue and wait for opponent
+      // For now, simulate matchmaking
+      setTimeout(() => {
+        const mockOpponents = [
+          { name: 'Rahul', avatar: '👨‍🎓' },
+          { name: 'Priya', avatar: '👩‍🔬' },
+          { name: 'Arun', avatar: '🧑‍🔬' },
+          { name: 'Neha', avatar: '🐱' },
+          { name: 'Vikram', avatar: '🦁' },
+          { name: 'Ananya', avatar: '🦄' },
+        ];
+        const opponent = mockOpponents[Math.floor(Math.random() * mockOpponents.length)];
+        
+        const match: Match = {
+          id: 'match-' + Date.now(),
+          player1_id: 'current-user',
+          player1_name: name,
+          player1_avatar: avatar,
+          player1_score: 0,
+          player1_answers: [],
+          player2_id: 'opponent-' + Date.now(),
+          player2_name: opponent.name,
+          player2_avatar: opponent.avatar,
+          player2_score: 0,
+          player2_answers: [],
+          status: 'active',
+          subject: selectedSubject,
+          questions: questions,
+          current_question: 0,
+          winner_id: null,
+          created_at: new Date().toISOString(),
+        };
+        
+        setCurrentMatch(match);
+        setGameState('countdown');
+        setIsLoading(false);
+        
+        // Start countdown
+        let count = 3;
+        const interval = setInterval(() => {
+          count--;
+          setCountdown(count);
+          if (count <= 0) {
+            clearInterval(interval);
+            setGameState('playing');
+          }
+        }, 1000);
+      }, 2000 + Math.random() * 2000);
+    } catch (err) {
+      setError('Failed to start matchmaking. Please try again.');
+      setGameState('setup');
+      setIsLoading(false);
+    }
+  }, [name, avatar, selectedSubject]);
 
   const cancelMatchmaking = () => {
-    setIsSearching(false);
+    setGameState('setup');
+    setIsLoading(false);
   };
 
-  const handleGameComplete = (playerScore: number, opponentScore: number) => {
+  const handleGameComplete = (playerScore: number, opponentScore: number, playerAnswers: Match['player1_answers']) => {
     if (currentMatch) {
-      setCurrentMatch({
+      const updatedMatch = {
         ...currentMatch,
         player1_score: playerScore,
         player2_score: opponentScore,
-        status: 'completed',
-      });
+        player1_answers: playerAnswers,
+        status: 'completed' as const,
+        winner_id: playerScore > opponentScore ? 'current-user' : playerScore < opponentScore ? 'opponent' : null,
+        completed_at: new Date().toISOString(),
+      };
+      
+      setCurrentMatch(updatedMatch);
+      setMatchHistory(prev => [updatedMatch, ...prev]);
     }
     setGameState('finished');
     
     // Award coins based on result
     if (playerScore > opponentScore) {
       addCoins(50);
+    } else if (playerScore === opponentScore) {
+      addCoins(25);
     } else {
       addCoins(10);
     }
@@ -99,8 +158,9 @@ export default function Battle() {
 
   const exitBattle = () => {
     setCurrentMatch(null);
-    setGameState('lobby');
+    setGameState('setup');
     setCountdown(3);
+    setError(null);
   };
 
   // Render countdown screen
@@ -118,6 +178,17 @@ export default function Battle() {
             {countdown > 0 ? countdown : 'GO!'}
           </motion.div>
           <p className="text-white/80 text-lg">Battle starting...</p>
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <div className="text-center">
+              <span className="text-4xl">{currentMatch.player1_avatar}</span>
+              <p className="text-white text-sm mt-2">{currentMatch.player1_name}</p>
+            </div>
+            <div className="text-white text-xl font-bold">VS</div>
+            <div className="text-center">
+              <span className="text-4xl">{currentMatch.player2_avatar}</span>
+              <p className="text-white text-sm mt-2">{currentMatch.player2_name}</p>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -141,23 +212,14 @@ export default function Battle() {
         match={currentMatch}
         onExit={exitBattle}
         onRematch={() => {
-          setGameState('countdown');
-          setCountdown(3);
-          let count = 3;
-          const interval = setInterval(() => {
-            count--;
-            setCountdown(count);
-            if (count <= 0) {
-              clearInterval(interval);
-              setGameState('playing');
-            }
-          }, 1000);
+          setGameState('searching');
+          startMatchmaking();
         }}
       />
     );
   }
 
-  // Render lobby
+  // Render lobby/setup
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
       {/* Header */}
@@ -213,11 +275,13 @@ export default function Battle() {
           <div className="bg-white border-2 border-purple-100 rounded-2xl p-6">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-2xl font-bold text-purple-600">12</p>
+                <p className="text-2xl font-bold text-purple-600">{matchHistory.length}</p>
                 <p className="text-xs text-gray-500">Matches</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-green-600">8</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {matchHistory.filter(m => m.player1_score > m.player2_score).length}
+                </p>
                 <p className="text-xs text-gray-500">Wins</p>
               </div>
               <div>
@@ -227,51 +291,118 @@ export default function Battle() {
             </div>
           </div>
 
+          {/* Subject Selection */}
+          {!isLoading && gameState === 'setup' && (
+            <>
+              <div className="bg-white border-2 border-gray-100 rounded-2xl p-6">
+                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-purple-500" />
+                  Select Subject
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {SUBJECTS.map((subject) => (
+                    <button
+                      key={subject.id}
+                      onClick={() => setSelectedSubject(subject.id)}
+                      className={`p-4 rounded-xl border-2 transition-all ${
+                        selectedSubject === subject.id
+                          ? `border-purple-500 ${subject.bgColor}`
+                          : 'border-gray-100 hover:border-purple-200'
+                      }`}
+                    >
+                      <div className={`${subject.color} mb-2`}>{subject.icon}</div>
+                      <p className="font-semibold text-gray-900">{subject.name}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Grade Selection */}
+              <div className="bg-white border-2 border-gray-100 rounded-2xl p-6">
+                <h3 className="font-bold text-gray-900 mb-4">Select Grade</h3>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setSelectedGrade('plus_one')}
+                    className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-all ${
+                      selectedGrade === 'plus_one'
+                        ? 'border-purple-500 bg-purple-50 text-purple-700'
+                        : 'border-gray-100 hover:border-purple-200'
+                    }`}
+                  >
+                    +1 (Class 11)
+                  </button>
+                  <button
+                    onClick={() => setSelectedGrade('plus_two')}
+                    className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-all ${
+                      selectedGrade === 'plus_two'
+                        ? 'border-purple-500 bg-purple-50 text-purple-700'
+                        : 'border-gray-100 hover:border-purple-200'
+                    }`}
+                  >
+                    +2 (Class 12)
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+
           {/* Matchmaking Card */}
           <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                  <Users className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-bold">Quick Match</h3>
-                  <p className="text-white/80 text-sm">5 questions • Physics</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-xs text-white/80">Online Players</p>
-                <p className="font-bold">24</p>
-              </div>
-            </div>
-
-            {isSearching ? (
-              <div className="text-center">
+            {isLoading ? (
+              <div className="text-center py-4">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 1 }}
                   className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"
                 />
                 <p className="font-semibold mb-2">Finding opponent...</p>
+                <p className="text-white/80 text-sm mb-4">
+                  Subject: {SUBJECTS.find(s => s.id === selectedSubject)?.name}
+                </p>
                 <button
                   onClick={cancelMatchmaking}
-                  className="text-sm text-white/80 hover:text-white"
+                  className="text-sm text-white/80 hover:text-white px-4 py-2 bg-white/20 rounded-xl"
                 >
                   Cancel
                 </button>
               </div>
             ) : (
-              <button
-                onClick={startMatchmaking}
-                className="w-full py-4 bg-white text-purple-600 rounded-xl font-bold hover:bg-white/90 transition-colors"
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  Start Matchmaking
+              <>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">Quick Match</h3>
+                      <p className="text-white/80 text-sm">5 questions • {SUBJECTS.find(s => s.id === selectedSubject)?.name}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-white/80">Online Players</p>
+                    <p className="font-bold">{Math.floor(Math.random() * 50) + 20}</p>
+                  </div>
                 </div>
-              </button>
+
+                <button
+                  onClick={startMatchmaking}
+                  className="w-full py-4 bg-white text-purple-600 rounded-xl font-bold hover:bg-white/90 transition-colors"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <Zap className="w-5 h-5" />
+                    Start Matchmaking
+                  </div>
+                </button>
+              </>
             )}
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <p className="text-red-700 text-sm">{error}</p>
+            </div>
+          )}
 
           {/* Rewards Info */}
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
@@ -281,6 +412,7 @@ export default function Battle() {
             </h4>
             <ul className="text-sm text-blue-700 space-y-1">
               <li>• Win: +50 coins + XP</li>
+              <li>• Draw: +25 coins</li>
               <li>• Loss: +10 coins</li>
               <li>• 3-win streak: Bonus 100 coins</li>
             </ul>
@@ -311,7 +443,9 @@ export default function Battle() {
                     <span className="text-2xl">{match.player2_avatar}</span>
                     <div>
                       <p className="font-semibold text-gray-900">{match.player2_name}</p>
-                      <p className="text-xs text-gray-500">{match.subject}</p>
+                      <p className="text-xs text-gray-500">
+                        {SUBJECTS.find(s => s.id === match.subject)?.name}
+                      </p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -339,41 +473,18 @@ export default function Battle() {
 }
 
 // Battle Game Component
-function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (p1: number, p2: number) => void; onExit: () => void }) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (p1: number, p2: number, answers: Match['player1_answers']) => void; onExit: () => void }) {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [playerScore, setPlayerScore] = useState(0);
   const [opponentScore, setOpponentScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(15);
   const [showResult, setShowResult] = useState(false);
+  const [playerAnswers, setPlayerAnswers] = useState<Match['player1_answers']>([]);
+  const [opponentAnswered, setOpponentAnswered] = useState(false);
 
-  const questions = [
-    {
-      question: "What is the SI unit of force?",
-      options: ["Newton", "Joule", "Watt", "Pascal"],
-      correct: 0,
-    },
-    {
-      question: "Which law states F = ma?",
-      options: ["Newton's 1st Law", "Newton's 2nd Law", "Newton's 3rd Law", "Law of Gravitation"],
-      correct: 1,
-    },
-    {
-      question: "What is the speed of light in vacuum?",
-      options: ["3 × 10^8 m/s", "3 × 10^6 m/s", "3 × 10^10 m/s", "3 × 10^4 m/s"],
-      correct: 0,
-    },
-    {
-      question: "Which particle has a negative charge?",
-      options: ["Proton", "Neutron", "Electron", "Photon"],
-      correct: 2,
-    },
-    {
-      question: "What is the formula for kinetic energy?",
-      options: ["mgh", "½mv²", "mv", "mc²"],
-      correct: 1,
-    },
-  ];
+  const questions = match.questions;
+  const currentQuestion = questions[currentQuestionIndex];
 
   useEffect(() => {
     if (timeLeft > 0 && !showResult) {
@@ -387,17 +498,17 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
   // Simulate opponent answering
   useEffect(() => {
     if (!showResult && selectedAnswer === null) {
+      const opponentTime = 3000 + Math.random() * 8000; // 3-11 seconds
       const opponentTimer = setTimeout(() => {
         // Opponent has 60% chance to answer correctly
-        if (Math.random() < 0.6) {
-          setOpponentScore(s => s + 10);
-        } else {
-          setOpponentScore(s => s + 2);
-        }
-      }, 3000 + Math.random() * 4000);
+        const isCorrect = Math.random() < 0.6;
+        const points = isCorrect ? 10 + Math.floor(Math.random() * 10) : 0;
+        setOpponentScore(s => s + points);
+        setOpponentAnswered(true);
+      }, opponentTime);
       return () => clearTimeout(opponentTimer);
     }
-  }, [currentQuestion, showResult, selectedAnswer]);
+  }, [currentQuestionIndex, showResult, selectedAnswer]);
 
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null || showResult) return;
@@ -405,33 +516,57 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
     setSelectedAnswer(answerIndex);
     setShowResult(true);
     
-    const isCorrect = answerIndex === questions[currentQuestion].correct;
+    const isCorrect = answerIndex === currentQuestion.correctAnswer;
     const points = isCorrect ? 10 + timeLeft : 0;
     setPlayerScore(s => s + points);
+    
+    setPlayerAnswers(prev => [...prev, {
+      questionIndex: currentQuestionIndex,
+      correct: isCorrect,
+      timeLeft: timeLeft,
+    }]);
 
     setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(c => c + 1);
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(c => c + 1);
         setSelectedAnswer(null);
         setShowResult(false);
-        setTimeLeft(10);
+        setTimeLeft(15);
+        setOpponentAnswered(false);
       } else {
-        onComplete(playerScore + points, opponentScore);
+        // Small delay to show final scores before completing
+        setTimeout(() => {
+          onComplete(playerScore + points, opponentScore, [...playerAnswers, {
+            questionIndex: currentQuestionIndex,
+            correct: isCorrect,
+            timeLeft: timeLeft,
+          }]);
+        }, 1000);
       }
-    }, 1500);
+    }, 2000);
   };
 
-  const question = questions[currentQuestion];
+  // Get subject color
+  const subjectInfo = SUBJECTS.find(s => s.id === currentQuestion.subject);
+  const subjectColor = subjectInfo?.color.replace('text-', '') || 'blue';
 
   return (
     <div className="fixed inset-0 bg-white flex flex-col z-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-4">
+      <div className={`bg-gradient-to-r ${
+        currentQuestion.subject === 'physics' ? 'from-blue-600 to-blue-500' :
+        currentQuestion.subject === 'chemistry' ? 'from-green-600 to-green-500' :
+        currentQuestion.subject === 'biology' ? 'from-pink-600 to-pink-500' :
+        'from-purple-600 to-pink-500'
+      } text-white p-4`}>
         <div className="flex items-center justify-between">
           <button onClick={onExit} className="p-2 hover:bg-white/20 rounded-xl">
             <ArrowLeft className="w-6 h-6" />
           </button>
-          <h2 className="font-bold">Battle</h2>
+          <div className="flex items-center gap-2">
+            {subjectInfo?.icon}
+            <span className="font-semibold capitalize">{currentQuestion.subject}</span>
+          </div>
           <div className="w-10" />
         </div>
 
@@ -447,14 +582,23 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
             <span className="text-2xl">{match.player2_avatar}</span>
             <p className="font-bold text-lg">{opponentScore}</p>
             <p className="text-xs text-white/80">{match.player2_name}</p>
+            {opponentAnswered && !showResult && (
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xs text-yellow-300 mt-1"
+              >
+                Answered!
+              </motion.p>
+            )}
           </div>
         </div>
       </div>
 
       {/* Progress */}
-      <div className="px-4 py-2 bg-gray-50">
+      <div className="px-4 py-2 bg-gray-50 border-b">
         <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-          <span>Question {currentQuestion + 1}/{questions.length}</span>
+          <span>Question {currentQuestionIndex + 1}/{questions.length}</span>
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
             {timeLeft}s
@@ -462,9 +606,14 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
         </div>
         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-purple-500"
+            className={`h-full ${
+              currentQuestion.subject === 'physics' ? 'bg-blue-500' :
+              currentQuestion.subject === 'chemistry' ? 'bg-green-500' :
+              currentQuestion.subject === 'biology' ? 'bg-pink-500' :
+              'bg-purple-500'
+            }`}
             initial={{ width: 0 }}
-            animate={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+            animate={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
           />
         </div>
       </div>
@@ -472,19 +621,38 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
       {/* Question */}
       <div className="flex-1 overflow-auto p-4">
         <motion.div
-          key={currentQuestion}
+          key={currentQuestionIndex}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           className="max-w-lg mx-auto"
         >
+          {/* Topic badge */}
+          <div className="mb-4">
+            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+              currentQuestion.subject === 'physics' ? 'bg-blue-100 text-blue-700' :
+              currentQuestion.subject === 'chemistry' ? 'bg-green-100 text-green-700' :
+              currentQuestion.subject === 'biology' ? 'bg-pink-100 text-pink-700' :
+              'bg-purple-100 text-purple-700'
+            }`}>
+              {currentQuestion.topic}
+            </span>
+            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ml-2 ${
+              currentQuestion.difficulty === 'easy' ? 'bg-green-100 text-green-700' :
+              currentQuestion.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+              'bg-red-100 text-red-700'
+            }`}>
+              {currentQuestion.difficulty}
+            </span>
+          </div>
+
           <h3 className="text-xl font-bold text-gray-900 mb-6">
-            {question.question}
+            {currentQuestion.question}
           </h3>
 
           <div className="space-y-3">
-            {question.options.map((option, index) => {
+            {currentQuestion.options.map((option, index) => {
               const isSelected = selectedAnswer === index;
-              const isCorrect = index === question.correct;
+              const isCorrect = index === currentQuestion.correctAnswer;
               const showCorrectness = showResult && (isSelected || isCorrect);
 
               return (
@@ -499,7 +667,7 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
                         : isSelected
                         ? 'bg-red-100 border-2 border-red-500 text-red-900'
                         : 'bg-gray-100 text-gray-500'
-                      : 'bg-gray-100 hover:bg-purple-50 hover:border-purple-300 border-2 border-transparent'
+                      : 'bg-gray-100 hover:bg-gray-200 border-2 border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -526,6 +694,16 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
               );
             })}
           </div>
+
+          {/* Timer bar */}
+          <div className="mt-6 h-1 bg-gray-200 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-gray-400"
+              initial={{ width: '100%' }}
+              animate={{ width: `${(timeLeft / 15) * 100}%` }}
+              transition={{ duration: 1, ease: 'linear' }}
+            />
+          </div>
         </motion.div>
       </div>
     </div>
@@ -536,6 +714,7 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
 function BattleResults({ match, onExit, onRematch }: { match: Match; onExit: () => void; onRematch: () => void }) {
   const playerWon = match.player1_score > match.player2_score;
   const isDraw = match.player1_score === match.player2_score;
+  const coinsEarned = playerWon ? 50 : isDraw ? 25 : 10;
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center z-50 p-4">
@@ -562,6 +741,9 @@ function BattleResults({ match, onExit, onRematch }: { match: Match; onExit: () 
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
           {playerWon ? 'Victory!' : isDraw ? 'Draw!' : 'Defeat!'}
         </h2>
+        <p className="text-gray-500 text-sm mb-6">
+          {SUBJECTS.find(s => s.id === match.subject)?.name}
+        </p>
 
         {/* Score Display */}
         <div className="flex items-center justify-center gap-4 mb-6">
@@ -578,12 +760,37 @@ function BattleResults({ match, onExit, onRematch }: { match: Match; onExit: () 
           </div>
         </div>
 
+        {/* Question Summary */}
+        <div className="bg-gray-50 rounded-xl p-4 mb-6">
+          <div className="flex justify-around text-sm">
+            <div className="text-center">
+              <Check className="w-5 h-5 text-green-500 mx-auto mb-1" />
+              <p className="font-bold text-green-600">
+                {match.player1_answers.filter(a => a.correct).length}
+              </p>
+              <p className="text-gray-500 text-xs">Correct</p>
+            </div>
+            <div className="text-center">
+              <X className="w-5 h-5 text-red-500 mx-auto mb-1" />
+              <p className="font-bold text-red-600">
+                {match.player1_answers.filter(a => !a.correct).length}
+              </p>
+              <p className="text-gray-500 text-xs">Wrong</p>
+            </div>
+            <div className="text-center">
+              <Clock className="w-5 h-5 text-blue-500 mx-auto mb-1" />
+              <p className="font-bold text-blue-600">
+                {Math.round(match.player1_answers.reduce((acc, a) => acc + (15 - a.timeLeft), 0))}s
+              </p>
+              <p className="text-gray-500 text-xs">Time</p>
+            </div>
+          </div>
+        </div>
+
         {/* Rewards */}
         <div className="bg-yellow-50 rounded-xl p-4 mb-6">
           <p className="text-sm text-gray-600 mb-1">Coins Earned</p>
-          <p className="text-3xl font-bold text-yellow-600">
-            +{playerWon ? 50 : 10}
-          </p>
+          <p className="text-3xl font-bold text-yellow-600">+{coinsEarned}</p>
         </div>
 
         {/* Buttons */}
