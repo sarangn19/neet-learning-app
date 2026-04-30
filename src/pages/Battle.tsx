@@ -207,27 +207,34 @@ export default function Battle() {
             // No opponent joined - switch to AI
             const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
             
-            await supabase
-              .from('battle_matches')
-              .update({
-                player2_id: 'ai-opponent',
-                player2_name: aiOpponent.name,
-                player2_avatar: aiOpponent.avatar,
-                status: 'active',
-                started_at: new Date().toISOString(),
-              })
-              .eq('id', newMatch.id);
+            // Delete the waiting match from Supabase (AI doesn't need DB record)
+            await supabase.from('battle_matches').delete().eq('id', newMatch.id);
 
             // Unsubscribe from realtime for AI matches
             channel.unsubscribe();
 
-            setCurrentMatch(prev => prev ? {
-              ...prev,
+            // Create local AI match
+            const aiMatch: Match = {
+              id: 'ai-' + Date.now(),
+              player1_id: userId,
+              player1_name: name,
+              player1_avatar: avatar,
+              player1_score: 0,
+              player1_answers: [],
               player2_id: 'ai-opponent',
               player2_name: aiOpponent.name,
               player2_avatar: aiOpponent.avatar,
+              player2_score: 0,
+              player2_answers: [],
               status: 'active',
-            } : null);
+              subject: selectedSubject,
+              questions: questions,
+              current_question: 0,
+              winner_id: null,
+              created_at: new Date().toISOString(),
+            };
+
+            setCurrentMatch(aiMatch);
             
             setGameState('countdown');
             
