@@ -2,8 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
-import { supabase } from '../lib/supabase';
-import { battleQuestions, getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
+import type { BattleQuestion } from '../data/battleQuestions';
 
 interface Match {
   id: string;
@@ -66,57 +65,14 @@ export default function Battle() {
     setError(null);
 
     try {
-      // Get random questions for the selected subject
-      const questions = getRandomQuestions(selectedSubject, 5);
+      // TODO: Implement real-time matchmaking with Supabase
+      // 1. Join matchmaking_queue table
+      // 2. Listen for opponent match via Supabase Realtime
+      // 3. Create battle_matches record when matched
       
-      // In production, this would join the matchmaking queue and wait for opponent
-      // For now, simulate matchmaking
-      setTimeout(() => {
-        const mockOpponents = [
-          { name: 'Rahul', avatar: '👨‍🎓' },
-          { name: 'Priya', avatar: '👩‍🔬' },
-          { name: 'Arun', avatar: '🧑‍🔬' },
-          { name: 'Neha', avatar: '🐱' },
-          { name: 'Vikram', avatar: '🦁' },
-          { name: 'Ananya', avatar: '🦄' },
-        ];
-        const opponent = mockOpponents[Math.floor(Math.random() * mockOpponents.length)];
-        
-        const match: Match = {
-          id: 'match-' + Date.now(),
-          player1_id: 'current-user',
-          player1_name: name,
-          player1_avatar: avatar,
-          player1_score: 0,
-          player1_answers: [],
-          player2_id: 'opponent-' + Date.now(),
-          player2_name: opponent.name,
-          player2_avatar: opponent.avatar,
-          player2_score: 0,
-          player2_answers: [],
-          status: 'active',
-          subject: selectedSubject,
-          questions: questions,
-          current_question: 0,
-          winner_id: null,
-          created_at: new Date().toISOString(),
-        };
-        
-        setCurrentMatch(match);
-        setGameState('countdown');
-        setIsLoading(false);
-        
-        // Start countdown
-        let count = 3;
-        const interval = setInterval(() => {
-          count--;
-          setCountdown(count);
-          if (count <= 0) {
-            clearInterval(interval);
-            setGameState('playing');
-          }
-        }, 1000);
-      }, 2000 + Math.random() * 2000);
+      setError('Real-time multiplayer coming soon! This feature requires Supabase Realtime setup.');
+      setGameState('setup');
+      setIsLoading(false);
     } catch (err) {
       setError('Failed to start matchmaking. Please try again.');
       setGameState('setup');
@@ -379,8 +335,8 @@ export default function Battle() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-white/80">Online Players</p>
-                    <p className="font-bold">{Math.floor(Math.random() * 50) + 20}</p>
+                    <p className="text-xs text-white/80">Status</p>
+                    <p className="font-bold text-yellow-300">Beta</p>
                   </div>
                 </div>
 
@@ -476,12 +432,11 @@ export default function Battle() {
 function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (p1: number, p2: number, answers: Match['player1_answers']) => void; onExit: () => void }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [playerScore, setPlayerScore] = useState(0);
-  const [opponentScore, setOpponentScore] = useState(0);
+  const [opponentScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(15);
   const [showResult, setShowResult] = useState(false);
   const [playerAnswers, setPlayerAnswers] = useState<Match['player1_answers']>([]);
-  const [opponentAnswered, setOpponentAnswered] = useState(false);
 
   const questions = match.questions;
   const currentQuestion = questions[currentQuestionIndex];
@@ -495,20 +450,8 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
     }
   }, [timeLeft, showResult]);
 
-  // Simulate opponent answering
-  useEffect(() => {
-    if (!showResult && selectedAnswer === null) {
-      const opponentTime = 3000 + Math.random() * 8000; // 3-11 seconds
-      const opponentTimer = setTimeout(() => {
-        // Opponent has 60% chance to answer correctly
-        const isCorrect = Math.random() < 0.6;
-        const points = isCorrect ? 10 + Math.floor(Math.random() * 10) : 0;
-        setOpponentScore(s => s + points);
-        setOpponentAnswered(true);
-      }, opponentTime);
-      return () => clearTimeout(opponentTimer);
-    }
-  }, [currentQuestionIndex, showResult, selectedAnswer]);
+  // TODO: Implement real-time opponent updates via WebSocket/Supabase Realtime
+  // This will sync opponent's score and answer status in real-time
 
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null || showResult) return;
@@ -532,7 +475,6 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
         setSelectedAnswer(null);
         setShowResult(false);
         setTimeLeft(15);
-        setOpponentAnswered(false);
       } else {
         // Small delay to show final scores before completing
         setTimeout(() => {
@@ -546,9 +488,8 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
     }, 2000);
   };
 
-  // Get subject color
+  // Get subject info
   const subjectInfo = SUBJECTS.find(s => s.id === currentQuestion.subject);
-  const subjectColor = subjectInfo?.color.replace('text-', '') || 'blue';
 
   return (
     <div className="fixed inset-0 bg-white flex flex-col z-50">
@@ -582,15 +523,7 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
             <span className="text-2xl">{match.player2_avatar}</span>
             <p className="font-bold text-lg">{opponentScore}</p>
             <p className="text-xs text-white/80">{match.player2_name}</p>
-            {opponentAnswered && !showResult && (
-              <motion.p 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-yellow-300 mt-1"
-              >
-                Answered!
-              </motion.p>
-            )}
+            <p className="text-xs text-white/60 mt-1">Waiting...</p>
           </div>
         </div>
       </div>
