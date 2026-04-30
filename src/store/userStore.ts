@@ -452,11 +452,14 @@ export const useUserStore = create<UserState>()(
 
       addCoins: (amount) => set((state) => ({ coins: state.coins + amount })),
 
-      // Track battle victories for magic boxes (returns new victory count)
+      // Track battle victories for magic boxes (returns new victory count, max 4/day)
       recordBattleVictory: () => {
         const today = new Date().toDateString();
         const savedDate = localStorage.getItem('lastBattleVictoryDate');
         const savedCount = parseInt(localStorage.getItem('battleVictoriesToday') || '0');
+        
+        // Max 4 keys per day
+        const MAX_KEYS_PER_DAY = 4;
         
         let newCount;
         if (savedDate !== today) {
@@ -464,7 +467,11 @@ export const useUserStore = create<UserState>()(
           newCount = 1;
           localStorage.setItem('lastBattleVictoryDate', today);
         } else {
-          // Same day - increment
+          // Same day - increment only if under limit
+          if (savedCount >= MAX_KEYS_PER_DAY) {
+            // Already at max, don't give more keys
+            return savedCount;
+          }
           newCount = savedCount + 1;
         }
         
