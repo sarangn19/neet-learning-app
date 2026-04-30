@@ -109,18 +109,55 @@ export default function Battle() {
     setIsLoading(true);
     setError(null);
 
+    // Check if user is authenticated via store
+    if (!isAuthenticated || !userId) {
+      setError('Please login to play multiplayer');
+      setGameState('setup');
+      setIsLoading(false);
+      return;
+    }
+
+    const questions = getRandomQuestions(selectedSubject, 5);
+    const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
+
+    // Helper to start a local AI match
+    const startAIMatch = () => {
+      const match: Match = {
+        id: 'ai-' + Date.now(),
+        player1_id: userId,
+        player1_name: name,
+        player1_avatar: avatar,
+        player1_score: 0,
+        player1_answers: [],
+        player2_id: 'ai-opponent',
+        player2_name: aiOpponent.name,
+        player2_avatar: aiOpponent.avatar,
+        player2_score: 0,
+        player2_answers: [],
+        status: 'active',
+        subject: selectedSubject,
+        questions: questions,
+        current_question: 0,
+        winner_id: null,
+        created_at: new Date().toISOString(),
+      };
+      setCurrentMatch(match);
+      setGameState('countdown');
+      setIsLoading(false);
+
+      let count = 3;
+      const interval = setInterval(() => {
+        count--;
+        setCountdown(count);
+        if (count <= 0) {
+          clearInterval(interval);
+          setGameState('playing');
+        }
+      }, 1000);
+    };
+
     try {
-      // 1. Check if user is authenticated via store
-      if (!isAuthenticated || !userId) {
-        setError('Please login to play multiplayer');
-        setGameState('setup');
-        setIsLoading(false);
-        return;
-      }
-
-      const questions = getRandomQuestions(selectedSubject, 5);
-
-      // 2. Try to find an existing match waiting for opponent
+      // Try to find an existing match waiting for opponent
       const { data: waitingMatches, error: searchError } = await supabase
         .from('battle_matches')
         .select('*')
@@ -129,16 +166,13 @@ export default function Battle() {
         .neq('player1_id', userId)
         .limit(1);
 
-      if (searchError) throw searchError;
-
-      if (waitingMatches && waitingMatches.length > 0) {
-        // Join existing match
+      if (!searchError && waitingMatches && waitingMatches.length > 0) {
+        // Join existing match - real multiplayer!
         const match = waitingMatches[0];
         
         const { error: updateError } = await supabase
           .from('battle_matches')
           .update({
-            player2_id: userId,
             player2_name: name,
             player2_avatar: avatar,
             status: 'active',
@@ -146,156 +180,51 @@ export default function Battle() {
           })
           .eq('id', match.id);
 
-        if (updateError) throw updateError;
+        if (!updateError) {
+          const fullMatch: Match = {
+            id: match.id,
+            player1_id: match.player1_id,
+            player1_name: match.player1_name,
+            player1_avatar: match.player1_avatar || '👨‍🔬',
+            player1_score: match.player1_score || 0,
+            player1_answers: match.player1_answers || [],
+            player2_id: userId,
+            player2_name: name,
+            player2_avatar: avatar,
+            player2_score: 0,
+            player2_answers: [],
+            status: 'active',
+            subject: match.subject,
+            questions: match.questions,
+            current_question: 0,
+            winner_id: null,
+            created_at: match.created_at,
+          };
 
-        const fullMatch: Match = {
-          ...match,
-          player2_id: userId,
-          player2_name: name,
-          player2_avatar: avatar,
-          status: 'active',
-        };
+          setCurrentMatch(fullMatch);
+          subscribeToMatch(match.id);
+          setGameState('countdown');
+          setIsLoading(false);
 
-        setCurrentMatch(fullMatch);
-        subscribeToMatch(match.id);
-        setGameState('countdown');
-        setIsLoading(false);
-
-        // Start countdown
-        let count = 3;
-        const interval = setInterval(() => {
-          count--;
-          setCountdown(count);
-          if (count <= 0) {
-            clearInterval(interval);
-            setGameState('playing');
-          }
-        }, 1000);
-      } else {
-        // 3. No waiting match - create new match and wait
-        const { data: newMatch, error: createError } = await supabase
-          .from('battle_matches')
-          .insert({
-            player1_id: userId,
-            player1_name: name,
-            player1_avatar: avatar,
-            status: 'waiting',
-            subject: selectedSubject,
-            grade: selectedGrade,
-            questions: questions,
-          })
-          .select()
-          .single();
-
-        if (createError) throw createError;
-        if (!newMatch) throw new Error('Failed to create match');
-
-        setCurrentMatch(newMatch);
-        
-        // Subscribe to match updates (waiting for opponent)
-        const channel = subscribeToMatch(newMatch.id);
-
-        // Wait 15 seconds for opponent, then fallback to AI
-        setTimeout(async () => {
-          const { data: currentMatchData } = await supabase
-            .from('battle_matches')
-            .select('*')
-            .eq('id', newMatch.id)
-            .single();
-
-          if (currentMatchData && !currentMatchData.player2_id) {
-            // No opponent joined - switch to AI
-            const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
-            
-            // Delete the waiting match from Supabase (AI doesn't need DB record)
-            await supabase.from('battle_matches').delete().eq('id', newMatch.id);
-
-            // Unsubscribe from realtime for AI matches
-            channel.unsubscribe();
-
-            // Create local AI match
-            const aiMatch: Match = {
-              id: 'ai-' + Date.now(),
-              player1_id: userId,
-              player1_name: name,
-              player1_avatar: avatar,
-              player1_score: 0,
-              player1_answers: [],
-              player2_id: 'ai-opponent',
-              player2_name: aiOpponent.name,
-              player2_avatar: aiOpponent.avatar,
-              player2_score: 0,
-              player2_answers: [],
-              status: 'active',
-              subject: selectedSubject,
-              questions: questions,
-              current_question: 0,
-              winner_id: null,
-              created_at: new Date().toISOString(),
-            };
-
-            setCurrentMatch(aiMatch);
-            
-            setGameState('countdown');
-            
-            let count = 3;
-            const interval = setInterval(() => {
-              count--;
-              setCountdown(count);
-              if (count <= 0) {
-                clearInterval(interval);
-                setGameState('playing');
-              }
-            }, 1000);
-          }
-        }, 15000); // Wait 15 seconds
-
-        setIsLoading(false);
+          let count = 3;
+          const interval = setInterval(() => {
+            count--;
+            setCountdown(count);
+            if (count <= 0) {
+              clearInterval(interval);
+              setGameState('playing');
+            }
+          }, 1000);
+          return; // Real match started
+        }
       }
+
+      // No waiting match or error - start AI match immediately
+      startAIMatch();
     } catch (err) {
       console.error('Matchmaking error:', err);
-      setError('Failed to start matchmaking. Falling back to AI opponent...');
-      
-      // Fallback to AI immediately on error
-      setTimeout(() => {
-        const questions = getRandomQuestions(selectedSubject, 5);
-        const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
-        
-        const match: Match = {
-          id: 'local-' + Date.now(),
-          player1_id: userId || 'current-user',
-          player1_name: name,
-          player1_avatar: avatar,
-          player1_score: 0,
-          player1_answers: [],
-          player2_id: 'ai-opponent',
-          player2_name: aiOpponent.name,
-          player2_avatar: aiOpponent.avatar,
-          player2_score: 0,
-          player2_answers: [],
-          status: 'active',
-          subject: selectedSubject,
-          questions: questions,
-          current_question: 0,
-          winner_id: null,
-          created_at: new Date().toISOString(),
-        };
-        
-        setCurrentMatch(match);
-        setError(null);
-        setGameState('countdown');
-        setIsLoading(false);
-        
-        let count = 3;
-        const interval = setInterval(() => {
-          count--;
-          setCountdown(count);
-          if (count <= 0) {
-            clearInterval(interval);
-            setGameState('playing');
-          }
-        }, 1000);
-      }, 2000);
+      // Any error - start AI match immediately
+      startAIMatch();
     }
   }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
 
