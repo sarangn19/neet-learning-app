@@ -121,17 +121,20 @@ export default function Battle() {
           
           console.log('Match update - player2_id:', updated.player2_id, 'status:', updated.status);
           
-          // Check if opponent joined before updating state
-          const opponentJustJoined = updated.player2_id && updated.status === 'active';
-          console.log('Opponent just joined?', opponentJustJoined);
-          
           setCurrentMatch(prev => {
-            console.log('Current match status:', prev?.status, 'Opponent joined?', opponentJustJoined);
+            // Check if we went from no player2 to having player2 (opponent joined)
+            const hadNoOpponent = !prev?.player2_id;
+            const nowHasOpponent = !!updated.player2_id;
+            const opponentJustJoined = hadNoOpponent && nowHasOpponent;
             
-            if (opponentJustJoined && prev?.status === 'waiting') {
+            console.log('Previous player2:', prev?.player2_id, 'New player2:', updated.player2_id);
+            console.log('Opponent just joined?', opponentJustJoined);
+            
+            if (opponentJustJoined) {
               console.log('Starting countdown - opponent joined!');
               // Opponent joined - start countdown
               setGameState('countdown');
+              setIsLoading(false);
               let count = 3;
               const interval = setInterval(() => {
                 count--;
