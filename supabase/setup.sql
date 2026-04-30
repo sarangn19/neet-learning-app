@@ -132,6 +132,28 @@ ALTER PUBLICATION supabase_realtime ADD TABLE system_logs;
 ALTER PUBLICATION supabase_realtime ADD TABLE battle_matches;
 ALTER PUBLICATION supabase_realtime ADD TABLE matchmaking_queue;
 
+-- Disable RLS or add permissive policies for anon access
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE lesson_progress ENABLE ROW LEVEL SECURITY;
+ALTER TABLE badges ENABLE ROW LEVEL SECURITY;
+ALTER TABLE system_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE battle_matches ENABLE ROW LEVEL SECURITY;
+ALTER TABLE battle_history ENABLE ROW LEVEL SECURITY;
+ALTER TABLE matchmaking_queue ENABLE ROW LEVEL SECURITY;
+
+-- Allow anon key to read/write all tables
+CREATE POLICY "Allow all access to users" ON users FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all access to lesson_progress" ON lesson_progress FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all access to badges" ON badges FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all access to system_logs" ON system_logs FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all access to battle_matches" ON battle_matches FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all access to battle_history" ON battle_history FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all access to matchmaking_queue" ON matchmaking_queue FOR ALL USING (true) WITH CHECK (true);
+
+-- Remove foreign key constraint from player2_id to allow any string (for real multiplayer)
+ALTER TABLE battle_matches DROP CONSTRAINT IF EXISTS battle_matches_player2_id_fkey;
+ALTER TABLE battle_history DROP CONSTRAINT IF EXISTS battle_history_player2_id_fkey;
+
 -- Insert default admin users
 INSERT INTO users (email, name, role, status, gems, level, completed_lessons, avatar) VALUES
   ('super@example.com', 'Super Admin', 'superadmin', 'active', 9999, 100, 500, '👑'),

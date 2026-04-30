@@ -212,6 +212,7 @@ export default function Battle() {
         const { error: updateError } = await supabase
           .from('battle_matches')
           .update({
+            player2_id: userId,
             player2_name: name,
             player2_avatar: avatar,
             status: 'active',
