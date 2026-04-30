@@ -352,10 +352,14 @@ export default function Battle() {
 
   const handleGameComplete = (playerScore: number, opponentScore: number, playerAnswers: Match['player1_answers']) => {
     if (currentMatch) {
+      // Determine if current user is player1 or player2
+      const isPlayer1 = currentMatch.player1_id === userId;
+      
       const updatedMatch = {
         ...currentMatch,
-        player1_score: playerScore,
-        player2_score: opponentScore,
+        // Set scores correctly based on which player I am
+        player1_score: isPlayer1 ? playerScore : opponentScore,
+        player2_score: isPlayer1 ? opponentScore : playerScore,
         player1_answers: playerAnswers,
         status: 'completed' as const,
         winner_id: playerScore > opponentScore ? 'current-user' : playerScore < opponentScore ? 'opponent' : null,
