@@ -126,7 +126,7 @@ export default function Battle() {
         .select('*')
         .eq('status', 'waiting')
         .eq('subject', selectedSubject)
-        .neq('player1_id', user.id)
+        .neq('player1_id', userId)
         .limit(1);
 
       if (searchError) throw searchError;
