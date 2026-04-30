@@ -104,21 +104,47 @@ export const useUserStore = create<UserState>()(
 
       signup: async (data) => {
         try {
-          // Generate UUID v4
-          const generateUUID = () => {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-              const r = Math.random() * 16 | 0;
-              const v = c === 'x' ? r : (r & 0x3 | 0x8);
-              return v.toString(16);
-            });
-          };
+          // Check if Supabase is configured
+          const { isFallbackMode } = await import('../lib/supabase');
+          
+          if (isFallbackMode) {
+            // Fallback mode - create local user without Supabase
+            const newUser: User = {
+              id: 'user-' + Date.now(),
+              name: data.name,
+              email: data.email,
+              avatar: '👨‍🔬',
+              tokens: 0,
+              level: 1,
+              streak: 1,
+              longestStreak: 1,
+              gems: 100,
+              lastActive: new Date().toISOString().split('T')[0],
+              badges: [],
+              completedLessons: [],
+              role: 'user',
+              purchasedAvatars: ['👨‍🔬'],
+            };
 
-          // Check if user already exists
-          const { data: existingUser } = await supabase
+            set({ 
+              isAuthenticated: true, 
+              user: newUser,
+              ...newUser,
+              lessonProgress: {} 
+            });
+            return { success: true };
+          }
+
+          // Check if user already exists (use maybeSingle to avoid error when no user found)
+          const { data: existingUser, error: checkError } = await supabase
             .from('users')
             .select('email')
             .eq('email', data.email)
-            .single();
+            .maybeSingle();
+
+          if (checkError) {
+            console.error('Error checking existing user:', checkError);
+          }
 
           if (existingUser) {
             return { success: false, error: 'Email already registered. Please log in.' };
@@ -128,10 +154,9 @@ export const useUserStore = create<UserState>()(
           const { data: userData, error } = await supabase
             .from('users')
             .insert({
-              id: generateUUID(),
               email: data.email,
               name: data.name,
-              avatar: '👤',
+              avatar: '�‍🔬',
               role: 'user',
               status: 'active',
               gems: 100,
@@ -140,37 +165,43 @@ export const useUserStore = create<UserState>()(
               longest_streak: 1,
               tokens: 0,
               completed_lessons: 0,
-              last_active: 'Just now',
+              last_active: new Date().toISOString().split('T')[0],
             })
             .select()
             .single();
 
           if (error) {
             console.error('Signup error:', error);
-            return { success: false, error: 'Failed to create account. Please try again.' };
+            return { success: false, error: error.message || 'Failed to create account. Please try again.' };
           }
 
           const newUser: User = {
             id: userData.id,
             name: userData.name,
             email: userData.email,
-            avatar: userData.avatar || '👤',
+            avatar: userData.avatar || '�‍🔬',
             tokens: userData.tokens || 0,
             level: userData.level || 1,
             streak: userData.streak || 1,
             longestStreak: userData.longest_streak || 1,
             gems: userData.gems || 100,
-            lastActive: userData.last_active || 'Just now',
+            lastActive: userData.last_active || new Date().toISOString().split('T')[0],
             badges: [],
             completedLessons: [],
             role: userData.role || 'user',
+            purchasedAvatars: ['👨‍🔬'],
           };
 
-          set({ isAuthenticated: true, user: newUser, lessonProgress: {} });
+          set({ 
+            isAuthenticated: true, 
+            user: newUser,
+            ...newUser,
+            lessonProgress: {} 
+          });
           return { success: true };
-        } catch (error) {
+        } catch (error: any) {
           console.error('Signup error:', error);
-          return { success: false, error: 'Signup failed. Please try again.' };
+          return { success: false, error: error?.message || 'Signup failed. Please try again.' };
         }
       },
 
