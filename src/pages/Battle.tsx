@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles } from 'lucide-react';
+import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles, Globe } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
-import type { BattleQuestion } from '../data/battleQuestions';
+import { supabase } from '../lib/supabase';
+import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
 
 interface Match {
   id: string;
@@ -58,27 +59,239 @@ export default function Battle() {
     // For now, use local state
   };
 
-  // Start matchmaking
+  // AI Opponent names and avatars (fallback)
+  const AI_OPPONENTS = [
+    { name: 'NeoBot', avatar: '🤖' },
+    { name: 'QuizMaster AI', avatar: '🧠' },
+    { name: 'StudyBuddy', avatar: '📚' },
+    { name: 'BrainyBot', avatar: '⚡' },
+    { name: 'Genius AI', avatar: '🎯' },
+  ];
+
+  // Subscribe to match updates via Supabase Realtime
+  const subscribeToMatch = useCallback((matchId: string) => {
+    const channel = supabase
+      .channel(`battle:${matchId}`)
+      .on('postgres_changes', 
+        { event: 'UPDATE', schema: 'public', table: 'battle_matches', filter: `id=eq.${matchId}` },
+        (payload) => {
+          const updated = payload.new as Match;
+          
+          // Check if opponent joined before updating state
+          const opponentJustJoined = updated.player2_id && updated.status === 'active';
+          
+          setCurrentMatch(prev => {
+            if (opponentJustJoined && prev?.status === 'waiting') {
+              // Opponent joined - start countdown
+              setGameState('countdown');
+              let count = 3;
+              const interval = setInterval(() => {
+                count--;
+                setCountdown(count);
+                if (count <= 0) {
+                  clearInterval(interval);
+                  setGameState('playing');
+                }
+              }, 1000);
+            }
+            return prev ? { ...prev, ...updated } : null;
+          });
+        }
+      )
+      .subscribe();
+    
+    return channel;
+  }, []);
+
+  // Start matchmaking - tries real-time first, falls back to AI
   const startMatchmaking = useCallback(async () => {
     setGameState('searching');
     setIsLoading(true);
     setError(null);
 
     try {
-      // TODO: Implement real-time matchmaking with Supabase
-      // 1. Join matchmaking_queue table
-      // 2. Listen for opponent match via Supabase Realtime
-      // 3. Create battle_matches record when matched
-      
-      setError('Real-time multiplayer coming soon! This feature requires Supabase Realtime setup.');
-      setGameState('setup');
-      setIsLoading(false);
+      // 1. Get current user from Supabase
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setError('Please login to play multiplayer');
+        setGameState('setup');
+        setIsLoading(false);
+        return;
+      }
+
+      const questions = getRandomQuestions(selectedSubject, 5);
+
+      // 2. Try to find an existing match waiting for opponent
+      const { data: waitingMatches, error: searchError } = await supabase
+        .from('battle_matches')
+        .select('*')
+        .eq('status', 'waiting')
+        .eq('subject', selectedSubject)
+        .neq('player1_id', user.id)
+        .limit(1);
+
+      if (searchError) throw searchError;
+
+      if (waitingMatches && waitingMatches.length > 0) {
+        // Join existing match
+        const match = waitingMatches[0];
+        
+        const { error: updateError } = await supabase
+          .from('battle_matches')
+          .update({
+            player2_id: user.id,
+            player2_name: name,
+            player2_avatar: avatar,
+            status: 'active',
+            started_at: new Date().toISOString(),
+          })
+          .eq('id', match.id);
+
+        if (updateError) throw updateError;
+
+        const fullMatch: Match = {
+          ...match,
+          player2_id: user.id,
+          player2_name: name,
+          player2_avatar: avatar,
+          status: 'active',
+        };
+
+        setCurrentMatch(fullMatch);
+        subscribeToMatch(match.id);
+        setGameState('countdown');
+        setIsLoading(false);
+
+        // Start countdown
+        let count = 3;
+        const interval = setInterval(() => {
+          count--;
+          setCountdown(count);
+          if (count <= 0) {
+            clearInterval(interval);
+            setGameState('playing');
+          }
+        }, 1000);
+      } else {
+        // 3. No waiting match - create new match and wait
+        const { data: newMatch, error: createError } = await supabase
+          .from('battle_matches')
+          .insert({
+            player1_id: user.id,
+            player1_name: name,
+            player1_avatar: avatar,
+            status: 'waiting',
+            subject: selectedSubject,
+            grade: selectedGrade,
+            questions: questions,
+          })
+          .select()
+          .single();
+
+        if (createError) throw createError;
+        if (!newMatch) throw new Error('Failed to create match');
+
+        setCurrentMatch(newMatch);
+        
+        // Subscribe to match updates (waiting for opponent)
+        const channel = subscribeToMatch(newMatch.id);
+
+        // Wait 15 seconds for opponent, then fallback to AI
+        setTimeout(async () => {
+          const { data: currentMatchData } = await supabase
+            .from('battle_matches')
+            .select('*')
+            .eq('id', newMatch.id)
+            .single();
+
+          if (currentMatchData && !currentMatchData.player2_id) {
+            // No opponent joined - switch to AI
+            const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
+            
+            await supabase
+              .from('battle_matches')
+              .update({
+                player2_id: 'ai-opponent',
+                player2_name: aiOpponent.name,
+                player2_avatar: aiOpponent.avatar,
+                status: 'active',
+                started_at: new Date().toISOString(),
+              })
+              .eq('id', newMatch.id);
+
+            // Unsubscribe from realtime for AI matches
+            channel.unsubscribe();
+
+            setCurrentMatch(prev => prev ? {
+              ...prev,
+              player2_id: 'ai-opponent',
+              player2_name: aiOpponent.name,
+              player2_avatar: aiOpponent.avatar,
+              status: 'active',
+            } : null);
+            
+            setGameState('countdown');
+            
+            let count = 3;
+            const interval = setInterval(() => {
+              count--;
+              setCountdown(count);
+              if (count <= 0) {
+                clearInterval(interval);
+                setGameState('playing');
+              }
+            }, 1000);
+          }
+        }, 15000); // Wait 15 seconds
+
+        setIsLoading(false);
+      }
     } catch (err) {
-      setError('Failed to start matchmaking. Please try again.');
-      setGameState('setup');
-      setIsLoading(false);
+      console.error('Matchmaking error:', err);
+      setError('Failed to start matchmaking. Falling back to AI opponent...');
+      
+      // Fallback to AI immediately on error
+      setTimeout(() => {
+        const questions = getRandomQuestions(selectedSubject, 5);
+        const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
+        
+        const match: Match = {
+          id: 'local-' + Date.now(),
+          player1_id: 'current-user',
+          player1_name: name,
+          player1_avatar: avatar,
+          player1_score: 0,
+          player1_answers: [],
+          player2_id: 'ai-opponent',
+          player2_name: aiOpponent.name,
+          player2_avatar: aiOpponent.avatar,
+          player2_score: 0,
+          player2_answers: [],
+          status: 'active',
+          subject: selectedSubject,
+          questions: questions,
+          current_question: 0,
+          winner_id: null,
+          created_at: new Date().toISOString(),
+        };
+        
+        setCurrentMatch(match);
+        setError(null);
+        setGameState('countdown');
+        setIsLoading(false);
+        
+        let count = 3;
+        const interval = setInterval(() => {
+          count--;
+          setCountdown(count);
+          if (count <= 0) {
+            clearInterval(interval);
+            setGameState('playing');
+          }
+        }, 1000);
+      }, 2000);
     }
-  }, [name, avatar, selectedSubject]);
+  }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch]);
 
   const cancelMatchmaking = () => {
     setGameState('setup');
@@ -335,8 +548,11 @@ export default function Battle() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-white/80">Status</p>
-                    <p className="font-bold text-yellow-300">Beta</p>
+                    <p className="text-xs text-white/80">Mode</p>
+                    <div className="flex items-center gap-1">
+                      <Globe className="w-3 h-3 text-green-300" />
+                      <p className="font-bold text-green-300">Real-time</p>
+                    </div>
                   </div>
                 </div>
 
@@ -432,11 +648,12 @@ export default function Battle() {
 function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (p1: number, p2: number, answers: Match['player1_answers']) => void; onExit: () => void }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [playerScore, setPlayerScore] = useState(0);
-  const [opponentScore] = useState(0);
+  const [opponentScore, setOpponentScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(15);
   const [showResult, setShowResult] = useState(false);
   const [playerAnswers, setPlayerAnswers] = useState<Match['player1_answers']>([]);
+  const [opponentAnswered, setOpponentAnswered] = useState(false);
 
   const questions = match.questions;
   const currentQuestion = questions[currentQuestionIndex];
@@ -450,8 +667,21 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
     }
   }, [timeLeft, showResult]);
 
-  // TODO: Implement real-time opponent updates via WebSocket/Supabase Realtime
-  // This will sync opponent's score and answer status in real-time
+  // AI Opponent answering logic
+  useEffect(() => {
+    if (!showResult && selectedAnswer === null && match.player2_id === 'ai-opponent') {
+      // AI answers after 3-11 seconds with 65% accuracy
+      const aiResponseTime = 3000 + Math.random() * 8000;
+      const aiTimer = setTimeout(() => {
+        const isCorrect = Math.random() < 0.65; // 65% accuracy
+        const aiTimeLeft = Math.floor(Math.random() * 8) + 3; // 3-11 seconds remaining
+        const points = isCorrect ? 10 + aiTimeLeft : 0;
+        setOpponentScore(s => s + points);
+        setOpponentAnswered(true);
+      }, aiResponseTime);
+      return () => clearTimeout(aiTimer);
+    }
+  }, [currentQuestionIndex, showResult, selectedAnswer, match.player2_id]);
 
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null || showResult) return;
@@ -475,6 +705,7 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
         setSelectedAnswer(null);
         setShowResult(false);
         setTimeLeft(15);
+        setOpponentAnswered(false);
       } else {
         // Small delay to show final scores before completing
         setTimeout(() => {
@@ -523,7 +754,18 @@ function BattleGame({ match, onComplete, onExit }: { match: Match; onComplete: (
             <span className="text-2xl">{match.player2_avatar}</span>
             <p className="font-bold text-lg">{opponentScore}</p>
             <p className="text-xs text-white/80">{match.player2_name}</p>
-            <p className="text-xs text-white/60 mt-1">Waiting...</p>
+            {opponentAnswered && !showResult && (
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xs text-yellow-300 mt-1"
+              >
+                Answered!
+              </motion.p>
+            )}
+            {!opponentAnswered && !showResult && (
+              <p className="text-xs text-white/60 mt-1">Thinking...</p>
+            )}
           </div>
         </div>
       </div>
