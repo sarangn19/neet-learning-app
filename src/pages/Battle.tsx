@@ -38,7 +38,7 @@ const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: strin
 ];
 
 export default function Battle() {
-  const { name, avatar, coins, addCoins } = useUserStore();
+  const { name, avatar, coins, addCoins, isAuthenticated, id: userId } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
   const [selectedSubject, setSelectedSubject] = useState<Subject>('mixed');
@@ -110,9 +110,8 @@ export default function Battle() {
     setError(null);
 
     try {
-      // 1. Get current user from Supabase
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      // 1. Check if user is authenticated via store
+      if (!isAuthenticated || !userId) {
         setError('Please login to play multiplayer');
         setGameState('setup');
         setIsLoading(false);
@@ -139,7 +138,7 @@ export default function Battle() {
         const { error: updateError } = await supabase
           .from('battle_matches')
           .update({
-            player2_id: user.id,
+            player2_id: userId,
             player2_name: name,
             player2_avatar: avatar,
             status: 'active',
@@ -151,7 +150,7 @@ export default function Battle() {
 
         const fullMatch: Match = {
           ...match,
-          player2_id: user.id,
+          player2_id: userId,
           player2_name: name,
           player2_avatar: avatar,
           status: 'active',
@@ -177,7 +176,7 @@ export default function Battle() {
         const { data: newMatch, error: createError } = await supabase
           .from('battle_matches')
           .insert({
-            player1_id: user.id,
+            player1_id: userId,
             player1_name: name,
             player1_avatar: avatar,
             status: 'waiting',
@@ -257,7 +256,7 @@ export default function Battle() {
         
         const match: Match = {
           id: 'local-' + Date.now(),
-          player1_id: 'current-user',
+          player1_id: userId || 'current-user',
           player1_name: name,
           player1_avatar: avatar,
           player1_score: 0,
@@ -291,7 +290,7 @@ export default function Battle() {
         }, 1000);
       }, 2000);
     }
-  }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch]);
+  }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
 
   const cancelMatchmaking = () => {
     setGameState('setup');
