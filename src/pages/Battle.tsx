@@ -478,7 +478,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         className="mb-6"
       >
         <img 
-          src="/images/battle banner.svg" 
+          src="/images/battle%20banner.svg" 
           alt="1v1 Battle"
           className="w-full h-auto rounded-2xl"
         />
