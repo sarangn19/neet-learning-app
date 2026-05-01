@@ -471,17 +471,17 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         </button>
       )}
 
-      {/* Header */}
+      {/* Banner */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="mb-6"
       >
-        <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Swords className="w-8 h-8 text-white" />
-        </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">1v1 Battle</h1>
-        <p className="text-gray-500">Challenge other players in real-time quiz duels!</p>
+        <img 
+          src="/images/battle banner.svg" 
+          alt="1v1 Battle"
+          className="w-full h-auto rounded-2xl"
+        />
       </motion.div>
 
       {/* Tab Switcher */}
