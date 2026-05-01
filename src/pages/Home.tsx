@@ -261,7 +261,7 @@ export default function Home() {
           <div 
             className="absolute inset-0"
             style={{
-              backgroundImage: 'url(/ChatGPT Image May 1, 2026, 11_20_53 AM.png)',
+              backgroundImage: 'url(/images/battle.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center top'
             }}
