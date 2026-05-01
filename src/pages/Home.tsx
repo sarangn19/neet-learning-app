@@ -297,10 +297,6 @@ export default function Home() {
         transition={{ delay: 0.4 }}
         className="mb-6"
       >
-        <div className="mb-3">
-          <h3 className="font-bold text-gray-900">Magic Boxes</h3>
-        </div>
-        
         <div className="grid grid-cols-4 gap-3">
           {[0, 1, 2, 3].map((boxIndex) => {
             const isOpened = openedBoxes.includes(boxIndex);
