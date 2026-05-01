@@ -309,38 +309,28 @@ export default function Home() {
                 disabled={isOpened || !canOpen}
                 whileHover={canOpen ? { scale: 1.05 } : {}}
                 whileTap={canOpen ? { scale: 0.95 } : {}}
-                className={`relative aspect-square rounded-xl flex flex-col items-center justify-center transition-all ${
+                className={`relative aspect-square rounded-xl flex flex-col items-center justify-center transition-all bg-white border-2 border-gray-100 shadow-sm ${
                   isOpened 
-                    ? 'bg-gray-100 border-2 border-gray-200' 
+                    ? 'opacity-60 grayscale' 
                     : canOpen 
-                      ? 'bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-amber-300 shadow-lg cursor-pointer' 
-                      : 'bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-amber-300 shadow-lg'
+                      ? 'cursor-pointer' 
+                      : ''
                 }`}
               >
                 {isOpened ? (
-                  <>
-                    <img src="/images/opened-tin.png" alt="Opened" className="w-12 h-12 mb-1 object-contain" />
-                    <span className="text-[10px] text-gray-500 font-medium">Claimed</span>
-                  </>
+                  <img src="/images/opened-tin.png" alt="Opened" className="w-16 h-16 object-contain" />
                 ) : canOpen ? (
-                  <>
-                    <motion.img 
-                      src="/images/closed-tin.png" 
-                      alt="Gift Box"
-                      animate={{ rotate: [0, -10, 10, 0] }}
-                      transition={{ repeat: Infinity, duration: 2 }}
-                      className="w-12 h-12 mb-1 object-contain"
-                    />
-                    <span className="text-[10px] text-white font-medium">Tap to open!</span>
-                  </>
+                  <motion.img 
+                    src="/images/closed-tin.png" 
+                    alt="Gift Box"
+                    animate={{ rotate: [0, -10, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    className="w-16 h-16 object-contain"
+                  />
                 ) : (
-                  <img src="/images/closed-tin.png" alt="Locked" className="w-12 h-12 object-contain" />
+                  <img src="/images/closed-tin.png" alt="Locked" className="w-16 h-16 object-contain" />
                 )}
                 
-                {/* Box number */}
-                <span className="absolute top-1 left-2 text-[10px] font-bold text-white/80">
-                  #{boxIndex + 1}
-                </span>
               </motion.button>
             );
           })}
