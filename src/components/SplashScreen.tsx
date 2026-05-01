@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Atom, FlaskConical, Dna, Calculator } from 'lucide-react';
 
 interface SplashScreenProps {
   onComplete?: () => void;
@@ -38,38 +37,19 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-[9999] bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex flex-col items-center justify-center"
         >
-          {/* Animated Icons */}
-          <div className="relative mb-8">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="w-32 h-32 rounded-full border-4 border-white/20 border-t-white flex items-center justify-center"
-            >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <BookOpen className="w-12 h-12 text-white" />
-              </div>
-            </motion.div>
-
-            {/* Orbiting icons */}
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0"
-            >
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2">
-                <Atom className="w-6 h-6 text-white/80" />
-              </div>
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                <FlaskConical className="w-6 h-6 text-white/80" />
-              </div>
-              <div className="absolute top-1/2 -left-2 -translate-y-1/2">
-                <Dna className="w-6 h-6 text-white/80" />
-              </div>
-              <div className="absolute top-1/2 -right-2 -translate-y-1/2">
-                <Calculator className="w-6 h-6 text-white/80" />
-              </div>
-            </motion.div>
-          </div>
+          {/* EduCat Logo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8"
+          >
+            <img 
+              src="/educat%20logo.svg" 
+              alt="EduCat"
+              className="w-32 h-32 object-contain"
+            />
+          </motion.div>
 
           {/* Logo Text */}
           <motion.div
@@ -78,7 +58,7 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
             transition={{ delay: 0.3 }}
             className="text-center"
           >
-            <h1 className="text-4xl font-bold text-white mb-2">Science Learn</h1>
+            <h1 className="text-4xl font-bold text-white mb-2">EduCat</h1>
             <p className="text-white/80 text-lg">Master NEET with Interactive Learning</p>
           </motion.div>
 
