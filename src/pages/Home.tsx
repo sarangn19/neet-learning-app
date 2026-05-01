@@ -328,9 +328,9 @@ export default function Home() {
                       {isOpened ? (
                         <>
                           <img src="/images/opened-tin.png" alt="Opened" className="relative z-10 w-12 h-12 object-contain" />
-                          {/* Stars for opened */}
-                          <div className="absolute -top-1 -right-1 z-20 flex">
-                            <span className="text-[10px] text-yellow-400">⭐⭐</span>
+                          {/* Stars for opened - small in corner */}
+                          <div className="absolute top-1 right-1 z-20">
+                            <span className="text-[8px] text-yellow-400">⭐</span>
                           </div>
                         </>
                       ) : canOpen ? (
@@ -342,17 +342,17 @@ export default function Home() {
                           >
                             <img src="/images/closed-tin.png" alt="Mystery Box" className="w-12 h-12 object-contain" />
                           </motion.div>
-                          {/* Mystery ? Badge */}
-                          <div className="absolute -top-1 -right-1 z-20 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center border-2 border-yellow-500 shadow-lg">
-                            <span className="text-xs font-bold text-purple-900">?</span>
+                          {/* Mystery ? Badge - small in corner */}
+                          <div className="absolute top-1 right-1 z-20 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center border border-yellow-500 shadow-sm">
+                            <span className="text-[10px] font-bold text-purple-900">?</span>
                           </div>
                         </>
                       ) : (
                         <>
                           <img src="/images/closed-tin.png" alt="Locked" className="relative z-10 w-12 h-12 object-contain opacity-60 grayscale" />
-                          {/* Lock icon */}
+                          {/* Lock icon - small in corner */}
                           <div className="absolute top-1 right-1 z-20">
-                            <span className="text-[10px]">🔒</span>
+                            <span className="text-[8px]">🔒</span>
                           </div>
                         </>
                       )}
