@@ -475,12 +475,12 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-6"
+        className="-mx-4 -mt-4"
       >
         <img 
           src="/images/battle-banner.svg" 
           alt="1v1 Battle"
-          className="w-full h-auto rounded-2xl"
+          className="w-full h-auto"
         />
       </motion.div>
 
