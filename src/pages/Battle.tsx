@@ -398,7 +398,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
   // Render countdown screen
   if (gameState === 'countdown' && currentMatch) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center z-50">
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center z-50 rounded-2xl">
         <div className="text-center">
           <motion.div
             key={countdown}
@@ -429,33 +429,38 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
   // Render game screen
   if (gameState === 'playing' && currentMatch) {
     return (
-      <BattleGame
+      <div className="absolute inset-0 rounded-2xl overflow-hidden">
+        <BattleGame
         match={currentMatch}
         currentUserId={userId}
         onComplete={handleGameComplete}
         onExit={exitBattle}
       />
+      </div>
     );
   }
 
   // Render results screen
   if (gameState === 'finished' && currentMatch) {
     return (
-      <BattleResults
+      <div className="absolute inset-0 rounded-2xl overflow-hidden">
+        <BattleResults
         match={currentMatch}
         currentUserId={userId}
         onExit={exitBattle}
         onRematch={() => {
-          setGameState('searching');
-          startMatchmaking();
+          setGameState('setup');
+          setCurrentMatch(null);
+          setCountdown(3);
         }}
       />
+      </div>
     );
   }
 
   // Render lobby/setup
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 pb-24">
+    <div className="h-full overflow-y-auto px-4 py-6 pb-24 bg-white rounded-2xl">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -880,14 +885,14 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
   const subjectInfo = SUBJECTS.find(s => s.id === currentQuestion.subject);
 
   return (
-    <div className="fixed inset-0 bg-white flex flex-col z-50">
+    <div className="h-full w-full bg-white flex flex-col overflow-y-auto">
       {/* Header */}
       <div className={`bg-gradient-to-r ${
         currentQuestion.subject === 'physics' ? 'from-blue-600 to-blue-500' :
         currentQuestion.subject === 'chemistry' ? 'from-green-600 to-green-500' :
         currentQuestion.subject === 'biology' ? 'from-pink-600 to-pink-500' :
         'from-purple-600 to-pink-500'
-      } text-white p-4`}>
+      } text-white p-4 shrink-0`}>
         <div className="flex items-center justify-between">
           <button onClick={onExit} className="p-2 hover:bg-white/20 rounded-xl">
             <ArrowLeft className="w-6 h-6" />
@@ -1054,11 +1059,11 @@ function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Mat
   const coinsEarned = playerWon ? 50 : isDraw ? 25 : 10;
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center z-50 p-4">
+    <div className="h-full w-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center p-4 overflow-y-auto">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-white rounded-3xl p-8 max-w-sm w-full text-center"
+        className="bg-white rounded-3xl p-8 max-w-sm w-full text-center my-auto"
       >
         {/* Result Icon */}
         <motion.div
