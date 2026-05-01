@@ -162,6 +162,8 @@ export default function Home() {
 
         onStartRevision={() => setShowFlashcards(true)} 
 
+        disabled={showBattleModal}
+
       />
 
       {/* Header - Greeting & Cat Food */}

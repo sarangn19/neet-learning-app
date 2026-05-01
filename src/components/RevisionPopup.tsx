@@ -5,18 +5,21 @@ import { X, Clock, BookOpen } from 'lucide-react';
 interface RevisionPopupProps {
   onClose: () => void;
   onStartRevision: () => void;
+  disabled?: boolean;
 }
 
-export default function RevisionPopup({ onClose, onStartRevision }: RevisionPopupProps) {
+export default function RevisionPopup({ onClose, onStartRevision, disabled = false }: RevisionPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVisible(true);
+      if (!disabled) {
+        setIsVisible(true);
+      }
     }, 10000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [disabled]);
 
   const handleClose = () => {
     setIsVisible(false);
