@@ -297,43 +297,83 @@ export default function Home() {
         transition={{ delay: 0.4 }}
         className="mb-6"
       >
-        <div className="grid grid-cols-3 gap-3">
-          {[0, 1, 2].map((boxIndex) => {
-            const isOpened = openedBoxes.includes(boxIndex);
-            const canOpen = victoriesToday > openedBoxes.length && !isOpened;
-            
-            return (
-              <motion.button
-                key={boxIndex}
-                onClick={() => canOpen && handleOpenBox(boxIndex)}
-                disabled={isOpened || !canOpen}
-                whileHover={canOpen ? { scale: 1.05 } : {}}
-                whileTap={canOpen ? { scale: 0.95 } : {}}
-                className={`relative aspect-square rounded-xl flex flex-col items-center justify-center transition-all bg-white border-2 border-gray-100 shadow-sm ${
-                  isOpened 
-                    ? 'opacity-60 grayscale' 
-                    : canOpen 
-                      ? 'cursor-pointer' 
-                      : ''
-                }`}
-              >
-                {isOpened ? (
-                  <img src="/images/opened-tin.png" alt="Opened" className="w-16 h-16 object-contain" />
-                ) : canOpen ? (
-                  <motion.img 
-                    src="/images/closed-tin.png" 
-                    alt="Gift Box"
-                    animate={{ rotate: [0, -10, 10, 0] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                    className="w-16 h-16 object-contain"
-                  />
-                ) : (
-                  <img src="/images/closed-tin.png" alt="Locked" className="w-16 h-16 object-contain" />
-                )}
-                
-              </motion.button>
-            );
-          })}
+        {/* Clash Royale Style Magic Boxes */}
+        <div className="relative">
+          {/* Golden frame container */}
+          <div className="bg-gradient-to-b from-purple-600 via-purple-700 to-purple-800 rounded-2xl p-2 border-2 border-yellow-400 shadow-lg">
+            <div className="bg-gradient-to-b from-amber-400 to-yellow-500 rounded-xl p-2">
+              <div className="flex items-center justify-between gap-2">
+                {[0, 1, 2].map((boxIndex) => {
+                  const isOpened = openedBoxes.includes(boxIndex);
+                  const canOpen = victoriesToday > openedBoxes.length && !isOpened;
+                  
+                  return (
+                    <motion.button
+                      key={boxIndex}
+                      onClick={() => canOpen && handleOpenBox(boxIndex)}
+                      disabled={isOpened || !canOpen}
+                      whileHover={canOpen ? { scale: 1.05 } : {}}
+                      whileTap={canOpen ? { scale: 0.95 } : {}}
+                      className={`relative flex-1 aspect-square rounded-lg flex flex-col items-center justify-center transition-all bg-purple-900/90 border-2 ${
+                        isOpened 
+                          ? 'border-purple-400 opacity-70' 
+                          : canOpen 
+                            ? 'border-yellow-400 cursor-pointer shadow-[0_0_10px_rgba(255,215,0,0.5)]' 
+                            : 'border-purple-600'
+                      }`}
+                    >
+                      {/* Box background pattern */}
+                      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-800 to-purple-950" />
+                      
+                      {isOpened ? (
+                        <>
+                          <img src="/images/opened-tin.png" alt="Opened" className="relative z-10 w-12 h-12 object-contain" />
+                          {/* Stars for opened */}
+                          <div className="absolute -top-1 -right-1 z-20 flex">
+                            <span className="text-[10px] text-yellow-400">⭐⭐</span>
+                          </div>
+                        </>
+                      ) : canOpen ? (
+                        <>
+                          <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ repeat: Infinity, duration: 1.5 }}
+                            className="relative z-10"
+                          >
+                            <img src="/images/closed-tin.png" alt="Mystery Box" className="w-12 h-12 object-contain" />
+                          </motion.div>
+                          {/* Mystery ? Badge */}
+                          <div className="absolute -top-1 -right-1 z-20 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center border-2 border-yellow-500 shadow-lg">
+                            <span className="text-xs font-bold text-purple-900">?</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <img src="/images/closed-tin.png" alt="Locked" className="relative z-10 w-12 h-12 object-contain opacity-60 grayscale" />
+                          {/* Lock icon */}
+                          <div className="absolute top-1 right-1 z-20">
+                            <span className="text-[10px]">🔒</span>
+                          </div>
+                        </>
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          
+          {/* Triangle pointer at bottom */}
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
+            <div className="w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent border-t-purple-700" />
+          </div>
+          
+          {/* Notification badge */}
+          {victoriesToday > openedBoxes.length && (
+            <div className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 rounded-lg flex items-center justify-center border-2 border-white shadow-lg z-30">
+              <span className="text-sm font-bold text-white">{victoriesToday - openedBoxes.length}</span>
+            </div>
+          )}
         </div>
       </motion.div>
 
