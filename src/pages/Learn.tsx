@@ -62,10 +62,10 @@ export default function Learn() {
           >
             <Link
               to={`/chapter/${subject.id}/plus_one`}
-              className={`flex w-full aspect-[4/3] ${subject.color} rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start relative overflow-hidden border border-gray-100`}
+              className={`flex w-full aspect-[4/3] ${subject.color} rounded-2xl pt-4 pr-4 shadow-lg hover:shadow-xl transition-all relative overflow-hidden border border-gray-100`}
             >
-              <img src={subject.icon} alt={subject.name} className="w-10 h-10 absolute top-3 right-3 opacity-80 object-contain" />
-              <span className="text-gray-900 font-bold text-lg z-10">{subject.name}</span>
+              <span className="absolute top-4 right-4 text-gray-900 font-bold text-lg z-10">{subject.name}</span>
+              <img src={subject.icon} alt={subject.name} className="w-12 h-12 absolute bottom-0 left-0 object-contain" />
             </Link>
           </motion.div>
         ))}
