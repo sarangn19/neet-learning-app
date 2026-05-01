@@ -250,11 +250,11 @@ export default function Home() {
         className="mb-4"
       >
         {/* Small Clash Royale Style Magic Boxes */}
-        <div className="relative max-w-[200px] mx-auto">
+        <div className="relative max-w-[160px] mx-auto">
           {/* Golden frame container */}
-          <div className="bg-gradient-to-b from-purple-600 via-purple-700 to-purple-800 rounded-xl p-1.5 border-2 border-yellow-400 shadow-lg">
-            <div className="bg-gradient-to-b from-amber-400 to-yellow-500 rounded-lg p-1.5">
-              <div className="flex items-center justify-between gap-1">
+          <div className="bg-gradient-to-b from-purple-600 via-purple-700 to-purple-800 rounded-lg p-1 border-2 border-yellow-400 shadow-lg">
+            <div className="bg-gradient-to-b from-amber-400 to-yellow-500 rounded-md p-1">
+              <div className="flex items-center justify-between gap-0.5">
                 {[0, 1, 2].map((boxIndex) => {
                   const isOpened = openedBoxes.includes(boxIndex);
                   const canOpen = victoriesToday > openedBoxes.length && !isOpened;
@@ -279,7 +279,7 @@ export default function Home() {
                       
                       {isOpened ? (
                         <>
-                          <img src="/images/opened-tin.png" alt="Opened" className="relative z-10 w-8 h-8 object-contain" />
+                          <img src="/images/opened-tin.png" alt="Opened" className="relative z-10 w-6 h-6 object-contain" />
                           {/* Stars for opened - small in corner */}
                           <div className="absolute top-0.5 right-0.5 z-20">
                             <span className="text-[6px] text-yellow-400">⭐</span>
@@ -292,7 +292,7 @@ export default function Home() {
                             transition={{ repeat: Infinity, duration: 1.5 }}
                             className="relative z-10"
                           >
-                            <img src="/images/closed-tin.png" alt="Mystery Box" className="w-8 h-8 object-contain" />
+                            <img src="/images/closed-tin.png" alt="Mystery Box" className="w-6 h-6 object-contain" />
                           </motion.div>
                           {/* Mystery ? Badge - small in corner */}
                           <div className="absolute top-0.5 right-0.5 z-20 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center border border-yellow-500 shadow-sm">
@@ -301,7 +301,7 @@ export default function Home() {
                         </>
                       ) : (
                         <>
-                          <img src="/images/closed-tin.png" alt="Locked" className="relative z-10 w-8 h-8 object-contain opacity-60 grayscale" />
+                          <img src="/images/closed-tin.png" alt="Locked" className="relative z-10 w-6 h-6 object-contain opacity-60 grayscale" />
                           {/* Lock icon - small in corner */}
                           <div className="absolute top-0.5 right-0.5 z-20">
                             <span className="text-[6px]">🔒</span>
@@ -317,13 +317,13 @@ export default function Home() {
           
           {/* Triangle pointer at bottom */}
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-            <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-purple-700" />
+            <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-purple-700" />
           </div>
           
           {/* Notification badge */}
           {victoriesToday > openedBoxes.length && (
-            <div className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 rounded flex items-center justify-center border border-white shadow-lg z-30">
-              <span className="text-[10px] font-bold text-white">{victoriesToday - openedBoxes.length}</span>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded flex items-center justify-center border border-white shadow-lg z-30">
+              <span className="text-[8px] font-bold text-white">{victoriesToday - openedBoxes.length}</span>
             </div>
           )}
         </div>
