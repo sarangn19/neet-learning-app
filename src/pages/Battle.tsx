@@ -460,7 +460,17 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
   // Render lobby/setup
   return (
-    <div className="h-full overflow-y-auto px-4 py-6 pb-24 bg-white rounded-2xl">
+    <div className="h-full overflow-y-auto px-4 py-6 pb-24 bg-white rounded-2xl relative">
+      {/* Close Button */}
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
+        >
+          <X className="w-6 h-6 text-gray-500" />
+        </button>
+      )}
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
