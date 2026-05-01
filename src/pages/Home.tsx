@@ -580,11 +580,9 @@ export default function Home() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="w-full max-w-md max-h-[85vh] rounded-2xl bg-white overflow-hidden shadow-2xl"
+            className="w-full max-w-md h-[85vh] rounded-2xl bg-white overflow-hidden shadow-2xl relative"
           >
-            <div className="h-full overflow-y-auto">
-              <Battle onClose={() => setShowBattleModal(false)} />
-            </div>
+            <Battle onClose={() => setShowBattleModal(false)} />
           </motion.div>
         </div>
       )}
