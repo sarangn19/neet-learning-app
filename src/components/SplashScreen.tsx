@@ -45,7 +45,7 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
             className="mb-8"
           >
             <img 
-              src="/educat%20logo.svg" 
+              src="/images/educat-logo.svg" 
               alt="EduCat"
               className="w-32 h-32 object-contain"
             />
