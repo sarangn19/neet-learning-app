@@ -251,20 +251,25 @@ export default function Home() {
       >
         <div 
           onClick={() => setShowBattleModal(true)}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-4 text-white cursor-pointer hover:shadow-lg transition-shadow"
+          className="relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow h-32"
+          style={{
+            backgroundImage: 'url(/images/battle-bg.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                <Zap className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-base">1v1 Battle</h3>
-                <p className="text-white/80 text-xs">Challenge friends in real-time!</p>
-              </div>
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          
+          <div className="relative h-full flex items-center justify-between px-6">
+            {/* Left: Title */}
+            <div>
+              <h3 className="font-bold text-2xl text-white drop-shadow-lg">1v1 Battle</h3>
             </div>
-            <div className="bg-white/20 px-4 py-2 rounded-xl">
-              <span className="font-semibold text-sm">1v1 battle start</span>
+            
+            {/* Right: START Button */}
+            <div className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl px-8 py-4 rounded-2xl shadow-lg transition-colors">
+              START
             </div>
           </div>
         </div>
