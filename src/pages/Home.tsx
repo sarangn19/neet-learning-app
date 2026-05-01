@@ -251,25 +251,74 @@ export default function Home() {
       >
         <div 
           onClick={() => setShowBattleModal(true)}
-          className="relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow h-32"
+          className="relative rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
           style={{
-            backgroundImage: 'url(/images/battle-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            height: '106px',
+            background: '#FFFFFF'
           }}
         >
-          {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'url(/ChatGPT Image May 1, 2026, 11_20_53 AM.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top'
+            }}
+          />
           
-          <div className="relative h-full flex items-center justify-between px-6">
+          {/* Gradient Overlay - Right side */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(90deg, rgba(235, 122, 6, 0) 0%, #7C4B0C 100%)',
+              width: '431.39px',
+              height: '139.99px',
+              top: '-25.08px'
+            }}
+          />
+          
+          {/* Gradient Overlay - Left side (flipped) */}
+          <div 
+            className="absolute"
+            style={{
+              background: 'linear-gradient(90deg, rgba(235, 122, 6, 0) 0%, #7C4B0C 100%)',
+              transform: 'matrix(-1, 0, 0, 1, 0, 0)',
+              width: '135.19px',
+              height: '139.99px',
+              left: '-20px',
+              top: '-25.08px'
+            }}
+          />
+          
+          {/* Content */}
+          <div className="relative h-full flex items-center justify-between px-3">
             {/* Left: Title */}
             <div>
-              <h3 className="font-bold text-2xl text-white drop-shadow-lg">1v1 Battle</h3>
+              <h3 
+                className="font-bold text-base text-white"
+                style={{
+                  textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+                }}
+              >
+                1v1 Battle
+              </h3>
             </div>
             
             {/* Right: START Button */}
-            <div className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl px-8 py-4 rounded-2xl shadow-lg transition-colors">
-              START
+            <div 
+              className="flex items-center justify-center px-4 py-2 font-bold text-base text-white"
+              style={{
+                background: 'linear-gradient(180deg, #FF7F00 0%, #CB6908 100%)',
+                border: '1px solid #F98D0B',
+                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                borderRadius: '16px',
+                width: '118px',
+                height: '65px',
+                textShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+              }}
+            >
+              Start
             </div>
           </div>
         </div>
