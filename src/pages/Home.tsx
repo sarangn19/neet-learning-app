@@ -297,8 +297,8 @@ export default function Home() {
         transition={{ delay: 0.4 }}
         className="mb-6"
       >
-        <div className="grid grid-cols-4 gap-3">
-          {[0, 1, 2, 3].map((boxIndex) => {
+        <div className="grid grid-cols-3 gap-3">
+          {[0, 1, 2].map((boxIndex) => {
             const isOpened = openedBoxes.includes(boxIndex);
             const canOpen = victoriesToday > openedBoxes.length && !isOpened;
             
@@ -314,7 +314,7 @@ export default function Home() {
                     ? 'bg-gray-100 border-2 border-gray-200' 
                     : canOpen 
                       ? 'bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-amber-300 shadow-lg cursor-pointer' 
-                      : 'bg-gray-50 border-2 border-gray-200 opacity-60'
+                      : 'bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-amber-300 shadow-lg'
                 }`}
               >
                 {isOpened ? (
@@ -334,10 +334,7 @@ export default function Home() {
                     <span className="text-[10px] text-white font-medium">Tap to open!</span>
                   </>
                 ) : (
-                  <>
-                    <img src="/images/closed-tin.png" alt="Locked" className="w-12 h-12 mb-1 object-contain grayscale opacity-60" />
-                    <span className="text-[10px] text-gray-400 font-medium">Locked</span>
-                  </>
+                  <img src="/images/closed-tin.png" alt="Locked" className="w-12 h-12 object-contain" />
                 )}
                 
                 {/* Box number */}
