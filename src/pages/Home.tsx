@@ -233,7 +233,7 @@ export default function Home() {
         transition={{ delay: 0.2 }}
         className="my-6"
       >
-        <div className="w-full relative overflow-hidden rounded-2xl shadow-sm py-16 px-0 flex items-center justify-center bg-white">
+        <div className="w-full relative overflow-hidden rounded-2xl shadow-sm flex items-center justify-center bg-white">
           <img 
             src="/images/mascot.gif" 
             alt="Mascot"
