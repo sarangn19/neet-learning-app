@@ -251,24 +251,20 @@ export default function Home() {
       >
         <div 
           onClick={() => setShowBattleModal(true)}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-5 text-white cursor-pointer hover:shadow-lg transition-shadow"
+          className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-4 text-white cursor-pointer hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6" />
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <Zap className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-lg">1v1 Battle</h3>
-                <p className="text-white/80 text-sm">Challenge friends in real-time!</p>
+                <h3 className="font-bold text-base">1v1 Battle</h3>
+                <p className="text-white/80 text-xs">Challenge friends in real-time!</p>
               </div>
             </div>
-            <div className="text-right">
-              <div className="flex items-center gap-1 text-xs text-white/80">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span>Live</span>
-              </div>
-              <p className="text-xs text-white/60 mt-1">5 questions • Win coins</p>
+            <div className="bg-white/20 px-4 py-2 rounded-xl">
+              <span className="font-semibold text-sm">1v1 battle start</span>
             </div>
           </div>
         </div>
