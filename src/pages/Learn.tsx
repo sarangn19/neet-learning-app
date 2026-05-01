@@ -5,32 +5,25 @@ import { BookOpen } from 'lucide-react';
 export default function Learn() {
   const subjects = [
     {
-      id: 'maths',
-      name: 'Maths',
-      grade: 'plus_one',
-      gradient: 'from-pink-400 via-pink-500 to-purple-600',
-      icon: '📐',
-    },
-    {
       id: 'physics',
       name: 'Physics',
-      grade: 'plus_one',
-      gradient: 'from-orange-400 via-orange-500 to-amber-500',
-      icon: '⚡',
+      icon: '/images/physics-icon.png',
+      color: 'bg-white',
+      chapters: 10,
     },
     {
       id: 'chemistry',
       name: 'Chemistry',
-      grade: 'plus_one',
-      gradient: 'from-yellow-400 via-amber-500 to-orange-500',
-      icon: '🧪',
+      icon: '/images/chemistry-icon.png',
+      color: 'bg-white',
+      chapters: 8,
     },
     {
       id: 'biology',
       name: 'Biology',
-      grade: 'plus_one',
-      gradient: 'from-orange-400 via-red-400 to-red-500',
-      icon: '🧬',
+      icon: '/images/biology-icon.png',
+      color: 'bg-white',
+      chapters: 12,
     },
   ];
 
@@ -68,40 +61,14 @@ export default function Learn() {
             transition={{ delay: 0.1 * (index + 1) }}
           >
             <Link
-              to={`/chapter/${subject.id}/${subject.grade}`}
-              className={`flex w-full aspect-[4/3] bg-gradient-to-br ${subject.gradient} rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start relative overflow-hidden`}
+              to={`/chapter/${subject.id}/plus_one`}
+              className={`flex w-full aspect-[4/3] ${subject.color} rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all items-start justify-start relative overflow-hidden border border-gray-100`}
             >
-              <span className="text-3xl absolute top-3 right-3 opacity-30">{subject.icon}</span>
-              <span className="text-white font-bold text-lg z-10">{subject.name}</span>
+              <img src={subject.icon} alt={subject.name} className="w-10 h-10 absolute top-3 right-3 opacity-80 object-contain" />
+              <span className="text-gray-900 font-bold text-lg z-10">{subject.name}</span>
             </Link>
           </motion.div>
         ))}
-      </motion.div>
-
-      {/* Study Tips Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="px-4"
-      >
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h2 className="font-bold text-gray-900 mb-3">Study Tips</h2>
-          <ul className="space-y-2 text-sm text-gray-600">
-            <li className="flex items-start gap-2">
-              <span className="text-brand-blue">•</span>
-              Complete lessons in order for better understanding
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brand-blue">•</span>
-              Practice MCQs after each chapter
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-brand-blue">•</span>
-              Maintain your daily streak for rewards
-            </li>
-          </ul>
-        </div>
       </motion.div>
     </div>
   );
