@@ -478,7 +478,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         className="relative"
       >
         <img 
-          src="/images/battle-cats.png" 
+          src="/images/battle-banner.png" 
           alt="Battle Arena"
           className="w-full h-48 object-cover"
         />
