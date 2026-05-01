@@ -233,11 +233,11 @@ export default function Home() {
         transition={{ delay: 0.2 }}
         className="my-6"
       >
-        <div className="w-full aspect-[16/9] relative overflow-hidden rounded-2xl shadow-sm py-16 px-0">
+        <div className="w-full relative overflow-hidden rounded-2xl shadow-sm py-16 px-0 flex items-center justify-center bg-white">
           <img 
             src="/images/mascot.gif" 
             alt="Mascot"
-            className="w-full h-full object-cover"
+            className="max-w-full h-auto object-contain"
           />
         </div>
       </motion.div>
