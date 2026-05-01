@@ -242,11 +242,98 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Battle Card */}
+      {/* Magic Boxes - Small and above battle */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
+        className="mb-4"
+      >
+        {/* Small Clash Royale Style Magic Boxes */}
+        <div className="relative max-w-[200px] mx-auto">
+          {/* Golden frame container */}
+          <div className="bg-gradient-to-b from-purple-600 via-purple-700 to-purple-800 rounded-xl p-1.5 border-2 border-yellow-400 shadow-lg">
+            <div className="bg-gradient-to-b from-amber-400 to-yellow-500 rounded-lg p-1.5">
+              <div className="flex items-center justify-between gap-1">
+                {[0, 1, 2].map((boxIndex) => {
+                  const isOpened = openedBoxes.includes(boxIndex);
+                  const canOpen = victoriesToday > openedBoxes.length && !isOpened;
+                  
+                  return (
+                    <motion.button
+                      key={boxIndex}
+                      onClick={() => canOpen && handleOpenBox(boxIndex)}
+                      disabled={isOpened || !canOpen}
+                      whileHover={canOpen ? { scale: 1.05 } : {}}
+                      whileTap={canOpen ? { scale: 0.95 } : {}}
+                      className={`relative flex-1 aspect-square rounded flex flex-col items-center justify-center transition-all bg-purple-900/90 border ${
+                        isOpened 
+                          ? 'border-purple-400 opacity-70' 
+                          : canOpen 
+                            ? 'border-yellow-400 cursor-pointer shadow-[0_0_10px_rgba(255,215,0,0.5)]' 
+                            : 'border-purple-600'
+                      }`}
+                    >
+                      {/* Box background pattern */}
+                      <div className="absolute inset-0 rounded bg-gradient-to-br from-purple-800 to-purple-950" />
+                      
+                      {isOpened ? (
+                        <>
+                          <img src="/images/opened-tin.png" alt="Opened" className="relative z-10 w-8 h-8 object-contain" />
+                          {/* Stars for opened - small in corner */}
+                          <div className="absolute top-0.5 right-0.5 z-20">
+                            <span className="text-[6px] text-yellow-400">⭐</span>
+                          </div>
+                        </>
+                      ) : canOpen ? (
+                        <>
+                          <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ repeat: Infinity, duration: 1.5 }}
+                            className="relative z-10"
+                          >
+                            <img src="/images/closed-tin.png" alt="Mystery Box" className="w-8 h-8 object-contain" />
+                          </motion.div>
+                          {/* Mystery ? Badge - small in corner */}
+                          <div className="absolute top-0.5 right-0.5 z-20 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center border border-yellow-500 shadow-sm">
+                            <span className="text-[8px] font-bold text-purple-900">?</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <img src="/images/closed-tin.png" alt="Locked" className="relative z-10 w-8 h-8 object-contain opacity-60 grayscale" />
+                          {/* Lock icon - small in corner */}
+                          <div className="absolute top-0.5 right-0.5 z-20">
+                            <span className="text-[6px]">🔒</span>
+                          </div>
+                        </>
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          
+          {/* Triangle pointer at bottom */}
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
+            <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-purple-700" />
+          </div>
+          
+          {/* Notification badge */}
+          {victoriesToday > openedBoxes.length && (
+            <div className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 rounded flex items-center justify-center border border-white shadow-lg z-30">
+              <span className="text-[10px] font-bold text-white">{victoriesToday - openedBoxes.length}</span>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Battle Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
         className="mb-6"
       >
         <div 
@@ -287,93 +374,6 @@ export default function Home() {
               Start
             </button>
           </div>
-        </div>
-      </motion.div>
-
-      {/* Magic Boxes */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mb-6"
-      >
-        {/* Clash Royale Style Magic Boxes */}
-        <div className="relative">
-          {/* Golden frame container */}
-          <div className="bg-gradient-to-b from-purple-600 via-purple-700 to-purple-800 rounded-2xl p-2 border-2 border-yellow-400 shadow-lg">
-            <div className="bg-gradient-to-b from-amber-400 to-yellow-500 rounded-xl p-2">
-              <div className="flex items-center justify-between gap-2">
-                {[0, 1, 2].map((boxIndex) => {
-                  const isOpened = openedBoxes.includes(boxIndex);
-                  const canOpen = victoriesToday > openedBoxes.length && !isOpened;
-                  
-                  return (
-                    <motion.button
-                      key={boxIndex}
-                      onClick={() => canOpen && handleOpenBox(boxIndex)}
-                      disabled={isOpened || !canOpen}
-                      whileHover={canOpen ? { scale: 1.05 } : {}}
-                      whileTap={canOpen ? { scale: 0.95 } : {}}
-                      className={`relative flex-1 aspect-square rounded-lg flex flex-col items-center justify-center transition-all bg-purple-900/90 border-2 ${
-                        isOpened 
-                          ? 'border-purple-400 opacity-70' 
-                          : canOpen 
-                            ? 'border-yellow-400 cursor-pointer shadow-[0_0_10px_rgba(255,215,0,0.5)]' 
-                            : 'border-purple-600'
-                      }`}
-                    >
-                      {/* Box background pattern */}
-                      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-800 to-purple-950" />
-                      
-                      {isOpened ? (
-                        <>
-                          <img src="/images/opened-tin.png" alt="Opened" className="relative z-10 w-12 h-12 object-contain" />
-                          {/* Stars for opened - small in corner */}
-                          <div className="absolute top-1 right-1 z-20">
-                            <span className="text-[8px] text-yellow-400">⭐</span>
-                          </div>
-                        </>
-                      ) : canOpen ? (
-                        <>
-                          <motion.div
-                            animate={{ scale: [1, 1.1, 1] }}
-                            transition={{ repeat: Infinity, duration: 1.5 }}
-                            className="relative z-10"
-                          >
-                            <img src="/images/closed-tin.png" alt="Mystery Box" className="w-12 h-12 object-contain" />
-                          </motion.div>
-                          {/* Mystery ? Badge - small in corner */}
-                          <div className="absolute top-1 right-1 z-20 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center border border-yellow-500 shadow-sm">
-                            <span className="text-[10px] font-bold text-purple-900">?</span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <img src="/images/closed-tin.png" alt="Locked" className="relative z-10 w-12 h-12 object-contain opacity-60 grayscale" />
-                          {/* Lock icon - small in corner */}
-                          <div className="absolute top-1 right-1 z-20">
-                            <span className="text-[8px]">🔒</span>
-                          </div>
-                        </>
-                      )}
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-          
-          {/* Triangle pointer at bottom */}
-          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
-            <div className="w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent border-t-purple-700" />
-          </div>
-          
-          {/* Notification badge */}
-          {victoriesToday > openedBoxes.length && (
-            <div className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 rounded-lg flex items-center justify-center border-2 border-white shadow-lg z-30">
-              <span className="text-sm font-bold text-white">{victoriesToday - openedBoxes.length}</span>
-            </div>
-          )}
         </div>
       </motion.div>
 
