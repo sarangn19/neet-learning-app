@@ -297,16 +297,8 @@ export default function Home() {
         transition={{ delay: 0.4 }}
         className="mb-6"
       >
-        <div className="flex items-center justify-between mb-3">
+        <div className="mb-3">
           <h3 className="font-bold text-gray-900">Magic Boxes</h3>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">
-              {victoriesToday - openedBoxes.length} keys available
-            </span>
-            <span className="text-xs text-purple-600 font-medium">
-              Resets at midnight
-            </span>
-          </div>
         </div>
         
         <div className="grid grid-cols-4 gap-3">
@@ -360,10 +352,6 @@ export default function Home() {
             );
           })}
         </div>
-        
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          Win battles to get keys. Each key opens one box!
-        </p>
       </motion.div>
 
       {/* Box Reward Modal */}
