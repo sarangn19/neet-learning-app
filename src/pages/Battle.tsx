@@ -460,28 +460,33 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
   // Render lobby/setup
   return (
-    <div className="h-full overflow-y-auto px-4 py-6 pb-24 bg-white rounded-2xl relative">
+    <div className="h-full overflow-y-auto bg-black rounded-2xl relative">
       {/* Close Button */}
       {onClose && (
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
+          className="absolute top-4 right-4 p-2 bg-black/50 rounded-full transition-colors z-50"
         >
-          <X className="w-6 h-6 text-gray-500" />
+          <X className="w-6 h-6 text-white" />
         </button>
       )}
 
-      {/* Banner */}
+      {/* Boxing Arena Banner */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="-mx-4 -mt-4"
+        className="relative"
       >
         <img 
-          src="/images/battle-banner.svg" 
-          alt="1v1 Battle"
-          className="w-full h-auto"
+          src="/images/battle-cats.png" 
+          alt="Battle Arena"
+          className="w-full h-48 object-cover"
         />
+        {/* Round Timer Overlay */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded-lg">
+          <p className="text-xs text-gray-400">ROUND 1</p>
+          <p className="text-xl font-bold text-yellow-400">02:00</p>
+        </div>
       </motion.div>
 
       {/* Tab Switcher */}
@@ -540,137 +545,80 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
 
-          {/* Live Players Card */}
-          <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl p-4 text-white">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                  <Users className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="font-bold text-lg">{activePlayers > 0 ? `${activePlayers} Players` : 'Loading...'}</p>
-                  <p className="text-white/80 text-xs">
-                    {activePlayers === 0 
-                      ? 'Connecting to server...' 
-                      : waitingMatches > 0 
-                        ? `${waitingMatches} waiting for match` 
-                        : 'No players waiting - AI opponent ready'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs text-white/80">Live</span>
-              </div>
-            </div>
+          {/* Players Info */}
+          <div className="px-4 py-3">
+            <p className="text-white font-semibold">{activePlayers > 0 ? `${activePlayers} Players` : '10 Players'}</p>
+            <p className="text-gray-400 text-sm">
+              {waitingMatches > 0 ? `${waitingMatches} waiting` : 'No players waiting'}
+            </p>
           </div>
 
           {/* Subject Selection */}
           {!isLoading && gameState === 'setup' && (
             <>
-              <div className="bg-white border-2 border-gray-100 rounded-2xl p-6">
-                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-purple-500" />
-                  Select Subject
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {SUBJECTS.map((subject) => (
-                    <button
-                      key={subject.id}
-                      onClick={() => setSelectedSubject(subject.id)}
-                      className={`p-4 rounded-xl border-2 transition-all ${
-                        selectedSubject === subject.id
-                          ? `border-purple-500 ${subject.bgColor}`
-                          : 'border-gray-100 hover:border-purple-200'
-                      }`}
-                    >
-                      <div className={`${subject.color} mb-2`}>{subject.icon}</div>
-                      <p className="font-semibold text-gray-900">{subject.name}</p>
-                    </button>
-                  ))}
-                </div>
+              {/* Subject Pills */}
+              <div className="px-4 flex flex-wrap gap-2">
+                {SUBJECTS.map((subject) => (
+                  <button
+                    key={subject.id}
+                    onClick={() => setSelectedSubject(subject.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      selectedSubject === subject.id
+                        ? 'bg-gray-700 text-white border border-gray-600'
+                        : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'
+                    }`}
+                  >
+                    {subject.name}
+                  </button>
+                ))}
               </div>
 
-              {/* Grade Selection */}
-              <div className="bg-white border-2 border-gray-100 rounded-2xl p-6">
-                <h3 className="font-bold text-gray-900 mb-4">Select Grade</h3>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setSelectedGrade('plus_one')}
-                    className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-all ${
-                      selectedGrade === 'plus_one'
-                        ? 'border-purple-500 bg-purple-50 text-purple-700'
-                        : 'border-gray-100 hover:border-purple-200'
-                    }`}
-                  >
-                    +1 (Class 11)
-                  </button>
-                  <button
-                    onClick={() => setSelectedGrade('plus_two')}
-                    className={`flex-1 py-3 rounded-xl border-2 font-semibold transition-all ${
-                      selectedGrade === 'plus_two'
-                        ? 'border-purple-500 bg-purple-50 text-purple-700'
-                        : 'border-gray-100 hover:border-purple-200'
-                    }`}
-                  >
-                    +2 (Class 12)
-                  </button>
-                </div>
-              </div>
             </>
           )}
 
-          {/* Matchmaking Card */}
-          <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
+          {/* Rewards Info */}
+          <div className="px-4 py-4">
+            <p className="text-gray-400 text-sm mb-3">Rewards</p>
+            <div className="flex justify-between text-sm">
+              <div className="text-center">
+                <p className="text-gray-500 mb-1">Win</p>
+                <p className="text-white font-semibold">50 coins</p>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-500 mb-1">Draw</p>
+                <p className="text-white font-semibold">25 coins</p>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-500 mb-1">Loss</p>
+                <p className="text-white font-semibold">10 coins</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Start Match Button */}
+          <div className="px-4 pb-8">
             {isLoading ? (
               <div className="text-center py-4">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 1 }}
-                  className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"
+                  className="w-8 h-8 border-4 border-purple-500/30 border-t-purple-500 rounded-full mx-auto mb-4"
                 />
-                <p className="font-semibold mb-2">Finding opponent...</p>
-                <p className="text-white/80 text-sm mb-4">
-                  Subject: {SUBJECTS.find(s => s.id === selectedSubject)?.name}
-                </p>
+                <p className="text-gray-400 mb-4">Finding opponent...</p>
                 <button
                   onClick={cancelMatchmaking}
-                  className="text-sm text-white/80 hover:text-white px-4 py-2 bg-white/20 rounded-xl"
+                  className="px-6 py-2 bg-gray-800 text-white rounded-lg text-sm"
                 >
                   Cancel
                 </button>
               </div>
             ) : (
-              <>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                      <Users className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold">Quick Match</h3>
-                      <p className="text-white/80 text-sm">5 questions • {SUBJECTS.find(s => s.id === selectedSubject)?.name}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs text-white/80">Mode</p>
-                    <div className="flex items-center gap-1">
-                      <Globe className="w-3 h-3 text-green-300" />
-                      <p className="font-bold text-green-300">Real-time</p>
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={startMatchmaking}
-                  className="w-full py-4 bg-white text-purple-600 rounded-xl font-bold hover:bg-white/90 transition-colors"
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <Zap className="w-5 h-5" />
-                    Start Matchmaking
-                  </div>
-                </button>
-              </>
+              <button
+                onClick={startMatchmaking}
+                className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-xl font-bold hover:opacity-90 transition-opacity"
+              >
+                Start Matchmaking
+              </button>
             )}
           </div>
 
@@ -681,19 +629,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </div>
           )}
 
-          {/* Rewards Info */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-              <Trophy className="w-4 h-4" />
-              Rewards
-            </h4>
-            <ul className="text-sm text-blue-700 space-y-1">
-              <li>• Win: +50 coins + XP</li>
-              <li>• Draw: +25 coins</li>
-              <li>• Loss: +10 coins</li>
-              <li>• 3-win streak: Bonus 100 coins</li>
-            </ul>
-          </div>
         </motion.div>
       )}
 
