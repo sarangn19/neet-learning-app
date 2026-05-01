@@ -319,23 +319,23 @@ export default function Home() {
               >
                 {isOpened ? (
                   <>
-                    <span className="text-2xl mb-1">✓</span>
-                    <span className="text-[10px] text-gray-500 font-medium">Opened</span>
+                    <img src="/images/opened-tin.png" alt="Opened" className="w-12 h-12 mb-1 object-contain" />
+                    <span className="text-[10px] text-gray-500 font-medium">Claimed</span>
                   </>
                 ) : canOpen ? (
                   <>
-                    <motion.span 
+                    <motion.img 
+                      src="/images/closed-tin.png" 
+                      alt="Gift Box"
                       animate={{ rotate: [0, -10, 10, 0] }}
                       transition={{ repeat: Infinity, duration: 2 }}
-                      className="text-3xl mb-1"
-                    >
-                      🎁
-                    </motion.span>
+                      className="w-12 h-12 mb-1 object-contain"
+                    />
                     <span className="text-[10px] text-white font-medium">Tap to open!</span>
                   </>
                 ) : (
                   <>
-                    <span className="text-2xl mb-1 grayscale">🔒</span>
+                    <img src="/images/closed-tin.png" alt="Locked" className="w-12 h-12 mb-1 object-contain grayscale opacity-60" />
                     <span className="text-[10px] text-gray-400 font-medium">Locked</span>
                   </>
                 )}
