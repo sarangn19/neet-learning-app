@@ -482,11 +482,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           alt="Battle Arena"
           className="w-full h-48 object-cover"
         />
-        {/* Round Timer Overlay */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded-lg">
-          <p className="text-xs text-gray-400">ROUND 1</p>
-          <p className="text-xl font-bold text-yellow-400">02:00</p>
-        </div>
       </motion.div>
 
       {/* Tab Switcher */}
@@ -525,26 +520,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           className="space-y-4"
         >
-          {/* Stats Card */}
-          <div className="bg-white border-2 border-purple-100 rounded-2xl p-6">
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-purple-600">{matchHistory.length}</p>
-                <p className="text-xs text-gray-500">Matches</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-green-600">
-                  {matchHistory.filter(m => m.player1_score > m.player2_score).length}
-                </p>
-                <p className="text-xs text-gray-500">Wins</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-amber-600">{coins}</p>
-                <p className="text-xs text-gray-500">Coins</p>
-              </div>
-            </div>
-          </div>
-
           {/* Players Info */}
           <div className="px-4 py-3">
             <p className="text-white font-semibold">{activePlayers > 0 ? `${activePlayers} Players` : '10 Players'}</p>
