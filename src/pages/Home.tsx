@@ -570,15 +570,15 @@ export default function Home() {
         </div>
       )}
 
-      {/* Battle Modal */}
+      {/* Battle Popup */}
       {showBattleModal && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center">
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
           <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="w-full h-[95vh] sm:h-[90vh] sm:max-w-lg sm:rounded-2xl bg-white overflow-hidden"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="w-full max-w-md max-h-[85vh] rounded-2xl bg-white overflow-hidden shadow-2xl"
           >
             <div className="h-full overflow-y-auto">
               <Battle onClose={() => setShowBattleModal(false)} />
