@@ -484,37 +484,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         />
       </motion.div>
 
-      {/* Tab Switcher */}
-      <div className="flex gap-2 mb-6">
-        <button
-          onClick={() => setActiveTab('find')}
-          className={`flex-1 py-3 rounded-xl font-semibold transition-colors ${
-            activeTab === 'find'
-              ? 'bg-purple-500 text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-          }`}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <Swords className="w-4 h-4" />
-            Find Match
-          </div>
-        </button>
-        <button
-          onClick={() => setActiveTab('history')}
-          className={`flex-1 py-3 rounded-xl font-semibold transition-colors ${
-            activeTab === 'history'
-              ? 'bg-purple-500 text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-          }`}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <Trophy className="w-4 h-4" />
-            History
-          </div>
-        </button>
-      </div>
-
-      {activeTab === 'find' && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -605,56 +574,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           )}
 
         </motion.div>
-      )}
-
-      {activeTab === 'history' && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-3"
-        >
-          {matchHistory.length === 0 ? (
-            <div className="text-center py-12">
-              <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">No battles yet</p>
-              <p className="text-sm text-gray-400">Start your first match!</p>
-            </div>
-          ) : (
-            matchHistory.map((match) => (
-              <div
-                key={match.id}
-                className="bg-white border-2 border-gray-100 rounded-xl p-4"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{match.player2_avatar}</span>
-                    <div>
-                      <p className="font-semibold text-gray-900">{match.player2_name}</p>
-                      <p className="text-xs text-gray-500">
-                        {SUBJECTS.find(s => s.id === match.subject)?.name}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className={`font-bold ${
-                      match.player1_score > match.player2_score
-                        ? 'text-green-600'
-                        : match.player1_score < match.player2_score
-                        ? 'text-red-600'
-                        : 'text-gray-600'
-                    }`}>
-                      {match.player1_score > match.player2_score ? 'Won' : match.player1_score < match.player2_score ? 'Lost' : 'Draw'}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {match.player1_score} - {match.player2_score}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-        </motion.div>
-      )}
     </div>
   );
 }
