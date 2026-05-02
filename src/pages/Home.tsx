@@ -105,6 +105,8 @@ export default function Home() {
 
         onStartRevision={() => setShowFlashcards(true)} 
 
+        onPracticeWeakArea={(subjectId) => navigate(`/mcqs/${subjectId}`)}
+
         disabled={false}
 
       />
