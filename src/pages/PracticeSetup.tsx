@@ -18,14 +18,29 @@ export default function PracticeSetup() {
   const [selectedChapters, setSelectedChapters] = useState<Set<string>>(new Set());
   const [questionCount, setQuestionCount] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState<string>(subjectId || 'physics');
+
+  const subjects = [
+    { id: 'physics', name: 'Physics', color: 'bg-blue-500' },
+    { id: 'chemistry', name: 'Chemistry', color: 'bg-emerald-500' },
+    { id: 'biology', name: 'Biology', color: 'bg-violet-500' },
+  ];
+
+  const handleSubjectChange = (subjectId: string) => {
+    setSelectedSubject(subjectId);
+    setSelectedChapters(new Set());
+  };
+
+  const handleSelectAll = () => {
+    const subjectChapters = allChapters
+      .filter(c => c.subjectId === selectedSubject)
+      .map(c => c.id);
+    setSelectedChapters(new Set(subjectChapters));
+  };
 
   const filteredChapters = useMemo(() => {
-    if (!searchQuery.trim()) return chapters;
-    return chapters.filter(c => 
-      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.subjectName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [chapters, searchQuery]);
+    return allChapters.filter(c => c.subjectId === selectedSubject);
+  }, [allChapters, selectedSubject]);
 
   const toggleChapter = (chapterId: string) => {
     const newSet = new Set(selectedChapters);
@@ -81,21 +96,45 @@ export default function PracticeSetup() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="bg-white rounded-3xl p-5 mb-4 shadow-lg border border-gray-200"
+        className="mb-6"
       >
-        <h2 className="font-bold text-gray-900 mb-3">Questions</h2>
-        <div className="flex flex-wrap gap-2">
-          {[5, 10, 15, 20, 25, 30].map((num) => (
+        <h2 className="text-lg font-medium text-gray-900 mb-3">Number of questions</h2>
+        <div className="flex flex-wrap gap-3">
+          {[5, 10, 15, 20, 30, 180].map((num) => (
             <button
               key={num}
               onClick={() => setQuestionCount(num)}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+              className={`w-12 h-12 flex items-center justify-center text-lg font-medium border transition-all ${
                 questionCount === num
-                  ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'border-gray-900 bg-gray-900 text-white'
+                  : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
               }`}
             >
               {num}
+            </button>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Subject Selector */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mb-6"
+      >
+        <div className="flex bg-gray-100 rounded-full p-1.5">
+          {subjects.map((subject) => (
+            <button
+              key={subject.id}
+              onClick={() => handleSubjectChange(subject.id)}
+              className={`flex-1 py-3 px-4 rounded-full text-sm font-medium transition-all ${
+                selectedSubject === subject.id
+                  ? `${subject.color} text-white shadow-md`
+                  : 'text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {subject.name}
             </button>
           ))}
         </div>
@@ -108,21 +147,17 @@ export default function PracticeSetup() {
         transition={{ delay: 0.2 }}
         className="bg-white rounded-3xl p-5 mb-4 shadow-lg border border-gray-200"
       >
-        <h2 className="font-bold text-gray-900 mb-3">Chapters</h2>
-        
-        {/* Search Bar */}
-        <div className="relative mb-3">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search chapters..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-xl text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-          />
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-bold text-gray-900">Chapters</h2>
+          <button
+            onClick={handleSelectAll}
+            className="text-sm text-amber-600 font-medium hover:text-amber-700"
+          >
+            Select All
+          </button>
         </div>
         
-        <div className="space-y-1.5">
+        <div className="space-y-2 max-h-80 overflow-y-auto">
           {filteredChapters.map((chapter) => {
             const isSelected = selectedChapters.has(chapter.id);
             return (
@@ -149,7 +184,7 @@ export default function PracticeSetup() {
           })}
         </div>
         {filteredChapters.length === 0 && (
-          <p className="text-center text-gray-500 py-3 text-sm">No chapters found</p>
+          <p className="text-center text-gray-500 py-3 text-sm">No chapters available for this subject</p>
         )}
       </motion.div>
 
