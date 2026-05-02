@@ -541,6 +541,30 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
 
+          {/* Magic Boxes - Victory Reward Boxes */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="px-4"
+          >
+            <p className="text-gray-400 text-sm mb-3">Win Battles to Open Boxes</p>
+            <div className="flex items-center justify-center p-3 bg-white/10 rounded-full border border-white/20">
+              {[0, 1, 2, 3].map((boxIndex) => (
+                <motion.div
+                  key={boxIndex}
+                  className="w-12 h-12 rounded-full border-2 border-amber-400/50 flex items-center justify-center bg-gray-800/50 mx-1"
+                >
+                  <img 
+                    src="/images/closed-tin.png" 
+                    alt="Reward Box" 
+                    className="w-8 h-8 object-contain"
+                  />
+                </motion.div>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs text-center mt-2">Win 4 battles to unlock all rewards</p>
+          </motion.div>
+
           {/* Start Match Button */}
           <div className="px-4 pb-8">
             {isLoading ? (
