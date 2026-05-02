@@ -71,14 +71,17 @@ export type ActivityType =
   | 'drag_drop'
   | 'sequence'
   | 'true_false'
-  | 'identify';
+  | 'identify'
+  | 'memory'
+  | 'word_scramble'
+  | 'puzzle';
 
 export interface Activity {
   id: string;
   type: ActivityType;
   question: string;
   tokenReward: number;
-  data: QuizData | FlashcardData | MatchData | FillBlankData | DragDropData | SequenceData | TrueFalseData | IdentifyData;
+  data: QuizData | FlashcardData | MatchData | FillBlankData | DragDropData | SequenceData | TrueFalseData | IdentifyData | MemoryData | WordScrambleData | PuzzleData;
 }
 
 export interface QuizData {
@@ -122,6 +125,20 @@ export interface IdentifyData {
   imageLabel?: string;
   parts: { id: string; name: string; x: number; y: number }[];
   options: string[];
+}
+
+export interface MemoryData {
+  pairs: { term: string; definition: string }[];
+}
+
+export interface WordScrambleData {
+  word: string;
+  scrambled: string;
+  hint?: string;
+}
+
+export interface PuzzleData {
+  pieces: { id: string; emoji: string; correctPos: number }[];
 }
 
 // Progress Types

@@ -26,6 +26,31 @@ const createFillBlank = (id: string, question: string, sentence: string, blanks:
   data: { sentence, blanks, options }
 });
 
+const createMemory = (id: string, question: string, pairs: {term: string, definition: string}[], xp = 15): Activity => ({
+  id, type: 'memory', question, tokenReward: xp,
+  data: { pairs }
+});
+
+const createWordScramble = (id: string, question: string, word: string, hint?: string, xp = 12): Activity => {
+  // Create scrambled version
+  const scrambled = word.split('').sort(() => Math.random() - 0.5).join('');
+  return {
+    id, type: 'word_scramble', question, tokenReward: xp,
+    data: { word, scrambled, hint }
+  };
+};
+
+const createPuzzle = (id: string, question: string, pieces: {emoji: string}[], xp = 15): Activity => ({
+  id, type: 'puzzle', question, tokenReward: xp,
+  data: { 
+    pieces: pieces.map((p, i) => ({ 
+      id: `piece-${i}`, 
+      emoji: p.emoji, 
+      correctPos: i 
+    }))
+  }
+});
+
 // ============ PHYSICS CURRICULUM ============
 const physicsPlusOneChapters: Chapter[] = [
   {

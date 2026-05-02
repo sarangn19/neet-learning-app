@@ -11,16 +11,14 @@ import type { Activity, Level, Badge } from '../types';
 
 
 // Activity Components
-
 import QuizActivity from '../components/activities/QuizActivity';
-
 import FlashcardActivity from '../components/activities/FlashcardActivity';
-
 import MatchActivity from '../components/activities/MatchActivity';
-
 import TrueFalseActivity from '../components/activities/TrueFalseActivity';
-
 import FillBlankActivity from '../components/activities/FillBlankActivity';
+import MemoryActivity from '../components/activities/MemoryActivity';
+import WordScrambleActivity from '../components/activities/WordScrambleActivity';
+import PuzzleActivity from '../components/activities/PuzzleActivity';
 
 
 
@@ -357,8 +355,16 @@ function ActivityRenderer({ activity, onComplete }: { activity: Activity; onComp
       return <TrueFalseActivity activity={activity} onComplete={onComplete} />;
 
     case 'fill_blank':
-
       return <FillBlankActivity activity={activity} onComplete={onComplete} />;
+
+    case 'memory':
+      return <MemoryActivity activity={activity} onComplete={onComplete} />;
+
+    case 'word_scramble':
+      return <WordScrambleActivity activity={activity} onComplete={onComplete} />;
+
+    case 'puzzle':
+      return <PuzzleActivity activity={activity} onComplete={onComplete} />;
 
     default:
 
