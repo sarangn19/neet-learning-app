@@ -13,8 +13,8 @@ export default function Profile() {
   };
 
   const stats = [
-    { icon: <Cat className="w-5 h-5" />, label: 'Cat Food', value: catFood, color: 'text-amber-600' },
-    { icon: <Flame className="w-5 h-5" />, label: 'Current Streak', value: streak, color: 'text-brand-orange' },
+    { icon: <Cat className="w-5 h-5" />, label: 'Cat Food', value: catFood, color: 'text-violet-600' },
+    { icon: <Flame className="w-5 h-5" />, label: 'Current Streak', value: streak, color: 'text-violet-500' },
     { icon: <Target className="w-5 h-5" />, label: 'Longest Streak', value: longestStreak, color: 'text-brand-red' },
     { icon: <Zap className="w-5 h-5" />, label: 'Lessons Completed', value: completedLessons.length, color: 'text-brand-blue' },
   ];

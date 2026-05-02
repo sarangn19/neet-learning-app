@@ -231,7 +231,7 @@ export default function Home() {
                 className="w-7 h-7 object-contain"
               />
             </div>
-            <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-amber-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-violet-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
               {catFood}
             </span>
           </div>
@@ -370,8 +370,8 @@ export default function Home() {
             
             <p className="text-gray-600 mb-4">You found:</p>
             
-            <div className="bg-amber-100 rounded-xl p-4 mb-6">
-              <span className="text-3xl font-bold text-amber-600">
+            <div className="bg-violet-100 rounded-xl p-4 mb-6">
+              <span className="text-3xl font-bold text-violet-600">
                 +{showBoxReward.coins} coins
               </span>
             </div>
@@ -467,12 +467,12 @@ export default function Home() {
             {/* Stats */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="bg-gray-50 rounded-xl p-3 text-center">
-                <Cat className="w-5 h-5 text-amber-600 mx-auto mb-1" />
+                <Cat className="w-5 h-5 text-violet-600 mx-auto mb-1" />
                 <p className="text-lg font-bold text-gray-900">{catFood}</p>
                 <p className="text-xs text-gray-500">Cat Food</p>
               </div>
               <div className="bg-gray-50 rounded-xl p-3 text-center">
-                <Flame className="w-5 h-5 text-orange-500 mx-auto mb-1" />
+                <Flame className="w-5 h-5 text-violet-500 mx-auto mb-1" />
                 <p className="text-lg font-bold text-gray-900">{streak}</p>
                 <p className="text-xs text-gray-500">Streak</p>
               </div>
@@ -541,7 +541,7 @@ export default function Home() {
                       <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
                         hasBadge(selectedBadge.id)
                           ? 'bg-green-100 text-green-700'
-                          : 'bg-amber-100 text-amber-700'
+                          : 'bg-violet-100 text-violet-700'
                       }`}>
                         {hasBadge(selectedBadge.id) ? (
                           <><span>✓</span> Unlocked!</>

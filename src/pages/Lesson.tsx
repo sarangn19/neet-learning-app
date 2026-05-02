@@ -432,13 +432,13 @@ function LessonComplete({ level, stars, score, onContinue, moduleCompleted }: { 
 
             transition={{ delay: 0.3 }}
 
-            className="bg-amber-100 rounded-2xl p-4 mb-6"
+            className="bg-violet-100 rounded-2xl p-4 mb-6"
 
           >
 
-            <p className="text-amber-600 font-bold text-sm mb-1">🎊 Module Completed!</p>
+            <p className="text-violet-600 font-bold text-sm mb-1">🎊 Module Completed!</p>
 
-            <p className="text-amber-700 text-lg font-bold">+3 Cat Food 🍗</p>
+            <p className="text-violet-700 text-lg font-bold">+3 Cat Food 🍗</p>
 
           </motion.div>
 

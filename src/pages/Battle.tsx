@@ -971,9 +971,9 @@ function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Mat
         </div>
 
         {/* Rewards */}
-        <div className="bg-yellow-50 rounded-xl p-4 mb-6">
+        <div className="bg-violet-50 rounded-xl p-4 mb-6">
           <p className="text-sm text-gray-600 mb-1">Coins Earned</p>
-          <p className="text-3xl font-bold text-yellow-600">+{coinsEarned}</p>
+          <p className="text-3xl font-bold text-violet-600">+{coinsEarned}</p>
         </div>
 
         {/* Buttons */}

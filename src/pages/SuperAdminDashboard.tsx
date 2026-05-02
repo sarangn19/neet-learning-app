@@ -440,7 +440,7 @@ export default function SuperAdminDashboard() {
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-3 pl-4 border-l border-white/20">
-                <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-bold">{user.name?.charAt(0).toUpperCase()}</span>
                 </div>
                 <span className="text-sm font-medium hidden sm:block">{user.name}</span>
@@ -524,7 +524,7 @@ export default function SuperAdminDashboard() {
                   value={`$${adminStore.stats?.totalRevenue?.toLocaleString() || '0'}`}
                   change=""
                   icon={<CreditCard className="w-6 h-6 text-white" />}
-                  color="bg-orange-500"
+                  color="bg-violet-500"
                 />
               </div>
 
@@ -635,7 +635,7 @@ export default function SuperAdminDashboard() {
                         <div className="flex items-center gap-4">
                           <span className={`text-sm ${
                             server.status === 'operational' ? 'text-green-600' :
-                            server.status === 'warning' ? 'text-yellow-600' : 'text-red-600'
+                            server.status === 'warning' ? 'text-violet-600' : 'text-red-600'
                           }`}>
                             {server.status === 'operational' ? 'Operational' : server.status}
                           </span>
