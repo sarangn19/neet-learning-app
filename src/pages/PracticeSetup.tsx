@@ -15,7 +15,7 @@ export default function PracticeSetup() {
     return allChapters.filter(c => c.subjectId === subjectId);
   }, [allChapters, subjectId]);
   
-  const [selectedChapters, setSelectedChapters] = useState<Set<string>>(new Set());
+  const [selectedChaptersBySubject, setSelectedChaptersBySubject] = useState<Record<string, Set<string>>>({});
   const [questionCount, setQuestionCount] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState<string>(subjectId || 'physics');
@@ -26,16 +26,22 @@ export default function PracticeSetup() {
     { id: 'biology', name: 'Biology', color: 'bg-violet-500' },
   ];
 
+  // Get selected chapters for current subject
+  const selectedChapters = selectedChaptersBySubject[selectedSubject] || new Set<string>();
+
   const handleSubjectChange = (subjectId: string) => {
     setSelectedSubject(subjectId);
-    setSelectedChapters(new Set());
+    // Don't clear - selections persist per subject
   };
 
   const handleSelectAll = () => {
     const subjectChapters = allChapters
       .filter(c => c.subjectId === selectedSubject)
       .map(c => c.id);
-    setSelectedChapters(new Set(subjectChapters));
+    setSelectedChaptersBySubject(prev => ({
+      ...prev,
+      [selectedSubject]: new Set(subjectChapters)
+    }));
   };
 
   const filteredChapters = useMemo(() => {
@@ -43,27 +49,42 @@ export default function PracticeSetup() {
   }, [allChapters, selectedSubject]);
 
   const toggleChapter = (chapterId: string) => {
-    const newSet = new Set(selectedChapters);
-    if (newSet.has(chapterId)) {
-      newSet.delete(chapterId);
-    } else {
-      newSet.add(chapterId);
-    }
-    setSelectedChapters(newSet);
+    setSelectedChaptersBySubject(prev => {
+      const currentSet = prev[selectedSubject] || new Set<string>();
+      const newSet = new Set(currentSet);
+      if (newSet.has(chapterId)) {
+        newSet.delete(chapterId);
+      } else {
+        newSet.add(chapterId);
+      }
+      return { ...prev, [selectedSubject]: newSet };
+    });
   };
 
   const maxQuestions = useMemo(() => {
-    return chapters
-      .filter(c => selectedChapters.has(c.id))
-      .reduce((sum, c) => sum + c.questionCount, 0);
-  }, [chapters, selectedChapters]);
+    // Sum across all subjects
+    let total = 0;
+    Object.entries(selectedChaptersBySubject).forEach(([subjId, chaptersSet]) => {
+      const subjectChapters = allChapters.filter(c => c.subjectId === subjId && chaptersSet.has(c.id));
+      total += subjectChapters.reduce((sum, c) => sum + c.questionCount, 0);
+    });
+    return total;
+  }, [allChapters, selectedChaptersBySubject]);
 
-  const canStart = selectedChapters.size > 0 && maxQuestions >= 5;
+  const totalSelectedChapters = useMemo(() => {
+    return Object.values(selectedChaptersBySubject).reduce((sum, set) => sum + set.size, 0);
+  }, [selectedChaptersBySubject]);
+
+  const canStart = totalSelectedChapters > 0 && maxQuestions >= 5;
 
   const handleStartPractice = () => {
     if (!canStart) return;
-    const chapterIds = Array.from(selectedChapters);
-    navigate(`/practice/session?chapters=${chapterIds.join(',')}&count=${questionCount}`);
+    // Collect all selected chapter IDs from all subjects
+    const allSelectedIds: string[] = [];
+    Object.entries(selectedChaptersBySubject).forEach(([subjId, chaptersSet]) => {
+      allSelectedIds.push(...Array.from(chaptersSet));
+    });
+    navigate(`/practice/session?chapters=${allSelectedIds.join(',')}&count=${questionCount}`);
   };
 
   return (
