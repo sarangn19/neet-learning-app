@@ -68,7 +68,6 @@ function App() {
             <Route path="practice/:subjectId" element={<PracticeSetup />} />
             <Route path="chapter/:subjectId/:grade" element={<ChapterList />} />
             <Route path="chapter/:subjectId/:grade/:chapterId" element={<ChapterView />} />
-            <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
             <Route path="lesson/:levelId" element={<Lesson />} />
             <Route path="profile" element={<Profile />} />
             <Route path="performance" element={<Performance />} />
@@ -77,6 +76,12 @@ function App() {
           <Route path="/practice/session" element={
             <ProtectedRoute>
               <PracticeSession />
+            </ProtectedRoute>
+          } />
+          {/* Module View - Outside Layout (no nav bar) */}
+          <Route path="/module/:subjectId/:grade/:chapterId/:moduleId" element={
+            <ProtectedRoute>
+              <ModuleView />
             </ProtectedRoute>
           } />
           {/* Auth Routes - Outside Layout */}
