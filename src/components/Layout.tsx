@@ -10,14 +10,14 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
       {/* Main Content */}
       <main className="flex-1 pb-24">
         <Outlet />
       </main>
 
       {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-4 left-4 right-4 bg-[#1A1A1A]/95 backdrop-blur-xl border border-white/10 rounded-2xl z-50 shadow-2xl">
+      <nav className="fixed bottom-4 left-4 right-4 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-2xl z-50 shadow-xl">
         <div className="flex items-center justify-around py-3">
           <NavItem to="/" icon={<Home className="w-5 h-5" />} label="Home" isActive={isActive('/')} />
           <NavItem to="/learn" icon={<BookOpen className="w-5 h-5" />} label="Learn" isActive={isActive('/learn')} />
@@ -34,13 +34,13 @@ function NavItem({ to, icon, label, isActive }: { to: string; icon: React.ReactN
     <Link 
       to={to}
       className={`flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-all ${
-        isActive ? 'bg-amber-500/20' : 'hover:bg-white/5'
+        isActive ? 'bg-amber-100' : 'hover:bg-gray-100'
       }`}
     >
-      <div className={`${isActive ? 'text-amber-400' : 'text-gray-500'}`}>
+      <div className={`${isActive ? 'text-amber-600' : 'text-gray-500'}`}>
         {icon}
       </div>
-      <span className={`text-[10px] ${isActive ? 'text-amber-400 font-medium' : 'text-gray-500'}`}>
+      <span className={`text-[10px] ${isActive ? 'text-amber-600 font-medium' : 'text-gray-500'}`}>
         {label}
       </span>
     </Link>

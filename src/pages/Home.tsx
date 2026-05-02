@@ -186,7 +186,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setShowProfile(true)}
-            className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden border-2 border-white/10"
+            className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden border-2 border-white shadow-sm"
           >
             {avatar ? (
               <img src={avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
@@ -196,21 +196,21 @@ export default function Home() {
           </button>
 
           <div className="flex flex-col">
-            <p className="text-gray-400 text-sm font-normal leading-4">Hello</p>
-            <p className="text-white text-base font-semibold leading-5">{name}</p>
+            <p className="text-gray-500 text-sm font-normal leading-4">Hello</p>
+            <p className="text-gray-900 text-base font-semibold leading-5">{name}</p>
           </div>
         </div>
 
         {/* Right: Search Icon & Cat Food */}
         <div className="flex items-center gap-3">
           {/* Search Icon */}
-          <button className="w-11 h-11 rounded-full bg-[#1A1A1A] border border-white/10 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
-            <Search className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
+          <button className="w-11 h-11 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer shadow-sm">
+            <Search className="w-5 h-5 text-gray-500" strokeWidth={1.5} />
           </button>
 
           {/* Cat Food Icon */}
           <div className="relative cursor-pointer hover:scale-105 transition-transform">
-            <div className="w-11 h-11 rounded-full bg-[#1A1A1A] border border-white/10 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
               <img 
                 src="/images/catfood.svg" 
                 alt="Cat Food"
@@ -233,9 +233,9 @@ export default function Home() {
         transition={{ delay: 0.2 }}
         className="my-6"
       >
-        <div className="w-full relative overflow-hidden rounded-3xl shadow-xl flex items-center justify-center bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-white/5">
+        <div className="w-full relative overflow-hidden rounded-3xl shadow-xl flex items-center justify-center bg-white border border-gray-100">
           {/* NEW Badge */}
-          <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+          <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
             NEW
           </div>
           <img 
@@ -246,7 +246,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Magic Boxes - Dark pill design with NEW badge */}
+      {/* Magic Boxes - Light pill design with NEW badge */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -255,11 +255,11 @@ export default function Home() {
       >
         <div className="relative mx-auto w-fit">
           {/* NEW Badge */}
-          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 shadow-lg">
             NEW
           </div>
           {/* Pill container */}
-          <div className="flex flex-row items-center justify-center p-2 gap-2 bg-[#1A1A1A] border border-white/10 rounded-full shadow-lg">
+          <div className="flex flex-row items-center justify-center p-2 gap-2 bg-white border border-gray-200 rounded-full shadow-lg">
             {[0, 1, 2, 3].map((boxIndex) => {
               const isOpened = openedBoxes.includes(boxIndex);
               
@@ -270,10 +270,10 @@ export default function Home() {
                   disabled={isOpened}
                   whileHover={!isOpened ? { scale: 1.05 } : {}}
                   whileTap={!isOpened ? { scale: 0.95 } : {}}
-                  className={`relative w-[41px] h-[41px] rounded-full border-2 border-amber-500/30 flex items-center justify-center transition-all bg-[#0A0A0A] overflow-hidden ${
+                  className={`relative w-[41px] h-[41px] rounded-full border-2 border-amber-200 flex items-center justify-center transition-all bg-gray-50 overflow-hidden ${
                     isOpened 
                       ? 'opacity-40 cursor-not-allowed' 
-                      : 'cursor-pointer shadow-sm hover:shadow-md hover:border-amber-500/50'
+                      : 'cursor-pointer shadow-sm hover:shadow-md hover:border-amber-300'
                   }`}
                 >
                   {isOpened ? (
@@ -302,10 +302,10 @@ export default function Home() {
       >
         <div 
           onClick={() => setShowBattleModal(true)}
-          className="relative rounded-3xl overflow-hidden cursor-pointer hover:shadow-2xl transition-all h-[120px] border border-white/10 group"
+          className="relative rounded-3xl overflow-hidden cursor-pointer hover:shadow-2xl transition-all h-[120px] border border-gray-200 shadow-lg group"
         >
           {/* NEW Badge */}
-          <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+          <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
             NEW
           </div>
           
@@ -341,11 +341,11 @@ export default function Home() {
 
       {/* Box Reward Modal */}
       {showBoxReward && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-[#1A1A1A] border border-white/10 rounded-3xl p-8 max-w-xs w-full text-center"
+            className="bg-white border border-gray-200 rounded-3xl p-8 max-w-xs w-full text-center shadow-2xl"
           >
             <motion.div
               initial={{ y: 20 }}
@@ -356,14 +356,14 @@ export default function Home() {
               <span className="text-6xl">🎉</span>
             </motion.div>
             
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
               Box #{showBoxReward.boxIndex + 1} Opened!
             </h3>
             
-            <p className="text-gray-400 mb-4">You found:</p>
+            <p className="text-gray-500 mb-4">You found:</p>
             
-            <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-2xl p-4 mb-6">
-              <span className="text-3xl font-bold text-amber-400 flex items-center justify-center gap-2">
+            <div className="bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-200 rounded-2xl p-4 mb-6">
+              <span className="text-3xl font-bold text-amber-600 flex items-center justify-center gap-2">
                 <img src="/images/coin.png" alt="" className="w-8 h-8" /> +{showBoxReward.coins}
               </span>
             </div>
@@ -380,20 +380,20 @@ export default function Home() {
 
       {/* Profile Modal */}
       {showProfile && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-[#1A1A1A] border border-white/10 rounded-3xl max-w-md w-full max-h-[80vh] overflow-y-auto p-6"
+            className="bg-white border border-gray-200 rounded-3xl max-w-md w-full max-h-[80vh] overflow-y-auto p-6 shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-white">Profile</h2>
+              <h2 className="text-lg font-bold text-gray-900">Profile</h2>
               <button 
                 onClick={() => setShowProfile(false)}
-                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-gray-400" />
+                <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
 
@@ -401,7 +401,7 @@ export default function Home() {
             <div className="text-center mb-6">
               <button
                 onClick={() => setShowAvatarPicker(true)}
-                className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl hover:opacity-80 transition-opacity cursor-pointer relative group overflow-hidden border-2 border-white/20"
+                className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl hover:opacity-80 transition-opacity cursor-pointer relative group overflow-hidden border-4 border-white shadow-lg"
               >
                 {avatar ? (
                   <img src={avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
@@ -412,8 +412,8 @@ export default function Home() {
                   <span className="text-white text-xs">Change</span>
                 </span>
               </button>
-              <h3 className="text-xl font-bold text-white">{name}</h3>
-              <p className="text-gray-400">Level {level} Learner</p>
+              <h3 className="text-xl font-bold text-gray-900">{name}</h3>
+              <p className="text-gray-500">Level {level} Learner</p>
             </div>
 
             {/* Avatar Picker */}
@@ -421,15 +421,15 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="mb-6 bg-[#0A0A0A] rounded-2xl p-4 border border-white/10"
+                className="mb-6 bg-gray-50 rounded-2xl p-4 border border-gray-200"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-white">Choose Avatar</h4>
+                  <h4 className="font-bold text-gray-900">Choose Avatar</h4>
                   <button
                     onClick={() => setShowAvatarPicker(false)}
-                    className="p-1 hover:bg-white/10 rounded-full"
+                    className="p-1 hover:bg-gray-200 rounded-full"
                   >
-                    <X className="w-4 h-4 text-gray-400" />
+                    <X className="w-4 h-4 text-gray-500" />
                   </button>
                 </div>
                 <div className="grid grid-cols-5 gap-2">

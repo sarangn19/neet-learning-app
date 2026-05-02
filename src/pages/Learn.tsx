@@ -8,8 +8,8 @@ export default function Learn() {
       id: 'physics',
       name: 'Physics',
       icon: '/images/physics-icon.png',
-      bgColor: 'bg-gradient-to-br from-blue-500/20 to-blue-600/20',
-      borderColor: 'border-blue-500/30',
+      bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100',
+      borderColor: 'border-blue-200',
       chapters: 10,
       isNew: true,
     },
@@ -17,8 +17,8 @@ export default function Learn() {
       id: 'chemistry',
       name: 'Chemistry',
       icon: '/images/chemistry-icon.png',
-      bgColor: 'bg-gradient-to-br from-emerald-500/20 to-emerald-600/20',
-      borderColor: 'border-emerald-500/30',
+      bgColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100',
+      borderColor: 'border-emerald-200',
       chapters: 8,
       isNew: false,
     },
@@ -26,15 +26,15 @@ export default function Learn() {
       id: 'biology',
       name: 'Biology',
       icon: '/images/biology-icon.png',
-      bgColor: 'bg-gradient-to-br from-violet-500/20 to-violet-600/20',
-      borderColor: 'border-violet-500/30',
+      bgColor: 'bg-gradient-to-br from-violet-50 to-violet-100',
+      borderColor: 'border-violet-200',
       chapters: 12,
       isNew: true,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24">
+    <div className="min-h-screen bg-[#F8FAFC] pb-24">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -42,12 +42,12 @@ export default function Learn() {
         className="px-4 py-6"
       >
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-2xl flex items-center justify-center border border-amber-500/30">
-            <BookOpen className="w-6 h-6 text-amber-400" />
+          <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center border border-amber-200">
+            <BookOpen className="w-6 h-6 text-amber-600" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white">Learn</h1>
-            <p className="text-gray-400 text-sm">Choose a subject to start learning</p>
+            <h1 className="text-xl font-bold text-gray-900">Learn</h1>
+            <p className="text-gray-500 text-sm">Choose a subject to start learning</p>
           </div>
         </div>
       </motion.div>
@@ -69,7 +69,7 @@ export default function Learn() {
           >
             {/* NEW Badge */}
             {subject.isNew && (
-              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
                 NEW
               </div>
             )}
@@ -78,8 +78,8 @@ export default function Learn() {
               className={`flex flex-col items-center justify-center w-full h-36 ${subject.bgColor} ${subject.borderColor} rounded-3xl shadow-lg hover:shadow-xl transition-all border group hover:scale-[1.02]`}
             >
               <img src={subject.icon} alt={subject.name} className="w-16 h-16 object-contain mb-3 group-hover:scale-110 transition-transform" />
-              <span className="text-white font-semibold text-lg">{subject.name}</span>
-              <span className="text-gray-400 text-sm mt-1">{subject.chapters} chapters</span>
+              <span className="text-gray-900 font-semibold text-lg">{subject.name}</span>
+              <span className="text-gray-500 text-sm mt-1">{subject.chapters} chapters</span>
             </Link>
           </motion.div>
         ))}
