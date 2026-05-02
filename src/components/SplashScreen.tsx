@@ -65,7 +65,7 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
             <img
               src="/images/cognix logo.png"
               alt="Cognix"
-              className="h-6 object-contain opacity-80"
+              className="h-10 object-contain opacity-80"
             />
           </motion.div>
         </motion.div>

@@ -178,24 +178,23 @@ export default function Shop() {
         <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
           <User className="w-5 h-5 text-amber-600" /> Profile Pictures
         </h2>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 w-full">
           {AVATAR_SHOP_ITEMS.map((avatar) => {
             const owned = purchasedAvatars.includes(avatar.image);
             return (
               <motion.div
                 key={avatar.id}
                 whileTap={owned ? {} : { scale: 0.95 }}
-                className={`bg-white border rounded-xl p-2 text-center transition-all flex flex-col items-center gap-1 ${
+                className={`bg-white border rounded-xl p-2 text-center transition-all flex flex-col items-center gap-1 w-full min-w-0 ${
                   owned 
                     ? 'border-green-200 bg-green-50' 
                     : 'border-black/20 hover:border-amber-300'
                 }`}
-                style={{ width: '132px' }}
               >
-                <div className="w-[116px] h-[116px] rounded-xl overflow-hidden bg-gray-100">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-gray-100">
                   <img src={avatar.image} alt={avatar.name} className="w-full h-full object-cover" />
                 </div>
-                <p className="text-xs font-bold text-black w-[116px] text-center leading-4 h-4">{avatar.name}</p>
+                <p className="text-xs font-bold text-black w-full text-center leading-4 truncate px-1">{avatar.name}</p>
                 <motion.button
                   onClick={() => {
                     if (owned) return;
@@ -213,7 +212,7 @@ export default function Shop() {
                   }}
                   disabled={owned}
                   whileTap={owned ? {} : { scale: 0.95 }}
-                  className={`w-[116px] h-[35px] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 px-4 py-1 ${
+                  className={`w-full h-[35px] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 px-2 ${
                     owned
                       ? 'bg-green-100 text-green-700 cursor-default border border-green-200'
                       : purchasedId === avatar.id
