@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Cat, Coins, Sparkles, Palette, Zap, Crown, Check, User } from 'lucide-react';
+import { Cat, Coins, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { useState } from 'react';
 
@@ -29,6 +29,7 @@ const AVATAR_SHOP_ITEMS = [
 export default function Shop() {
   const { catFood, coins, spendCoins, purchaseAvatar, purchasedAvatars } = useUserStore();
   const [purchasedId, setPurchasedId] = useState<string | null>(null);
+  const [showHowToEarn, setShowHowToEarn] = useState(false);
 
   // Demo items that users can buy with coins
   const [items, setItems] = useState<ShopItem[]>([
@@ -125,21 +126,41 @@ export default function Shop() {
         </div>
       </motion.div>
 
-      {/* How to Earn */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6"
-      >
-        <h3 className="font-bold text-blue-900 mb-2">How to Earn</h3>
-        <ul className="text-sm text-blue-700 space-y-1">
-          <li>• Complete a lesson: +10 coins</li>
-          <li>• Complete a module: +1 cat food & +50 coins</li>
-          <li>• Daily streak: +5 coins per day</li>
-          <li>• Perfect score: +20 bonus coins</li>
-        </ul>
-      </motion.div>
+      {/* How to Earn - Expandable */}
+      <div className="mb-6">
+        <button
+          onClick={() => setShowHowToEarn(!showHowToEarn)}
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          <Info className="w-4 h-4" />
+          <span>How to Earn</span>
+          <motion.div
+            animate={{ rotate: showHowToEarn ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ChevronUp className="w-4 h-4" />
+          </motion.div>
+        </button>
+        
+        <motion.div
+          initial={false}
+          animate={{ 
+            height: showHowToEarn ? 'auto' : 0,
+            opacity: showHowToEarn ? 1 : 0
+          }}
+          transition={{ duration: 0.2 }}
+          className="overflow-hidden"
+        >
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-2">
+            <ul className="text-sm text-blue-700 space-y-1">
+              <li>• Complete a lesson: +10 coins</li>
+              <li>• Complete a module: +1 cat food & +50 coins</li>
+              <li>• Daily streak: +5 coins per day</li>
+              <li>• Perfect score: +20 bonus coins</li>
+            </ul>
+          </div>
+        </motion.div>
+      </div>
 
       {/* Avatar Shop */}
       <motion.div
