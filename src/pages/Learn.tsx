@@ -1,32 +1,33 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+import { Atom, FlaskConical, Dna } from 'lucide-react';
 
 export default function Learn() {
   const subjects = [
     {
       id: 'physics',
       name: 'Physics',
-      bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100',
-      borderColor: 'border-blue-200',
-      accentColor: 'bg-blue-500',
       chapters: 10,
+      gradient: 'from-blue-500 via-blue-600 to-indigo-600',
+      icon: <Atom className="w-24 h-24 text-white/20" />,
+      iconColor: 'text-white/30',
     },
     {
       id: 'chemistry',
       name: 'Chemistry',
-      bgColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100',
-      borderColor: 'border-emerald-200',
-      accentColor: 'bg-emerald-500',
       chapters: 8,
+      gradient: 'from-emerald-500 via-emerald-600 to-teal-600',
+      icon: <FlaskConical className="w-24 h-24 text-white/20" />,
+      iconColor: 'text-white/30',
     },
     {
       id: 'biology',
       name: 'Biology',
-      bgColor: 'bg-gradient-to-br from-violet-50 to-violet-100',
-      borderColor: 'border-violet-200',
-      accentColor: 'bg-violet-500',
       chapters: 12,
+      gradient: 'from-violet-500 via-violet-600 to-purple-600',
+      icon: <Dna className="w-24 h-24 text-white/20" />,
+      iconColor: 'text-white/30',
     },
   ];
 
@@ -65,14 +66,18 @@ export default function Learn() {
           >
             <Link
               to={`/chapter/${subject.id}/plus_one`}
-              className={`flex items-center justify-between w-full p-5 ${subject.bgColor} ${subject.borderColor} rounded-3xl shadow-lg hover:shadow-xl transition-all border group hover:scale-[1.02]`}
+              className={`relative flex items-center w-full h-28 overflow-hidden rounded-2xl bg-gradient-to-r ${subject.gradient} shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]`}
             >
-              <div className="flex flex-col">
-                <span className="text-gray-900 font-bold text-xl mb-1">{subject.name}</span>
-                <span className="text-gray-500 text-sm">{subject.chapters} chapters</span>
+              {/* Content */}
+              <div className="relative z-10 flex flex-col px-6 py-4">
+                <span className="text-white font-bold text-2xl">{subject.name}</span>
+                <span className="text-white/70 text-sm mt-1">{subject.chapters} chapters</span>
+                <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
               </div>
-              <div className={`w-10 h-10 ${subject.accentColor} rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
-                <ArrowRight className="w-5 h-5 text-white" />
+              
+              {/* Icon silhouette on right */}
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
+                {subject.icon}
               </div>
             </Link>
           </motion.div>
