@@ -52,7 +52,7 @@ export default function Learn() {
         </div>
       </motion.div>
 
-      {/* Subject Cards - Single Column with NEW badges */}
+      {/* Subject Cards - Single Column */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,14 +65,7 @@ export default function Learn() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 * (index + 1) }}
-            className="relative"
           >
-            {/* NEW Badge */}
-            {subject.isNew && (
-              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
-                NEW
-              </div>
-            )}
             <Link
               to={`/chapter/${subject.id}/plus_one`}
               className={`flex flex-col items-center justify-center w-full h-36 ${subject.bgColor} ${subject.borderColor} rounded-3xl shadow-lg hover:shadow-xl transition-all border group hover:scale-[1.02]`}

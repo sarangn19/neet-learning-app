@@ -226,7 +226,7 @@ export default function Home() {
 
 
 
-      {/* Mascot - Cat GIF with NEW badge */}
+      {/* Mascot - Cat GIF */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -234,10 +234,6 @@ export default function Home() {
         className="my-6"
       >
         <div className="w-full relative overflow-hidden rounded-3xl shadow-xl flex items-center justify-center bg-white border border-gray-100">
-          {/* NEW Badge */}
-          <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
-            NEW
-          </div>
           <img 
             src="/images/mascot.gif" 
             alt="Mascot"
@@ -246,7 +242,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Magic Boxes - Light pill design with NEW badge */}
+      {/* Magic Boxes - Light pill design */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -254,10 +250,6 @@ export default function Home() {
         className="mb-4"
       >
         <div className="relative mx-auto w-fit">
-          {/* NEW Badge */}
-          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 shadow-lg">
-            NEW
-          </div>
           {/* Pill container */}
           <div className="flex flex-row items-center justify-center p-2 gap-2 bg-white border border-gray-200 rounded-full shadow-lg">
             {[0, 1, 2, 3].map((boxIndex) => {
@@ -293,7 +285,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Battle Card with NEW badge */}
+      {/* Battle Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -304,11 +296,6 @@ export default function Home() {
           onClick={() => setShowBattleModal(true)}
           className="relative rounded-3xl overflow-hidden cursor-pointer hover:shadow-2xl transition-all h-[120px] border border-gray-200 shadow-lg group"
         >
-          {/* NEW Badge */}
-          <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
-            NEW
-          </div>
-          
           {/* Background Image */}
           <img 
             src="/images/battle.png" 

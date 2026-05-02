@@ -173,25 +173,18 @@ export default function Shop() {
           <User className="w-5 h-5 text-amber-600" /> Profile Pictures
         </h2>
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
-          {AVATAR_SHOP_ITEMS.map((avatar, index) => {
+          {AVATAR_SHOP_ITEMS.map((avatar) => {
             const owned = purchasedAvatars.includes(avatar.image);
-            const isNew = index >= 6; // Last 3 avatars are new
             return (
               <motion.div
                 key={avatar.id}
                 whileTap={owned ? {} : { scale: 0.95 }}
-                className={`bg-white border rounded-2xl p-3 text-center transition-all relative shadow-sm ${
+                className={`bg-white border rounded-2xl p-3 text-center transition-all shadow-sm ${
                   owned 
                     ? 'border-green-200 bg-green-50' 
                     : 'border-gray-200 hover:border-amber-300'
                 }`}
               >
-                {/* NEW Badge */}
-                {isNew && !owned && (
-                  <div className="absolute -top-2 -right-1 bg-red-500 text-white text-[8px] font-bold px-2 py-0.5 rounded-full z-10 shadow-lg">
-                    NEW
-                  </div>
-                )}
                 <div className="w-12 h-12 mx-auto mb-2 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
                   <img src={avatar.image} alt={avatar.name} className="w-full h-full object-cover" />
                 </div>
@@ -242,22 +235,16 @@ export default function Shop() {
       >
         <h2 className="text-lg font-bold text-gray-900 mb-4">Items</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <motion.div
               key={item.id}
               whileTap={{ scale: 0.98 }}
-              className={`bg-white border rounded-2xl p-4 transition-all relative shadow-sm ${
+              className={`bg-white border rounded-2xl p-4 transition-all shadow-sm ${
                 item.owned 
                   ? 'border-green-200 bg-green-50' 
                   : 'border-gray-200 hover:border-amber-300'
               }`}
             >
-              {/* NEW Badge */}
-              {index === 0 && (
-                <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 shadow-lg">
-                  NEW
-                </div>
-              )}
               <div className="flex items-start gap-3">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${item.color}`}>
                   {item.owned ? <Check className="w-6 h-6 text-green-600" /> : item.icon}
