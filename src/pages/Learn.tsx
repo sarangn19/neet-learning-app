@@ -1,35 +1,32 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, ArrowRight } from 'lucide-react';
 
 export default function Learn() {
   const subjects = [
     {
       id: 'physics',
       name: 'Physics',
-      icon: '/images/physics-icon.png',
       bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100',
       borderColor: 'border-blue-200',
+      accentColor: 'bg-blue-500',
       chapters: 10,
-      isNew: true,
     },
     {
       id: 'chemistry',
       name: 'Chemistry',
-      icon: '/images/chemistry-icon.png',
       bgColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100',
       borderColor: 'border-emerald-200',
+      accentColor: 'bg-emerald-500',
       chapters: 8,
-      isNew: false,
     },
     {
       id: 'biology',
       name: 'Biology',
-      icon: '/images/biology-icon.png',
       bgColor: 'bg-gradient-to-br from-violet-50 to-violet-100',
       borderColor: 'border-violet-200',
+      accentColor: 'bg-violet-500',
       chapters: 12,
-      isNew: true,
     },
   ];
 
@@ -68,11 +65,15 @@ export default function Learn() {
           >
             <Link
               to={`/chapter/${subject.id}/plus_one`}
-              className={`flex flex-col items-center justify-center w-full h-36 ${subject.bgColor} ${subject.borderColor} rounded-3xl shadow-lg hover:shadow-xl transition-all border group hover:scale-[1.02]`}
+              className={`flex items-center justify-between w-full p-5 ${subject.bgColor} ${subject.borderColor} rounded-3xl shadow-lg hover:shadow-xl transition-all border group hover:scale-[1.02]`}
             >
-              <img src={subject.icon} alt={subject.name} className="w-16 h-16 object-contain mb-3 group-hover:scale-110 transition-transform" />
-              <span className="text-gray-900 font-semibold text-lg">{subject.name}</span>
-              <span className="text-gray-500 text-sm mt-1">{subject.chapters} chapters</span>
+              <div className="flex flex-col">
+                <span className="text-gray-900 font-bold text-xl mb-1">{subject.name}</span>
+                <span className="text-gray-500 text-sm">{subject.chapters} chapters</span>
+              </div>
+              <div className={`w-10 h-10 ${subject.accentColor} rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
+                <ArrowRight className="w-5 h-5 text-white" />
+              </div>
             </Link>
           </motion.div>
         ))}
