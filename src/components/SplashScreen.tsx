@@ -32,12 +32,11 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
           >
             <img
               src="/images/white logo.png"
               alt="EduCat"
-              className="w-32 h-32 object-contain"
+              className="w-48 h-48 object-contain"
             />
           </motion.div>
 
@@ -46,13 +45,12 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="relative"
+            className="absolute bottom-12"
           >
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-10 h-10 border-3 border-white/20 border-t-white rounded-full"
-              style={{ borderWidth: '3px' }}
+              className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full"
             />
           </motion.div>
         </motion.div>
