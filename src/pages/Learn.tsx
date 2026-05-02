@@ -46,12 +46,12 @@ export default function Learn() {
         </div>
       </motion.div>
 
-      {/* Subject Cards - 2x2 Grid */}
+      {/* Subject Cards - Single Column */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="grid grid-cols-2 gap-4 px-4 py-6"
+        className="flex flex-col gap-4 px-4 py-6"
       >
         {subjects.map((subject, index) => (
           <motion.div
@@ -62,10 +62,10 @@ export default function Learn() {
           >
             <Link
               to={`/chapter/${subject.id}/plus_one`}
-              className={`flex w-full aspect-[4/3] ${subject.color} rounded-2xl pt-4 pr-4 shadow-lg hover:shadow-xl transition-all relative overflow-hidden border border-gray-100`}
+              className={`flex w-full h-28 ${subject.color} rounded-2xl pt-4 pr-4 shadow-lg hover:shadow-xl transition-all relative overflow-hidden border border-gray-100`}
             >
               <span className="absolute top-4 right-4 text-gray-900 font-bold text-lg z-10">{subject.name}</span>
-              <img src={subject.icon} alt={subject.name} className="w-12 h-12 absolute bottom-0 left-0 object-contain" />
+              <img src={subject.icon} alt={subject.name} className="w-16 h-16 absolute bottom-2 left-2 object-contain" />
             </Link>
           </motion.div>
         ))}
