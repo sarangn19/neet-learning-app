@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { Cat, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Cat, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp, PartyPopper } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { useState } from 'react';
 
@@ -29,6 +29,7 @@ const AVATAR_SHOP_ITEMS = [
 export default function Shop() {
   const { catFood, coins, spendCoins, purchaseAvatar, purchasedAvatars } = useUserStore();
   const [purchasedId, setPurchasedId] = useState<string | null>(null);
+  const [purchaseAnimation, setPurchaseAnimation] = useState<{ id: string; name: string } | null>(null);
   const [showHowToEarn, setShowHowToEarn] = useState(false);
 
   // Demo items that users can buy with coins
@@ -72,15 +73,20 @@ export default function Shop() {
   ]);
 
   const handlePurchase = (item: ShopItem) => {
-    if (item.owned) return;
+    if (item.owned) return false;
     
     const success = spendCoins(item.price);
     if (success) {
       setItems(items.map(i => i.id === item.id ? { ...i, owned: true } : i));
       setPurchasedId(item.id);
-      setTimeout(() => setPurchasedId(null), 2000);
+      setTimeout(() => {
+        setPurchasedId(null);
+        setPurchaseAnimation(null);
+      }, 2000);
+      return true;
     } else {
       alert('Not enough coins! Complete lessons to earn more.');
+      return false;
     }
   };
 
@@ -189,18 +195,23 @@ export default function Shop() {
                   <img src={avatar.image} alt={avatar.name} className="w-full h-full object-cover" />
                 </div>
                 <p className="text-xs font-medium text-gray-700 mb-2">{avatar.name}</p>
-                <button
+                <motion.button
                   onClick={() => {
                     if (owned) return;
                     const success = purchaseAvatar(avatar.image, avatar.cost);
                     if (success) {
+                      setPurchaseAnimation({ id: avatar.id, name: avatar.name });
                       setPurchasedId(avatar.id);
-                      setTimeout(() => setPurchasedId(null), 2000);
+                      setTimeout(() => {
+                        setPurchasedId(null);
+                        setPurchaseAnimation(null);
+                      }, 2000);
                     } else {
                       alert('Not enough coins! Complete lessons to earn more.');
                     }
                   }}
                   disabled={owned}
+                  whileTap={owned ? {} : { scale: 0.9 }}
                   className={`w-full py-1.5 rounded-xl text-xs font-medium transition-colors ${
                     owned
                       ? 'bg-green-100 text-green-700 cursor-default'
@@ -209,23 +220,112 @@ export default function Shop() {
                       : 'bg-amber-100 hover:bg-amber-200 text-amber-700'
                   }`}
                 >
-                  {owned ? (
-                    <span className="flex items-center justify-center gap-1">
-                      <Check className="w-3 h-3" /> Owned
-                    </span>
-                  ) : purchasedId === avatar.id ? (
-                    'Purchased!'
-                  ) : (
-                    <span className="flex items-center justify-center gap-1">
-                      <img src="/images/coin.png" alt="" className="w-3 h-3 object-contain" /> {avatar.cost}
-                    </span>
-                  )}
-                </button>
+                  <AnimatePresence mode="wait">
+                    {owned ? (
+                      <motion.span 
+                        key="owned"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="flex items-center justify-center gap-1"
+                      >
+                        <Check className="w-3 h-3" /> Owned
+                      </motion.span>
+                    ) : purchasedId === avatar.id ? (
+                      <motion.span
+                        key="purchased"
+                        initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                        className="flex items-center justify-center gap-1"
+                      >
+                        <PartyPopper className="w-3 h-3" /> Purchased!
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="buy"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center justify-center gap-1"
+                      >
+                        <img src="/images/coin.png" alt="" className="w-3 h-3 object-contain" /> {avatar.cost}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
               </motion.div>
             );
           })}
         </div>
       </motion.div>
+
+      {/* Global Purchase Success Animation */}
+      <AnimatePresence>
+        {purchaseAnimation && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center"
+          >
+            {/* Background blur */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+            />
+            
+            {/* Success Card */}
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: -50 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              className="relative bg-white rounded-3xl p-8 shadow-2xl border border-gray-200 mx-4"
+            >
+              {/* Sparkles */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1 }}
+                className="absolute -top-4 -right-4 w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center"
+              >
+                <Sparkles className="w-6 h-6 text-white" />
+              </motion.div>
+              
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: 'spring', stiffness: 500 }}
+                className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
+              >
+                <Check className="w-10 h-10 text-white" strokeWidth={3} />
+              </motion.div>
+              
+              <motion.h3
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-xl font-bold text-gray-900 text-center mb-2"
+              >
+                Purchase Successful!
+              </motion.h3>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-gray-500 text-center"
+              >
+                You got {purchaseAnimation.name}
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Shop Items */}
       <motion.div
@@ -255,9 +355,15 @@ export default function Shop() {
                 </div>
               </div>
               
-              <button
-                onClick={() => handlePurchase(item)}
+              <motion.button
+                onClick={() => {
+                  const success = handlePurchase(item);
+                  if (success) {
+                    setPurchaseAnimation({ id: item.id, name: item.name });
+                  }
+                }}
                 disabled={item.owned}
+                whileTap={item.owned ? {} : { scale: 0.95 }}
                 className={`w-full mt-4 py-2.5 rounded-xl font-medium transition-colors ${
                   item.owned
                     ? 'bg-green-100 text-green-700 cursor-default'
@@ -266,18 +372,41 @@ export default function Shop() {
                     : 'bg-gradient-to-r from-amber-400 to-orange-500 hover:opacity-90 text-white shadow-lg'
                 }`}
               >
-                {item.owned ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <Check className="w-4 h-4" /> Owned
-                  </span>
-                ) : purchasedId === item.id ? (
-                  'Purchased!'
-                ) : (
-                  <span className="flex items-center justify-center gap-2">
-                    <img src="/images/coin.png" alt="" className="w-4 h-4 object-contain" /> {item.price}
-                  </span>
-                )}
-              </button>
+                <AnimatePresence mode="wait">
+                  {item.owned ? (
+                    <motion.span 
+                      key="owned"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Check className="w-4 h-4" /> Owned
+                    </motion.span>
+                  ) : purchasedId === item.id ? (
+                    <motion.span
+                      key="purchased"
+                      initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <PartyPopper className="w-4 h-4" /> Purchased!
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="buy"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <img src="/images/coin.png" alt="" className="w-4 h-4 object-contain" /> {item.price}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             </motion.div>
           ))}
         </div>
