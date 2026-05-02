@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, Play, Check, BookOpen, Layers } from 'lucide-react';
+import { ChevronLeft, Play, Check, BookOpen, Layers, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getChaptersWithQuestionCount } from '../data/questionBank';
 
@@ -45,8 +45,14 @@ export default function PracticeSetup() {
   };
 
   const filteredChapters = useMemo(() => {
-    return allChapters.filter(c => c.subjectId === selectedSubject);
-  }, [allChapters, selectedSubject]);
+    let chapters = allChapters.filter(c => c.subjectId === selectedSubject);
+    if (searchQuery.trim()) {
+      chapters = chapters.filter(c => 
+        c.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return chapters;
+  }, [allChapters, selectedSubject, searchQuery]);
 
   const toggleChapter = (chapterId: string) => {
     setSelectedChaptersBySubject(prev => {
@@ -183,6 +189,18 @@ export default function PracticeSetup() {
           >
             Select All
           </motion.button>
+        </div>
+
+        {/* Search Bar */}
+        <div className="relative mb-4">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search chapters..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-2xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+          />
         </div>
         
         <div className="space-y-3">
