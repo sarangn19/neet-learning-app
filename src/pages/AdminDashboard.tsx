@@ -240,7 +240,7 @@ export default function AdminDashboard() {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
             <div className="space-y-4">
               {[
-                { user: 'John Doe', action: 'Completed Biology Quiz', time: '2 min ago', icon: <Trophy className="w-4 h-4" />, color: 'bg-violet-100 text-violet-600', },
+                { user: 'John Doe', action: 'Completed Biology Quiz', time: '2 min ago', icon: <Trophy className="w-4 h-4" />, color: 'bg-yellow-100 text-yellow-600' },
                 { user: 'Jane Smith', action: 'Started Physics Module', time: '5 min ago', icon: <BookOpen className="w-4 h-4" />, color: 'bg-blue-100 text-blue-600' },
                 { user: 'Mike Johnson', action: 'Earned 50 points', time: '12 min ago', icon: <DollarSign className="w-4 h-4" />, color: 'bg-green-100 text-green-600' },
                 { user: 'Sarah Williams', action: 'Achieved streak x7', time: '25 min ago', icon: <Activity className="w-4 h-4" />, color: 'bg-purple-100 text-purple-600' },
@@ -272,7 +272,7 @@ export default function AdminDashboard() {
               { label: 'Manage Users', icon: <Users className="w-5 h-5" />, color: 'bg-blue-50 text-blue-600' },
               { label: 'Add Content', icon: <BookOpen className="w-5 h-5" />, color: 'bg-green-50 text-green-600' },
               { label: 'View Reports', icon: <Activity className="w-5 h-5" />, color: 'bg-purple-50 text-purple-600' },
-              { label: 'Schedule', icon: <Calendar className="w-5 h-5" />, color: 'bg-violet-50 text-violet-600', },
+              { label: 'Schedule', icon: <Calendar className="w-5 h-5" />, color: 'bg-yellow-50 text-yellow-600' },
             ].map((action, i) => (
               <button
                 key={i}

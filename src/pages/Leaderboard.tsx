@@ -57,7 +57,7 @@ export default function Leaderboard() {
           
           const heights = ['h-24', 'h-32', 'h-28'];
           const positions = [2, 1, 3];
-          const colors = ['bg-gray-300', 'bg-violet-400', 'bg-violet-300'];
+          const colors = ['bg-gray-300', 'bg-brand-yellow', 'bg-orange-300'];
           
           return (
             <div key={offset} className="flex flex-col items-center">
@@ -94,7 +94,7 @@ export default function Leaderboard() {
                 <p className="text-sm text-gray-500">{user.catFood} 🐱 food</p>
               </div>
               {user.streak > 0 && (
-                <div className="text-violet-500 text-sm font-bold">
+                <div className="text-brand-orange text-sm font-bold">
                   🔥 {user.streak}
                 </div>
               )}

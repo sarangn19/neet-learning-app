@@ -56,7 +56,7 @@ export default function Shop() {
       description: 'Double XP for 24 hours',
       price: 100,
       icon: <Sparkles className="w-6 h-6" />,
-      color: 'bg-violet-100 text-violet-600',
+      color: 'bg-yellow-100 text-yellow-600',
       owned: false,
     },
     {
@@ -65,7 +65,7 @@ export default function Shop() {
       description: 'Show off your premium status',
       price: 200,
       icon: <Crown className="w-6 h-6" />,
-      color: 'bg-violet-100 text-violet-600',
+      color: 'bg-amber-100 text-amber-600',
       owned: false,
     },
   ]);
@@ -103,20 +103,20 @@ export default function Shop() {
         className="flex gap-4 mb-8"
       >
         {/* Cat Food Balance */}
-        <div className="flex-1 bg-violet-50 border border-violet-200 rounded-xl p-4 flex items-center gap-3">
-          <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center">
-            <Cat className="w-6 h-6 text-violet-600" />
+        <div className="flex-1 bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3">
+          <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+            <Cat className="w-6 h-6 text-amber-600" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Cat Food</p>
-            <p className="text-xl font-bold text-violet-700">{catFood}</p>
+            <p className="text-xl font-bold text-amber-700">{catFood}</p>
           </div>
         </div>
 
         {/* Coins Balance */}
-        <div className="flex-1 bg-violet-50 border border-violet-200 rounded-xl p-4 flex items-center gap-3">
-          <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center">
-            <Coins className="w-6 h-6 text-violet-600" />
+        <div className="flex-1 bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-center gap-3">
+          <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+            <Coins className="w-6 h-6 text-yellow-600" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Coins</p>
