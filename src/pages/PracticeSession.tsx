@@ -135,7 +135,7 @@ export default function PracticeSession() {
   }
 
   return (
-    <div className="fixed inset-0 bg-white flex flex-col z-50 pb-20">
+    <div className="fixed inset-0 bg-white flex flex-col z-50">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b-2 border-gray-100">
         <button onClick={() => navigate('/practice')} className="p-2">
@@ -157,7 +157,7 @@ export default function PracticeSession() {
       </div>
 
       {/* Question */}
-      <div className="flex-1 p-4 overflow-auto pb-24">
+      <div className="flex-1 p-4 overflow-auto pb-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-4">
             <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full">
@@ -205,8 +205,8 @@ export default function PracticeSession() {
         </div>
       </div>
 
-      {/* Footer - Fixed above bottom nav */}
-      <div className="fixed bottom-16 left-0 right-0 p-4 border-t-2 border-gray-100 bg-white z-50">
+      {/* Footer - Fixed at bottom */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 border-t-2 border-gray-100 bg-white z-50">
         {!showResult ? (
           <button
             onClick={handleCheck}
