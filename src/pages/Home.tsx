@@ -54,67 +54,11 @@ export default function Home() {
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [openedBoxes, setOpenedBoxes] = useState<number[]>([]);
-  const [lastResetDate, setLastResetDate] = useState<string>('');
-  const [showBoxReward, setShowBoxReward] = useState<{boxIndex: number, coins: number} | null>(null);
-  const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, addCoins, recordBattleVictory } = useUserStore();
+  const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, recordBattleVictory } = useUserStore();
   const navigate = useNavigate();
 
   const hasBadge = (badgeId: string) => badges.some(b => b.id === badgeId);
 
-  // Load magic box state from localStorage
-  useEffect(() => {
-    const savedOpened = localStorage.getItem('magicBoxesOpened');
-    const savedReset = localStorage.getItem('magicBoxesLastReset');
-    
-    const today = new Date().toDateString();
-    
-    // Check if it's a new day - reset boxes
-    if (savedReset !== today) {
-      setOpenedBoxes([]);
-      setLastResetDate(today);
-      localStorage.setItem('magicBoxesOpened', JSON.stringify([]));
-      localStorage.setItem('magicBoxesLastReset', today);
-    } else {
-      setOpenedBoxes(savedOpened ? JSON.parse(savedOpened) : []);
-      setLastResetDate(savedReset || today);
-    }
-    
-    setIsLoading(false);
-  }, []);
-
-  // Reset boxes at midnight
-  useEffect(() => {
-    const checkDate = setInterval(() => {
-      const today = new Date().toDateString();
-      if (lastResetDate && lastResetDate !== today) {
-        setOpenedBoxes([]);
-        setLastResetDate(today);
-        localStorage.setItem('magicBoxesOpened', JSON.stringify([]));
-        localStorage.setItem('magicBoxesLastReset', today);
-      }
-    }, 60000); // Check every minute
-
-    return () => clearInterval(checkDate);
-  }, [lastResetDate]);
-
-  const handleOpenBox = (boxIndex: number) => {
-    if (openedBoxes.includes(boxIndex)) return;
-
-    // Generate random coins (10-50)
-    const rewardCoins = Math.floor(Math.random() * 41) + 10;
-    
-    // Add coins
-    addCoins(rewardCoins);
-    
-    // Mark box as opened
-    const newOpened = [...openedBoxes, boxIndex];
-    setOpenedBoxes(newOpened);
-    localStorage.setItem('magicBoxesOpened', JSON.stringify(newOpened));
-    
-    // Show reward modal
-    setShowBoxReward({ boxIndex, coins: rewardCoins });
-  };
 
   // Simulate loading for demo
   useEffect(() => {
@@ -231,49 +175,6 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Magic Boxes - Light pill design */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mb-4"
-      >
-        <div className="relative mx-auto w-fit">
-          {/* Pill container */}
-          <div className="flex flex-row items-center justify-center p-2 gap-2 bg-white border border-gray-200 rounded-full shadow-lg">
-            {[0, 1, 2, 3].map((boxIndex) => {
-              const isOpened = openedBoxes.includes(boxIndex);
-              
-              return (
-                <motion.button
-                  key={boxIndex}
-                  onClick={() => !isOpened && handleOpenBox(boxIndex)}
-                  disabled={isOpened}
-                  whileHover={!isOpened ? { scale: 1.05 } : {}}
-                  whileTap={!isOpened ? { scale: 0.95 } : {}}
-                  className={`relative w-[41px] h-[41px] rounded-full border-2 border-amber-200 flex items-center justify-center transition-all bg-gray-50 overflow-hidden ${
-                    isOpened 
-                      ? 'opacity-40 cursor-not-allowed' 
-                      : 'cursor-pointer shadow-sm hover:shadow-md hover:border-amber-300'
-                  }`}
-                >
-                  {isOpened ? (
-                    <img src="/images/opened-tin.png" alt="Claimed" className="w-7 h-7 object-contain grayscale" />
-                  ) : (
-                    <motion.div
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ repeat: Infinity, duration: 2 }}
-                    >
-                      <img src="/images/closed-tin.png" alt="Mystery Box" className="w-7 h-7 object-contain" />
-                    </motion.div>
-                  )}
-                </motion.button>
-              );
-            })}
-          </div>
-        </div>
-      </motion.div>
-
       {/* Subjects Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -338,45 +239,6 @@ export default function Home() {
           </Link>
         </div>
       </motion.div>
-
-      {/* Box Reward Modal */}
-      {showBoxReward && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white border border-gray-200 rounded-3xl p-8 max-w-xs w-full text-center shadow-2xl"
-          >
-            <motion.div
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.2, type: 'spring' }}
-              className="mb-4"
-            >
-              <span className="text-6xl">🎉</span>
-            </motion.div>
-            
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Box #{showBoxReward.boxIndex + 1} Opened!
-            </h3>
-            
-            <p className="text-gray-500 mb-4">You found:</p>
-            
-            <div className="bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-200 rounded-2xl p-4 mb-6">
-              <span className="text-3xl font-bold text-amber-600 flex items-center justify-center gap-2">
-                <img src="/images/coin.png" alt="" className="w-8 h-8" /> +{showBoxReward.coins}
-              </span>
-            </div>
-            
-            <button
-              onClick={() => setShowBoxReward(null)}
-              className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3 rounded-2xl font-semibold hover:opacity-90 transition-opacity"
-            >
-              Awesome!
-            </button>
-          </motion.div>
-        </div>
-      )}
 
       {/* Profile Modal */}
       {showProfile && (
