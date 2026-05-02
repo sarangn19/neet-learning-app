@@ -30,19 +30,18 @@ interface Match {
 
 type Subject = 'physics' | 'chemistry' | 'biology' | 'mixed';
 type Grade = 'plus_one' | 'plus_two';
+type GradeMode = 'plus_one_only' | 'combined';
 
-const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: string; bgColor: string }[] = [
-  { id: 'physics', name: 'Physics', icon: <Atom className="w-6 h-6" />, color: 'text-blue-600', bgColor: 'bg-blue-100' },
-  { id: 'chemistry', name: 'Chemistry', icon: <FlaskConical className="w-6 h-6" />, color: 'text-green-600', bgColor: 'bg-green-100' },
-  { id: 'biology', name: 'Biology', icon: <Dna className="w-6 h-6" />, color: 'text-pink-600', bgColor: 'bg-pink-100' },
-  { id: 'mixed', name: 'Mixed', icon: <Sparkles className="w-6 h-6" />, color: 'text-purple-600', bgColor: 'bg-purple-100' },
+const GRADE_MODES: { id: GradeMode; label: string; description: string }[] = [
+  { id: 'plus_one_only', label: '+1 Only', description: 'Plus One questions only' },
+  { id: 'combined', label: '+1 & +2 Combined', description: 'Questions from both grades' },
 ];
 
 export default function Battle({ onClose }: { onClose?: () => void }) {
   const { name, avatar, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
-  const [selectedSubject, setSelectedSubject] = useState<Subject>('mixed');
+  const [selectedGradeMode, setSelectedGradeMode] = useState<GradeMode>('plus_one_only');
   const [selectedGrade, setSelectedGrade] = useState<Grade>('plus_one');
   const [currentMatch, setCurrentMatch] = useState<Match | null>(null);
   const [countdown, setCountdown] = useState(3);
@@ -194,7 +193,8 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       return;
     }
 
-    const questions = getRandomQuestions(selectedSubject, 5);
+    // Always use mixed subject (all three subjects combined)
+    const questions = getRandomQuestions('mixed', 5);
     const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
 
     // Helper to start a local AI match
@@ -239,7 +239,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         .from('battle_matches')
         .select('*')
         .eq('status', 'waiting')
-        .eq('subject', selectedSubject)
+        .eq('grade', selectedGrade)
         .neq('player1_id', userId)
         .limit(1);
 
@@ -311,8 +311,8 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           player1_name: name,
           player1_avatar: avatar,
           status: 'waiting',
-          subject: selectedSubject,
-          grade: selectedGrade,
+          subject: 'mixed',
+          grade: selectedGradeMode === 'plus_one_only' ? 'plus_one' : 'plus_two',
           questions: questions,
         })
         .select()
@@ -366,7 +366,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       // Any error - start AI match immediately
       startAIMatch();
     }
-  }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
+  }, [name, avatar, selectedGradeMode, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
 
   const cancelMatchmaking = () => {
     setGameState('setup');
@@ -510,49 +510,50 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             <p className="text-gray-400 text-sm">
               {waitingMatches > 0 ? `${waitingMatches} waiting` : 'No players waiting'}
             </p>
-          </div>
-
-          {/* Subject Selection */}
           {!isLoading && gameState === 'setup' && (
             <>
-              {/* Subject Pills */}
-              <div className="px-4 flex flex-wrap gap-2">
-                {SUBJECTS.map((subject) => (
-                  <button
-                    key={subject.id}
-                    onClick={() => setSelectedSubject(subject.id)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      selectedSubject === subject.id
-                        ? 'bg-gray-700 text-white border border-gray-600'
-                        : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'
-                    }`}
-                  >
-                    {subject.name}
-                  </button>
-                ))}
+              {/* Grade Mode Selection */}
+              <div className="px-4">
+                <p className="text-gray-500 text-sm mb-2">Select Mode</p>
+                <div className="flex flex-col gap-2">
+                  {GRADE_MODES.map((mode) => (
+                    <button
+                      key={mode.id}
+                      onClick={() => {
+                        setSelectedGradeMode(mode.id);
+                        setSelectedGrade(mode.id === 'plus_one_only' ? 'plus_one' : 'plus_two');
+                      }}
+                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-all text-left ${
+                        selectedGradeMode === mode.id
+                          ? 'bg-gray-700 text-white border border-gray-600'
+                          : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'
+                      }`}
+                    >
+                      <span className="font-semibold">{mode.label}</span>
+                      <span className="block text-xs opacity-70 mt-0.5">{mode.description}</span>
+                    </button>
+                  ))}
+                </div>
+                <p className="text-gray-500 text-xs mt-2">Questions from all three subjects (Physics, Chemistry, Biology)</p>
               </div>
 
+              {/* Rewards Info */}
+              <div className="px-4 flex gap-4">
+                <div className="flex-1 text-center">
+                  <p className="text-gray-500 mb-1">Win</p>
+                  <p className="text-white font-semibold">50 coins</p>
+                </div>
+                <div className="flex-1 text-center">
+                  <p className="text-gray-500 mb-1">Draw</p>
+                  <p className="text-white font-semibold">25 coins</p>
+                </div>
+                <div className="flex-1 text-center">
+                  <p className="text-gray-500 mb-1">Loss</p>
+                  <p className="text-white font-semibold">10 coins</p>
+                </div>
+              </div>
             </>
           )}
-
-          {/* Rewards Info */}
-          <div className="px-4 py-4">
-            <p className="text-gray-400 text-sm mb-3">Rewards</p>
-            <div className="flex justify-between text-sm">
-              <div className="text-center">
-                <p className="text-gray-500 mb-1">Win</p>
-                <p className="text-white font-semibold">50 coins</p>
-              </div>
-              <div className="text-center">
-                <p className="text-gray-500 mb-1">Draw</p>
-                <p className="text-white font-semibold">25 coins</p>
-              </div>
-              <div className="text-center">
-                <p className="text-gray-500 mb-1">Loss</p>
-                <p className="text-white font-semibold">10 coins</p>
-              </div>
-            </div>
-          </div>
 
           {/* Leaderboard */}
           <motion.div
