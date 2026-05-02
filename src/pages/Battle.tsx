@@ -561,7 +561,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             ) : (
               <button
                 onClick={startMatchmaking}
-                className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-xl font-bold hover:opacity-90 transition-opacity"
+                className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold hover:opacity-90 transition-opacity"
               >
                 Start Matchmaking
               </button>
