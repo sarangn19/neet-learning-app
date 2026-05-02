@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import Learn from './pages/Learn';
+import BattlePage from './pages/BattlePage';
 import ChapterList from './pages/ChapterList';
 import ChapterView from './pages/ChapterView';
 import ModuleView from './pages/ModuleView';
@@ -60,7 +60,7 @@ function App() {
             </ProtectedRoute>
           }>
             <Route index element={<Home />} />
-            <Route path="learn" element={<Learn />} />
+            <Route path="battle" element={<BattlePage />} />
             <Route path="mcqs" element={<PracticeSetup />} />
             <Route path="shop" element={<Shop />} />
             <Route path="practice" element={<PracticeSetup />} />

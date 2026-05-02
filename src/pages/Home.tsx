@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
-import { Search, Cat, Flame, Target, Zap, Award, LogOut, X } from 'lucide-react';
+import { Search, Cat, Flame, Target, Zap, Award, LogOut, X, Atom, FlaskConical, Dna, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../store/userStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import RevisionPopup from '../components/RevisionPopup';
 
 import DailyRevision from '../components/DailyRevision';
-import Battle from './Battle';
 
 import { PageSkeleton } from '../components/Skeleton';
 
@@ -56,10 +55,8 @@ export default function Home() {
   const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [openedBoxes, setOpenedBoxes] = useState<number[]>([]);
-  const [victoriesToday, setVictoriesToday] = useState(0);
   const [lastResetDate, setLastResetDate] = useState<string>('');
   const [showBoxReward, setShowBoxReward] = useState<{boxIndex: number, coins: number} | null>(null);
-  const [showBattleModal, setShowBattleModal] = useState(false);
   const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, addCoins, recordBattleVictory } = useUserStore();
   const navigate = useNavigate();
 
@@ -69,44 +66,36 @@ export default function Home() {
   useEffect(() => {
     const savedOpened = localStorage.getItem('magicBoxesOpened');
     const savedReset = localStorage.getItem('magicBoxesLastReset');
-    const savedVictories = localStorage.getItem('battleVictoriesToday');
     
     const today = new Date().toDateString();
     
     // Check if it's a new day - reset boxes
     if (savedReset !== today) {
       setOpenedBoxes([]);
-      setVictoriesToday(0);
       setLastResetDate(today);
       localStorage.setItem('magicBoxesOpened', JSON.stringify([]));
       localStorage.setItem('magicBoxesLastReset', today);
-      localStorage.setItem('battleVictoriesToday', '0');
     } else {
       setOpenedBoxes(savedOpened ? JSON.parse(savedOpened) : []);
-      setVictoriesToday(savedVictories ? parseInt(savedVictories) : 0);
       setLastResetDate(savedReset || today);
     }
+    
+    setIsLoading(false);
   }, []);
 
-  // Check for midnight reset
+  // Reset boxes at midnight
   useEffect(() => {
-    const checkMidnight = () => {
-      const now = new Date();
-      const today = now.toDateString();
-      
+    const checkDate = setInterval(() => {
+      const today = new Date().toDateString();
       if (lastResetDate && lastResetDate !== today) {
-        // Midnight passed - reset everything
         setOpenedBoxes([]);
-        setVictoriesToday(0);
         setLastResetDate(today);
         localStorage.setItem('magicBoxesOpened', JSON.stringify([]));
         localStorage.setItem('magicBoxesLastReset', today);
-        localStorage.setItem('battleVictoriesToday', '0');
       }
-    };
+    }, 60000); // Check every minute
 
-    const interval = setInterval(checkMidnight, 60000); // Check every minute
-    return () => clearInterval(interval);
+    return () => clearInterval(checkDate);
   }, [lastResetDate]);
 
   const handleOpenBox = (boxIndex: number) => {
@@ -172,7 +161,7 @@ export default function Home() {
 
         onStartRevision={() => setShowFlashcards(true)} 
 
-        disabled={showBattleModal}
+        disabled={false}
 
       />
 
@@ -285,44 +274,68 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Battle Card */}
+      {/* Subjects Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         className="mb-6"
       >
-        <div 
-          onClick={() => setShowBattleModal(true)}
-          className="relative rounded-3xl overflow-hidden cursor-pointer hover:shadow-2xl transition-all h-[120px] border border-gray-200 shadow-lg group"
-        >
-          {/* Background Image */}
-          <img 
-            src="/images/battle.png" 
-            alt="Battle"
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-          
-          {/* Content */}
-          <div className="relative h-full flex items-center justify-between px-5">
-            {/* Left: Title */}
-            <div>
-              <h3 className="font-bold text-xl text-white drop-shadow-lg">
-                1v1 Battle
-              </h3>
-              <p className="text-gray-300 text-sm mt-1">Compete & Win Coins!</p>
+        <div className="flex items-center justify-between mb-3 px-1">
+          <h3 className="font-bold text-lg text-gray-900">Subjects</h3>
+          <button 
+            onClick={() => navigate('/mcqs')}
+            className="text-amber-600 text-sm font-medium hover:text-amber-700"
+          >
+            View All
+          </button>
+        </div>
+        
+        <div className="space-y-3">
+          {/* Physics */}
+          <Link
+            to="/chapter/physics/plus_one"
+            className="relative flex items-center w-full h-24 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]"
+          >
+            <div className="relative z-10 flex flex-col px-5 py-3">
+              <span className="text-white font-bold text-xl">Physics</span>
+              <span className="text-white/70 text-sm mt-1">10 chapters</span>
+              <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
             </div>
-            
-            {/* Right: START Button */}
-            <button 
-              className="flex items-center justify-center font-bold text-white text-base px-6 py-3 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-            >
-              Start
-            </button>
-          </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
+              <Atom className="w-20 h-20 text-white/20" />
+            </div>
+          </Link>
+
+          {/* Chemistry */}
+          <Link
+            to="/chapter/chemistry/plus_one"
+            className="relative flex items-center w-full h-24 overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]"
+          >
+            <div className="relative z-10 flex flex-col px-5 py-3">
+              <span className="text-white font-bold text-xl">Chemistry</span>
+              <span className="text-white/70 text-sm mt-1">8 chapters</span>
+              <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
+            </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
+              <FlaskConical className="w-20 h-20 text-white/20" />
+            </div>
+          </Link>
+
+          {/* Biology */}
+          <Link
+            to="/chapter/biology/plus_one"
+            className="relative flex items-center w-full h-24 overflow-hidden rounded-2xl bg-gradient-to-r from-violet-500 via-violet-600 to-purple-600 shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]"
+          >
+            <div className="relative z-10 flex flex-col px-5 py-3">
+              <span className="text-white font-bold text-xl">Biology</span>
+              <span className="text-white/70 text-sm mt-1">12 chapters</span>
+              <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
+            </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
+              <Dna className="w-20 h-20 text-white/20" />
+            </div>
+          </Link>
         </div>
       </motion.div>
 
@@ -552,20 +565,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Battle Popup */}
-      {showBattleModal && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="w-full max-w-sm max-h-[85vh] rounded-2xl bg-black overflow-hidden shadow-2xl relative"
-          >
-            <Battle onClose={() => setShowBattleModal(false)} />
-          </motion.div>
-        </div>
-      )}
     </div>
 
   );
