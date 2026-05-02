@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, Play, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -20,10 +20,29 @@ export default function PracticeSetup() {
   const [selectedSubject, setSelectedSubject] = useState<string>(subjectId || 'physics');
 
   const subjects = [
-    { id: 'physics', name: 'Physics' },
-    { id: 'chemistry', name: 'Chemistry' },
-    { id: 'biology', name: 'Biology' },
+    { id: 'physics', name: 'Physics', color: 'bg-blue-500' },
+    { id: 'chemistry', name: 'Chemistry', color: 'bg-emerald-500' },
+    { id: 'biology', name: 'Biology', color: 'bg-violet-500' },
   ];
+
+  // Handle subject selection - auto-select all chapters for the subject
+  const handleSubjectChange = (subjectId: string) => {
+    setSelectedSubject(subjectId);
+    // Get all chapter IDs for this subject and select them
+    const subjectChapters = allChapters
+      .filter(c => c.subjectId === subjectId)
+      .map(c => c.id);
+    setSelectedChapters(new Set(subjectChapters));
+  };
+
+  // Auto-select chapters for initial subject on mount
+  useEffect(() => {
+    const initialSubject = subjectId || 'physics';
+    const subjectChapters = allChapters
+      .filter(c => c.subjectId === initialSubject)
+      .map(c => c.id);
+    setSelectedChapters(new Set(subjectChapters));
+  }, [allChapters, subjectId]);
 
   const filteredChapters = useMemo(() => {
     return chapters.filter(c => c.subjectId === selectedSubject);
@@ -105,15 +124,15 @@ export default function PracticeSetup() {
         transition={{ delay: 0.15 }}
         className="mb-6"
       >
-        <div className="flex bg-gray-200 rounded-full p-1">
+        <div className="flex bg-gray-100 rounded-full p-1.5">
           {subjects.map((subject) => (
             <button
               key={subject.id}
-              onClick={() => setSelectedSubject(subject.id)}
+              onClick={() => handleSubjectChange(subject.id)}
               className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-full text-sm font-medium transition-all ${
                 selectedSubject === subject.id
-                  ? 'bg-gray-500 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-300'
+                  ? `${subject.color} text-white shadow-md`
+                  : 'text-gray-600 hover:bg-gray-200'
               }`}
             >
               {subject.name}
