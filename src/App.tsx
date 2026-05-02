@@ -65,13 +65,18 @@ function App() {
             <Route path="shop" element={<Shop />} />
             <Route path="practice" element={<PracticeSetup />} />
             <Route path="practice/:subjectId" element={<PracticeSetup />} />
-            <Route path="practice/session" element={<PracticeSession />} />
             <Route path="chapter/:subjectId/:grade" element={<ChapterList />} />
             <Route path="chapter/:subjectId/:grade/:chapterId" element={<ChapterView />} />
             <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
             <Route path="lesson/:levelId" element={<Lesson />} />
             <Route path="profile" element={<Profile />} />
           </Route>
+          {/* Practice Session - Outside Layout (no nav bar) */}
+          <Route path="/practice/session" element={
+            <ProtectedRoute>
+              <PracticeSession />
+            </ProtectedRoute>
+          } />
           {/* Auth Routes - Outside Layout */}
           <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
           <Route path="/signup" element={isAuthenticated ? <Navigate to="/" replace /> : <Signup />} />
