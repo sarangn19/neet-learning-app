@@ -17,7 +17,8 @@ import {
   Search,
   ArrowUpRight,
   ArrowDownRight,
-  Filter
+  Filter,
+  AlertTriangle
 } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { useAdminStore, AdminUser } from '../store/adminStore';
@@ -68,9 +69,14 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'overview' | 'users'>('overview');
 
+  // Load real users from database on mount
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
+    const loadData = async () => {
+      await adminStore.loadUsers();
+      adminStore.refreshStats();
+      setIsLoading(false);
+    };
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -231,31 +237,35 @@ export default function AdminDashboard() {
             </div>
           </motion.div>
 
-          {/* Recent Activity */}
+          {/* Recent Activity - Real Data */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
           >
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Users</h2>
             <div className="space-y-4">
-              {[
-                { user: 'John Doe', action: 'Completed Biology Quiz', time: '2 min ago', icon: <Trophy className="w-4 h-4" />, color: 'bg-yellow-100 text-yellow-600' },
-                { user: 'Jane Smith', action: 'Started Physics Module', time: '5 min ago', icon: <BookOpen className="w-4 h-4" />, color: 'bg-blue-100 text-blue-600' },
-                { user: 'Mike Johnson', action: 'Earned 50 points', time: '12 min ago', icon: <DollarSign className="w-4 h-4" />, color: 'bg-green-100 text-green-600' },
-                { user: 'Sarah Williams', action: 'Achieved streak x7', time: '25 min ago', icon: <Activity className="w-4 h-4" />, color: 'bg-purple-100 text-purple-600' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <div className={`w-8 h-8 rounded-lg ${item.color} flex items-center justify-center flex-shrink-0`}>
-                    {item.icon}
+              {filteredUsers.slice(0, 5).map((u, i) => (
+                <div key={u.id} className="flex items-start gap-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                    u.status === 'active' ? 'bg-green-100 text-green-600' :
+                    u.status === 'suspended' ? 'bg-red-100 text-red-600' :
+                    'bg-gray-100 text-gray-600'
+                  }`}>
+                    {u.status === 'active' ? <TrendingUp className="w-4 h-4" /> :
+                     u.status === 'suspended' ? <AlertTriangle className="w-4 h-4" /> :
+                     <Activity className="w-4 h-4" />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900">{item.user}</p>
-                    <p className="text-xs text-gray-500">{item.action}</p>
+                    <p className="text-sm font-medium text-gray-900">{u.name}</p>
+                    <p className="text-xs text-gray-500">Level {u.level} • {u.completedLessons} lessons</p>
                   </div>
-                  <span className="text-xs text-gray-400">{item.time}</span>
+                  <span className="text-xs text-gray-400">{u.lastActive}</span>
                 </div>
               ))}
+              {filteredUsers.length === 0 && (
+                <p className="text-center text-gray-500 py-4">No users yet</p>
+              )}
             </div>
           </motion.div>
         </div>

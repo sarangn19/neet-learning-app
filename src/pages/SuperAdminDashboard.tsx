@@ -340,10 +340,14 @@ export default function SuperAdminDashboard() {
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [expandedLogId, setExpandedLogId] = useState<string | null>(null);
 
+  // Load real users from database on mount
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
+    const loadData = async () => {
+      await adminStore.loadUsers();
+      adminStore.refreshStats();
+      setIsLoading(false);
+    };
+    loadData();
   }, []);
 
   useEffect(() => {
