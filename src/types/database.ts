@@ -285,6 +285,129 @@ export interface Database {
           joined_at?: string;
         };
       };
+      mcq_sessions: {
+        Row: {
+          id: string;
+          user_id: string;
+          subject_id: string;
+          chapter_ids: string[];
+          total_questions: number;
+          correct_answers: number;
+          incorrect_answers: number;
+          time_spent: number;
+          completed_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          subject_id: string;
+          chapter_ids: string[];
+          total_questions: number;
+          correct_answers: number;
+          incorrect_answers: number;
+          time_spent: number;
+          completed_at: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          subject_id?: string;
+          chapter_ids?: string[];
+          total_questions?: number;
+          correct_answers?: number;
+          incorrect_answers?: number;
+          time_spent?: number;
+          completed_at?: string;
+        };
+      };
+      question_results: {
+        Row: {
+          id: string;
+          session_id: string;
+          user_id: string;
+          question_id: string;
+          chapter_id: string;
+          subject_id: string;
+          selected_answer: string;
+          correct_answer: string;
+          is_correct: boolean;
+          time_spent: number;
+        };
+        Insert: {
+          id?: string;
+          session_id: string;
+          user_id: string;
+          question_id: string;
+          chapter_id: string;
+          subject_id: string;
+          selected_answer: string;
+          correct_answer: string;
+          is_correct: boolean;
+          time_spent: number;
+        };
+        Update: {
+          id?: string;
+          session_id?: string;
+          user_id?: string;
+          question_id?: string;
+          chapter_id?: string;
+          subject_id?: string;
+          selected_answer?: string;
+          correct_answer?: string;
+          is_correct?: boolean;
+          time_spent?: number;
+        };
+      };
+      user_performance_metrics: {
+        Row: {
+          user_id: string;
+          total_questions_attempted: number;
+          correct_answers: number;
+          incorrect_answers: number;
+          accuracy_rate: number;
+          average_time_per_question: number;
+          total_time_spent: number;
+          streak_days: number;
+          longest_streak: number;
+          last_practice_date: string;
+          subject_performance: any;
+          chapter_performance: any;
+          weekly_progress: any;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          total_questions_attempted?: number;
+          correct_answers?: number;
+          incorrect_answers?: number;
+          accuracy_rate?: number;
+          average_time_per_question?: number;
+          total_time_spent?: number;
+          streak_days?: number;
+          longest_streak?: number;
+          last_practice_date?: string;
+          subject_performance?: any;
+          chapter_performance?: any;
+          weekly_progress?: any;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          total_questions_attempted?: number;
+          correct_answers?: number;
+          incorrect_answers?: number;
+          accuracy_rate?: number;
+          average_time_per_question?: number;
+          total_time_spent?: number;
+          streak_days?: number;
+          longest_streak?: number;
+          last_practice_date?: string;
+          subject_performance?: any;
+          chapter_performance?: any;
+          weekly_progress?: any;
+          updated_at?: string;
+        };
+      };
     };
     Views: {
       [_ in never]: never;

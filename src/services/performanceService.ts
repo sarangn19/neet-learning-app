@@ -93,7 +93,7 @@ export const performanceService = {
       const sessions = JSON.parse(localStorage.getItem('mcq_sessions') || '[]');
       sessions.push(result);
       localStorage.setItem('mcq_sessions', JSON.stringify(sessions));
-      this.updateLocalMetrics(result.userId, result);
+      performanceService._updateLocalMetrics(result.userId, result);
       return;
     }
 
@@ -135,7 +135,7 @@ export const performanceService = {
       if (questionsError) throw questionsError;
 
       // Update aggregated metrics
-      await this.updateUserMetrics(result.userId, result);
+      await performanceService._updateUserMetrics(result.userId, result);
     } catch (error) {
       console.error('Failed to record MCQ session:', error);
       // Fallback to local storage
@@ -198,7 +198,7 @@ export const performanceService = {
   async getUserMetrics(userId: string): Promise<PerformanceMetrics | null> {
     if (isFallbackMode) {
       const metrics = localStorage.getItem(`performance_metrics_${userId}`);
-      return metrics ? JSON.parse(metrics) : this.calculateDefaultMetrics();
+      return metrics ? JSON.parse(metrics) : performanceService._calculateDefaultMetrics();
     }
 
     try {
@@ -211,17 +211,17 @@ export const performanceService = {
       if (error) {
         if (error.code === 'PGRST116') {
           // No data found, return default metrics
-          return this.calculateDefaultMetrics();
+          return performanceService._calculateDefaultMetrics();
         }
         throw error;
       }
 
-      return data ? this.mapDbMetricsToPerformance(data) : this.calculateDefaultMetrics();
+      return data ? performanceService._mapDbMetricsToPerformance(data) : performanceService._calculateDefaultMetrics();
     } catch (error) {
       console.error('Failed to get user metrics:', error);
       // Fallback to localStorage
       const metrics = localStorage.getItem(`performance_metrics_${userId}`);
-      return metrics ? JSON.parse(metrics) : this.calculateDefaultMetrics();
+      return metrics ? JSON.parse(metrics) : performanceService._calculateDefaultMetrics();
     }
   },
 
@@ -246,7 +246,7 @@ export const performanceService = {
         .limit(limit);
 
       if (error) throw error;
-      return data?.map(this.mapDbSessionToResult) || [];
+      return data?.map(performanceService._mapDbSessionToResult) || [];
     } catch (error) {
       console.error('Failed to get session history:', error);
       // Fallback to localStorage
@@ -282,8 +282,8 @@ export const performanceService = {
       .slice(0, 5);
   },
 
-  // Update user metrics after a session (private method)
-  private async updateUserMetrics(userId: string, result: MCQSessionResult): Promise<void> {
+  // Update user metrics after a session (internal method)
+  _updateUserMetrics: async (userId: string, result: MCQSessionResult): Promise<void> => {
     const currentMetrics = await this.getUserMetrics(userId);
     if (!currentMetrics) return;
 
@@ -350,7 +350,7 @@ export const performanceService = {
     });
 
     // Update weekly progress
-    const weekKey = this.getWeekKey(new Date());
+    const weekKey = performanceService._getWeekKey(new Date());
     const weekIndex = currentMetrics.weeklyProgress.findIndex((w) => w.week === weekKey);
     if (weekIndex >= 0) {
       currentMetrics.weeklyProgress[weekIndex].questionsAttempted += result.totalQuestions;
@@ -402,12 +402,12 @@ export const performanceService = {
   },
 
   // Update local metrics (fallback mode)
-  private updateLocalMetrics(userId: string, result: MCQSessionResult): void {
-    this.updateUserMetrics(userId, result).catch(console.error);
+  _updateLocalMetrics: (userId: string, result: MCQSessionResult): void => {
+    performanceService._updateUserMetrics(userId, result).catch(console.error);
   },
 
   // Helper: Calculate default metrics for new users
-  private calculateDefaultMetrics(): PerformanceMetrics {
+  _calculateDefaultMetrics: (): PerformanceMetrics => {
     return {
       totalQuestionsAttempted: 0,
       correctAnswers: 0,
@@ -426,7 +426,7 @@ export const performanceService = {
   },
 
   // Helper: Get week key (e.g., "2024-W01")
-  private getWeekKey(date: Date): string {
+  _getWeekKey: (date: Date): string => {
     const year = date.getFullYear();
     const firstDayOfYear = new Date(year, 0, 1);
     const pastDays = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
@@ -435,7 +435,7 @@ export const performanceService = {
   },
 
   // Helper: Map database metrics to PerformanceMetrics
-  private mapDbMetricsToPerformance(data: any): PerformanceMetrics {
+  _mapDbMetricsToPerformance: (data: any): PerformanceMetrics => {
     return {
       totalQuestionsAttempted: data.total_questions_attempted || 0,
       correctAnswers: data.correct_answers || 0,
@@ -454,7 +454,7 @@ export const performanceService = {
   },
 
   // Helper: Map database session to MCQSessionResult
-  private mapDbSessionToResult(data: any): MCQSessionResult {
+  _mapDbSessionToResult: (data: any): MCQSessionResult => {
     return {
       userId: data.user_id,
       sessionId: data.id,

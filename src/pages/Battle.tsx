@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles, Globe, Crown, Medal } from 'lucide-react';
+import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles, Globe } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../lib/supabase';
 import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
-import { leaderboardService, type LeaderboardEntry } from '../services/leaderboardService';
 
 interface Match {
   id: string;
@@ -30,57 +29,36 @@ interface Match {
 
 type Subject = 'physics' | 'chemistry' | 'biology' | 'mixed';
 type Grade = 'plus_one' | 'plus_two';
-type GradeMode = 'plus_one_only' | 'combined';
 
-const GRADE_MODES: { id: GradeMode; label: string; description: string }[] = [
-  { id: 'plus_one_only', label: '+1 Only', description: 'Plus One questions only' },
-  { id: 'combined', label: '+1 & +2 Combined', description: 'Questions from both grades' },
+const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: string; bgColor: string }[] = [
+  { id: 'physics', name: 'Physics', icon: <Atom className="w-6 h-6" />, color: 'text-blue-600', bgColor: 'bg-blue-100' },
+  { id: 'chemistry', name: 'Chemistry', icon: <FlaskConical className="w-6 h-6" />, color: 'text-green-600', bgColor: 'bg-green-100' },
+  { id: 'biology', name: 'Biology', icon: <Dna className="w-6 h-6" />, color: 'text-pink-600', bgColor: 'bg-pink-100' },
+  { id: 'mixed', name: 'Mixed', icon: <Sparkles className="w-6 h-6" />, color: 'text-purple-600', bgColor: 'bg-purple-100' },
 ];
 
 export default function Battle({ onClose }: { onClose?: () => void }) {
   const { name, avatar, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
-  const [selectedGradeMode, setSelectedGradeMode] = useState<GradeMode>('plus_one_only');
+  const [selectedSubject, setSelectedSubject] = useState<Subject>('mixed');
   const [selectedGrade, setSelectedGrade] = useState<Grade>('plus_one');
   const [currentMatch, setCurrentMatch] = useState<Match | null>(null);
   const [countdown, setCountdown] = useState(3);
   const [matchHistory, setMatchHistory] = useState<Match[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  // Leaderboard state
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-  const [userRank, setUserRank] = useState<{ rank: number; victories: number } | null>(null);
   const [activePlayers, setActivePlayers] = useState(0);
   const [waitingMatches, setWaitingMatches] = useState(0);
 
   // Fetch match history and active players on mount
   useEffect(() => {
     fetchMatchHistory();
-    loadActivePlayers();
-    // Poll active players every 10 seconds
-    const interval = setInterval(loadActivePlayers, 10000);
+    fetchActivePlayers();
+    // Poll active players every 30 seconds
+    const interval = setInterval(fetchActivePlayers, 30000);
     return () => clearInterval(interval);
   }, []);
-
-  // Load leaderboard on mount
-  useEffect(() => {
-    const loadLeaderboard = async () => {
-      const top10 = await leaderboardService.getTop10();
-      setLeaderboard(top10);
-      
-      if (userId) {
-        const rank = await leaderboardService.getUserRank(userId);
-        setUserRank(rank);
-      }
-    };
-    loadLeaderboard();
-    
-    // Refresh leaderboard every 30 seconds
-    const interval = setInterval(loadLeaderboard, 30000);
-    return () => clearInterval(interval);
-  }, [userId]);
 
   const fetchMatchHistory = async () => {
     // In production, fetch from Supabase
@@ -193,8 +171,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       return;
     }
 
-    // Always use mixed subject (all three subjects combined)
-    const questions = getRandomQuestions('mixed', 5);
+    const questions = getRandomQuestions(selectedSubject, 5);
     const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
 
     // Helper to start a local AI match
@@ -239,7 +216,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         .from('battle_matches')
         .select('*')
         .eq('status', 'waiting')
-        .eq('grade', selectedGrade)
+        .eq('subject', selectedSubject)
         .neq('player1_id', userId)
         .limit(1);
 
@@ -311,8 +288,8 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           player1_name: name,
           player1_avatar: avatar,
           status: 'waiting',
-          subject: 'mixed',
-          grade: selectedGradeMode === 'plus_one_only' ? 'plus_one' : 'plus_two',
+          subject: selectedSubject,
+          grade: selectedGrade,
           questions: questions,
         })
         .select()
@@ -366,7 +343,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       // Any error - start AI match immediately
       startAIMatch();
     }
-  }, [name, avatar, selectedGradeMode, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
+  }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
 
   const cancelMatchmaking = () => {
     setGameState('setup');
@@ -510,135 +487,54 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             <p className="text-gray-400 text-sm">
               {waitingMatches > 0 ? `${waitingMatches} waiting` : 'No players waiting'}
             </p>
+          </div>
+
+          {/* Subject Selection */}
           {!isLoading && gameState === 'setup' && (
             <>
-              {/* Grade Mode Selection */}
-              <div className="px-4">
-                <p className="text-gray-500 text-sm mb-2">Select Mode</p>
-                <div className="flex flex-col gap-2">
-                  {GRADE_MODES.map((mode) => (
-                    <button
-                      key={mode.id}
-                      onClick={() => {
-                        setSelectedGradeMode(mode.id);
-                        setSelectedGrade(mode.id === 'plus_one_only' ? 'plus_one' : 'plus_two');
-                      }}
-                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-all text-left ${
-                        selectedGradeMode === mode.id
-                          ? 'bg-gray-700 text-white border border-gray-600'
-                          : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'
-                      }`}
-                    >
-                      <span className="font-semibold">{mode.label}</span>
-                      <span className="block text-xs opacity-70 mt-0.5">{mode.description}</span>
-                    </button>
-                  ))}
-                </div>
-                <p className="text-gray-500 text-xs mt-2">Questions from all three subjects (Physics, Chemistry, Biology)</p>
+              {/* Subject Pills */}
+              <div className="px-4 flex flex-wrap gap-2">
+                {SUBJECTS.map((subject) => (
+                  <button
+                    key={subject.id}
+                    onClick={() => setSelectedSubject(subject.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      selectedSubject === subject.id
+                        ? 'bg-gray-700 text-white border border-gray-600'
+                        : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'
+                    }`}
+                  >
+                    {subject.name}
+                  </button>
+                ))}
               </div>
 
-              {/* Rewards Info */}
-              <div className="px-4 flex gap-4">
-                <div className="flex-1 text-center">
-                  <p className="text-gray-500 mb-1">Win</p>
-                  <p className="text-white font-semibold">50 coins</p>
-                </div>
-                <div className="flex-1 text-center">
-                  <p className="text-gray-500 mb-1">Draw</p>
-                  <p className="text-white font-semibold">25 coins</p>
-                </div>
-                <div className="flex-1 text-center">
-                  <p className="text-gray-500 mb-1">Loss</p>
-                  <p className="text-white font-semibold">10 coins</p>
-                </div>
-              </div>
             </>
           )}
 
-          {/* Leaderboard */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="px-4"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-amber-400" />
-                <h3 className="text-white font-semibold">Leaderboard</h3>
+          {/* Rewards Info */}
+          <div className="px-4 py-4">
+            <p className="text-gray-400 text-sm mb-3">Rewards</p>
+            <div className="flex justify-between text-sm">
+              <div className="text-center">
+                <p className="text-gray-500 mb-1">Win</p>
+                <p className="text-white font-semibold">50 coins</p>
               </div>
-              {userRank && (
-                <div className="text-right">
-                  <span className="text-xs text-gray-400">Your Rank: </span>
-                  <span className="text-amber-400 font-bold">#{userRank.rank}</span>
-                  <span className="text-xs text-gray-500 ml-1">({userRank.victories} wins)</span>
-                </div>
-              )}
+              <div className="text-center">
+                <p className="text-gray-500 mb-1">Draw</p>
+                <p className="text-white font-semibold">25 coins</p>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-500 mb-1">Loss</p>
+                <p className="text-white font-semibold">10 coins</p>
+              </div>
             </div>
-            
-            <div className="bg-gray-800/50 rounded-2xl border border-gray-700 overflow-hidden">
-              {leaderboard.length > 0 ? (
-                <div className="divide-y divide-gray-700">
-                  {leaderboard.map((entry) => (
-                    <div
-                      key={entry.userId}
-                      className={`flex items-center gap-3 p-3 ${entry.userId === userId ? 'bg-amber-500/10' : ''}`}
-                    >
-                      {/* Rank */}
-                      <div className={`
-                        w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-                        ${entry.rank === 1 ? 'bg-amber-400 text-amber-900' :
-                          entry.rank === 2 ? 'bg-gray-300 text-gray-800' :
-                          entry.rank === 3 ? 'bg-amber-600 text-white' :
-                          'bg-gray-700 text-gray-400'}
-                      `}>
-                        {entry.rank <= 3 ? (
-                          entry.rank === 1 ? <Crown className="w-4 h-4" /> :
-                          entry.rank === 2 ? <Medal className="w-4 h-4" /> :
-                          <Medal className="w-4 h-4" />
-                        ) : (
-                          entry.rank
-                        )}
-                      </div>
-                      
-                      {/* Avatar */}
-                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
-                        {entry.avatar ? (
-                          <img src={entry.avatar} alt={entry.name} className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-lg">🎮</span>
-                        )}
-                      </div>
-                      
-                      {/* Name */}
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium truncate ${entry.userId === userId ? 'text-amber-400' : 'text-white'}`}>
-                          {entry.name} {entry.userId === userId && '(You)'}
-                        </p>
-                      </div>
-                      
-                      {/* Victories */}
-                      <div className="text-right">
-                        <p className="text-white font-bold">{entry.victories}</p>
-                        <p className="text-xs text-gray-500">wins</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="p-8 text-center text-gray-400">
-                  <Trophy className="w-12 h-12 mx-auto mb-2 opacity-30" />
-                  <p className="text-sm">No battles yet. Be the first!</p>
-                </div>
-              )}
-            </div>
-          </motion.div>
+          </div>
 
           {/* Magic Boxes - Victory Reward Boxes */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
             className="px-4"
           >
             <p className="text-gray-400 text-sm mb-3">Win Battles to Open Boxes</p>
