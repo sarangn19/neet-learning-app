@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles, Globe } from 'lucide-react';
+import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles, Globe, Crown, Medal } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../lib/supabase';
 import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
+import { leaderboardService, type LeaderboardEntry } from '../services/leaderboardService';
 
 interface Match {
   id: string;
@@ -48,17 +49,39 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
   const [matchHistory, setMatchHistory] = useState<Match[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Leaderboard state
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [userRank, setUserRank] = useState<{ rank: number; victories: number } | null>(null);
   const [activePlayers, setActivePlayers] = useState(0);
   const [waitingMatches, setWaitingMatches] = useState(0);
 
   // Fetch match history and active players on mount
   useEffect(() => {
     fetchMatchHistory();
-    fetchActivePlayers();
-    // Poll active players every 30 seconds
-    const interval = setInterval(fetchActivePlayers, 30000);
+    loadActivePlayers();
+    // Poll active players every 10 seconds
+    const interval = setInterval(loadActivePlayers, 10000);
     return () => clearInterval(interval);
   }, []);
+
+  // Load leaderboard on mount
+  useEffect(() => {
+    const loadLeaderboard = async () => {
+      const top10 = await leaderboardService.getTop10();
+      setLeaderboard(top10);
+      
+      if (userId) {
+        const rank = await leaderboardService.getUserRank(userId);
+        setUserRank(rank);
+      }
+    };
+    loadLeaderboard();
+    
+    // Refresh leaderboard every 30 seconds
+    const interval = setInterval(loadLeaderboard, 30000);
+    return () => clearInterval(interval);
+  }, [userId]);
 
   const fetchMatchHistory = async () => {
     // In production, fetch from Supabase
@@ -531,10 +554,90 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
 
+          {/* Leaderboard */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="px-4"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-400" />
+                <h3 className="text-white font-semibold">Leaderboard</h3>
+              </div>
+              {userRank && (
+                <div className="text-right">
+                  <span className="text-xs text-gray-400">Your Rank: </span>
+                  <span className="text-amber-400 font-bold">#{userRank.rank}</span>
+                  <span className="text-xs text-gray-500 ml-1">({userRank.victories} wins)</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="bg-gray-800/50 rounded-2xl border border-gray-700 overflow-hidden">
+              {leaderboard.length > 0 ? (
+                <div className="divide-y divide-gray-700">
+                  {leaderboard.map((entry) => (
+                    <div
+                      key={entry.userId}
+                      className={`flex items-center gap-3 p-3 ${entry.userId === userId ? 'bg-amber-500/10' : ''}`}
+                    >
+                      {/* Rank */}
+                      <div className={`
+                        w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
+                        ${entry.rank === 1 ? 'bg-amber-400 text-amber-900' :
+                          entry.rank === 2 ? 'bg-gray-300 text-gray-800' :
+                          entry.rank === 3 ? 'bg-amber-600 text-white' :
+                          'bg-gray-700 text-gray-400'}
+                      `}>
+                        {entry.rank <= 3 ? (
+                          entry.rank === 1 ? <Crown className="w-4 h-4" /> :
+                          entry.rank === 2 ? <Medal className="w-4 h-4" /> :
+                          <Medal className="w-4 h-4" />
+                        ) : (
+                          entry.rank
+                        )}
+                      </div>
+                      
+                      {/* Avatar */}
+                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
+                        {entry.avatar ? (
+                          <img src={entry.avatar} alt={entry.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="text-lg">🎮</span>
+                        )}
+                      </div>
+                      
+                      {/* Name */}
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium truncate ${entry.userId === userId ? 'text-amber-400' : 'text-white'}`}>
+                          {entry.name} {entry.userId === userId && '(You)'}
+                        </p>
+                      </div>
+                      
+                      {/* Victories */}
+                      <div className="text-right">
+                        <p className="text-white font-bold">{entry.victories}</p>
+                        <p className="text-xs text-gray-500">wins</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center text-gray-400">
+                  <Trophy className="w-12 h-12 mx-auto mb-2 opacity-30" />
+                  <p className="text-sm">No battles yet. Be the first!</p>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
           {/* Magic Boxes - Victory Reward Boxes */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
             className="px-4"
           >
             <p className="text-gray-400 text-sm mb-3">Win Battles to Open Boxes</p>
