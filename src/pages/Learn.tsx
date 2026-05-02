@@ -8,21 +8,24 @@ export default function Learn() {
       id: 'physics',
       name: 'Physics',
       icon: '/images/physics-icon.png',
-      color: 'bg-white',
+      bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100',
+      borderColor: 'border-blue-200',
       chapters: 10,
     },
     {
       id: 'chemistry',
       name: 'Chemistry',
       icon: '/images/chemistry-icon.png',
-      color: 'bg-white',
+      bgColor: 'bg-gradient-to-br from-emerald-50 to-emerald-100',
+      borderColor: 'border-emerald-200',
       chapters: 8,
     },
     {
       id: 'biology',
       name: 'Biology',
       icon: '/images/biology-icon.png',
-      color: 'bg-white',
+      bgColor: 'bg-gradient-to-br from-violet-50 to-violet-100',
+      borderColor: 'border-violet-200',
       chapters: 12,
     },
   ];
@@ -62,10 +65,11 @@ export default function Learn() {
           >
             <Link
               to={`/chapter/${subject.id}/plus_one`}
-              className={`flex w-full h-28 ${subject.color} rounded-2xl pt-4 pr-4 shadow-lg hover:shadow-xl transition-all relative overflow-hidden border border-gray-100`}
+              className={`flex flex-col items-center justify-center w-full h-32 ${subject.bgColor} ${subject.borderColor} rounded-2xl shadow-sm hover:shadow-md transition-all border`}
             >
-              <span className="absolute top-4 right-4 text-gray-900 font-bold text-lg z-10">{subject.name}</span>
-              <img src={subject.icon} alt={subject.name} className="w-16 h-16 absolute bottom-2 left-2 object-contain" />
+              <img src={subject.icon} alt={subject.name} className="w-14 h-14 object-contain mb-2" />
+              <span className="text-gray-900 font-semibold text-base">{subject.name}</span>
+              <span className="text-gray-500 text-xs mt-1">{subject.chapters} chapters</span>
             </Link>
           </motion.div>
         ))}
