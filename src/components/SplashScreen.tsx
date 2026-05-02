@@ -53,6 +53,21 @@ export default function SplashScreen({ onComplete, duration = 2500 }: SplashScre
               className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full"
             />
           </motion.div>
+
+          {/* Powered by Cognix */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="absolute bottom-24 flex flex-col items-center gap-2"
+          >
+            <span className="text-white/60 text-xs font-medium tracking-wide">Powered by</span>
+            <img
+              src="/images/cognix logo.png"
+              alt="Cognix"
+              className="h-6 object-contain opacity-80"
+            />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
