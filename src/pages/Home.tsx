@@ -100,7 +100,6 @@ export default function Home() {
 
   const handleOpenBox = (boxIndex: number) => {
     if (openedBoxes.includes(boxIndex)) return;
-    if (victoriesToday <= openedBoxes.length) return;
 
     // Generate random coins (10-50)
     const rewardCoins = Math.floor(Math.random() * 41) + 10;
@@ -254,46 +253,34 @@ export default function Home() {
           <div className="flex flex-row items-center justify-center p-2 gap-2 bg-[#F7EEE1] border border-[rgba(195,109,43,0.05)] rounded-full shadow-sm">
             {[0, 1, 2, 3].map((boxIndex) => {
               const isOpened = openedBoxes.includes(boxIndex);
-              const canOpen = victoriesToday > openedBoxes.length && !isOpened;
               
               return (
                 <motion.button
                   key={boxIndex}
-                  onClick={() => canOpen && handleOpenBox(boxIndex)}
-                  disabled={isOpened || !canOpen}
-                  whileHover={canOpen ? { scale: 1.05 } : {}}
-                  whileTap={canOpen ? { scale: 0.95 } : {}}
+                  onClick={() => !isOpened && handleOpenBox(boxIndex)}
+                  disabled={isOpened}
+                  whileHover={!isOpened ? { scale: 1.05 } : {}}
+                  whileTap={!isOpened ? { scale: 0.95 } : {}}
                   className={`relative w-[41px] h-[41px] rounded-full border-2 border-[#E4C5A0] flex items-center justify-center transition-all bg-white overflow-hidden ${
                     isOpened 
-                      ? 'opacity-60' 
-                      : canOpen 
-                        ? 'cursor-pointer shadow-sm' 
-                        : 'opacity-80'
+                      ? 'opacity-40 cursor-not-allowed' 
+                      : 'cursor-pointer shadow-sm hover:shadow-md'
                   }`}
                 >
                   {isOpened ? (
-                    <img src="/images/opened-tin.png" alt="Opened" className="w-7 h-7 object-contain" />
-                  ) : canOpen ? (
+                    <img src="/images/opened-tin.png" alt="Claimed" className="w-7 h-7 object-contain grayscale" />
+                  ) : (
                     <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ repeat: Infinity, duration: 1.5 }}
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
                     >
                       <img src="/images/closed-tin.png" alt="Mystery Box" className="w-7 h-7 object-contain" />
                     </motion.div>
-                  ) : (
-                    <img src="/images/closed-tin.png" alt="Locked" className="w-7 h-7 object-contain opacity-70 grayscale" />
                   )}
                 </motion.button>
               );
             })}
           </div>
-          
-          {/* Notification badge */}
-          {victoriesToday > openedBoxes.length && (
-            <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-30">
-              <span className="text-[10px] font-bold text-white">{victoriesToday - openedBoxes.length}</span>
-            </div>
-          )}
         </div>
       </motion.div>
 
