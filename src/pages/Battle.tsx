@@ -246,7 +246,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             id: match.id,
             player1_id: match.player1_id,
             player1_name: match.player1_name,
-            player1_avatar: match.player1_avatar || '👨‍🔬',
+            player1_avatar: match.player1_avatar || '/images/profile pictures/1.png',
             player1_score: match.player1_score || 0,
             player1_answers: match.player1_answers || [],
             player2_id: userId,
@@ -412,12 +412,12 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           <p className="text-white/80 text-lg">Battle starting...</p>
           <div className="mt-8 flex items-center justify-center gap-4">
             <div className="text-center">
-              <span className="text-4xl">{currentMatch.player1_avatar}</span>
+              <img src={currentMatch.player1_avatar} alt="" className="w-16 h-16 rounded-full object-cover" />
               <p className="text-white text-sm mt-2">{currentMatch.player1_name}</p>
             </div>
             <div className="text-white text-xl font-bold">VS</div>
             <div className="text-center">
-              <span className="text-4xl">{currentMatch.player2_avatar}</span>
+              <img src={currentMatch.player2_avatar} alt="" className="w-16 h-16 rounded-full object-cover" />
               <p className="text-white text-sm mt-2">{currentMatch.player2_name}</p>
             </div>
           </div>
@@ -748,13 +748,13 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
         {/* Scores */}
         <div className="flex items-center justify-center gap-8 mt-4">
           <div className="text-center">
-            <span className="text-2xl">{match.player1_avatar}</span>
+            <img src={match.player1_avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
             <p className="font-bold text-lg">{playerScore}</p>
             <p className="text-xs text-white/80">You</p>
           </div>
           <div className="text-2xl font-bold">VS</div>
           <div className="text-center">
-            <span className="text-2xl">{match.player2_avatar}</span>
+            <img src={match.player2_avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
             <p className="font-bold text-lg">{opponentScore}</p>
             <p className="text-xs text-white/80">{match.player2_name}</p>
             {opponentAnswered && !showResult && (
@@ -931,13 +931,13 @@ function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Mat
         {/* Score Display */}
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="text-center">
-            <span className="text-3xl">{isPlayer1 ? match.player1_avatar : match.player2_avatar}</span>
+            <img src={isPlayer1 ? match.player1_avatar : match.player2_avatar} alt="" className="w-12 h-12 rounded-full object-cover" />
             <p className="text-2xl font-bold text-gray-900">{myScore}</p>
             <p className="text-xs text-gray-500">You</p>
           </div>
           <div className="text-xl text-gray-400">-</div>
           <div className="text-center">
-            <span className="text-3xl">{isPlayer1 ? match.player2_avatar : match.player1_avatar}</span>
+            <img src={isPlayer1 ? match.player2_avatar : match.player1_avatar} alt="" className="w-12 h-12 rounded-full object-cover" />
             <p className="text-2xl font-bold text-gray-900">{opponentScore}</p>
             <p className="text-xs text-gray-500">{isPlayer1 ? match.player2_name : match.player1_name}</p>
           </div>

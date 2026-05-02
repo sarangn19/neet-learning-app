@@ -32,11 +32,24 @@ interface UserState extends User {
   clearStorage: () => void;
 }
 
+// Profile picture options
+export const AVATAR_IMAGES = [
+  '/images/profile pictures/1.png',
+  '/images/profile pictures/2.png',
+  '/images/profile pictures/3.png',
+  '/images/profile pictures/4.png',
+  '/images/profile pictures/5.png',
+  '/images/profile pictures/6.png',
+  '/images/profile pictures/7.png',
+  '/images/profile pictures/8.png',
+  '/images/profile pictures/9.png',
+];
+
 const defaultUser: User = {
   id: 'user-1',
   name: 'Science Learner',
   email: 'learner@example.com',
-  avatar: '👨‍🔬',
+  avatar: AVATAR_IMAGES[0],
   tokens: 0,
   level: 1,
   streak: 0,
@@ -46,7 +59,7 @@ const defaultUser: User = {
   badges: [],
   completedLessons: [],
   role: 'user',
-  purchasedAvatars: ['👨‍🔬'],
+  purchasedAvatars: [AVATAR_IMAGES[0]],
 };
 
 export const useUserStore = create<UserState>()(
@@ -107,7 +120,7 @@ export const useUserStore = create<UserState>()(
             badges: [],
             completedLessons: [],
             role: userData.role || 'user',
-            purchasedAvatars: ['👨‍🔬'],
+            purchasedAvatars: [AVATAR_IMAGES[0]],
           };
 
           set({ isAuthenticated: true, user, ...user, lessonProgress: {} });
@@ -136,7 +149,7 @@ export const useUserStore = create<UserState>()(
               id: 'user-' + Date.now(),
               name: data.name,
               email: data.email,
-              avatar: '👨‍🔬',
+              avatar: AVATAR_IMAGES[0],
               tokens: 0,
               level: 1,
               streak: 1,
@@ -146,7 +159,7 @@ export const useUserStore = create<UserState>()(
               badges: [],
               completedLessons: [],
               role: 'user',
-              purchasedAvatars: ['👨‍🔬'],
+              purchasedAvatars: [AVATAR_IMAGES[0]],
             };
 
             set({ 
@@ -202,7 +215,7 @@ export const useUserStore = create<UserState>()(
             id: userData.id,
             name: userData.name,
             email: userData.email,
-            avatar: userData.avatar || '�‍🔬',
+            avatar: userData.avatar || AVATAR_IMAGES[0],
             tokens: userData.tokens || 0,
             level: userData.level || 1,
             streak: userData.streak || 1,
@@ -212,7 +225,7 @@ export const useUserStore = create<UserState>()(
             badges: [],
             completedLessons: [],
             role: userData.role || 'user',
-            purchasedAvatars: ['👨‍🔬'],
+            purchasedAvatars: [AVATAR_IMAGES[0]],
           };
 
           set({ 
@@ -229,7 +242,7 @@ export const useUserStore = create<UserState>()(
             id: 'user-' + Date.now(),
             name: data.name,
             email: data.email,
-            avatar: '👨‍🔬',
+            avatar: AVATAR_IMAGES[0],
             tokens: 0,
             level: 1,
             streak: 1,
@@ -239,7 +252,7 @@ export const useUserStore = create<UserState>()(
             badges: [],
             completedLessons: [],
             role: 'user',
-            purchasedAvatars: ['👨‍🔬'],
+            purchasedAvatars: [AVATAR_IMAGES[0]],
           };
           set({ isAuthenticated: true, user: newUser, ...newUser, lessonProgress: {} });
           return { success: true };

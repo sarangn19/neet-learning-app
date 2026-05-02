@@ -13,7 +13,18 @@ import { PageSkeleton } from '../components/Skeleton';
 
 
 
-const AVATAR_OPTIONS = ['👨‍🔬', '👩‍🔬', '🧑‍🔬', '👨‍🎓', '👩‍🎓', '🧑‍🎓', '🐱', '🐶', '🐰', '🦊', '🦁', '🐯', '🐼', '🐨', '🐸', '🦄'];
+// Profile picture options
+const AVATAR_OPTIONS = [
+  '/images/profile pictures/1.png',
+  '/images/profile pictures/2.png',
+  '/images/profile pictures/3.png',
+  '/images/profile pictures/4.png',
+  '/images/profile pictures/5.png',
+  '/images/profile pictures/6.png',
+  '/images/profile pictures/7.png',
+  '/images/profile pictures/8.png',
+  '/images/profile pictures/9.png',
+];
 
 interface BadgeDefinition {
   id: string;
@@ -185,7 +196,11 @@ export default function Home() {
             onClick={() => setShowProfile(true)}
             className="w-10 h-10 bg-[#D9D9D9] rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
           >
-            {avatar || <span className="text-gray-500 text-sm">👤</span>}
+            {avatar ? (
+              <img src={avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
+            ) : (
+              <span className="text-gray-500 text-sm">👤</span>
+            )}
           </button>
 
           <div className="flex flex-col">
@@ -396,7 +411,11 @@ export default function Home() {
                 onClick={() => setShowAvatarPicker(true)}
                 className="w-20 h-20 bg-[#D9D9D9] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl hover:opacity-80 transition-opacity cursor-pointer relative group"
               >
-                {avatar || <span>👤</span>}
+                {avatar ? (
+                  <img src={avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                ) : (
+                  <span>👤</span>
+                )}
                 <span className="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="text-white text-xs">Change</span>
                 </span>
@@ -422,20 +441,20 @@ export default function Home() {
                   </button>
                 </div>
                 <div className="grid grid-cols-5 gap-2">
-                  {AVATAR_OPTIONS.filter(emoji => purchasedAvatars.includes(emoji)).map((emoji) => (
+                  {AVATAR_OPTIONS.filter(img => purchasedAvatars.includes(img)).map((img) => (
                     <button
-                      key={emoji}
+                      key={img}
                       onClick={() => {
-                        setUser({ avatar: emoji });
+                        setUser({ avatar: img });
                         setShowAvatarPicker(false);
                       }}
-                      className={`w-10 h-10 rounded-lg text-xl flex items-center justify-center transition-colors ${
-                        avatar === emoji
-                          ? 'bg-blue-500 text-white'
+                      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors p-1 ${
+                        avatar === img
+                          ? 'bg-blue-500 ring-2 ring-blue-500'
                           : 'bg-white hover:bg-gray-100'
                       }`}
                     >
-                      {emoji}
+                      <img src={img} alt="Avatar" className="w-full h-full object-cover rounded" />
                     </button>
                   ))}
                 </div>

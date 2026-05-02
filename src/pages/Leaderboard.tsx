@@ -2,13 +2,21 @@ import { motion } from 'framer-motion';
 import { Trophy, Crown } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 
+// Profile picture paths
+const AVATAR_IMAGES = [
+  '/images/profile pictures/1.png',
+  '/images/profile pictures/2.png',
+  '/images/profile pictures/3.png',
+  '/images/profile pictures/4.png',
+];
+
 // Mock leaderboard data
 const leaderboardData = [
-  { rank: 1, name: 'Science Pro', avatar: '🧑‍🔬', catFood: 45, streak: 45 },
-  { rank: 2, name: 'Bio Whiz', avatar: '🔬', catFood: 38, streak: 32 },
-  { rank: 3, name: 'Chem Master', avatar: '🧪', catFood: 32, streak: 28 },
-  { rank: 4, name: 'Physics Fan', avatar: '⚛️', catFood: 28, streak: 21 },
-  { rank: 5, name: 'Learner', avatar: '📚', catFood: 22, streak: 15 },
+  { rank: 1, name: 'Science Pro', avatar: AVATAR_IMAGES[0], catFood: 45, streak: 45 },
+  { rank: 2, name: 'Bio Whiz', avatar: AVATAR_IMAGES[1], catFood: 38, streak: 32 },
+  { rank: 3, name: 'Chem Master', avatar: AVATAR_IMAGES[2], catFood: 32, streak: 28 },
+  { rank: 4, name: 'Physics Fan', avatar: AVATAR_IMAGES[3], catFood: 28, streak: 21 },
+  { rank: 5, name: 'Learner', avatar: AVATAR_IMAGES[0], catFood: 22, streak: 15 },
 ];
 
 export default function Leaderboard() {
@@ -53,7 +61,7 @@ export default function Leaderboard() {
           
           return (
             <div key={offset} className="flex flex-col items-center">
-              <div className="text-xl mb-2">{user.avatar}</div>
+              <img src={user.avatar} alt="" className="w-12 h-12 rounded-full object-cover mb-2" />
               <p className="font-bold text-sm text-gray-900 mb-2">{user.name}</p>
               <div className={`w-20 ${heights[offset]} ${colors[offset]} rounded-t-xl flex items-center justify-center`}>
                 <Crown className={`w-6 h-6 ${offset === 1 ? 'text-white' : 'text-gray-600'}`} />
@@ -80,7 +88,7 @@ export default function Leaderboard() {
               className={`flex items-center gap-4 p-3 rounded-xl ${user.name === name ? 'bg-brand-blue/10 border-2 border-brand-blue' : 'bg-gray-50'}`}
             >
               <span className="w-8 text-center font-bold text-gray-400">{user.rank}</span>
-              <span className="text-xl">{user.avatar}</span>
+              <img src={user.avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
               <div className="flex-1">
                 <p className="font-bold text-gray-900">{user.name}</p>
                 <p className="text-sm text-gray-500">{user.catFood} 🐱 food</p>
@@ -105,7 +113,7 @@ export default function Leaderboard() {
         >
           <div className="flex items-center gap-4">
             <span className="w-8 text-center font-bold text-brand-blue">{currentUser.rank}</span>
-            <span className="text-xl">{avatar}</span>
+            <img src={avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
             <div className="flex-1">
               <p className="font-bold text-gray-900">You</p>
               <p className="text-sm text-gray-500">{catFood} 🐱 food</p>

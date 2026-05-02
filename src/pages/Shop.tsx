@@ -13,22 +13,17 @@ interface ShopItem {
   owned: boolean;
 }
 
+// Profile picture shop items
 const AVATAR_SHOP_ITEMS = [
-  { emoji: '👩‍🔬', name: 'Scientist', cost: 50 },
-  { emoji: '🧑‍🔬', name: 'Researcher', cost: 50 },
-  { emoji: '👨‍🎓', name: 'Student', cost: 50 },
-  { emoji: '👩‍🎓', name: 'Graduate', cost: 50 },
-  { emoji: '🧑‍🎓', name: 'Learner', cost: 50 },
-  { emoji: '🐱', name: 'Cat', cost: 100 },
-  { emoji: '🐶', name: 'Dog', cost: 100 },
-  { emoji: '🐰', name: 'Rabbit', cost: 100 },
-  { emoji: '🦊', name: 'Fox', cost: 150 },
-  { emoji: '🦁', name: 'Lion', cost: 150 },
-  { emoji: '🐯', name: 'Tiger', cost: 150 },
-  { emoji: '🐼', name: 'Panda', cost: 200 },
-  { emoji: '🐨', name: 'Koala', cost: 200 },
-  { emoji: '🐸', name: 'Frog', cost: 200 },
-  { emoji: '🦄', name: 'Unicorn', cost: 500 },
+  { id: 'avatar-1', image: '/images/profile pictures/1.png', name: 'Avatar 1', cost: 50 },
+  { id: 'avatar-2', image: '/images/profile pictures/2.png', name: 'Avatar 2', cost: 50 },
+  { id: 'avatar-3', image: '/images/profile pictures/3.png', name: 'Avatar 3', cost: 50 },
+  { id: 'avatar-4', image: '/images/profile pictures/4.png', name: 'Avatar 4', cost: 50 },
+  { id: 'avatar-5', image: '/images/profile pictures/5.png', name: 'Avatar 5', cost: 50 },
+  { id: 'avatar-6', image: '/images/profile pictures/6.png', name: 'Avatar 6', cost: 100 },
+  { id: 'avatar-7', image: '/images/profile pictures/7.png', name: 'Avatar 7', cost: 100 },
+  { id: 'avatar-8', image: '/images/profile pictures/8.png', name: 'Avatar 8', cost: 150 },
+  { id: 'avatar-9', image: '/images/profile pictures/9.png', name: 'Avatar 9', cost: 150 },
 ];
 
 export default function Shop() {
@@ -158,10 +153,10 @@ export default function Shop() {
         </h2>
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
           {AVATAR_SHOP_ITEMS.map((avatar) => {
-            const owned = purchasedAvatars.includes(avatar.emoji);
+            const owned = purchasedAvatars.includes(avatar.image);
             return (
               <motion.div
-                key={avatar.emoji}
+                key={avatar.id}
                 whileTap={owned ? {} : { scale: 0.95 }}
                 className={`bg-white border-2 rounded-xl p-3 text-center transition-all ${
                   owned 
@@ -169,14 +164,16 @@ export default function Shop() {
                     : 'border-gray-200 hover:border-purple-300'
                 }`}
               >
-                <div className="text-3xl mb-2">{avatar.emoji}</div>
+                <div className="w-12 h-12 mx-auto mb-2 rounded-lg overflow-hidden bg-gray-100">
+                  <img src={avatar.image} alt={avatar.name} className="w-full h-full object-cover" />
+                </div>
                 <p className="text-xs font-medium text-gray-700 mb-2">{avatar.name}</p>
                 <button
                   onClick={() => {
                     if (owned) return;
-                    const success = purchaseAvatar(avatar.emoji, avatar.cost);
+                    const success = purchaseAvatar(avatar.image, avatar.cost);
                     if (success) {
-                      setPurchasedId(avatar.emoji);
+                      setPurchasedId(avatar.id);
                       setTimeout(() => setPurchasedId(null), 2000);
                     } else {
                       alert('Not enough coins! Complete lessons to earn more.');
@@ -186,7 +183,7 @@ export default function Shop() {
                   className={`w-full py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     owned
                       ? 'bg-green-100 text-green-700 cursor-default'
-                      : purchasedId === avatar.emoji
+                      : purchasedId === avatar.id
                       ? 'bg-green-500 text-white'
                       : 'bg-purple-100 hover:bg-purple-200 text-purple-700'
                   }`}
@@ -195,7 +192,7 @@ export default function Shop() {
                     <span className="flex items-center justify-center gap-1">
                       <Check className="w-3 h-3" /> Owned
                     </span>
-                  ) : purchasedId === avatar.emoji ? (
+                  ) : purchasedId === avatar.id ? (
                     'Purchased!'
                   ) : (
                     <span className="flex items-center justify-center gap-1">
