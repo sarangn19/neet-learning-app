@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Cat, Coins, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp } from 'lucide-react';
+import { Cat, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { useState } from 'react';
 
@@ -117,7 +117,7 @@ export default function Shop() {
         {/* Coins Balance */}
         <div className="flex-1 bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-center gap-3">
           <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-            <Coins className="w-6 h-6 text-yellow-600" />
+            <img src="/images/coin.png" alt="Coins" className="w-6 h-6 object-contain" />
           </div>
           <div>
             <p className="text-sm text-gray-500">Coins</p>
@@ -217,7 +217,7 @@ export default function Shop() {
                     'Purchased!'
                   ) : (
                     <span className="flex items-center justify-center gap-1">
-                      <Coins className="w-3 h-3" /> {avatar.cost}
+                      <img src="/images/coin.png" alt="" className="w-3 h-3 object-contain" /> {avatar.cost}
                     </span>
                   )}
                 </button>
@@ -274,7 +274,7 @@ export default function Shop() {
                   'Purchased!'
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <Coins className="w-4 h-4" /> {item.price}
+                    <img src="/images/coin.png" alt="" className="w-4 h-4 object-contain" /> {item.price}
                   </span>
                 )}
               </button>
