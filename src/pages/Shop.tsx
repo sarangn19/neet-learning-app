@@ -178,7 +178,7 @@ export default function Shop() {
         <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
           <User className="w-5 h-5 text-amber-600" /> Profile Pictures
         </h2>
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="grid grid-cols-3 gap-3">
           {AVATAR_SHOP_ITEMS.map((avatar) => {
             const owned = purchasedAvatars.includes(avatar.image);
             return (
