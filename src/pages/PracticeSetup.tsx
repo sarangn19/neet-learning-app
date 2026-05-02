@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, Play, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -25,24 +25,21 @@ export default function PracticeSetup() {
     { id: 'biology', name: 'Biology', color: 'bg-violet-500' },
   ];
 
-  // Handle subject selection - auto-select all chapters for the subject
+  // Handle subject selection - just change subject, don't auto-select chapters
   const handleSubjectChange = (subjectId: string) => {
     setSelectedSubject(subjectId);
-    // Get all chapter IDs for this subject and select them
+    // Clear chapters when switching subjects
+    setSelectedChapters(new Set());
+  };
+
+  // Handle select all chapters for current subject (when checkmark clicked)
+  const handleSelectAll = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering subject change
     const subjectChapters = allChapters
-      .filter(c => c.subjectId === subjectId)
+      .filter(c => c.subjectId === selectedSubject)
       .map(c => c.id);
     setSelectedChapters(new Set(subjectChapters));
   };
-
-  // Auto-select chapters for initial subject on mount
-  useEffect(() => {
-    const initialSubject = subjectId || 'physics';
-    const subjectChapters = allChapters
-      .filter(c => c.subjectId === initialSubject)
-      .map(c => c.id);
-    setSelectedChapters(new Set(subjectChapters));
-  }, [allChapters, subjectId]);
 
   const filteredChapters = useMemo(() => {
     return chapters.filter(c => c.subjectId === selectedSubject);
@@ -137,7 +134,10 @@ export default function PracticeSetup() {
             >
               {subject.name}
               {selectedSubject === subject.id && (
-                <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                <div 
+                  onClick={handleSelectAll}
+                  className="w-5 h-5 bg-white rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                >
                   <Check className="w-3 h-3 text-gray-700" />
                 </div>
               )}
