@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, Play, Check, Search, BookOpen } from 'lucide-react';
+import { ChevronLeft, Play, Check, BookOpen, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getChaptersWithQuestionCount } from '../data/questionBank';
 
@@ -93,22 +93,17 @@ export default function PracticeSetup() {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-3 mb-6"
+        className="flex items-center gap-4 mb-8"
       >
         <button 
           onClick={() => navigate('/')} 
-          className="p-2 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors shadow-sm"
+          className="w-10 h-10 bg-white border border-gray-200 rounded-2xl flex items-center justify-center hover:bg-gray-50 transition-all shadow-sm hover:shadow-md"
         >
           <ChevronLeft className="w-5 h-5 text-gray-700" />
         </button>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center border border-amber-200">
-            <BookOpen className="w-5 h-5 text-amber-600" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">MCQ Practice</h1>
-            <p className="text-sm text-gray-500">{subjectId ? `${subjectId.charAt(0).toUpperCase() + subjectId.slice(1)} - Select chapters` : 'Select chapters'}</p>
-          </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">MCQ Practice</h1>
+          <p className="text-sm text-gray-500 mt-0.5">Select chapters to practice</p>
         </div>
       </motion.div>
 
@@ -117,22 +112,27 @@ export default function PracticeSetup() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="mb-6"
+        className="mb-8"
       >
-        <h2 className="text-lg font-medium text-gray-900 mb-3">Number of questions</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <Layers className="w-5 h-5 text-amber-600" />
+          <h2 className="text-lg font-semibold text-gray-900">Number of questions</h2>
+        </div>
         <div className="flex flex-wrap gap-3">
           {[5, 10, 15, 20, 30, 180].map((num) => (
-            <button
+            <motion.button
               key={num}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setQuestionCount(num)}
-              className={`w-12 h-12 flex items-center justify-center text-lg font-medium border transition-all ${
+              className={`w-14 h-14 flex items-center justify-center text-lg font-semibold rounded-2xl transition-all shadow-sm ${
                 questionCount === num
-                  ? 'border-gray-900 bg-gray-900 text-white'
-                  : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                  ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-200'
+                  : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-amber-300 hover:shadow-md'
               }`}
             >
               {num}
-            </button>
+            </motion.button>
           ))}
         </div>
       </motion.div>
@@ -142,21 +142,23 @@ export default function PracticeSetup() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="mb-6"
+        className="mb-8"
       >
-        <div className="flex bg-gray-100 rounded-full p-1.5">
+        <div className="flex bg-gray-100/80 rounded-2xl p-1.5 gap-1">
           {subjects.map((subject) => (
-            <button
+            <motion.button
               key={subject.id}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleSubjectChange(subject.id)}
-              className={`flex-1 py-3 px-4 rounded-full text-sm font-medium transition-all ${
+              className={`flex-1 py-3.5 px-4 rounded-xl text-sm font-semibold transition-all ${
                 selectedSubject === subject.id
-                  ? `${subject.color} text-white shadow-md`
-                  : 'text-gray-600 hover:bg-gray-200'
+                  ? `${subject.color} text-white shadow-lg`
+                  : 'text-gray-600 hover:bg-white hover:shadow-sm'
               }`}
             >
               {subject.name}
-            </button>
+            </motion.button>
           ))}
         </div>
       </motion.div>
@@ -166,46 +168,60 @@ export default function PracticeSetup() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white rounded-3xl p-5 mb-4 shadow-lg border border-gray-200"
+        className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 mb-24"
       >
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-bold text-gray-900">Chapters</h2>
-          <button
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-amber-600" />
+            <h2 className="font-bold text-gray-900 text-lg">Chapters</h2>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleSelectAll}
-            className="text-sm text-amber-600 font-medium hover:text-amber-700"
+            className="text-sm font-semibold text-amber-600 bg-amber-50 px-4 py-2 rounded-full hover:bg-amber-100 transition-colors"
           >
             Select All
-          </button>
+          </motion.button>
         </div>
         
-        <div className="space-y-2 max-h-80 overflow-y-auto">
+        <div className="space-y-3">
           {filteredChapters.map((chapter) => {
             const isSelected = selectedChapters.has(chapter.id);
             return (
-              <button
+              <motion.button
                 key={chapter.id}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 onClick={() => toggleChapter(chapter.id)}
-                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all ${
+                className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all shadow-sm ${
                   isSelected
-                    ? 'border-2 border-amber-400 bg-amber-50'
-                    : 'border border-gray-200 hover:border-amber-200'
+                    ? 'bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-400 shadow-amber-100'
+                    : 'bg-white border-2 border-gray-100 hover:border-amber-200 hover:shadow-md'
                 }`}
               >
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  isSelected ? 'bg-gradient-to-r from-amber-400 to-orange-500 border-transparent' : 'border-gray-300'
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                  isSelected 
+                    ? 'bg-gradient-to-r from-amber-400 to-orange-500 border-transparent shadow-sm' 
+                    : 'border-gray-300 bg-white'
                 }`}>
-                  {isSelected && <Check className="w-3 h-3 text-white" />}
+                  {isSelected && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-gray-900 truncate">{chapter.name}</p>
-                  <p className="text-xs text-gray-500">{chapter.questionCount} questions</p>
+                  <p className={`font-semibold truncate ${isSelected ? 'text-gray-900' : 'text-gray-700'}`}>
+                    {chapter.name}
+                  </p>
+                  <p className="text-sm text-gray-500 mt-0.5">{chapter.questionCount} questions</p>
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </div>
         {filteredChapters.length === 0 && (
-          <p className="text-center text-gray-500 py-3 text-sm">No chapters available for this subject</p>
+          <div className="text-center py-8">
+            <BookOpen className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+            <p className="text-gray-500 text-sm">No chapters available for this subject</p>
+          </div>
         )}
       </motion.div>
 
@@ -214,25 +230,29 @@ export default function PracticeSetup() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="fixed bottom-20 left-4 right-4 p-4 bg-white rounded-2xl shadow-xl border border-gray-200"
+        className="fixed bottom-24 left-4 right-4"
       >
-        <button
-          onClick={handleStartPractice}
-          disabled={!canStart}
-          className={`w-full py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 text-sm transition-all ${
-            canStart
-              ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg hover:opacity-90'
-              : 'bg-gray-200 text-gray-400'
-          }`}
-        >
-          <Play className="w-4 h-4" fill="currentColor" />
-          Start Practice ({questionCount} questions)
-        </button>
-        {!canStart && (
-          <p className="text-center text-xs text-gray-500 mt-2">
-            Select chapters with at least 5 questions
-          </p>
-        )}
+        <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-2 shadow-2xl border border-gray-200/50">
+          <button
+            onClick={handleStartPractice}
+            disabled={!canStart}
+            className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 text-base transition-all ${
+              canStart
+                ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-200 hover:shadow-xl hover:scale-[1.02]'
+                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${canStart ? 'bg-white/20' : 'bg-gray-200'}`}>
+              <Play className="w-4 h-4" fill="currentColor" />
+            </div>
+            <span>Start Practice ({questionCount} questions)</span>
+          </button>
+          {!canStart && (
+            <p className="text-center text-xs text-gray-500 mt-3 pb-1">
+              Select chapters with at least 5 questions to start
+            </p>
+          )}
+        </div>
       </motion.div>
     </div>
   );
