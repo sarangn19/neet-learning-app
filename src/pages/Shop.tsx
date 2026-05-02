@@ -178,23 +178,24 @@ export default function Shop() {
         <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
           <User className="w-5 h-5 text-amber-600" /> Profile Pictures
         </h2>
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
           {AVATAR_SHOP_ITEMS.map((avatar) => {
             const owned = purchasedAvatars.includes(avatar.image);
             return (
               <motion.div
                 key={avatar.id}
                 whileTap={owned ? {} : { scale: 0.95 }}
-                className={`bg-white border rounded-2xl p-3 text-center transition-all shadow-sm ${
+                className={`bg-white border rounded-xl p-2 text-center transition-all flex flex-col items-center gap-1 ${
                   owned 
                     ? 'border-green-200 bg-green-50' 
-                    : 'border-gray-200 hover:border-amber-300'
+                    : 'border-black/20 hover:border-amber-300'
                 }`}
+                style={{ width: '132px' }}
               >
-                <div className="w-12 h-12 mx-auto mb-2 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
+                <div className="w-[116px] h-[116px] rounded-xl overflow-hidden bg-gray-100">
                   <img src={avatar.image} alt={avatar.name} className="w-full h-full object-cover" />
                 </div>
-                <p className="text-xs font-medium text-gray-700 mb-2">{avatar.name}</p>
+                <p className="text-xs font-bold text-black w-[116px] text-center leading-4 h-4">{avatar.name}</p>
                 <motion.button
                   onClick={() => {
                     if (owned) return;
@@ -211,13 +212,13 @@ export default function Shop() {
                     }
                   }}
                   disabled={owned}
-                  whileTap={owned ? {} : { scale: 0.9 }}
-                  className={`w-full py-1.5 rounded-xl text-xs font-medium transition-colors ${
+                  whileTap={owned ? {} : { scale: 0.95 }}
+                  className={`w-[116px] h-[35px] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 px-4 py-1 ${
                     owned
-                      ? 'bg-green-100 text-green-700 cursor-default'
+                      ? 'bg-green-100 text-green-700 cursor-default border border-green-200'
                       : purchasedId === avatar.id
-                      ? 'bg-green-500 text-white'
-                      : 'bg-amber-100 hover:bg-amber-200 text-amber-700'
+                      ? 'bg-green-500 text-white border border-green-500'
+                      : 'bg-white border border-[rgba(250,169,64,0.32)] text-black hover:border-amber-400'
                   }`}
                 >
                   <AnimatePresence mode="wait">
@@ -229,7 +230,7 @@ export default function Shop() {
                         exit={{ opacity: 0, scale: 0.8 }}
                         className="flex items-center justify-center gap-1"
                       >
-                        <Check className="w-3 h-3" /> Owned
+                        <Check className="w-4 h-4" /> Owned
                       </motion.span>
                     ) : purchasedId === avatar.id ? (
                       <motion.span
@@ -240,7 +241,7 @@ export default function Shop() {
                         transition={{ type: 'spring', stiffness: 500, damping: 15 }}
                         className="flex items-center justify-center gap-1"
                       >
-                        <PartyPopper className="w-3 h-3" /> Purchased!
+                        <PartyPopper className="w-4 h-4" /> Purchased!
                       </motion.span>
                     ) : (
                       <motion.span
@@ -248,9 +249,10 @@ export default function Shop() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="flex items-center justify-center gap-1"
+                        className="flex items-center justify-center gap-2"
                       >
-                        <img src="/images/coin.png" alt="" className="w-3 h-3 object-contain" /> {avatar.cost}
+                        <img src="/images/coin.png" alt="" className="w-[27px] h-[27px] object-contain" /> 
+                        <span className="text-xs font-bold text-black">{avatar.cost}</span>
                       </motion.span>
                     )}
                   </AnimatePresence>
