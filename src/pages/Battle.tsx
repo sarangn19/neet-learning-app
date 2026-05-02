@@ -460,7 +460,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
   // Render lobby/setup
   return (
-    <div className="h-full overflow-y-auto bg-black relative flex flex-col">
+    <div className="h-full overflow-y-auto bg-black rounded-2xl relative">
       {/* Close Button */}
       {onClose && (
         <button
@@ -489,7 +489,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="space-y-4 flex-1 flex flex-col"
+          className="space-y-4"
         >
           {/* Players Info */}
           <div className="px-4 py-3">
@@ -542,7 +542,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           </div>
 
           {/* Start Match Button */}
-          <div className="px-4 pb-8 mt-auto">
+          <div className="px-4 pb-8">
             {isLoading ? (
               <div className="text-center py-4">
                 <motion.div
