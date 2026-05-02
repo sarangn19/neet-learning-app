@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { X, CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
 import { getQuestionsForChapters, shuffleArray } from '../data/questionBank';
+import { usePerformanceStore } from '../store/performanceStore';
+import { useUserStore } from '../store/userStore';
+import { performanceService, MCQSessionResult, QuestionResult } from '../services/performanceService';
 
 export default function PracticeSession() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const user = useUserStore((state) => state.user);
+  const recordMCQSession = usePerformanceStore((state) => state.recordMCQSession);
 
   // Load questions once using state initializer (runs only once on mount)
   const [questions] = useState(() => {
@@ -21,6 +26,10 @@ export default function PracticeSession() {
   const [selected, setSelected] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
+  const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
+  const [questionResults, setQuestionResults] = useState<QuestionResult[]>([]);
+  const [sessionStartTime] = useState<number>(Date.now());
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const question = questions[currentIndex];
 
@@ -30,9 +39,24 @@ export default function PracticeSession() {
 
   const handleCheck = () => {
     if (selected === null) return;
-    if (selected === question.correctAnswer) {
+    const isCorrect = selected === question.correctAnswer;
+    if (isCorrect) {
       setScore(s => s + 1);
     }
+    
+    // Record question result
+    const timeSpent = Math.floor((Date.now() - questionStartTime) / 1000);
+    const result: QuestionResult = {
+      questionId: question.id,
+      chapterId: question.chapterId,
+      subjectId: question.subjectId,
+      selectedAnswer: String(selected),
+      correctAnswer: String(question.correctAnswer),
+      isCorrect,
+      timeSpent,
+    };
+    setQuestionResults(prev => [...prev, result]);
+    
     setShowResult(true);
   };
 
@@ -41,11 +65,42 @@ export default function PracticeSession() {
       setCurrentIndex(i => i + 1);
       setSelected(null);
       setShowResult(false);
+      setQuestionStartTime(Date.now());
     } else {
-      // Force re-render to show results
+      // Session completed
+      setIsCompleted(true);
       setCurrentIndex(questions.length);
     }
   };
+
+  // Save performance data when session completes
+  useEffect(() => {
+    if (isCompleted && user?.id && questionResults.length > 0 && !questionResults.some(r => r.questionId === questionResults[questionResults.length - 1].questionId && questionResults.filter(q => q.questionId === r.questionId).length > 1)) {
+      const totalTimeSpent = Math.floor((Date.now() - sessionStartTime) / 1000);
+      const correctCount = questionResults.filter(r => r.isCorrect).length;
+      const incorrectCount = questionResults.length - correctCount;
+      
+      // Get unique subject and chapter IDs
+      const subjectId = questionResults[0]?.subjectId || 'mixed';
+      const chapterIds = [...new Set(questionResults.map(r => r.chapterId))];
+      
+      const sessionResult: MCQSessionResult = {
+        userId: user.id,
+        sessionId: `session_${Date.now()}`,
+        subjectId,
+        chapterIds,
+        totalQuestions: questionResults.length,
+        correctAnswers: correctCount,
+        incorrectAnswers: incorrectCount,
+        timeSpent: totalTimeSpent,
+        questions: questionResults,
+        completedAt: new Date().toISOString(),
+      };
+      
+      // Record the session
+      recordMCQSession(sessionResult);
+    }
+  }, [isCompleted, user?.id, questionResults, sessionStartTime, recordMCQSession]);
 
   // Results screen
   if (!question || currentIndex >= questions.length) {
@@ -69,6 +124,9 @@ export default function PracticeSession() {
             </button>
             <button onClick={() => navigate('/')} className="w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-bold">
               Back to Home
+            </button>
+            <button onClick={() => navigate('/performance')} className="w-full py-3 bg-purple-100 text-purple-700 rounded-xl font-bold">
+              View Performance
             </button>
           </div>
         </div>

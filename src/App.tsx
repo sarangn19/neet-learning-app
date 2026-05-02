@@ -8,6 +8,7 @@ import ChapterView from './pages/ChapterView';
 import ModuleView from './pages/ModuleView';
 import Lesson from './pages/Lesson';
 import Profile from './pages/Profile';
+import Performance from './pages/Performance';
 import PracticeSetup from './pages/PracticeSetup';
 import PracticeSession from './pages/PracticeSession';
 import Login from './pages/Login';
@@ -70,6 +71,7 @@ function App() {
             <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
             <Route path="lesson/:levelId" element={<Lesson />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="performance" element={<Performance />} />
           </Route>
           {/* Practice Session - Outside Layout (no nav bar) */}
           <Route path="/practice/session" element={

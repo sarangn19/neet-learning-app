@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Swords, BookOpen } from 'lucide-react';
+import { Home, ShoppingBag, Swords, BookOpen, BarChart3 } from 'lucide-react';
 
 export default function Layout() {
   const location = useLocation();
@@ -22,6 +22,7 @@ export default function Layout() {
           <NavItem to="/" icon={<Home className="w-5 h-5" />} label="Home" isActive={isActive('/')} />
           <NavItem to="/battle" icon={<Swords className="w-5 h-5" />} label="Battle" isActive={isActive('/battle')} />
           <NavItem to="/mcqs" icon={<BookOpen className="w-5 h-5" />} label="MCQs" isActive={isActive('/mcqs')} />
+          <NavItem to="/performance" icon={<BarChart3 className="w-5 h-5" />} label="Stats" isActive={isActive('/performance')} />
           <NavItem to="/shop" icon={<ShoppingBag className="w-5 h-5" />} label="Shop" isActive={isActive('/shop')} />
         </div>
       </nav>
