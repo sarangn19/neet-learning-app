@@ -455,9 +455,9 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
               </div>
               
               {/* Banner Background */}
-              <div className="relative h-24 rounded-xl overflow-hidden shadow-2xl border-2 border-amber-400/50">
+              <div className="relative h-24 overflow-hidden shadow-2xl">
                 <img src={player1Banner} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none"></div>
                 
                 {/* Player Name - positioned in banner's text area */}
                 <div className="absolute inset-0 flex items-center justify-center pl-16 pr-12">
@@ -488,9 +488,9 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
               </div>
               
               {/* Banner Background */}
-              <div className="relative h-24 rounded-xl overflow-hidden shadow-2xl border-2 border-amber-400/50">
+              <div className="relative h-24 overflow-hidden shadow-2xl">
                 <img src={player2Banner} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none"></div>
                 
                 {/* Player Name - positioned in banner's text area */}
                 <div className="absolute inset-0 flex items-center justify-center pr-16 pl-12">
