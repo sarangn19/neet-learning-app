@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, Bot, Swords } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../lib/supabase';
 import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
@@ -13,6 +13,8 @@ interface Match {
   player2_name: string | null;
   player1_avatar: string;
   player2_avatar: string | null;
+  player1_banner?: string;
+  player2_banner?: string;
   player1_score: number;
   player2_score: number;
   player1_answers: { questionIndex: number; correct: boolean; timeLeft: number }[];
@@ -36,7 +38,7 @@ const GRADE_MODES: { id: 'plus_one' | 'mixed'; name: string }[] = [
 ];
 
 export default function Battle({ onClose }: { onClose?: () => void }) {
-  const { name, avatar, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
+  const { name, avatar, equippedBanner, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
   const [selectedMode, setSelectedMode] = useState<'plus_one' | 'mixed'>('plus_one');
@@ -178,11 +180,13 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         player1_id: userId,
         player1_name: name,
         player1_avatar: avatar,
+        player1_banner: equippedBanner,
         player1_score: 0,
         player1_answers: [],
         player2_id: 'ai-opponent',
         player2_name: aiOpponent.name,
         player2_avatar: aiOpponent.avatar,
+        player2_banner: 'banner-default',
         player2_score: 0,
         player2_answers: [],
         status: 'active',
@@ -394,6 +398,21 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
   // Render countdown screen
   if (gameState === 'countdown' && currentMatch) {
+    // Banner gradients map
+    const BANNER_GRADIENTS: Record<string, string> = {
+      'banner-default': 'from-blue-500 to-cyan-400',
+      'banner-fire': 'from-red-500 to-orange-500',
+      'banner-nature': 'from-green-500 to-emerald-400',
+      'banner-royal': 'from-purple-500 to-pink-500',
+      'banner-gold': 'from-yellow-400 to-amber-600',
+      'banner-cosmic': 'from-indigo-600 to-purple-600',
+      'banner-dark': 'from-gray-800 to-slate-900',
+      'banner-ocean': 'from-blue-600 to-teal-500',
+    };
+
+    const player1Gradient = BANNER_GRADIENTS[currentMatch.player1_banner || 'banner-default'];
+    const player2Gradient = BANNER_GRADIENTS[currentMatch.player2_banner || 'banner-default'];
+
     return (
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center z-50 rounded-2xl">
         <div className="text-center">
@@ -407,15 +426,40 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             {countdown > 0 ? countdown : 'GO!'}
           </motion.div>
           <p className="text-white/80 text-lg">Battle starting...</p>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="text-center">
-              <img src={currentMatch.player1_avatar} alt="" className="w-16 h-16 rounded-full object-cover" />
-              <p className="text-white text-sm mt-2">{currentMatch.player1_name}</p>
+          
+          {/* Battle Banner Showdown */}
+          <div className="mt-8 flex items-center justify-center gap-6">
+            {/* Player 1 Banner */}
+            <div className="relative">
+              <div className={`w-32 h-40 rounded-2xl bg-gradient-to-br ${player1Gradient} shadow-2xl transform -skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30`}>
+                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                  <img src={currentMatch.player1_avatar} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white" />
+                </div>
+                <p className="text-white text-xs font-bold mt-2 truncate w-full text-center px-1">{currentMatch.player1_name}</p>
+              </div>
+              {/* Banner Ribbon */}
+              <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r ${player1Gradient} text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30`}>
+                P1
+              </div>
             </div>
-            <div className="text-white text-xl font-bold">VS</div>
-            <div className="text-center">
-              <img src={currentMatch.player2_avatar} alt="" className="w-16 h-16 rounded-full object-cover" />
-              <p className="text-white text-sm mt-2">{currentMatch.player2_name}</p>
+
+            {/* VS Badge */}
+            <div className="w-16 h-16 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-amber-400">
+              <span className="text-amber-600 text-xl font-black">VS</span>
+            </div>
+
+            {/* Player 2 Banner */}
+            <div className="relative">
+              <div className={`w-32 h-40 rounded-2xl bg-gradient-to-br ${player2Gradient} shadow-2xl transform skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30`}>
+                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                  <img src={currentMatch.player2_avatar} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white" />
+                </div>
+                <p className="text-white text-xs font-bold mt-2 truncate w-full text-center px-1">{currentMatch.player2_name}</p>
+              </div>
+              {/* Banner Ribbon */}
+              <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r ${player2Gradient} text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30`}>
+                P2
+              </div>
             </div>
           </div>
         </div>
@@ -550,8 +594,8 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             <p className="text-gray-500 text-xs text-center mt-2">Win 4 battles to unlock all rewards</p>
           </motion.div>
 
-          {/* Start Match Button */}
-          <div className="px-4 pb-8">
+          {/* Start Match Buttons */}
+          <div className="px-4 pb-8 space-y-3">
             {isLoading ? (
               <div className="text-center py-4">
                 <motion.div
@@ -568,12 +612,25 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={startMatchmaking}
-                className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold hover:opacity-90 transition-opacity"
-              >
-                Start Matchmaking
-              </button>
+              <>
+                {/* Play vs AI Button */}
+                <button
+                  onClick={startAIMatch}
+                  className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                >
+                  <Bot className="w-5 h-5" />
+                  Play vs AI
+                </button>
+                
+                {/* Play vs Player Button */}
+                <button
+                  onClick={startMatchmaking}
+                  className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                >
+                  <Swords className="w-5 h-5" />
+                  Play vs Player
+                </button>
+              </>
             )}
           </div>
 

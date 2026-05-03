@@ -10,7 +10,9 @@ interface UserState extends User {
   coins: number;
   isAuthenticated: boolean;
   user: User | null;
-  
+  purchasedBanners: string[];
+  equippedBanner: string;
+
   // Actions
   setUser: (user: Partial<User>) => void;
   completeLesson: (levelId: string, stars: number) => Promise<Badge[]>;
@@ -25,6 +27,8 @@ interface UserState extends User {
   addCoins: (amount: number) => void;
   spendCoins: (amount: number) => boolean;
   purchaseAvatar: (avatar: string, cost: number) => boolean;
+  purchaseBanner: (bannerId: string, cost: number) => boolean;
+  equipBanner: (bannerId: string) => void;
   completeModule: () => void;
   login: (email: string, password: string) => Promise<{ success: boolean; user?: User; error?: string }>;
   signup: (data: { name: string; email: string; password: string }) => Promise<{ success: boolean; error?: string }>;
@@ -45,7 +49,7 @@ export const AVATAR_IMAGES = [
   '/images/profile pictures/9.png',
 ];
 
-const defaultUser: User = {
+const defaultUser: User & { purchasedBanners: string[]; equippedBanner: string } = {
   id: 'user-1',
   name: 'Science Learner',
   email: 'learner@example.com',
@@ -60,6 +64,8 @@ const defaultUser: User = {
   completedLessons: [],
   role: 'user',
   purchasedAvatars: [AVATAR_IMAGES[0]],
+  purchasedBanners: ['banner-default'],
+  equippedBanner: 'banner-default',
 };
 
 export const useUserStore = create<UserState>()(
@@ -520,6 +526,25 @@ export const useUserStore = create<UserState>()(
           return true;
         }
         return false;
+      },
+
+      purchaseBanner: (bannerId, cost) => {
+        const state = get();
+        if (state.coins >= cost && !state.purchasedBanners.includes(bannerId)) {
+          set({
+            coins: state.coins - cost,
+            purchasedBanners: [...state.purchasedBanners, bannerId],
+          });
+          return true;
+        }
+        return false;
+      },
+
+      equipBanner: (bannerId) => {
+        const state = get();
+        if (state.purchasedBanners.includes(bannerId)) {
+          set({ equippedBanner: bannerId });
+        }
       },
 
       getDailyGoal: () => {

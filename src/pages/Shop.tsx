@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cat, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp, PartyPopper } from 'lucide-react';
+import { Cat, Sparkles, Palette, Zap, Crown, Check, User, Info, ChevronUp, PartyPopper, Swords } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { useState } from 'react';
 
@@ -26,8 +26,20 @@ const AVATAR_SHOP_ITEMS = [
   { id: 'avatar-9', image: '/images/profile pictures/9.png', name: 'Avatar 9', cost: 150 },
 ];
 
+// Battle Banner shop items
+const BANNER_SHOP_ITEMS = [
+  { id: 'banner-default', name: 'Default Banner', gradient: 'from-blue-500 to-cyan-400', cost: 0 },
+  { id: 'banner-fire', name: 'Fire Banner', gradient: 'from-red-500 to-orange-500', cost: 100 },
+  { id: 'banner-nature', name: 'Nature Banner', gradient: 'from-green-500 to-emerald-400', cost: 100 },
+  { id: 'banner-royal', name: 'Royal Banner', gradient: 'from-purple-500 to-pink-500', cost: 200 },
+  { id: 'banner-gold', name: 'Gold Banner', gradient: 'from-yellow-400 to-amber-600', cost: 300 },
+  { id: 'banner-cosmic', name: 'Cosmic Banner', gradient: 'from-indigo-600 to-purple-600', cost: 500 },
+  { id: 'banner-dark', name: 'Dark Banner', gradient: 'from-gray-800 to-slate-900', cost: 250 },
+  { id: 'banner-ocean', name: 'Ocean Banner', gradient: 'from-blue-600 to-teal-500', cost: 200 },
+];
+
 export default function Shop() {
-  const { catFood, coins, spendCoins, purchaseAvatar, purchasedAvatars } = useUserStore();
+  const { catFood, coins, spendCoins, purchaseAvatar, purchasedAvatars, purchaseBanner, purchasedBanners, equippedBanner, equipBanner } = useUserStore();
   const [purchasedId, setPurchasedId] = useState<string | null>(null);
   const [purchaseAnimation, setPurchaseAnimation] = useState<{ id: string; name: string } | null>(null);
   const [showHowToEarn, setShowHowToEarn] = useState(false);
@@ -256,6 +268,86 @@ export default function Shop() {
                     )}
                   </AnimatePresence>
                 </motion.button>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      {/* Battle Banner Shop */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="mb-8"
+      >
+        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <Swords className="w-5 h-5 text-amber-600" /> Battle Banners
+        </h2>
+        <div className="grid grid-cols-2 gap-3 w-full">
+          {BANNER_SHOP_ITEMS.map((banner) => {
+            const owned = purchasedBanners.includes(banner.id);
+            const equipped = equippedBanner === banner.id;
+            return (
+              <motion.div
+                key={banner.id}
+                whileTap={owned ? {} : { scale: 0.95 }}
+                className={`bg-white border rounded-xl p-2 text-center transition-all flex flex-col items-center gap-2 w-full min-w-0 ${
+                  equipped
+                    ? 'border-amber-400 ring-2 ring-amber-200'
+                    : owned
+                    ? 'border-green-200 bg-green-50'
+                    : 'border-black/20 hover:border-amber-300'
+                }`}
+              >
+                {/* Banner Preview */}
+                <div className={`w-full h-16 rounded-xl bg-gradient-to-r ${banner.gradient} flex items-center justify-center shadow-inner`}>
+                  <span className="text-white font-bold text-xs drop-shadow-md">BANNER</span>
+                </div>
+                <p className="text-xs font-bold text-black w-full text-center leading-4 truncate px-1">{banner.name}</p>
+                
+                {owned ? (
+                  <motion.button
+                    onClick={() => equipBanner(banner.id)}
+                    disabled={equipped}
+                    whileTap={equipped ? {} : { scale: 0.95 }}
+                    className={`w-full h-[35px] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1 px-2 ${
+                      equipped
+                        ? 'bg-amber-100 text-amber-700 cursor-default border border-amber-200'
+                        : 'bg-white border border-green-300 text-green-700 hover:bg-green-50'
+                    }`}
+                  >
+                    {equipped ? (
+                      <span className="flex items-center gap-1">
+                        <Check className="w-4 h-4" /> Equipped
+                      </span>
+                    ) : (
+                      <span>Equip</span>
+                    )}
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    onClick={() => {
+                      const success = purchaseBanner(banner.id, banner.cost);
+                      if (success) {
+                        equipBanner(banner.id);
+                        setPurchasedId(banner.id);
+                        setPurchaseAnimation({ id: banner.id, name: banner.name });
+                        setTimeout(() => {
+                          setPurchasedId(null);
+                          setPurchaseAnimation(null);
+                        }, 2000);
+                      } else {
+                        alert('Not enough coins! Complete lessons to earn more.');
+                      }
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full h-[35px] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 px-2 bg-white border border-[rgba(250,169,64,0.32)] text-black hover:border-amber-400"
+                  >
+                    <img src="/images/coin.png" alt="" className="w-[27px] h-[27px] object-contain" />
+                    <span className="text-xs font-bold text-black">{banner.cost}</span>
+                  </motion.button>
+                )}
               </motion.div>
             );
           })}
