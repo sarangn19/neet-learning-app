@@ -443,62 +443,72 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           </motion.div>
           <p className="text-white/80 text-lg">Battle starting...</p>
           
-          {/* Battle Banner Showdown - Clash Royale Style */}
-          <div className="mt-8 flex flex-col items-center gap-4">
+          {/* Battle Banner Showdown - Big Clash Royale Style */}
+          <div className="mt-6 flex flex-col items-center gap-3">
             {/* Player 1 - Top Banner */}
-            <div className="relative w-64">
+            <div className="relative w-72">
+              {/* Avatar peeking from top */}
+              <div className="absolute -top-6 left-4 z-20">
+                <div className="w-24 h-24 rounded-full bg-white/30 backdrop-blur-sm p-1 border-3 border-white shadow-2xl">
+                  <img src={currentMatch.player1_avatar} alt="" className="w-full h-full rounded-full object-cover border-2 border-amber-400" />
+                </div>
+              </div>
+              
               {/* Banner Background */}
-              <div className="relative h-24 rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
+              <div className="relative h-28 rounded-2xl overflow-hidden shadow-2xl border-3 border-amber-400/50">
                 <img src={player1Banner} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
                 
-                {/* Avatar centered on banner */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-xl">
-                    <img src={currentMatch.player1_avatar} alt="" className="w-full h-full rounded-full object-cover" />
-                  </div>
+                {/* Crown/Shield Icon */}
+                <div className="absolute top-3 left-32 w-10 h-10 rounded-full bg-gradient-to-br from-amber-300 to-yellow-600 flex items-center justify-center shadow-lg border-2 border-white">
+                  <span className="text-white text-lg">👑</span>
                 </div>
                 
                 {/* Player Name */}
-                <div className="absolute bottom-2 left-4">
-                  <p className="text-white font-bold text-sm drop-shadow-lg">{currentMatch.player1_name}</p>
+                <div className="absolute bottom-4 left-32 right-4">
+                  <p className="text-white font-black text-lg drop-shadow-lg tracking-wide uppercase truncate">{currentMatch.player1_name}</p>
                 </div>
                 
                 {/* P1 Badge */}
-                <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-lg font-bold shadow-lg border border-white/30">
+                <div className="absolute top-3 right-3 bg-blue-600 text-white text-sm px-3 py-1 rounded-full font-black shadow-lg border-2 border-white/50">
                   P1
                 </div>
               </div>
             </div>
 
-            {/* VS Badge - Centered */}
-            <div className="relative z-10">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-2xl flex items-center justify-center border-4 border-white transform rotate-3">
-                <span className="text-white text-lg font-black drop-shadow-md">VS</span>
+            {/* VS Badge - Big */}
+            <div className="relative z-10 my-1">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-500 to-orange-500 shadow-2xl flex items-center justify-center border-4 border-white transform rotate-6">
+                <span className="text-white text-xl font-black drop-shadow-md">VS</span>
               </div>
             </div>
 
             {/* Player 2 - Bottom Banner */}
-            <div className="relative w-64">
+            <div className="relative w-72">
+              {/* Avatar peeking from top */}
+              <div className="absolute -top-6 right-4 z-20">
+                <div className="w-24 h-24 rounded-full bg-white/30 backdrop-blur-sm p-1 border-3 border-white shadow-2xl">
+                  <img src={currentMatch.player2_avatar} alt="" className="w-full h-full rounded-full object-cover border-2 border-amber-400" />
+                </div>
+              </div>
+              
               {/* Banner Background */}
-              <div className="relative h-24 rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
+              <div className="relative h-28 rounded-2xl overflow-hidden shadow-2xl border-3 border-amber-400/50">
                 <img src={player2Banner} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
                 
-                {/* Avatar centered on banner */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-xl">
-                    <img src={currentMatch.player2_avatar} alt="" className="w-full h-full rounded-full object-cover" />
-                  </div>
+                {/* Crown/Shield Icon */}
+                <div className="absolute top-3 right-32 w-10 h-10 rounded-full bg-gradient-to-br from-amber-300 to-yellow-600 flex items-center justify-center shadow-lg border-2 border-white">
+                  <span className="text-white text-lg">👑</span>
                 </div>
                 
-                {/* Player Name - Right aligned for variety */}
-                <div className="absolute bottom-2 right-4">
-                  <p className="text-white font-bold text-sm drop-shadow-lg">{currentMatch.player2_name}</p>
+                {/* Player Name */}
+                <div className="absolute bottom-4 left-4 right-32">
+                  <p className="text-white font-black text-lg drop-shadow-lg tracking-wide uppercase truncate text-right">{currentMatch.player2_name}</p>
                 </div>
                 
                 {/* P2 Badge */}
-                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-lg font-bold shadow-lg border border-white/30">
+                <div className="absolute top-3 left-3 bg-red-600 text-white text-sm px-3 py-1 rounded-full font-black shadow-lg border-2 border-white/50">
                   P2
                 </div>
               </div>
