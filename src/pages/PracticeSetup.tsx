@@ -131,10 +131,10 @@ export default function PracticeSetup() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setQuestionCount(num)}
-              className={`w-14 h-14 flex items-center justify-center text-lg font-semibold rounded-2xl transition-all shadow-sm ${
+              className={`w-11 h-11 flex items-center justify-center text-base font-semibold rounded-xl transition-all shadow-sm ${
                 questionCount === num
-                  ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-200'
-                  : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-amber-300 hover:shadow-md'
+                  ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-md shadow-amber-200'
+                  : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-amber-300 hover:shadow'
               }`}
             >
               {num}
