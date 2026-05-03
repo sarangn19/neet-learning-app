@@ -6,6 +6,7 @@ import { useUserStore } from './store/userStore';
 
 // Lazy load all pages for better performance
 const Home = lazy(() => import('./pages/Home'));
+const HomeDuolingo = lazy(() => import('./pages/HomeDuolingo'));
 const BattlePage = lazy(() => import('./pages/BattlePage'));
 const ChapterList = lazy(() => import('./pages/ChapterList'));
 const ChapterView = lazy(() => import('./pages/ChapterView'));
@@ -83,6 +84,12 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="performance" element={<Performance />} />
             </Route>
+            {/* Duolingo-style Home - Outside Layout (has its own nav) */}
+            <Route path="/learn" element={
+              <ProtectedRoute>
+                <HomeDuolingo />
+              </ProtectedRoute>
+            } />
             {/* Practice Session - Outside Layout (no nav bar) */}
             <Route path="/practice/session" element={
               <ProtectedRoute>
