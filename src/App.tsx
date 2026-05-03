@@ -79,7 +79,7 @@ function App() {
               <Route path="practice/:subjectId" element={<PracticeSetup />} />
               <Route path="chapter/:subjectId/:grade" element={<ChapterList />} />
               <Route path="chapter/:subjectId/:grade/:chapterId" element={<ChapterView />} />
-              <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
+              <Route path="module/:subjectId/:chapterId/:moduleId" element={<ModuleView />} />
               <Route path="lesson/:levelId" element={<Lesson />} />
               <Route path="profile" element={<Profile />} />
               <Route path="performance" element={<Performance />} />

@@ -216,7 +216,7 @@ export default function HomeDuolingo() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
                     className="flex items-center gap-4 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => navigate(`/module/biology/digestion/${selectedModule}`)}
+                    onClick={() => navigate(`/learn/module/biology/digestion/${selectedModule}`)}
                   >
                     <div className={`w-12 h-12 rounded-xl ${value.color} flex items-center justify-center text-2xl`}>
                       {value.icon}
@@ -234,7 +234,7 @@ export default function HomeDuolingo() {
               <div className="p-4 pb-8">
                 <button 
                   className="w-full py-4 rounded-xl bg-green-500 text-white font-bold text-lg hover:bg-green-600 transition-colors"
-                  onClick={() => navigate(`/module/biology/digestion/${selectedModule}`)}
+                  onClick={() => navigate(`/learn/module/biology/digestion/${selectedModule}`)}
                 >
                   START LEARNING
                 </button>
