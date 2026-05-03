@@ -98,12 +98,27 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
   };
 
   // AI Opponent names and avatars (fallback)
+  // Random AI avatars (using DiceBear API for consistent random avatars)
+  const AI_AVATARS = [
+    'https://api.dicebear.com/7.x/bottts/svg?seed=NeoBot',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=QuizMaster',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=StudyBuddy',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=BrainyBot',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=GeniusAI',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=AlphaBot',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=MegaMind',
+    'https://api.dicebear.com/7.x/bottts/svg?seed=Thinker',
+  ];
+
   const AI_OPPONENTS = [
-    { name: 'NeoBot', avatar: '🤖' },
-    { name: 'QuizMaster AI', avatar: '🧠' },
-    { name: 'StudyBuddy', avatar: '📚' },
-    { name: 'BrainyBot', avatar: '⚡' },
-    { name: 'Genius AI', avatar: '🎯' },
+    { name: 'NeoBot' },
+    { name: 'QuizMaster AI' },
+    { name: 'StudyBuddy' },
+    { name: 'BrainyBot' },
+    { name: 'Genius AI' },
+    { name: 'AlphaBot' },
+    { name: 'MegaMind' },
+    { name: 'Thinker' },
   ];
 
   // Subscribe to match updates via Supabase Realtime
@@ -166,6 +181,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
     const questions = getRandomQuestions('mixed', 5);
     const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
+    const aiAvatar = AI_AVATARS[Math.floor(Math.random() * AI_AVATARS.length)];
 
     const match: Match = {
       id: 'ai-' + Date.now(),
@@ -177,7 +193,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       player1_answers: [],
       player2_id: 'ai-opponent',
       player2_name: aiOpponent.name,
-      player2_avatar: aiOpponent.avatar,
+      player2_avatar: aiAvatar,
       player2_banner: 'banner-default',
       player2_score: 0,
       player2_answers: [],
