@@ -457,6 +457,18 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
         <div className="relative w-full max-w-md h-full flex flex-col justify-center items-center">
           
+          {/* Countdown - At top */}
+          <motion.div
+            key={countdown}
+            initial={{ scale: 2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="relative z-50 text-8xl font-bold text-white drop-shadow-2xl mb-8"
+            style={{ textShadow: '0 0 30px rgba(251, 191, 36, 0.8)' }}
+          >
+            {countdown > 0 ? countdown : 'GO!'}
+          </motion.div>
+          
           {/* Player 1 Banner - Slides from left */}
           <motion.div 
             className="relative w-[85%] h-32 self-start"
@@ -502,18 +514,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
               {/* Glow effect */}
               <div className="absolute inset-0 rounded-2xl bg-amber-400 blur-xl opacity-50 -z-10"></div>
             </div>
-          </motion.div>
-
-          {/* Countdown */}
-          <motion.div
-            key={countdown}
-            initial={{ scale: 2, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-8xl font-bold text-white drop-shadow-2xl z-40"
-            style={{ textShadow: '0 0 30px rgba(251, 191, 36, 0.8)' }}
-          >
-            {countdown > 0 ? countdown : 'GO!'}
           </motion.div>
 
           {/* Player 2 Banner - Slides from right */}
