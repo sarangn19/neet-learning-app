@@ -443,62 +443,60 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           </motion.div>
           <p className="text-white/80 text-lg">Battle starting...</p>
           
-          {/* Battle Banner Showdown - Clash Royale Style */}
-          <div className="mt-6 flex flex-col items-center gap-4">
+          {/* Battle Banner Showdown - Full Width */}
+          <div className="mt-6 flex flex-col items-center gap-4 w-full px-0">
             {/* Player 1 - Top Banner */}
-            <div className="relative w-80">
+            <div className="relative w-full">
               {/* Avatar positioned in banner's left frame slot */}
-              <div className="absolute -left-2 top-1/2 transform -translate-y-1/2 z-20">
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20">
                 <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-2xl">
                   <img src={currentMatch.player1_avatar} alt="" className="w-full h-full rounded-full object-cover" />
                 </div>
               </div>
               
-              {/* Banner Background */}
-              <div className="relative h-24 overflow-hidden shadow-2xl">
+              {/* Banner Background - full width, no box */}
+              <div className="relative h-24">
                 <img src={player1Banner} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none"></div>
                 
                 {/* Player Name - positioned in banner's text area */}
-                <div className="absolute inset-0 flex items-center justify-center pl-16 pr-12">
-                  <p className="text-white font-black text-base drop-shadow-lg tracking-wide uppercase truncate">{currentMatch.player1_name}</p>
+                <div className="absolute inset-0 flex items-center justify-center pl-24 pr-16">
+                  <p className="text-white font-black text-lg drop-shadow-lg tracking-wide uppercase truncate">{currentMatch.player1_name}</p>
                 </div>
                 
                 {/* P1 Badge */}
-                <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-lg font-black shadow-lg border border-white/30">
+                <div className="absolute top-2 right-4 bg-blue-500 text-white text-xs px-3 py-1 rounded-lg font-black shadow-lg border border-white/30">
                   P1
                 </div>
               </div>
             </div>
 
             {/* VS Badge */}
-            <div className="relative z-10 -my-2">
+            <div className="relative z-10 -my-3">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-2xl flex items-center justify-center border-3 border-white">
                 <span className="text-white text-lg font-black drop-shadow-md">VS</span>
               </div>
             </div>
 
             {/* Player 2 - Bottom Banner */}
-            <div className="relative w-80">
+            <div className="relative w-full">
               {/* Avatar positioned in banner's right frame slot */}
-              <div className="absolute -right-2 top-1/2 transform -translate-y-1/2 z-20">
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20">
                 <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-2xl">
                   <img src={currentMatch.player2_avatar} alt="" className="w-full h-full rounded-full object-cover" />
                 </div>
               </div>
               
-              {/* Banner Background */}
-              <div className="relative h-24 overflow-hidden shadow-2xl">
+              {/* Banner Background - full width, no box */}
+              <div className="relative h-24">
                 <img src={player2Banner} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none"></div>
                 
                 {/* Player Name - positioned in banner's text area */}
-                <div className="absolute inset-0 flex items-center justify-center pr-16 pl-12">
-                  <p className="text-white font-black text-base drop-shadow-lg tracking-wide uppercase truncate">{currentMatch.player2_name}</p>
+                <div className="absolute inset-0 flex items-center justify-center pr-24 pl-16">
+                  <p className="text-white font-black text-lg drop-shadow-lg tracking-wide uppercase truncate">{currentMatch.player2_name}</p>
                 </div>
                 
                 {/* P2 Badge */}
-                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-lg font-black shadow-lg border border-white/30">
+                <div className="absolute top-2 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-lg font-black shadow-lg border border-white/30">
                   P2
                 </div>
               </div>
