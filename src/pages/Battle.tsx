@@ -414,7 +414,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
     // Banner image paths
     const getBannerImage = (bannerId: string) => {
       const bannerMap: Record<string, string> = {
-        'banner-default': '/images/banner/default%20banner.png',
+        'banner-default': '/images/banner/banner.webp',
         'banner-fire': '/images/banner/fire.png',
         'banner-nature': '/images/banner/nature.png',
         'banner-royal': '/images/banner/royal.png',
@@ -423,7 +423,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         'banner-dark': '/images/banner/dark.png',
         'banner-ocean': '/images/banner/ocean.png',
       };
-      return bannerMap[bannerId] || '/images/banner/default%20banner.png';
+      return bannerMap[bannerId] || '/images/banner/banner.webp';
     };
 
     const player1Banner = getBannerImage(currentMatch.player1_banner || 'banner-default');
