@@ -1052,7 +1052,7 @@ function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Mat
               <p className="text-gray-500 text-xs">Correct</p>
             </div>
             <div className="text-center">
-              <X className="w-5 h-5 text-red-500 mx-auto mb-1" />
+              <XCircle className="w-5 h-5 text-red-500 mx-auto mb-1" />
               <p className="font-bold text-red-600">
                 {match.player1_answers.filter(a => !a.correct).length}
               </p>
