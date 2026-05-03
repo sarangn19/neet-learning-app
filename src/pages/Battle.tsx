@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, CheckCircle, XCircle, Bot, Swords } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, Bot, Swords, Check } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../lib/supabase';
 import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
@@ -443,46 +443,64 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           </motion.div>
           <p className="text-white/80 text-lg">Battle starting...</p>
           
-          {/* Battle Banner Showdown */}
-          <div className="mt-8 flex items-center justify-center gap-6">
-            {/* Player 1 Banner */}
-            <div className="relative">
-              <div className="w-32 h-40 rounded-2xl shadow-2xl transform -skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30 overflow-hidden">
-                {/* Banner Background Image */}
-                <img src={player1Banner} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/20"></div>
-                {/* Avatar on top */}
-                <div className="relative z-10 w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                  <img src={currentMatch.player1_avatar} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white" />
+          {/* Battle Banner Showdown - Clash Royale Style */}
+          <div className="mt-8 flex flex-col items-center gap-4">
+            {/* Player 1 - Top Banner */}
+            <div className="relative w-64">
+              {/* Banner Background */}
+              <div className="relative h-24 rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
+                <img src={player1Banner} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
+                
+                {/* Avatar centered on banner */}
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-xl">
+                    <img src={currentMatch.player1_avatar} alt="" className="w-full h-full rounded-full object-cover" />
+                  </div>
                 </div>
-                <p className="relative z-10 text-white text-xs font-bold mt-2 truncate w-full text-center px-1 drop-shadow-md">{currentMatch.player1_name}</p>
-              </div>
-              {/* Banner Ribbon */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30 shadow-lg">
-                P1
+                
+                {/* Player Name */}
+                <div className="absolute bottom-2 left-4">
+                  <p className="text-white font-bold text-sm drop-shadow-lg">{currentMatch.player1_name}</p>
+                </div>
+                
+                {/* P1 Badge */}
+                <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-lg font-bold shadow-lg border border-white/30">
+                  P1
+                </div>
               </div>
             </div>
 
-            {/* VS Badge */}
-            <div className="w-16 h-16 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-amber-400">
-              <span className="text-amber-600 text-xl font-black">VS</span>
+            {/* VS Badge - Centered */}
+            <div className="relative z-10">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-2xl flex items-center justify-center border-4 border-white transform rotate-3">
+                <span className="text-white text-lg font-black drop-shadow-md">VS</span>
+              </div>
             </div>
 
-            {/* Player 2 Banner */}
-            <div className="relative">
-              <div className="w-32 h-40 rounded-2xl shadow-2xl transform skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30 overflow-hidden">
-                {/* Banner Background Image */}
-                <img src={player2Banner} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/20"></div>
-                {/* Avatar on top */}
-                <div className="relative z-10 w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                  <img src={currentMatch.player2_avatar} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white" />
+            {/* Player 2 - Bottom Banner */}
+            <div className="relative w-64">
+              {/* Banner Background */}
+              <div className="relative h-24 rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
+                <img src={player2Banner} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
+                
+                {/* Avatar centered on banner */}
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-xl">
+                    <img src={currentMatch.player2_avatar} alt="" className="w-full h-full rounded-full object-cover" />
+                  </div>
                 </div>
-                <p className="relative z-10 text-white text-xs font-bold mt-2 truncate w-full text-center px-1 drop-shadow-md">{currentMatch.player2_name}</p>
-              </div>
-              {/* Banner Ribbon */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30 shadow-lg">
-                P2
+                
+                {/* Player Name - Right aligned for variety */}
+                <div className="absolute bottom-2 right-4">
+                  <p className="text-white font-bold text-sm drop-shadow-lg">{currentMatch.player2_name}</p>
+                </div>
+                
+                {/* P2 Badge */}
+                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-lg font-bold shadow-lg border border-white/30">
+                  P2
+                </div>
               </div>
             </div>
           </div>
