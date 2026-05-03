@@ -156,6 +156,52 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
     return channel;
   }, []);
 
+  // Start AI match - directly playable
+  const startAIMatch = useCallback(() => {
+    // Check auth
+    if (!isAuthenticated || !userId) {
+      setError('Please login to play');
+      return;
+    }
+
+    const questions = getRandomQuestions('mixed', 5);
+    const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
+
+    const match: Match = {
+      id: 'ai-' + Date.now(),
+      player1_id: userId,
+      player1_name: name,
+      player1_avatar: avatar,
+      player1_banner: equippedBanner,
+      player1_score: 0,
+      player1_answers: [],
+      player2_id: 'ai-opponent',
+      player2_name: aiOpponent.name,
+      player2_avatar: aiOpponent.avatar,
+      player2_banner: 'banner-default',
+      player2_score: 0,
+      player2_answers: [],
+      status: 'active',
+      subject: 'mixed',
+      questions: questions,
+      current_question: 0,
+      winner_id: null,
+      created_at: new Date().toISOString(),
+    };
+    setCurrentMatch(match);
+    setGameState('countdown');
+
+    let count = 3;
+    const interval = setInterval(() => {
+      count--;
+      setCountdown(count);
+      if (count <= 0) {
+        clearInterval(interval);
+        setGameState('playing');
+      }
+    }, 1000);
+  }, [isAuthenticated, userId, name, avatar, equippedBanner]);
+
   // Start matchmaking - tries real-time first, falls back to AI
   const startMatchmaking = useCallback(async () => {
     setGameState('searching');
@@ -171,44 +217,11 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
     }
 
     const questions = getRandomQuestions('mixed', 5);
-    const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
 
-    // Helper to start a local AI match
-    const startAIMatch = () => {
-      const match: Match = {
-        id: 'ai-' + Date.now(),
-        player1_id: userId,
-        player1_name: name,
-        player1_avatar: avatar,
-        player1_banner: equippedBanner,
-        player1_score: 0,
-        player1_answers: [],
-        player2_id: 'ai-opponent',
-        player2_name: aiOpponent.name,
-        player2_avatar: aiOpponent.avatar,
-        player2_banner: 'banner-default',
-        player2_score: 0,
-        player2_answers: [],
-        status: 'active',
-        subject: 'mixed',
-        questions: questions,
-        current_question: 0,
-        winner_id: null,
-        created_at: new Date().toISOString(),
-      };
-      setCurrentMatch(match);
-      setGameState('countdown');
+    // Helper to start AI match on failure
+    const fallbackToAI = () => {
       setIsLoading(false);
-
-      let count = 3;
-      const interval = setInterval(() => {
-        count--;
-        setCountdown(count);
-        if (count <= 0) {
-          clearInterval(interval);
-          setGameState('playing');
-        }
-      }, 1000);
+      startAIMatch();
     };
 
     try {
@@ -344,7 +357,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       // Any error - start AI match immediately
       startAIMatch();
     }
-  }, [name, avatar, selectedMode, subscribeToMatch, isAuthenticated, userId]);
+  }, [name, avatar, selectedMode, subscribeToMatch, isAuthenticated, userId, startAIMatch]);
 
   const cancelMatchmaking = () => {
     setGameState('setup');
