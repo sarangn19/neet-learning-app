@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Swords, Users, Trophy, Clock, Zap, ArrowLeft, BookOpen, Atom, Dna, FlaskConical, Check, X, Sparkles, Globe } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../lib/supabase';
 import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
@@ -30,19 +30,16 @@ interface Match {
 type Subject = 'physics' | 'chemistry' | 'biology' | 'mixed';
 type Grade = 'plus_one' | 'plus_two';
 
-const SUBJECTS: { id: Subject; name: string; icon: React.ReactNode; color: string; bgColor: string }[] = [
-  { id: 'physics', name: 'Physics', icon: <Atom className="w-6 h-6" />, color: 'text-blue-600', bgColor: 'bg-blue-100' },
-  { id: 'chemistry', name: 'Chemistry', icon: <FlaskConical className="w-6 h-6" />, color: 'text-green-600', bgColor: 'bg-green-100' },
-  { id: 'biology', name: 'Biology', icon: <Dna className="w-6 h-6" />, color: 'text-pink-600', bgColor: 'bg-pink-100' },
-  { id: 'mixed', name: 'Mixed', icon: <Sparkles className="w-6 h-6" />, color: 'text-purple-600', bgColor: 'bg-purple-100' },
+const GRADE_MODES: { id: 'plus_one' | 'mixed'; name: string }[] = [
+  { id: 'plus_one', name: 'Plus One Only' },
+  { id: 'mixed', name: 'Plus One + Plus Two' },
 ];
 
 export default function Battle({ onClose }: { onClose?: () => void }) {
   const { name, avatar, coins, addCoins, isAuthenticated, id: userId, recordBattleVictory } = useUserStore();
   const [activeTab, setActiveTab] = useState<'find' | 'history'>('find');
   const [gameState, setGameState] = useState<'setup' | 'searching' | 'countdown' | 'playing' | 'finished'>('setup');
-  const [selectedSubject, setSelectedSubject] = useState<Subject>('mixed');
-  const [selectedGrade, setSelectedGrade] = useState<Grade>('plus_one');
+  const [selectedMode, setSelectedMode] = useState<'plus_one' | 'mixed'>('plus_one');
   const [currentMatch, setCurrentMatch] = useState<Match | null>(null);
   const [countdown, setCountdown] = useState(3);
   const [matchHistory, setMatchHistory] = useState<Match[]>([]);
@@ -171,7 +168,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       return;
     }
 
-    const questions = getRandomQuestions(selectedSubject, 5);
+    const questions = getRandomQuestions('mixed', 5);
     const aiOpponent = AI_OPPONENTS[Math.floor(Math.random() * AI_OPPONENTS.length)];
 
     // Helper to start a local AI match
@@ -189,7 +186,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         player2_score: 0,
         player2_answers: [],
         status: 'active',
-        subject: selectedSubject,
+        subject: 'mixed',
         questions: questions,
         current_question: 0,
         winner_id: null,
@@ -216,7 +213,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         .from('battle_matches')
         .select('*')
         .eq('status', 'waiting')
-        .eq('subject', selectedSubject)
+        .eq('grade', selectedMode === 'plus_one' ? 'plus_one' : 'mixed')
         .neq('player1_id', userId)
         .limit(1);
 
@@ -288,8 +285,8 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           player1_name: name,
           player1_avatar: avatar,
           status: 'waiting',
-          subject: selectedSubject,
-          grade: selectedGrade,
+          subject: 'mixed',
+          grade: selectedMode === 'plus_one' ? 'plus_one' : 'mixed',
           questions: questions,
         })
         .select()
@@ -343,7 +340,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       // Any error - start AI match immediately
       startAIMatch();
     }
-  }, [name, avatar, selectedSubject, selectedGrade, subscribeToMatch, isAuthenticated, userId]);
+  }, [name, avatar, selectedMode, subscribeToMatch, isAuthenticated, userId]);
 
   const cancelMatchmaking = () => {
     setGameState('setup');
@@ -489,26 +486,24 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </p>
           </div>
 
-          {/* Subject Selection */}
+          {/* Grade Mode Selection */}
           {!isLoading && gameState === 'setup' && (
             <>
-              {/* Subject Pills */}
               <div className="px-4 flex flex-wrap gap-2">
-                {SUBJECTS.map((subject) => (
+                {GRADE_MODES.map((mode) => (
                   <button
-                    key={subject.id}
-                    onClick={() => setSelectedSubject(subject.id)}
+                    key={mode.id}
+                    onClick={() => setSelectedMode(mode.id)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      selectedSubject === subject.id
+                      selectedMode === mode.id
                         ? 'bg-gray-700 text-white border border-gray-600'
                         : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'
                     }`}
                   >
-                    {subject.name}
+                    {mode.name}
                   </button>
                 ))}
               </div>
-
             </>
           )}
 
@@ -736,16 +731,13 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
     }, 2000);
   };
 
-  // Get subject info
-  const subjectInfo = SUBJECTS.find(s => s.id === currentQuestion.subject);
+  // Get mode info for display
+  const modeInfo = { name: 'Mixed Topics' };
 
   return (
     <div className="h-full w-full bg-white flex flex-col overflow-y-auto">
       {/* Header */}
       <div className={`bg-gradient-to-r ${
-        currentQuestion.subject === 'physics' ? 'from-blue-600 to-blue-500' :
-        currentQuestion.subject === 'chemistry' ? 'from-green-600 to-green-500' :
-        currentQuestion.subject === 'biology' ? 'from-pink-600 to-pink-500' :
         'from-purple-600 to-pink-500'
       } text-white p-4 shrink-0`}>
         <div className="flex items-center justify-between">
@@ -753,8 +745,7 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="flex items-center gap-2">
-            {subjectInfo?.icon}
-            <span className="font-semibold capitalize">{currentQuestion.subject}</span>
+            <span className="font-semibold">Mixed</span>
           </div>
           <div className="w-10" />
         </div>
@@ -799,9 +790,6 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
             className={`h-full ${
-              currentQuestion.subject === 'physics' ? 'bg-blue-500' :
-              currentQuestion.subject === 'chemistry' ? 'bg-green-500' :
-              currentQuestion.subject === 'biology' ? 'bg-pink-500' :
               'bg-purple-500'
             }`}
             initial={{ width: 0 }}
@@ -821,9 +809,6 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
           {/* Topic badge */}
           <div className="mb-4">
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-              currentQuestion.subject === 'physics' ? 'bg-blue-100 text-blue-700' :
-              currentQuestion.subject === 'chemistry' ? 'bg-green-100 text-green-700' :
-              currentQuestion.subject === 'biology' ? 'bg-pink-100 text-pink-700' :
               'bg-purple-100 text-purple-700'
             }`}>
               {currentQuestion.topic}
@@ -939,7 +924,7 @@ function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Mat
           {playerWon ? 'Victory!' : isDraw ? 'Draw!' : 'Defeat!'}
         </h2>
         <p className="text-gray-500 text-sm mb-6">
-          {SUBJECTS.find(s => s.id === match.subject)?.name}
+          Mixed Topics
         </p>
 
         {/* Score Display */}
