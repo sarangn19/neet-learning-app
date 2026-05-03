@@ -1,23 +1,32 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import BattlePage from './pages/BattlePage';
-import ChapterList from './pages/ChapterList';
-import ChapterView from './pages/ChapterView';
-import ModuleView from './pages/ModuleView';
-import Lesson from './pages/Lesson';
-import Profile from './pages/Profile';
-import Performance from './pages/Performance';
-import PracticeSetup from './pages/PracticeSetup';
-import PracticeSession from './pages/PracticeSession';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import AdminDashboard from './pages/AdminDashboard';
-import SuperAdminDashboard from './pages/SuperAdminDashboard';
-import Shop from './pages/Shop';
 import SplashScreen from './components/SplashScreen';
 import { useUserStore } from './store/userStore';
+
+// Lazy load all pages for better performance
+const Home = lazy(() => import('./pages/Home'));
+const BattlePage = lazy(() => import('./pages/BattlePage'));
+const ChapterList = lazy(() => import('./pages/ChapterList'));
+const ChapterView = lazy(() => import('./pages/ChapterView'));
+const ModuleView = lazy(() => import('./pages/ModuleView'));
+const Lesson = lazy(() => import('./pages/Lesson'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Performance = lazy(() => import('./pages/Performance'));
+const PracticeSetup = lazy(() => import('./pages/PracticeSetup'));
+const PracticeSession = lazy(() => import('./pages/PracticeSession'));
+const Login = lazy(() => import('./pages/Login'));
+const Signup = lazy(() => import('./pages/Signup'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const SuperAdminDashboard = lazy(() => import('./pages/SuperAdminDashboard'));
+const Shop = lazy(() => import('./pages/Shop'));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 // Protected Route wrapper component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -54,37 +63,39 @@ function App() {
         duration={2500}
       />
       {!showSplash && (
-        <Routes>
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<Home />} />
-            <Route path="battle" element={<BattlePage />} />
-            <Route path="mcqs" element={<PracticeSetup />} />
-            <Route path="shop" element={<Shop />} />
-            <Route path="practice" element={<PracticeSetup />} />
-            <Route path="practice/:subjectId" element={<PracticeSetup />} />
-            <Route path="chapter/:subjectId/:grade" element={<ChapterList />} />
-            <Route path="chapter/:subjectId/:grade/:chapterId" element={<ChapterView />} />
-            <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
-            <Route path="lesson/:levelId" element={<Lesson />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="performance" element={<Performance />} />
-          </Route>
-          {/* Practice Session - Outside Layout (no nav bar) */}
-          <Route path="/practice/session" element={
-            <ProtectedRoute>
-              <PracticeSession />
-            </ProtectedRoute>
-          } />
-          {/* Auth Routes - Outside Layout */}
-          <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
-          <Route path="/signup" element={isAuthenticated ? <Navigate to="/" replace /> : <Signup />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/superadmin" element={<SuperAdminDashboard />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<Home />} />
+              <Route path="battle" element={<BattlePage />} />
+              <Route path="mcqs" element={<PracticeSetup />} />
+              <Route path="shop" element={<Shop />} />
+              <Route path="practice" element={<PracticeSetup />} />
+              <Route path="practice/:subjectId" element={<PracticeSetup />} />
+              <Route path="chapter/:subjectId/:grade" element={<ChapterList />} />
+              <Route path="chapter/:subjectId/:grade/:chapterId" element={<ChapterView />} />
+              <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
+              <Route path="lesson/:levelId" element={<Lesson />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="performance" element={<Performance />} />
+            </Route>
+            {/* Practice Session - Outside Layout (no nav bar) */}
+            <Route path="/practice/session" element={
+              <ProtectedRoute>
+                <PracticeSession />
+              </ProtectedRoute>
+            } />
+            {/* Auth Routes - Outside Layout */}
+            <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
+            <Route path="/signup" element={isAuthenticated ? <Navigate to="/" replace /> : <Signup />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/superadmin" element={<SuperAdminDashboard />} />
+          </Routes>
+        </Suspense>
       )}
     </>
   );
