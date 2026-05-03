@@ -430,23 +430,8 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
     const player2Banner = getBannerImage(currentMatch.player2_banner || 'banner-default');
 
     return (
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex flex-col items-center z-50 rounded-2xl overflow-hidden">
-        {/* Countdown Number */}
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <motion.div
-            key={countdown}
-            initial={{ scale: 2, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            className="text-8xl font-bold text-white mb-4"
-          >
-            {countdown > 0 ? countdown : 'GO!'}
-          </motion.div>
-          <p className="text-white/80 text-lg">Battle starting...</p>
-        </div>
-        
-        {/* Battle Banner Showdown - Full Width Edge to Edge */}
-        <div className="w-full flex flex-col gap-0">
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center z-50 rounded-2xl overflow-hidden">
+        <div className="w-full flex flex-col items-center">
           {/* Player 1 - Top Banner */}
           <div className="relative w-full">
             {/* Avatar positioned in banner's left frame slot */}
@@ -472,14 +457,26 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
 
-          {/* VS Badge - Overlapping */}
-          <div className="relative z-10 self-center -my-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-2xl flex items-center justify-center border-4 border-white">
-              <span className="text-white text-xl font-black drop-shadow-md">VS</span>
+          {/* Countdown & VS - Centered Between Banners */}
+          <div className="relative z-10 -my-6 flex flex-col items-center">
+            <motion.div
+              key={countdown}
+              initial={{ scale: 2, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              className="text-7xl font-bold text-white drop-shadow-2xl"
+            >
+              {countdown > 0 ? countdown : 'GO!'}
+            </motion.div>
+            <p className="text-white/80 text-sm mt-1">Battle starting...</p>
+            
+            {/* VS Badge */}
+            <div className="mt-2 w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-2xl flex items-center justify-center border-4 border-white">
+              <span className="text-white text-lg font-black drop-shadow-md">VS</span>
             </div>
           </div>
 
-          {/* Player 2 - Bottom Banner */}
+          {/* Player 2 - Bottom Banner (Flipped Horizontally) */}
           <div className="relative w-full">
             {/* Avatar positioned in banner's right frame slot */}
             <div className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20">
@@ -488,9 +485,9 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
               </div>
             </div>
             
-            {/* Banner Background - full width */}
+            {/* Banner Background - full width, flipped horizontally */}
             <div className="relative h-28 w-full">
-              <img src={player2Banner} alt="" className="w-full h-full object-cover object-center" />
+              <img src={player2Banner} alt="" className="w-full h-full object-cover object-center transform scale-x-[-1]" />
               
               {/* Player Name */}
               <div className="absolute inset-0 flex items-center justify-center">
@@ -504,9 +501,6 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
         </div>
-        
-        {/* Spacer for bottom */}
-        <div className="h-8"></div>
       </div>
     );
   }
