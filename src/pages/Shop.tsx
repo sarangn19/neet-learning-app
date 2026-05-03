@@ -28,14 +28,14 @@ const AVATAR_SHOP_ITEMS = [
 
 // Battle Banner shop items
 const BANNER_SHOP_ITEMS = [
-  { id: 'banner-default', name: 'Default Banner', gradient: 'from-blue-500 to-cyan-400', cost: 0 },
-  { id: 'banner-fire', name: 'Fire Banner', gradient: 'from-red-500 to-orange-500', cost: 100 },
-  { id: 'banner-nature', name: 'Nature Banner', gradient: 'from-green-500 to-emerald-400', cost: 100 },
-  { id: 'banner-royal', name: 'Royal Banner', gradient: 'from-purple-500 to-pink-500', cost: 200 },
-  { id: 'banner-gold', name: 'Gold Banner', gradient: 'from-yellow-400 to-amber-600', cost: 300 },
-  { id: 'banner-cosmic', name: 'Cosmic Banner', gradient: 'from-indigo-600 to-purple-600', cost: 500 },
-  { id: 'banner-dark', name: 'Dark Banner', gradient: 'from-gray-800 to-slate-900', cost: 250 },
-  { id: 'banner-ocean', name: 'Ocean Banner', gradient: 'from-blue-600 to-teal-500', cost: 200 },
+  { id: 'banner-default', name: 'Default Banner', image: '/images/banner/default%20banner.png', cost: 0 },
+  { id: 'banner-fire', name: 'Fire Banner', image: '/images/banner/fire.png', cost: 100 },
+  { id: 'banner-nature', name: 'Nature Banner', image: '/images/banner/nature.png', cost: 100 },
+  { id: 'banner-royal', name: 'Royal Banner', image: '/images/banner/royal.png', cost: 200 },
+  { id: 'banner-gold', name: 'Gold Banner', image: '/images/banner/gold.png', cost: 300 },
+  { id: 'banner-cosmic', name: 'Cosmic Banner', image: '/images/banner/cosmic.png', cost: 500 },
+  { id: 'banner-dark', name: 'Dark Banner', image: '/images/banner/dark.png', cost: 250 },
+  { id: 'banner-ocean', name: 'Ocean Banner', image: '/images/banner/ocean.png', cost: 200 },
 ];
 
 export default function Shop() {
@@ -301,8 +301,8 @@ export default function Shop() {
                 }`}
               >
                 {/* Banner Preview */}
-                <div className={`w-full h-16 rounded-xl bg-gradient-to-r ${banner.gradient} flex items-center justify-center shadow-inner`}>
-                  <span className="text-white font-bold text-xs drop-shadow-md">BANNER</span>
+                <div className="w-full h-16 rounded-xl overflow-hidden shadow-inner relative">
+                  <img src={banner.image} alt={banner.name} className="w-full h-full object-cover" />
                 </div>
                 <p className="text-xs font-bold text-black w-full text-center leading-4 truncate px-1">{banner.name}</p>
                 
