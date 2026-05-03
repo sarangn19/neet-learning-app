@@ -411,20 +411,23 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
   // Render countdown screen
   if (gameState === 'countdown' && currentMatch) {
-    // Banner gradients map
-    const BANNER_GRADIENTS: Record<string, string> = {
-      'banner-default': 'from-blue-500 to-cyan-400',
-      'banner-fire': 'from-red-500 to-orange-500',
-      'banner-nature': 'from-green-500 to-emerald-400',
-      'banner-royal': 'from-purple-500 to-pink-500',
-      'banner-gold': 'from-yellow-400 to-amber-600',
-      'banner-cosmic': 'from-indigo-600 to-purple-600',
-      'banner-dark': 'from-gray-800 to-slate-900',
-      'banner-ocean': 'from-blue-600 to-teal-500',
+    // Banner image paths
+    const getBannerImage = (bannerId: string) => {
+      const bannerMap: Record<string, string> = {
+        'banner-default': '/images/banners/default.png',
+        'banner-fire': '/images/banners/fire.png',
+        'banner-nature': '/images/banners/nature.png',
+        'banner-royal': '/images/banners/royal.png',
+        'banner-gold': '/images/banners/gold.png',
+        'banner-cosmic': '/images/banners/cosmic.png',
+        'banner-dark': '/images/banners/dark.png',
+        'banner-ocean': '/images/banners/ocean.png',
+      };
+      return bannerMap[bannerId] || '/images/banners/default.png';
     };
 
-    const player1Gradient = BANNER_GRADIENTS[currentMatch.player1_banner || 'banner-default'];
-    const player2Gradient = BANNER_GRADIENTS[currentMatch.player2_banner || 'banner-default'];
+    const player1Banner = getBannerImage(currentMatch.player1_banner || 'banner-default');
+    const player2Banner = getBannerImage(currentMatch.player2_banner || 'banner-default');
 
     return (
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center z-50 rounded-2xl">
@@ -444,14 +447,18 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           <div className="mt-8 flex items-center justify-center gap-6">
             {/* Player 1 Banner */}
             <div className="relative">
-              <div className={`w-32 h-40 rounded-2xl bg-gradient-to-br ${player1Gradient} shadow-2xl transform -skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30`}>
-                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+              <div className="w-32 h-40 rounded-2xl shadow-2xl transform -skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30 overflow-hidden">
+                {/* Banner Background Image */}
+                <img src={player1Banner} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/20"></div>
+                {/* Avatar on top */}
+                <div className="relative z-10 w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
                   <img src={currentMatch.player1_avatar} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white" />
                 </div>
-                <p className="text-white text-xs font-bold mt-2 truncate w-full text-center px-1">{currentMatch.player1_name}</p>
+                <p className="relative z-10 text-white text-xs font-bold mt-2 truncate w-full text-center px-1 drop-shadow-md">{currentMatch.player1_name}</p>
               </div>
               {/* Banner Ribbon */}
-              <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r ${player1Gradient} text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30`}>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30 shadow-lg">
                 P1
               </div>
             </div>
@@ -463,14 +470,18 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
             {/* Player 2 Banner */}
             <div className="relative">
-              <div className={`w-32 h-40 rounded-2xl bg-gradient-to-br ${player2Gradient} shadow-2xl transform skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30`}>
-                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+              <div className="w-32 h-40 rounded-2xl shadow-2xl transform skew-x-6 flex flex-col items-center justify-center p-3 border-2 border-white/30 overflow-hidden">
+                {/* Banner Background Image */}
+                <img src={player2Banner} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/20"></div>
+                {/* Avatar on top */}
+                <div className="relative z-10 w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
                   <img src={currentMatch.player2_avatar} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white" />
                 </div>
-                <p className="text-white text-xs font-bold mt-2 truncate w-full text-center px-1">{currentMatch.player2_name}</p>
+                <p className="relative z-10 text-white text-xs font-bold mt-2 truncate w-full text-center px-1 drop-shadow-md">{currentMatch.player2_name}</p>
               </div>
               {/* Banner Ribbon */}
-              <div className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r ${player2Gradient} text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30`}>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold border border-white/30 shadow-lg">
                 P2
               </div>
             </div>
