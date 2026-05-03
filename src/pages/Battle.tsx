@@ -409,143 +409,45 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
     }
   };
 
-  // Render countdown screen - Clash Royale Style
+  // Render countdown screen - Simple Version
   if (gameState === 'countdown' && currentMatch) {
-    // Banner image paths
-    const getBannerImage = (bannerId: string) => {
-      const bannerMap: Record<string, string> = {
-        'banner-default': '/images/banner/banner.webp',
-        'banner-fire': '/images/banner/fire.png',
-        'banner-nature': '/images/banner/nature.png',
-        'banner-royal': '/images/banner/royal.png',
-        'banner-gold': '/images/banner/gold.png',
-        'banner-cosmic': '/images/banner/cosmic.png',
-        'banner-dark': '/images/banner/dark.png',
-        'banner-ocean': '/images/banner/ocean.png',
-      };
-      return bannerMap[bannerId] || '/images/banner/banner.webp';
-    };
-
-    const player1Banner = getBannerImage(currentMatch.player1_banner || 'banner-default');
-    const player2Banner = getBannerImage(currentMatch.player2_banner || 'banner-default');
-
     return (
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center z-50 rounded-2xl overflow-hidden">
-        {/* Background particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-white/30 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [-100, -300],
-                opacity: [0.5, 0],
-                scale: [1, 0],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 flex flex-col items-center justify-center z-50 rounded-2xl overflow-hidden">
+        {/* Countdown */}
+        <motion.div
+          key={countdown}
+          initial={{ scale: 2, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          className="text-8xl font-bold text-white drop-shadow-2xl mb-8"
+        >
+          {countdown > 0 ? countdown : 'GO!'}
+        </motion.div>
+        
+        <p className="text-white/80 text-lg mb-12">Battle starting...</p>
 
-        <div className="relative w-full max-w-md h-full flex flex-col justify-center items-center">
-          
-          {/* Countdown - At top */}
-          <motion.div
-            key={countdown}
-            initial={{ scale: 2, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            className="relative z-50 text-8xl font-bold text-white drop-shadow-2xl mb-8"
-            style={{ textShadow: '0 0 30px rgba(251, 191, 36, 0.8)' }}
-          >
-            {countdown > 0 ? countdown : 'GO!'}
-          </motion.div>
-          
-          {/* Player 1 Banner - Slides from left */}
-          <motion.div 
-            className="relative w-[85%] h-32 self-start"
-            initial={{ x: '-100%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6, ease: [0.17, 0.89, 0.32, 1.28] }}
-          >
-            {/* Banner image with clip path */}
-            <div className="absolute inset-0" style={{ clipPath: 'polygon(0% 0%, 100% 0%, 92% 100%, 0% 100%)' }}>
-              <img src={player1Banner} alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-900/40 to-transparent"></div>
+        {/* Simple Player Display */}
+        <div className="flex items-center gap-8">
+          {/* Player 1 */}
+          <div className="flex flex-col items-center">
+            <div className="w-20 h-20 rounded-full bg-white/20 p-1 border-2 border-white shadow-xl mb-2">
+              <img src={currentMatch.player1_avatar} alt="" className="w-full h-full rounded-full object-cover" />
             </div>
-            
-            {/* Avatar */}
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20">
-              <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-xl">
-                <img src={currentMatch.player1_avatar} alt="" className="w-full h-full rounded-full object-cover" />
-              </div>
-            </div>
-            
-            {/* Player Name */}
-            <div className="absolute inset-0 flex items-center justify-center pl-20 pr-12">
-              <p className="text-white font-black text-lg drop-shadow-lg tracking-wide uppercase italic">{currentMatch.player1_name}</p>
-            </div>
-            
-            {/* P1 Badge */}
-            <div className="absolute top-3 right-14 bg-blue-500 text-white text-xs px-3 py-1 rounded-full font-black shadow-lg border-2 border-white/50">
-              P1
-            </div>
-          </motion.div>
+            <span className="text-white font-bold">{currentMatch.player1_name}</span>
+            <span className="text-blue-300 text-sm">P1</span>
+          </div>
 
-          {/* VS Badge - Pops in */}
-          <motion.div 
-            className="relative z-30 my-4"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.4, ease: [0.68, -0.55, 0.27, 1.55] }}
-          >
-            <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-500 to-orange-500 shadow-2xl flex items-center justify-center border-4 border-white transform -rotate-6">
-                <span className="text-white text-3xl font-black italic drop-shadow-md" style={{ textShadow: '2px 2px 0 #92400e' }}>VS</span>
-              </div>
-              {/* Glow effect */}
-              <div className="absolute inset-0 rounded-2xl bg-amber-400 blur-xl opacity-50 -z-10"></div>
-            </div>
-          </motion.div>
+          {/* VS */}
+          <div className="text-4xl font-black text-amber-400 drop-shadow-lg">VS</div>
 
-          {/* Player 2 Banner - Slides from right */}
-          <motion.div 
-            className="relative w-[85%] h-32 self-end"
-            initial={{ x: '100%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.17, 0.89, 0.32, 1.28] }}
-          >
-            {/* Banner image with clip path */}
-            <div className="absolute inset-0" style={{ clipPath: 'polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%)' }}>
-              <img src={player2Banner} alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-l from-purple-900/40 to-transparent"></div>
+          {/* Player 2 */}
+          <div className="flex flex-col items-center">
+            <div className="w-20 h-20 rounded-full bg-white/20 p-1 border-2 border-white shadow-xl mb-2">
+              <img src={currentMatch.player2_avatar} alt="" className="w-full h-full rounded-full object-cover" />
             </div>
-            
-            {/* Avatar */}
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20">
-              <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm p-1 border-2 border-white shadow-xl">
-                <img src={currentMatch.player2_avatar} alt="" className="w-full h-full rounded-full object-cover" />
-              </div>
-            </div>
-            
-            {/* Player Name */}
-            <div className="absolute inset-0 flex items-center justify-center pr-20 pl-12">
-              <p className="text-white font-black text-lg drop-shadow-lg tracking-wide uppercase italic text-right">{currentMatch.player2_name}</p>
-            </div>
-            
-            {/* P2 Badge */}
-            <div className="absolute top-3 left-14 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-black shadow-lg border-2 border-white/50">
-              P2
-            </div>
-          </motion.div>
+            <span className="text-white font-bold">{currentMatch.player2_name}</span>
+            <span className="text-red-300 text-sm">P2</span>
+          </div>
         </div>
       </div>
     );
