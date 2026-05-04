@@ -36,29 +36,35 @@ const taskTemplates: Task[] = [
 const modules: Module[] = [
   { 
     id: 'bio-11-4-m1', 
-    name: 'Basics of Digestion', 
+    name: '🧬 Overview of Digestive System', 
     stars: 3, 
     status: 'completed', 
     chapter: '',
-    tasks: taskTemplates.map(t => ({ ...t, completed: true }))
+    tasks: [
+      { ...taskTemplates[0], name: 'Learn (Foundation)', completed: true },
+      { ...taskTemplates[1], name: 'Practice', completed: true },
+      { ...taskTemplates[2], name: 'Recall', completed: true },
+      { ...taskTemplates[3], name: 'Test (NEET-level)', completed: true },
+      { ...taskTemplates[4], name: 'Mastery', completed: true },
+    ]
   },
   { 
     id: 'bio-11-4-m2', 
-    name: 'Alimentary Canal', 
+    name: '🔵 Structure of Alimentary Canal', 
     stars: 2, 
     status: 'current', 
-    chapter: 'Chapter 1',
+    chapter: '🧬 Digestion & Absorption',
     tasks: [
-      { ...taskTemplates[0], completed: true },
-      { ...taskTemplates[1], completed: true },
-      { ...taskTemplates[2], completed: false },
-      { ...taskTemplates[3], completed: false },
-      { ...taskTemplates[4], completed: false },
+      { ...taskTemplates[0], name: 'Learn (Diagram)', completed: true },
+      { ...taskTemplates[1], name: 'Practice', completed: true },
+      { ...taskTemplates[2], name: 'Recall (Labeling)', completed: false },
+      { ...taskTemplates[3], name: 'Test (NEET PYQs)', completed: false },
+      { ...taskTemplates[4], name: 'Mastery', completed: false },
     ]
   },
   { 
     id: 'bio-11-4-m3', 
-    name: 'Digestive Glands', 
+    name: '🟡 Digestive Glands', 
     stars: 0, 
     status: 'next', 
     chapter: '',
@@ -66,7 +72,7 @@ const modules: Module[] = [
   },
   { 
     id: 'bio-11-4-m4', 
-    name: 'Digestion Process', 
+    name: '🔴 Process of Digestion', 
     stars: 0, 
     status: 'locked', 
     chapter: '',
@@ -74,7 +80,23 @@ const modules: Module[] = [
   },
   { 
     id: 'bio-11-4-m5', 
-    name: 'Stomach', 
+    name: '🟣 Absorption', 
+    stars: 0, 
+    status: 'locked', 
+    chapter: '',
+    tasks: taskTemplates.map(t => ({ ...t, completed: false }))
+  },
+  { 
+    id: 'bio-11-4-m6', 
+    name: '🟠 Assimilation', 
+    stars: 0, 
+    status: 'locked', 
+    chapter: '',
+    tasks: taskTemplates.map(t => ({ ...t, completed: false }))
+  },
+  { 
+    id: 'bio-11-4-m7', 
+    name: '⚫ Disorders', 
     stars: 0, 
     status: 'locked', 
     chapter: '',
