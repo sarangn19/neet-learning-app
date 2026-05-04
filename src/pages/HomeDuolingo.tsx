@@ -35,15 +35,15 @@ const taskTemplates: Task[] = [
 
 const modules: Module[] = [
   { 
-    id: '1', 
-    name: 'Digestive Overview', 
+    id: 'bio-11-4-m1', 
+    name: 'Basics of Digestion', 
     stars: 3, 
     status: 'completed', 
     chapter: '',
     tasks: taskTemplates.map(t => ({ ...t, completed: true }))
   },
   { 
-    id: '2', 
+    id: 'bio-11-4-m2', 
     name: 'Alimentary Canal', 
     stars: 2, 
     status: 'current', 
@@ -57,7 +57,7 @@ const modules: Module[] = [
     ]
   },
   { 
-    id: '3', 
+    id: 'bio-11-4-m3', 
     name: 'Digestive Glands', 
     stars: 0, 
     status: 'next', 
@@ -65,7 +65,7 @@ const modules: Module[] = [
     tasks: taskTemplates.map(t => ({ ...t, completed: false }))
   },
   { 
-    id: '4', 
+    id: 'bio-11-4-m4', 
     name: 'Digestion Process', 
     stars: 0, 
     status: 'locked', 
@@ -73,8 +73,8 @@ const modules: Module[] = [
     tasks: taskTemplates.map(t => ({ ...t, completed: false }))
   },
   { 
-    id: '5', 
-    name: 'Absorption', 
+    id: 'bio-11-4-m5', 
+    name: 'Stomach', 
     stars: 0, 
     status: 'locked', 
     chapter: '',
@@ -201,7 +201,7 @@ export default function HomeDuolingo() {
                     className={`flex items-center gap-4 p-3 rounded-xl cursor-pointer ${
                       task.completed ? 'bg-green-50' : 'bg-gray-50'
                     }`}
-                    onClick={() => navigate(`/module/biology/digestion/${selectedModule.id}?task=${task.type}`)}
+                    onClick={() => navigate(`/chapter/biology/plus_one/bio-11-4/module/${selectedModule.id}`)}
                   >
                     <div className={`w-10 h-10 rounded-lg ${task.color} flex items-center justify-center text-xl`}>
                       {task.icon}
@@ -221,7 +221,7 @@ export default function HomeDuolingo() {
               <div className="p-4 pb-8">
                 <button 
                   className="w-full py-3.5 rounded-xl bg-green-500 text-white font-bold text-base hover:bg-green-600 transition-colors"
-                  onClick={() => navigate(`/module/biology/digestion/${selectedModule.id}`)}
+                  onClick={() => navigate(`/chapter/biology/plus_one/bio-11-4/module/${selectedModule.id}`)}
                 >
                   CONTINUE
                 </button>
