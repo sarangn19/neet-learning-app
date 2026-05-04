@@ -159,22 +159,6 @@ export default function Home() {
 
 
 
-      {/* Mascot - Cat GIF */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2 }}
-        className="my-6"
-      >
-        <div className="w-full relative overflow-hidden rounded-3xl flex items-center justify-center bg-white border border-gray-100">
-          <img 
-            src="/images/mascot.gif" 
-            alt="Mascot"
-            className="max-w-full h-auto object-contain"
-          />
-        </div>
-      </motion.div>
-
       {/* Subjects Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
