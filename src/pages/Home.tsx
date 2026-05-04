@@ -1,16 +1,9 @@
 import { motion } from 'framer-motion';
-import { Search, Cat, Flame, Target, Zap, Award, LogOut, X, Atom, FlaskConical, Dna, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../store/userStore';
 import { useNavigate, Link } from 'react-router-dom';
-
-import RevisionPopup from '../components/RevisionPopup';
-
-import DailyRevision from '../components/DailyRevision';
-
 import { PageSkeleton } from '../components/Skeleton';
-
-
+import { Home, BookOpen, Trophy, User, X, LogOut, Cat, Flame, Target, Zap, Award } from 'lucide-react';
 
 // Profile picture options
 const AVATAR_OPTIONS = [
@@ -78,150 +71,130 @@ export default function Home() {
 
 
   return (
-
-    <div className="max-w-5xl mx-auto px-4 py-6 pb-24">
-
-      {/* Flashcard Modal */}
-
-      {showFlashcards && (
-
-        <DailyRevision 
-
-          onClose={() => setShowFlashcards(false)}
-
-          onStartLesson={() => setShowFlashcards(false)}
-
-        />
-
-      )}
-
-
-
-      {/* Revision Popup - appears after 10 seconds */}
-
-      <RevisionPopup 
-
-        onClose={() => {}} 
-
-        onStartRevision={() => setShowFlashcards(true)} 
-
-        disabled={false}
-
-      />
-
-      {/* Header - Greeting */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between px-4 pt-4"
-      >
-        {/* Left: Avatar & Name */}
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={() => setShowProfile(true)}
-            className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden border-2 border-white shadow-sm"
-          >
-            {avatar ? (
-              <img src={avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
-            ) : (
-              <span className="text-white text-sm">👤</span>
-            )}
-          </button>
-
-          <div className="flex flex-col">
-            <p className="text-gray-500 text-sm font-normal leading-4">Hello</p>
-            <p className="text-gray-900 text-base font-semibold leading-5">{name}</p>
-          </div>
-        </div>
-
-        {/* Right: Search Icon & Cat Food */}
-        <div className="flex items-center gap-3">
-          {/* Search Icon */}
-          <button className="w-11 h-11 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer shadow-sm">
-            <Search className="w-5 h-5 text-gray-500" strokeWidth={1.5} />
-          </button>
-
-          {/* Cat Food Icon */}
-          <div className="relative cursor-pointer hover:scale-105 transition-transform">
-            <div className="w-11 h-11 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-              <img 
-                src="/images/catfood.svg" 
-                alt="Cat Food"
-                className="w-7 h-7 object-contain"
-              />
+    <div className="min-h-screen bg-[#F57556] relative overflow-hidden">
+      {/* Main Content */}
+      <div className="px-6 pt-8 pb-32">
+        {/* Header with Avatar */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-between mb-8"
+        >
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setShowProfile(true)}
+              className="w-12 h-12 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md"
+            >
+              {avatar ? (
+                <img src={avatar} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-xl">👤</span>
+              )}
+            </button>
+            <div>
+              <p className="text-white/80 text-sm">Hello,</p>
+              <p className="text-white font-semibold">{name}</p>
             </div>
-            <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-              {catFood}
-            </span>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
+        {/* Bookshelf with Cat */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="relative mb-12"
+        >
+          {/* Books on Shelf */}
+          <div className="flex items-end justify-center gap-1 mb-0">
+            {/* Green book */}
+            <div className="w-10 h-20 bg-[#2D5016] rounded-t-sm relative">
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-6 h-8 bg-[#4A7C2E] rounded-full" />
+            </div>
+            {/* Red book leaning */}
+            <div className="w-10 h-24 bg-[#B8382F] rounded-t-sm transform -rotate-6 origin-bottom-left relative">
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-5 h-6 bg-white/20 rounded" />
+            </div>
+            {/* Black Cat */}
+            <div className="relative mx-2">
+              <div className="w-24 h-20 bg-[#1A1A2E] rounded-t-full relative">
+                {/* Cat ears */}
+                <div className="absolute -top-3 left-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-[#1A1A2E]" />
+                <div className="absolute -top-3 right-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-[#1A1A2E]" />
+                {/* Cat eyes */}
+                <div className="absolute top-4 left-4 w-3 h-3 bg-[#39FF14] rounded-full animate-pulse" />
+                <div className="absolute top-4 right-4 w-3 h-3 bg-[#39FF14] rounded-full animate-pulse" />
+                {/* Cat tail */}
+                <div className="absolute -right-6 bottom-0 w-4 h-16 bg-[#1A1A2E] rounded-full transform rotate-12 origin-bottom" />
+              </div>
+            </div>
+          </div>
+          {/* Wooden Shelf */}
+          <div className="h-4 bg-[#8B4513] rounded-sm shadow-lg" />
+          <div className="h-1 bg-[#5D3A1A] rounded-sm" />
+        </motion.div>
 
+        {/* Subject Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="flex gap-3 justify-center"
+        >
+          {/* Biology Card - Active */}
+          <Link
+            to="/chapter/biology/plus_one"
+            className="flex-1 bg-[#7CD968] rounded-2xl p-4 h-32 shadow-lg transform hover:scale-105 transition-transform"
+          >
+            <p className="text-[#1B4D1B] font-bold text-sm">Biology</p>
+          </Link>
 
-      {/* Subjects Section */}
+          {/* Chemistry Card */}
+          <Link
+            to="/chapter/chemistry/plus_one"
+            className="flex-1 bg-[#E8E8E8] rounded-2xl p-4 h-32 shadow-lg transform hover:scale-105 transition-transform"
+          >
+            <p className="text-[#666] font-bold text-sm">Chemistry</p>
+          </Link>
+
+          {/* Physics Card */}
+          <Link
+            to="/chapter/physics/plus_one"
+            className="flex-1 bg-[#E8E8E8] rounded-2xl p-4 h-32 shadow-lg transform hover:scale-105 transition-transform"
+          >
+            <p className="text-[#666] font-bold text-sm">Physics</p>
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Bottom Navigation */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mb-6"
+        transition={{ delay: 0.6 }}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white rounded-full px-6 py-3 shadow-2xl flex items-center gap-6 z-40"
       >
-        <div className="flex items-center justify-between mb-3 px-1">
-          <h3 className="font-bold text-lg text-gray-900">Subjects</h3>
-          <button 
-            onClick={() => navigate('/mcqs')}
-            className="text-amber-600 text-sm font-medium hover:text-amber-700"
-          >
-            View All
-          </button>
-        </div>
-        
-        <div className="space-y-3">
-          {/* Physics */}
-          <Link
-            to="/chapter/physics/plus_one"
-            className="relative flex items-center w-full h-24 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]"
-          >
-            <div className="relative z-10 flex flex-col px-5 py-3">
-              <span className="text-white font-bold text-xl">Physics</span>
-              <span className="text-white/70 text-sm mt-1">10 chapters</span>
-              <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
-            </div>
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
-              <Atom className="w-20 h-20 text-white/20" />
-            </div>
-          </Link>
-
-          {/* Chemistry */}
-          <Link
-            to="/chapter/chemistry/plus_one"
-            className="relative flex items-center w-full h-24 overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]"
-          >
-            <div className="relative z-10 flex flex-col px-5 py-3">
-              <span className="text-white font-bold text-xl">Chemistry</span>
-              <span className="text-white/70 text-sm mt-1">8 chapters</span>
-              <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
-            </div>
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
-              <FlaskConical className="w-20 h-20 text-white/20" />
-            </div>
-          </Link>
-
-          {/* Biology */}
-          <Link
-            to="/chapter/biology/plus_one"
-            className="relative flex items-center w-full h-24 overflow-hidden rounded-2xl bg-gradient-to-r from-violet-500 via-violet-600 to-purple-600 shadow-lg hover:shadow-xl transition-all group hover:scale-[1.02]"
-          >
-            <div className="relative z-10 flex flex-col px-5 py-3">
-              <span className="text-white font-bold text-xl">Biology</span>
-              <span className="text-white/70 text-sm mt-1">12 chapters</span>
-              <div className="mt-2 w-8 h-1 bg-white/40 rounded-full" />
-            </div>
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-300">
-              <Dna className="w-20 h-20 text-white/20" />
-            </div>
-          </Link>
-        </div>
+        <button className="w-12 h-12 bg-[#F57556] rounded-full flex items-center justify-center">
+          <Home className="w-6 h-6 text-white" />
+        </button>
+        <button 
+          onClick={() => navigate('/learn')}
+          className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
+        >
+          <BookOpen className="w-6 h-6 text-gray-600" />
+        </button>
+        <button 
+          onClick={() => navigate('/leaderboard')}
+          className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
+        >
+          <Trophy className="w-6 h-6 text-gray-600" />
+        </button>
+        <button 
+          onClick={() => setShowProfile(true)}
+          className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
+        >
+          <User className="w-6 h-6 text-gray-600" />
+        </button>
       </motion.div>
 
       {/* Profile Modal */}
@@ -230,7 +203,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white border border-gray-200 rounded-3xl max-w-md w-full max-h-[80vh] overflow-y-auto p-6 shadow-2xl"
+            className="bg-white rounded-3xl max-w-md w-full max-h-[80vh] overflow-y-auto p-6 shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
@@ -245,67 +218,21 @@ export default function Home() {
 
             {/* Profile Info */}
             <div className="text-center mb-6">
-              <button
-                onClick={() => setShowAvatarPicker(true)}
-                className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl hover:opacity-80 transition-opacity cursor-pointer relative group overflow-hidden border-4 border-white shadow-lg"
-              >
+              <div className="w-20 h-20 bg-gradient-to-br from-[#F57556] to-[#FF8A65] rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
                 {avatar ? (
-                  <img src={avatar} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                  <img src={avatar} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
-                  <span>👤</span>
+                  <span className="text-3xl">👤</span>
                 )}
-                <span className="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white text-xs">Change</span>
-                </span>
-              </button>
+              </div>
               <h3 className="text-xl font-bold text-gray-900">{name}</h3>
               <p className="text-gray-500">Level {level} Learner</p>
             </div>
 
-            {/* Avatar Picker */}
-            {showAvatarPicker && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="mb-6 bg-gray-50 rounded-2xl p-4 border border-gray-200"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-gray-900">Choose Avatar</h4>
-                  <button
-                    onClick={() => setShowAvatarPicker(false)}
-                    className="p-1 hover:bg-gray-200 rounded-full"
-                  >
-                    <X className="w-4 h-4 text-gray-500" />
-                  </button>
-                </div>
-                <div className="grid grid-cols-5 gap-2">
-                  {AVATAR_OPTIONS.filter(img => purchasedAvatars.includes(img)).map((img) => (
-                    <button
-                      key={img}
-                      onClick={() => {
-                        setUser({ avatar: img });
-                        setShowAvatarPicker(false);
-                      }}
-                      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors p-1 ${
-                        avatar === img
-                          ? 'bg-blue-500 ring-2 ring-blue-500'
-                          : 'bg-white hover:bg-gray-100'
-                      }`}
-                    >
-                      <img src={img} alt="Avatar" className="w-full h-full object-cover rounded" />
-                    </button>
-                  ))}
-                </div>
-                <p className="text-xs text-gray-400 mt-3 text-center">
-                  Buy more avatars from the shop!
-                </p>
-              </motion.div>
-            )}
-
             {/* Stats */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="bg-gray-50 rounded-xl p-3 text-center">
-                <Cat className="w-5 h-5 text-amber-600 mx-auto mb-1" />
+                <Cat className="w-5 h-5 text-[#F57556] mx-auto mb-1" />
                 <p className="text-lg font-bold text-gray-900">{catFood}</p>
                 <p className="text-xs text-gray-500">Cat Food</p>
               </div>
@@ -320,89 +247,16 @@ export default function Home() {
                 <p className="text-xs text-gray-500">Best Streak</p>
               </div>
               <div className="bg-gray-50 rounded-xl p-3 text-center">
-                <Zap className="w-5 h-5 text-blue-500 mx-auto mb-1" />
+                <Zap className="w-5 h-5 text-yellow-500 mx-auto mb-1" />
                 <p className="text-lg font-bold text-gray-900">{completedLessons.length}</p>
                 <p className="text-xs text-gray-500">Lessons</p>
               </div>
-              <div className="bg-gray-50 rounded-xl p-3 text-center col-span-2">
-                <span className="text-xl mx-auto mb-1 block">🪙</span>
-                <p className="text-lg font-bold text-gray-900">{coins}</p>
-                <p className="text-xs text-gray-500">Coins</p>
-              </div>
-            </div>
-
-            {/* Badges */}
-            <div className="mb-6">
-              <div className="flex items-center gap-2 mb-3">
-                <Award className="w-5 h-5 text-purple-500" />
-                <h4 className="font-bold text-gray-900">Achievements</h4>
-                <span className="text-xs text-gray-500">({badges.length}/{ALL_BADGES.length})</span>
-              </div>
-              <div className="grid grid-cols-4 gap-2">
-                {ALL_BADGES.map((badge) => {
-                  const unlocked = hasBadge(badge.id);
-                  return (
-                    <button
-                      key={badge.id}
-                      onClick={() => setSelectedBadge(badge)}
-                      className={`rounded-lg p-2 text-center transition-all ${
-                        unlocked
-                          ? 'bg-purple-50 border-2 border-purple-200'
-                          : 'bg-gray-100 border-2 border-gray-200 opacity-60 grayscale'
-                      }`}
-                    >
-                      <div className="text-xl mb-1">{unlocked ? badge.icon : '🔒'}</div>
-                      <p className={`text-xs font-medium truncate ${unlocked ? 'text-purple-900' : 'text-gray-500'}`}>
-                        {badge.name}
-                      </p>
-                    </button>
-                  );
-                })}
-              </div>
-              
-              {/* Badge Detail Modal */}
-              {selectedBadge && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 bg-white border-2 border-purple-200 rounded-xl p-4"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
-                      hasBadge(selectedBadge.id) ? 'bg-purple-100' : 'bg-gray-100'
-                    }`}>
-                      {hasBadge(selectedBadge.id) ? selectedBadge.icon : '🔒'}
-                    </div>
-                    <div className="flex-1">
-                      <h5 className="font-bold text-gray-900">{selectedBadge.name}</h5>
-                      <p className="text-sm text-gray-600 mb-2">{selectedBadge.description}</p>
-                      <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
-                        hasBadge(selectedBadge.id)
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-amber-100 text-amber-700'
-                      }`}>
-                        {hasBadge(selectedBadge.id) ? (
-                          <><span>✓</span> Unlocked!</>
-                        ) : (
-                          <><span>📋</span> To unlock: {selectedBadge.requirement}</>
-                        )}
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setSelectedBadge(null)}
-                      className="p-1 hover:bg-gray-100 rounded-full"
-                    >
-                      <X className="w-4 h-4 text-gray-400" />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
             </div>
 
             {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-colors font-medium"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F57556] hover:bg-[#E56447] text-white rounded-xl transition-colors font-medium"
             >
               <LogOut className="w-4 h-4" />
               Logout
@@ -410,10 +264,7 @@ export default function Home() {
           </motion.div>
         </div>
       )}
-
     </div>
-
   );
-
 }
 
