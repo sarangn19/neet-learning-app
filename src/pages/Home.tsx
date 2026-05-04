@@ -1,32 +1,59 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useUserStore } from '../store/userStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { PageSkeleton } from '../components/Skeleton';
 import { X, LogOut, Cat, Flame, Target, Zap } from 'lucide-react';
 import { useRive } from '@rive-app/react-canvas';
 
-// Rive Cat Component - Interactive
+// Rive Cat Component - Mouse Tracking
 function RiveCat() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { RiveComponent, rive } = useRive({
     src: '/images/cat%20rive.riv',
     autoplay: true,
     stateMachines: 'State Machine 1',
   });
 
+  // Track mouse position and feed to Rive
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!rive || !containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      // Calculate mouse position relative to cat center (-1 to 1)
+      const mouseX = (e.clientX - centerX) / (rect.width / 2);
+      const mouseY = (e.clientY - centerY) / (rect.height / 2);
+
+      // Get state machine inputs
+      const inputs = rive.stateMachineInputs('State Machine 1');
+
+      // Feed mouse position to Rive (if inputs exist)
+      const xInput = inputs?.find(input => input.name === 'MouseX');
+      const yInput = inputs?.find(input => input.name === 'MouseY');
+
+      if (xInput) xInput.value = Math.max(-1, Math.min(1, mouseX));
+      if (yInput) yInput.value = Math.max(-1, Math.min(1, mouseY));
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [rive]);
+
   const handleClick = () => {
     if (rive) {
-      // Trigger animation on click
       const inputs = rive.stateMachineInputs('State Machine 1');
       const trigger = inputs?.find(input => input.name === 'Click');
-      if (trigger) {
-        trigger.fire();
-      }
+      if (trigger) trigger.fire();
     }
   };
 
   return (
     <div 
+      ref={containerRef}
       className="relative mx-2 w-28 h-24 cursor-pointer hover:scale-105 transition-transform"
       onClick={handleClick}
     >
