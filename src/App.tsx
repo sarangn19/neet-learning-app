@@ -6,7 +6,6 @@ import { useUserStore } from './store/userStore';
 
 // Lazy load all pages for better performance
 const Home = lazy(() => import('./pages/Home'));
-const HomeDuolingo = lazy(() => import('./pages/HomeDuolingo'));
 const BattlePage = lazy(() => import('./pages/BattlePage'));
 const ChapterList = lazy(() => import('./pages/ChapterList'));
 const ChapterView = lazy(() => import('./pages/ChapterView'));
@@ -66,17 +65,12 @@ function App() {
       {!showSplash && (
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Home - Outside Layout (has its own nav) */}
-            <Route path="/" element={
-              <ProtectedRoute>
-                <HomeDuolingo />
-              </ProtectedRoute>
-            } />
             <Route path="/" element={
               <ProtectedRoute>
                 <Layout />
               </ProtectedRoute>
             }>
+              <Route index element={<Home />} />
               <Route path="battle" element={<BattlePage />} />
               <Route path="mcqs" element={<PracticeSetup />} />
               <Route path="shop" element={<Shop />} />
@@ -84,7 +78,7 @@ function App() {
               <Route path="practice/:subjectId" element={<PracticeSetup />} />
               <Route path="chapter/:subjectId/:grade" element={<ChapterList />} />
               <Route path="chapter/:subjectId/:grade/:chapterId" element={<ChapterView />} />
-              <Route path="module/:subjectId/:chapterId/:moduleId" element={<ModuleView />} />
+              <Route path="module/:subjectId/:grade/:chapterId/:moduleId" element={<ModuleView />} />
               <Route path="lesson/:levelId" element={<Lesson />} />
               <Route path="profile" element={<Profile />} />
               <Route path="performance" element={<Performance />} />

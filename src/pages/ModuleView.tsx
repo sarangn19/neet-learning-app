@@ -6,20 +6,20 @@ import { useUserStore } from '../store/userStore';
 import type { Grade, Level } from '../types';
 
 export default function ModuleView() {
-  const { subjectId, chapterId, moduleId } = useParams<{ 
+  const { subjectId, grade, chapterId, moduleId } = useParams<{ 
     subjectId: string; 
+    grade: Grade; 
     chapterId: string; 
     moduleId: string;
   }>();
   const navigate = useNavigate();
   const subject = getSubject(subjectId || '');
-  // Default to plus_one grade for learn path
-  const module = getModule(subjectId || '', 'plus_one', chapterId || '', moduleId || '');
+  const module = getModule(subjectId || '', grade || 'plus_one', chapterId || '', moduleId || '');
   const { lessonProgress } = useUserStore();
 
   if (!subject || !module) return <div>Module not found</div>;
 
-  const gradeLabel = 'Plus One';
+  const gradeLabel = grade === 'plus_one' ? 'Plus One' : 'Plus Two';
 
   // Determine level status
   const getLevelStatus = (level: Level, index: number) => {
