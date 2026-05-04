@@ -111,17 +111,17 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
   // Subscribe to match updates via Supabase Realtime
   const subscribeToMatch = useCallback((matchId: string) => {
-    console.log('Subscribing to match:', matchId);
+    // Subscribing to match
     
     const channel = supabase
       .channel(`battle:${matchId}`)
       .on('postgres_changes', 
         { event: '*', schema: 'public', table: 'battle_matches', filter: `id=eq.${matchId}` },
         (payload) => {
-          console.log('Realtime update received:', payload);
+          // Realtime update received
           const updated = payload.new as Match;
           
-          console.log('Match update - player2_id:', updated.player2_id, 'status:', updated.status);
+          // Match update received
           
           setCurrentMatch(prev => {
             // Only react if I'm Player 1 (the creator) and opponent just joined
@@ -130,11 +130,10 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             const nowHasOpponent = !!updated.player2_id;
             const opponentJustJoined = imPlayer1 && hadNoOpponent && nowHasOpponent;
             
-            console.log('I am Player 1?', imPlayer1, 'Previous player2:', prev?.player2_id, 'New player2:', updated.player2_id);
-            console.log('Opponent just joined?', opponentJustJoined);
+            // Check if player 1 and opponent joined
             
             if (opponentJustJoined) {
-              console.log('Starting countdown - opponent joined!');
+              // Start countdown - opponent joined
               // Opponent joined - start countdown
               setGameState('countdown');
               setIsLoading(false);
@@ -153,7 +152,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         }
       )
       .subscribe((status) => {
-        console.log('Subscription status:', status);
+        // Subscription status updated
       });
     
     return channel;
@@ -237,12 +236,12 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
         .neq('player1_id', userId)
         .limit(1);
 
-      console.log('Searching for waiting matches...', { searchError, waitingMatches });
+      // Searching for waiting matches
 
       if (!searchError && waitingMatches && waitingMatches.length > 0) {
         // Join existing match - real multiplayer!
         const match = waitingMatches[0];
-        console.log('Found waiting match, attempting to join:', match.id);
+        // Found waiting match
         
         const { error: updateError } = await supabase
           .from('battle_matches')
@@ -255,10 +254,10 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
           })
           .eq('id', match.id);
 
-        console.log('Join result:', { updateError });
+        // Join result received
 
         if (!updateError) {
-          console.log('Successfully joined match!');
+          // Successfully joined match
           const fullMatch: Match = {
             id: match.id,
             player1_id: match.player1_id,
@@ -327,7 +326,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
 
       // Wait 60 seconds for a real opponent, then fallback to AI
       const timeoutId = setTimeout(async () => {
-        console.log('Timeout: Checking if opponent joined...');
+        // Timeout: Checking if opponent joined
         
         try {
           const { data: currentMatchData } = await supabase
@@ -336,16 +335,16 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
             .eq('id', newMatch.id)
             .single();
 
-          console.log('Match status after timeout:', currentMatchData);
+          // Match status after timeout
 
           if (currentMatchData && currentMatchData.status === 'waiting' && !currentMatchData.player2_id) {
             // No opponent joined - delete waiting match and start AI
-            console.log('No opponent joined, starting AI match');
+            // No opponent joined, starting AI match
             await supabase.from('battle_matches').delete().eq('id', newMatch.id);
             channel.unsubscribe();
             startAIMatch();
           } else if (currentMatchData?.player2_id) {
-            console.log('Opponent joined! Match should be active');
+            // Opponent joined - match should be active
             // Opponent joined - don't delete, subscription will handle it
           }
         } catch (err) {
@@ -393,7 +392,7 @@ export default function Battle({ onClose }: { onClose?: () => void }) {
       addCoins(50);
       // Record battle victory for magic boxes
       const newVictoryCount = recordBattleVictory();
-      console.log('Battle victory recorded! Total today:', newVictoryCount);
+      // Battle victory recorded
     } else if (playerScore === opponentScore) {
       addCoins(25);
     } else {
@@ -654,41 +653,39 @@ function BattleGame({ match, onComplete, onExit, currentUserId }: { match: Match
   // Subscribe to opponent score updates for real multiplayer
   useEffect(() => {
     if (!isRealOpponent) {
-      console.log('AI opponent - no score subscription needed');
+      // AI opponent - no score subscription needed
       return; // Only for real multiplayer
     }
-
-    console.log('Setting up score subscription for match:', match.id);
 
     const channel = supabase
       .channel(`scores:${match.id}`)
       .on('postgres_changes', 
         { event: '*', schema: 'public', table: 'battle_matches', filter: `id=eq.${match.id}` },
         (payload) => {
-          console.log('Score update received:', payload);
+          // Score update received
           const updated = payload.new as Match;
-          console.log('Updated match scores:', { p1: updated.player1_score, p2: updated.player2_score });
+          // Updated match scores
           
           // Update opponent score from Supabase
           if (isPlayer1) {
             // I'm player 1, opponent is player 2
             const newOpponentScore = updated.player2_score || 0;
-            console.log('Setting opponent score (player2):', newOpponentScore);
+            // Setting opponent score
             setOpponentScore(newOpponentScore);
           } else {
             // I'm player 2, opponent is player 1
             const newOpponentScore = updated.player1_score || 0;
-            console.log('Setting opponent score (player1):', newOpponentScore);
+            // Setting opponent score
             setOpponentScore(newOpponentScore);
           }
         }
       )
       .subscribe((status) => {
-        console.log('Score subscription status:', status);
+        // Score subscription status updated
       });
 
     return () => {
-      console.log('Unsubscribing from score updates');
+      // Unsubscribing from score updates
       channel.unsubscribe();
     };
   }, [match.id, isPlayer1, isRealOpponent]);
