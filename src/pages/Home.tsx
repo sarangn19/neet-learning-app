@@ -13,6 +13,13 @@ function RiveCat() {
     src: '/images/cat%20rive.riv',
     autoplay: true,
     stateMachines: 'State Machine 1',
+    onLoad: () => {
+      // Debug: Log all available inputs when Rive loads
+      if (rive) {
+        const inputs = rive.stateMachineInputs('State Machine 1');
+        console.log('Available Rive inputs:', inputs?.map(i => ({ name: i.name, type: i.type })));
+      }
+    }
   });
 
   // Track mouse position and feed to Rive
@@ -31,9 +38,12 @@ function RiveCat() {
       // Get state machine inputs
       const inputs = rive.stateMachineInputs('State Machine 1');
 
-      // Feed mouse position to Rive (if inputs exist)
-      const xInput = inputs?.find(input => input.name === 'MouseX');
-      const yInput = inputs?.find(input => input.name === 'MouseY');
+      // Try common mouse input names
+      const possibleXNames = ['MouseX', 'mouseX', 'Look X', 'look_x', 'X', 'x'];
+      const possibleYNames = ['MouseY', 'mouseY', 'Look Y', 'look_y', 'Y', 'y'];
+
+      const xInput = inputs?.find(input => possibleXNames.includes(input.name));
+      const yInput = inputs?.find(input => possibleYNames.includes(input.name));
 
       if (xInput) xInput.value = Math.max(-1, Math.min(1, mouseX));
       if (yInput) yInput.value = Math.max(-1, Math.min(1, mouseY));
@@ -46,8 +56,9 @@ function RiveCat() {
   const handleClick = () => {
     if (rive) {
       const inputs = rive.stateMachineInputs('State Machine 1');
-      const trigger = inputs?.find(input => input.name === 'Click');
-      if (trigger) trigger.fire();
+      const possibleClickNames = ['Click', 'click', 'Tap', 'tap', 'Trigger', 'trigger'];
+      const trigger = inputs?.find(input => possibleClickNames.includes(input.name));
+      if (trigger && trigger.type === 'trigger') trigger.fire();
     }
   };
 
