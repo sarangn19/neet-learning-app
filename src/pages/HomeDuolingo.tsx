@@ -223,7 +223,7 @@ export default function HomeDuolingo() {
                     className={`flex items-center gap-4 p-3 rounded-xl cursor-pointer ${
                       task.completed ? 'bg-green-50' : 'bg-gray-50'
                     }`}
-                    onClick={() => navigate(`/chapter/biology/plus_one/bio-11-4/module/${selectedModule.id}`)}
+                    onClick={() => navigate(`/module/biology/bio-11-4/${selectedModule.id}`)}
                   >
                     <div className={`w-10 h-10 rounded-lg ${task.color} flex items-center justify-center text-xl`}>
                       {task.icon}
@@ -243,7 +243,7 @@ export default function HomeDuolingo() {
               <div className="p-4 pb-8">
                 <button 
                   className="w-full py-3.5 rounded-xl bg-green-500 text-white font-bold text-base hover:bg-green-600 transition-colors"
-                  onClick={() => navigate(`/chapter/biology/plus_one/bio-11-4/module/${selectedModule.id}`)}
+                  onClick={() => navigate(`/module/biology/bio-11-4/${selectedModule.id}`)}
                 >
                   CONTINUE
                 </button>
