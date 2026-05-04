@@ -3,54 +3,13 @@ import { useState, useEffect } from 'react';
 import { useUserStore } from '../store/userStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { PageSkeleton } from '../components/Skeleton';
-import { Home, BookOpen, Trophy, User, X, LogOut, Cat, Flame, Target, Zap, Award } from 'lucide-react';
-
-// Profile picture options
-const AVATAR_OPTIONS = [
-  '/images/profile pictures/1.png',
-  '/images/profile pictures/2.png',
-  '/images/profile pictures/3.png',
-  '/images/profile pictures/4.png',
-  '/images/profile pictures/5.png',
-  '/images/profile pictures/6.png',
-  '/images/profile pictures/7.png',
-  '/images/profile pictures/8.png',
-  '/images/profile pictures/9.png',
-];
-
-interface BadgeDefinition {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  requirement: string;
-}
-
-const ALL_BADGES: BadgeDefinition[] = [
-  { id: 'first_lesson', name: 'First Steps', description: 'Complete your first lesson', icon: '👣', requirement: 'Complete 1 lesson' },
-  { id: 'ten_lessons', name: 'Quick Learner', description: 'Complete 10 lessons', icon: '📚', requirement: 'Complete 10 lessons' },
-  { id: 'fifty_lessons', name: 'Knowledge Seeker', description: 'Complete 50 lessons', icon: '🎓', requirement: 'Complete 50 lessons' },
-  { id: 'streak_3', name: 'On Fire', description: 'Maintain a 3-day streak', icon: '🔥', requirement: '3-day streak' },
-  { id: 'streak_7', name: 'Dedicated', description: 'Maintain a 7-day streak', icon: '⭐', requirement: '7-day streak' },
-  { id: 'streak_30', name: 'Unstoppable', description: 'Maintain a 30-day streak', icon: '🏆', requirement: '30-day streak' },
-  { id: 'perfect_score', name: 'Perfectionist', description: 'Get a perfect score on any lesson', icon: '💯', requirement: 'Perfect score' },
-  { id: 'module_master', name: 'Module Master', description: 'Complete an entire module', icon: '🎯', requirement: 'Complete 1 module' },
-  { id: 'all_subjects', name: 'Well Rounded', description: 'Complete lessons in all 4 subjects', icon: '🌟', requirement: 'All subjects' },
-  { id: 'early_bird', name: 'Early Bird', description: 'Complete a lesson before 8 AM', icon: '🌅', requirement: 'Early morning lesson' },
-  { id: 'night_owl', name: 'Night Owl', description: 'Complete a lesson after 10 PM', icon: '🦉', requirement: 'Late night lesson' },
-  { id: 'coin_collector', name: 'Coin Collector', description: 'Collect 500 coins', icon: '🪙', requirement: '500 coins' },
-];
+import { X, LogOut, Cat, Flame, Target, Zap } from 'lucide-react';
 
 export default function Home() {
-  const [showFlashcards, setShowFlashcards] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
-  const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, recordBattleVictory } = useUserStore();
+  const { catFood, name, avatar, level, streak, longestStreak, completedLessons, logout } = useUserStore();
   const navigate = useNavigate();
-
-  const hasBadge = (badgeId: string) => badges.some(b => b.id === badgeId);
 
 
   // Simulate loading for demo
@@ -139,7 +98,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="flex gap-3 justify-center"
+          className="flex gap-3 justify-center mb-20"
         >
           {/* Biology Card - Active */}
           <Link
@@ -166,36 +125,6 @@ export default function Home() {
           </Link>
         </motion.div>
       </div>
-
-      {/* Bottom Navigation */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white rounded-full px-6 py-3 shadow-2xl flex items-center gap-6 z-40"
-      >
-        <button className="w-12 h-12 bg-[#F57556] rounded-full flex items-center justify-center">
-          <Home className="w-6 h-6 text-white" />
-        </button>
-        <button 
-          onClick={() => navigate('/learn')}
-          className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
-        >
-          <BookOpen className="w-6 h-6 text-gray-600" />
-        </button>
-        <button 
-          onClick={() => navigate('/leaderboard')}
-          className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
-        >
-          <Trophy className="w-6 h-6 text-gray-600" />
-        </button>
-        <button 
-          onClick={() => setShowProfile(true)}
-          className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
-        >
-          <User className="w-6 h-6 text-gray-600" />
-        </button>
-      </motion.div>
 
       {/* Profile Modal */}
       {showProfile && (
