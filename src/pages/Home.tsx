@@ -4,6 +4,21 @@ import { useUserStore } from '../store/userStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { PageSkeleton } from '../components/Skeleton';
 import { X, LogOut, Cat, Flame, Target, Zap } from 'lucide-react';
+import { useRive } from '@rive-app/react-canvas';
+
+// Rive Cat Component
+function RiveCat() {
+  const { RiveComponent } = useRive({
+    src: '/images/cat%20rive.riv',
+    autoplay: true,
+  });
+
+  return (
+    <div className="relative mx-2 w-24 h-20">
+      <RiveComponent />
+    </div>
+  );
+}
 
 export default function Home() {
   const [showProfile, setShowProfile] = useState(false);
@@ -74,19 +89,8 @@ export default function Home() {
             <div className="w-10 h-24 bg-[#B8382F] rounded-t-sm transform -rotate-6 origin-bottom-left relative">
               <div className="absolute top-3 left-1/2 -translate-x-1/2 w-5 h-6 bg-white/20 rounded" />
             </div>
-            {/* Black Cat */}
-            <div className="relative mx-2">
-              <div className="w-24 h-20 bg-[#1A1A2E] rounded-t-full relative">
-                {/* Cat ears */}
-                <div className="absolute -top-3 left-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-[#1A1A2E]" />
-                <div className="absolute -top-3 right-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-[#1A1A2E]" />
-                {/* Cat eyes */}
-                <div className="absolute top-4 left-4 w-3 h-3 bg-[#39FF14] rounded-full animate-pulse" />
-                <div className="absolute top-4 right-4 w-3 h-3 bg-[#39FF14] rounded-full animate-pulse" />
-                {/* Cat tail */}
-                <div className="absolute -right-6 bottom-0 w-4 h-16 bg-[#1A1A2E] rounded-full transform rotate-12 origin-bottom" />
-              </div>
-            </div>
+            {/* Rive Cat Animation */}
+            <RiveCat />
           </div>
           {/* Wooden Shelf */}
           <div className="h-4 bg-[#8B4513] rounded-sm shadow-lg" />
