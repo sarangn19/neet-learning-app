@@ -71,7 +71,6 @@ function App() {
               </ProtectedRoute>
             }>
               <Route index element={<Home />} />
-              <Route path="battle" element={<BattlePage />} />
               <Route path="mcqs" element={<PracticeSetup />} />
               <Route path="shop" element={<Shop />} />
               <Route path="practice" element={<PracticeSetup />} />
@@ -92,6 +91,12 @@ function App() {
             <Route path="/lesson/:levelId" element={
               <ProtectedRoute>
                 <Lesson />
+              </ProtectedRoute>
+            } />
+            {/* Battle - Outside Layout (no nav bar) */}
+            <Route path="/battle" element={
+              <ProtectedRoute>
+                <BattlePage />
               </ProtectedRoute>
             } />
             {/* Auth Routes - Outside Layout */}
