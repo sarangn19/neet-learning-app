@@ -7,7 +7,12 @@ import { X, LogOut, Cat, Flame, Target, Zap } from 'lucide-react';
 import { useRive } from '@rive-app/react-canvas';
 
 // Rive Cat Component - Mouse Tracking
-function RiveCat() {
+function RiveCat({ name, streak, completedLessons, catFood }: { 
+  name: string; 
+  streak: number; 
+  completedLessons: string[]; 
+  catFood: number;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { RiveComponent, rive } = useRive({
     src: '/images/cat%20rive.riv',
@@ -63,12 +68,42 @@ function RiveCat() {
   };
 
   return (
-    <div 
-      ref={containerRef}
-      className="relative mx-2 w-28 h-24 cursor-pointer hover:scale-105 transition-transform"
-      onClick={handleClick}
-    >
-      <RiveComponent />
+    <div className="relative flex flex-col items-center">
+      {/* Speech Bubble - Cat's Dialogue */}
+      <motion.div
+        initial={{ opacity: 0, y: 10, scale: 0.8 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 0.5, duration: 0.3 }}
+        className="absolute -top-16 left-1/2 -translate-x-1/2 bg-white rounded-2xl px-4 py-3 shadow-lg min-w-[180px] z-10"
+      >
+        {/* Triangle pointer */}
+        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white" />
+        
+        <p className="text-xs text-gray-500 mb-1">Hey {name}! 👋</p>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="text-sm">🔥</span>
+            <span className="text-sm font-semibold text-gray-800">{streak} day streak!</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm">📚</span>
+            <span className="text-sm text-gray-600">{completedLessons.length} lessons done</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm">🐱</span>
+            <span className="text-sm text-gray-600">{catFood} cat food</span>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Rive Cat */}
+      <div 
+        ref={containerRef}
+        className="relative w-28 h-24 cursor-pointer hover:scale-105 transition-transform"
+        onClick={handleClick}
+      >
+        <RiveComponent />
+      </div>
     </div>
   );
 }
@@ -143,7 +178,12 @@ export default function Home() {
               <div className="absolute top-3 left-1/2 -translate-x-1/2 w-5 h-6 bg-white/20 rounded" />
             </div>
             {/* Rive Cat Animation */}
-            <RiveCat />
+            <RiveCat 
+              name={name}
+              streak={streak}
+              completedLessons={completedLessons}
+              catFood={catFood}
+            />
           </div>
           {/* Wooden Shelf */}
           <div className="h-4 bg-[#8B4513] rounded-sm shadow-lg" />
