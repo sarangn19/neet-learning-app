@@ -66,12 +66,17 @@ function App() {
       {!showSplash && (
         <Suspense fallback={<PageLoader />}>
           <Routes>
+            {/* Home - Outside Layout (has its own nav) */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                <HomeDuolingo />
+              </ProtectedRoute>
+            } />
             <Route path="/" element={
               <ProtectedRoute>
                 <Layout />
               </ProtectedRoute>
             }>
-              <Route index element={<Home />} />
               <Route path="battle" element={<BattlePage />} />
               <Route path="mcqs" element={<PracticeSetup />} />
               <Route path="shop" element={<Shop />} />
@@ -84,12 +89,6 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="performance" element={<Performance />} />
             </Route>
-            {/* Duolingo-style Home - Outside Layout (has its own nav) */}
-            <Route path="/learn" element={
-              <ProtectedRoute>
-                <HomeDuolingo />
-              </ProtectedRoute>
-            } />
             {/* Practice Session - Outside Layout (no nav bar) */}
             <Route path="/practice/session" element={
               <ProtectedRoute>

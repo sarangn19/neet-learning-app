@@ -48,12 +48,18 @@ const ALL_BADGES: BadgeDefinition[] = [
   { id: 'coin_collector', name: 'Coin Collector', description: 'Collect 500 coins', icon: '🪙', requirement: '500 coins' },
 ];
 
+const subjects = [
+  { id: 'physics', name: 'Physics', chapters: 10, color: 'from-blue-500 to-blue-700', icon: '⚛️' },
+  { id: 'chemistry', name: 'Chemistry', chapters: 12, color: 'from-green-500 to-green-700', icon: '⚗️' },
+  { id: 'biology', name: 'Biology', chapters: 15, color: 'from-pink-500 to-pink-700', icon: '🧬' },
+  { id: 'math', name: 'Math', chapters: 8, color: 'from-purple-500 to-purple-700', icon: '📐' },
+];
+
 export default function Home() {
-  const [showFlashcards, setShowFlashcards] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
-  const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
+  const { user, logout, hasBadge, streak, coins, lessonProgress, equippedAvatar } = useUserStore();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [showBadges, setShowBadges] = useState(false);
   const { catFood, coins, name, avatar, level, streak, longestStreak, completedLessons, badges, logout, setUser, purchasedAvatars, recordBattleVictory } = useUserStore();
   const navigate = useNavigate();
 
