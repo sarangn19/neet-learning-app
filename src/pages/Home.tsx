@@ -6,15 +6,30 @@ import { PageSkeleton } from '../components/Skeleton';
 import { X, LogOut, Cat, Flame, Target, Zap } from 'lucide-react';
 import { useRive } from '@rive-app/react-canvas';
 
-// Rive Cat Component
+// Rive Cat Component - Interactive
 function RiveCat() {
-  const { RiveComponent } = useRive({
+  const { RiveComponent, rive } = useRive({
     src: '/images/cat%20rive.riv',
     autoplay: true,
+    stateMachines: 'State Machine 1',
   });
 
+  const handleClick = () => {
+    if (rive) {
+      // Trigger animation on click
+      const inputs = rive.stateMachineInputs('State Machine 1');
+      const trigger = inputs?.find(input => input.name === 'Click');
+      if (trigger) {
+        trigger.fire();
+      }
+    }
+  };
+
   return (
-    <div className="relative mx-2 w-24 h-20">
+    <div 
+      className="relative mx-2 w-28 h-24 cursor-pointer hover:scale-105 transition-transform"
+      onClick={handleClick}
+    >
       <RiveComponent />
     </div>
   );
