@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { PageSkeleton } from '../components/Skeleton';
 import { X, LogOut, Cat, Flame, Target, Zap } from 'lucide-react';
 import { useRive } from '@rive-app/react-canvas';
+import { Sounds } from '../utils/sounds';
 
 // Rive Cat Component - Mouse Tracking
 function RiveCat({ name, streak, completedLessons, catFood }: { 
@@ -144,7 +145,10 @@ export default function Home() {
         >
           <div className="flex items-center gap-3">
             <button 
-              onClick={() => setShowProfile(true)}
+              onClick={() => {
+                Sounds.click();
+                setShowProfile(true);
+              }}
               className="w-12 h-12 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md"
             >
               {avatar ? (
@@ -235,7 +239,10 @@ export default function Home() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-gray-900">Profile</h2>
               <button 
-                onClick={() => setShowProfile(false)}
+                onClick={() => {
+                  Sounds.click();
+                  setShowProfile(false);
+                }}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
                 <X className="w-5 h-5 text-gray-500" />
@@ -281,7 +288,10 @@ export default function Home() {
 
             {/* Logout Button */}
             <button
-              onClick={handleLogout}
+              onClick={() => {
+                Sounds.click();
+                handleLogout();
+              }}
               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#F57556] hover:bg-[#E56447] text-white rounded-xl transition-colors font-medium"
             >
               <LogOut className="w-4 h-4" />

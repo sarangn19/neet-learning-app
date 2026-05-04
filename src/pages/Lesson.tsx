@@ -7,6 +7,7 @@ import confetti from 'canvas-confetti';
 import { subjects } from '../data/curriculum';
 import { useUserStore } from '../store/userStore';
 import type { Activity, Level, Badge } from '../types';
+import { Sounds } from '../utils/sounds';
 
 
 
@@ -105,11 +106,15 @@ export default function Lesson() {
         setIsCompleted(true);
         setStars(earnedStars);
         
+        // Play completion sound
+        Sounds.complete();
+        
         // Complete lesson and check for badges
         completeLesson(levelId!, earnedStars).then((newBadges) => {
           if (newBadges && newBadges.length > 0) {
             setUnlockedBadges(newBadges);
             setShowBadgeIndex(0);
+            Sounds.badgeUnlock(); // Add sound effect for badge unlock
           }
         });
 

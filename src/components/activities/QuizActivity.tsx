@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import type { Activity } from '../../types';
+import { Sounds } from '../../utils/sounds';
 
 interface Props {
   activity: Activity;
@@ -17,15 +18,23 @@ export default function QuizActivity({ activity, onComplete }: Props) {
 
   const handleSelect = (index: number) => {
     if (showResult) return;
+    Sounds.click();
     setSelectedOption(index);
   };
 
   const handleCheck = () => {
     if (selectedOption === null) return;
-    
+
     const correct = selectedOption === correctAnswer;
     setIsCorrect(correct);
     setShowResult(true);
+
+    // Play sound based on correctness
+    if (correct) {
+      Sounds.correct();
+    } else {
+      Sounds.wrong();
+    }
     
     setTimeout(() => {
       onComplete(correct, activity.tokenReward);

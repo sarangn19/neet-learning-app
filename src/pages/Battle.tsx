@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, CheckCircle, XCircle, Bot, Swords, Check } from 'luci
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../lib/supabase';
 import { getRandomQuestions, type BattleQuestion } from '../data/battleQuestions';
+import { Sounds } from '../utils/sounds';
 
 interface Match {
   id: string;
@@ -940,6 +941,15 @@ function BattleResults({ match, onExit, onRematch, currentUserId }: { match: Mat
   const playerWon = myScore > opponentScore;
   const isDraw = myScore === opponentScore;
   const coinsEarned = playerWon ? 50 : isDraw ? 25 : 10;
+  
+  // Play sound effect on mount
+  useEffect(() => {
+    if (playerWon) {
+      Sounds.battleWin();
+    } else if (!isDraw) {
+      Sounds.battleLose();
+    }
+  }, [playerWon, isDraw]);
 
   return (
     <div className="h-full w-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center p-4 overflow-y-auto">
